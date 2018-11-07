@@ -23,8 +23,7 @@ Clone this repository
 ## Copy compiler configurations
 
 Copy `*.cfg.sample` to `*.cfg`.
-Make adjustment as you need in `build.cfg`, `build.prod.cfg`, `build.dev.cfg`
-and run `build.sh` shell script (if you are on Windows, then `build.cmd`).
+Make adjustment as you need in `build.cfg`, `build.prod.cfg`, `build.dev.cfg`.
 
 These `*.cfg` files contain some Free Pascal compiler switches that you can turn on/off to change how executable is compiled and generated. For complete
 explanation on available compiler switches, consult Free Pascal documentation.
