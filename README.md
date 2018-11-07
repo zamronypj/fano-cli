@@ -78,7 +78,7 @@ environment variable. By default is `bin/unit` directory.
 Copy `bin/out/fanocli` executable file to directory that is accessible globally, then
 you can run
 
-    # fanocli --help
+    $ fanocli --help
 
 ## Known Issues
 
