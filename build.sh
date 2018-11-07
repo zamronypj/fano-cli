@@ -11,4 +11,16 @@
 # Build script for Linux
 #------------------------------------------------------
 
+if [[ -z "${BUILD_TYPE}" ]]; then
+export BUILD_TYPE="prod"
+fi
+
+if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then
+    export UNIT_OUTPUT_DIR="bin/unit"
+fi
+
+if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then
+export EXEC_OUTPUT_DIR="bin/out"
+fi
+
 fpc @build.cfg src/fanocli.pas

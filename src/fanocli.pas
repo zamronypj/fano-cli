@@ -13,13 +13,15 @@ program fanocli;
 uses
     fanoapp,
     InfoTaskImpl,
-    NullTaskImpl;
+    NullTaskImpl,
+    CreateProjectTaskImpl;
 
 var
     app : TFanoCliApplication;
 
 begin
     app := TFanoCliApplication.create(
+        nil,
         TInfoTask.create(),
         TCreateProjectTask.create()
     );

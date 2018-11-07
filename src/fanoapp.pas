@@ -13,7 +13,9 @@ interface
 {$H+}
 
 uses
+    sysutils,
     classes,
+    custapp,
     TaskIntf;
 
 type
@@ -25,7 +27,9 @@ type
     protected
         procedure doRun(); override;
     public
+        constructor create(AOwner : TComponent); override;
         constructor create(
+            const AOwner : TComponent;
             const info : ITask;
             const createProject : ITask
         );
@@ -34,17 +38,25 @@ type
 
 implementation
 
-    constructor create(
+    constructor TFanoCliApplication.create(AOwner : TComponent);
+    begin
+        inherited create(AOwner);
+        infoTask := nil;
+        createProjectTask := nil;
+    end;
+
+    constructor TFanoCliApplication.create(
+        const AOwner : TComponent;
         const info : ITask;
         const createProject : ITask
     );
     begin
-        inherited create();
+        inherited create(AOwner);
         infoTask := info;
         createProjectTask := createProject;
     end;
 
-    destructor destroy();
+    destructor TFanoCliApplication.destroy();
     begin
         inherited destroy();
         infoTask := nil;
@@ -53,17 +65,20 @@ implementation
 
     procedure TFanoCliApplication.doRun();
     begin
+        if (hasOption('c', 'create-project')) then
+        begin
+            createProjectTask.run();
+            halt();
+        end;
+
         if (hasOption('h', 'help')) then
         begin
             infoTask.run();
             halt();
         end;
 
-        if (hasOption('cp', 'create-project')) then
-        begin
-            createProjectTask.run();
-            halt();
-        end;
+        infoTask.run();
+        halt();
     end;
 
 end.

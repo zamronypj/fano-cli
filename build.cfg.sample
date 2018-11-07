@@ -39,8 +39,23 @@
 # Application Unit search path
 # user application base directory
 #----------------------------------------------
-#-Fusrc/path/to/other/units
+-Fusrc/Tasks/Contracts
+-Fusrc/Tasks/Implementations/Null
+-Fusrc/Tasks/Implementations/Info
+-Fusrc/Tasks/Implementations/Project
 #-Fu$USER_APP_DIR$/path/to/other/units
+
+#----------------------------------------------
+# Executable output path
+# $EXEC_OUTPUT_DIR$ environment variable contains
+# directory where output executable. (Default is bin/out)
+#----------------------------------------------
+-FE$EXEC_OUTPUT_DIR$
+
+#----------------------------------------------
+# Unit output path, default it bin/unit
+#----------------------------------------------
+-FU$UNIT_OUTPUT_DIR$
 
 #----------------------------------------------
 # Include configuration based on build type (default is prod)

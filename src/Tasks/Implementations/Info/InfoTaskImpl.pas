@@ -31,10 +31,12 @@ implementation
 
     function TInfoTask.run() : ITask;
     begin
-        writeln('Fano CLI');
+        writeln('Fano CLI 0.1, utility for Fano Web Framework');
+        writeln('(c) Zamrony P. Juhara');
         writeln('Usage: fanocli [Task] [Task Parameters]');
         writeln('Available task:');
-        writeln('   -cp [project name], --create-project=[project-name]');
+        writeln('   -h, --help display help information');
+        writeln('   -cp [project name], --create-project=[project-name] create project');
         result := self;
     end;
 end.
