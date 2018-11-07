@@ -29,7 +29,9 @@ type
     TCreateShellScriptsTask = class(TCreateFileTask)
     private
         procedure createShellScripts(const dir : string);
-        procedure createToolsScripts(const dir : string);
+        procedure createCleanScripts(const dir : string);
+        procedure createConfigSetupScripts(const dir : string);
+        procedure createSimulateScripts(const dir : string);
     public
         function run(
             const opt : ITaskOptions;
@@ -59,7 +61,7 @@ uses
         {$ENDIF}
     end;
 
-    procedure TCreateShellScriptsTask.createToolsScripts(const dir : string);
+    procedure TCreateShellScriptsTask.createCleanScripts(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.sh.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.cmd.inc}
@@ -71,6 +73,30 @@ uses
         {$ENDIF}
     end;
 
+    procedure TCreateShellScriptsTask.createConfigSetupScripts(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/config.setup.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/config.setup.cmd.inc}
+    begin
+        createTextFile(dir + '/config.setup.sh', strConfigSetupSh);
+        createTextFile(dir + '/config.setup.cmd', strConfigSetupCmd);
+        {$IFDEF UNIX}
+        fpChmod(dir + '/config.setup.sh', &775);
+        {$ENDIF}
+    end;
+
+    procedure TCreateShellScriptsTask.createSimulateScripts(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/simulate.run.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/simulate.run.cmd.inc}
+    begin
+        createTextFile(dir + '/simulate.run.sh', strSimulateSh);
+        createTextFile(dir + '/simulate.run.cmd', strSimulateCmd);
+        {$IFDEF UNIX}
+        fpChmod(dir + '/simulate.run.sh', &775);
+        {$ENDIF}
+    end;
+
     function TCreateShellScriptsTask.run(
         const opt : ITaskOptions;
         const shortOpt : char;
@@ -79,7 +105,9 @@ uses
     begin
         inherited run(opt, shortOpt, longOpt);
         createShellScripts(baseDirectory);
-        createToolsScripts(baseDirectory + '/tools');
+        createCleanScripts(baseDirectory + '/tools');
+        createConfigSetupScripts(baseDirectory + '/tools');
+        createSimulateScripts(baseDirectory + '/tools');
         result := self;
     end;
 end.
