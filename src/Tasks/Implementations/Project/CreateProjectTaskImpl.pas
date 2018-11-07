@@ -15,7 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    BaseProjectTaskImpl;
 
 type
 
@@ -25,25 +26,26 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateProjectTask = class(TInterfacedObject, ITask)
+    TCreateProjectTask = class(TBaseProjectTask)
     private
-        function createBaseDirectory(
-            const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
-        ) : string;
-        function createAppDirectory(const baseDir : string) : string;
-        procedure createDirectoryStructures(
-            const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
-        );
+        createDirectoryTask : ITask;
+        createShellScriptsTask : ITask;
+        createAppConfigsTask : ITask;
+        createAdditionalFilesTask : ITask;
     public
+        constructor create(
+            const createDirTask : ITask;
+            const createScriptsTask : ITask;
+            const createConfigsTask : ITask;
+            const createAddFilesTask : ITask
+        );
+        destructor destroy(); override;
+
         function run(
             const opt : ITaskOptions;
             const shortOpt : char;
             const longOpt : string
-        ) : ITask;
+        ) : ITask; override;
     end;
 
 implementation
@@ -52,44 +54,26 @@ uses
 
     sysutils;
 
-resourcestring
-
-    sErrCannotCreateDir = 'Cannot create directory %s';
-
-    function TCreateProjectTask.createBaseDirectory(
-        const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
-    ) : string;
-    begin
-        result := opt.getOptionValue(shortOpt, longOpt);
-        if (not directoryExists(result)) then
-        begin
-            mkdir(result);
-        end;
-    end;
-
-    function TCreateProjectTask.createAppDirectory(const baseDir : string) : string;
-    begin
-        result := 'app';
-        if (not directoryExists(result)) then
-        begin
-            mkdir(result);
-        end;
-    end;
-
-    procedure TCreateProjectTask.createDirectoryStructures(
-        const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+    constructor TCreateProjectTask.create(
+        const createDirTask : ITask;
+        const createScriptsTask : ITask;
+        const createConfigsTask : ITask;
+        const createAddFilesTask : ITask
     );
-    var baseDir, currentDir : string;
     begin
-        baseDir := createBaseDirectory(opt, shortOpt, longOpt);
-        currentDir := getCurrentDir();
-        chDir(baseDir);
-        createAppDirectory(baseDir);
-        chDir(currentDir);
+        createDirectoryTask := createDirTask;
+        createShellScriptsTask := createScriptsTask;
+        createAppConfigsTask := createConfigsTask;
+        createAdditionalFilesTask := createAddFilesTask;
+    end;
+
+    destructor TCreateProjectTask.destroy();
+    begin
+        inherited destroy();
+        createDirectoryTask := nil;
+        createShellScriptsTask := nil;
+        createAppConfigsTask := nil;
+        createAdditionalFilesTask := nil;
     end;
 
     function TCreateProjectTask.run(
@@ -98,15 +82,14 @@ resourcestring
         const longOpt : string
     ) : ITask;
     begin
-        writeln('Start creating project.');
+        inherited run(opt, shortOpt, longOpt);
+        writeln('Start creating project in ', baseDirectory, ' directory.');
 
-        writeln('Creating directories structures..');
-        createDirectoryStructures(opt, shortOpt, longOpt);
+        createDirectoryTask.run(opt, shortOpt, longOpt);
+        createShellScriptsTask.run(opt, shortOpt, longOpt);
+        createAppConfigsTask.run(opt, shortOpt, longOpt);
+        createAdditionalFilesTask.run(opt, shortOpt, longOpt);
 
-        writeln('Creating shell scripts..');
-        //TODO: create shell scripts
-        writeln('Creating application compiler config..');
-        //TODO: create application compiler config
         writeln('Creating application bootstrap..');
         //TODO: create application bootstrap file
         writeln('Finish creating project.');
