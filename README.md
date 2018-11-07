@@ -82,10 +82,26 @@ environment variable. By default is `bin/unit` directory.
 
 ## Run
 
-Copy `bin/out/fanocli` executable file to directory that is accessible globally, then
-you can run
+Copy `bin/out/fanocli` executable file to directory that is accessible globally, then you can run
 
-    $ fanocli --help
+```
+$ fanocli --help
+```
+
+### Scaffolding project directory structure
+
+To scaffolding project structure using Fano framework, run with `-c` or `--create-project` command line options
+
+```
+$ fanocli -c [project name]
+$ fanocli --create-project=[another project name]
+```
+
+For example, following command will cause a new project created in directory name `test-fano` inside current directory.
+
+```
+$ fanocli -c test-fano
+```
 
 ## Known Issues
 
