@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseProjectTaskImpl;
+    CreateFileTaskImpl;
 
 type
 
@@ -27,7 +27,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateAdditionalFilesTask = class(TBaseProjectTask)
+    TCreateAdditionalFilesTask = class(TCreateFileTask)
     private
         procedure createAdditionalFiles(const dir : string);
     public
@@ -45,13 +45,11 @@ uses
     sysutils;
 
     procedure TCreateAdditionalFilesTask.createAdditionalFiles(const dir : string);
-    var strReadme : string;
-        strGitignore : string;
-    begin
+    var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/readme.md.inc}
-        createTextFile(dir + '/README.md', strReadme);
-
         {$INCLUDE src/Tasks/Implementations/Project/Includes/gitignore.inc}
+    begin
+        createTextFile(dir + '/README.md', strReadme);
         createTextFile(dir + '/.gitignore', strGitignore);
     end;
 

@@ -44,19 +44,17 @@ uses
     sysutils;
 
     procedure TCreateAppConfigsTask.createAppConfigs(const dir : string);
-    var strBuildCfg : string;
-        strBuildCfgDev : string;
-        strBuildCfgProd : string;
-    begin
+    var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cfg.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.dev.cfg.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.prod.cfg.inc}
+    begin
         createTextFile(dir + '/build.cfg', strBuildCfg);
         createTextFile(dir + '/build.cfg.sample', strBuildCfg);
 
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.dev.cfg.inc}
         createTextFile(dir + '/build.dev.cfg', strBuildCfgDev);
         createTextFile(dir + '/build.dev.cfg.sample', strBuildCfgDev);
 
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.prod.cfg.inc}
         createTextFile(dir + '/build.prod.cfg', strBuildCfgProd);
         createTextFile(dir + '/build.prod.cfg.sample', strBuildCfgProd);
     end;

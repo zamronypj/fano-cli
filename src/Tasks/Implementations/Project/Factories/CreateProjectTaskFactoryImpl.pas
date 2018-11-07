@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit BaseProjectTaskImpl;
+unit CreateProjectTaskFactoryImpl;
 
 interface
 
@@ -14,41 +14,39 @@ interface
 
 uses
 
-    TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    TaskFactoryIntf;
 
 type
 
     (*!--------------------------------------
-     * Base task that create web application project
-     * using fano web framework
+     * Factory class for create project task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TBaseProjectTask = class(TInterfacedObject, ITask)
-    protected
-        baseDirectory : string;
+    TCreateProjectTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
-        function run(
-            const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
-        ) : ITask; virtual;
+        function build() : ITask;
     end;
 
 implementation
 
 uses
 
-    sysutils;
+    CreateDirTaskImpl,
+    CreateAppConfigsTaskImpl,
+    CreateAdditionalFilesTaskImpl,
+    CreateShellScriptsTaskImpl,
+    CreateProjectTaskImpl;
 
-    function TBaseProjectTask.run(
-        const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
-    ) : ITask;
+    function TCreateProjectTaskFactory.build() : ITask;
     begin
-        baseDirectory := opt.getOptionValue(shortOpt, longOpt);
-        result := self;
+        result := TCreateProjectTask.create(
+            TCreateDirTask.create(),
+            TCreateShellScriptsTask.create(),
+            TCreateAppConfigsTask.create(),
+            TCreateAdditionalFilesTask.create()
+        );
     end;
+
 end.

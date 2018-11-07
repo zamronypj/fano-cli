@@ -44,13 +44,11 @@ uses
     sysutils;
 
     procedure TCreateShellScriptsTask.createShellScripts(const dir : string);
-    var strBuildSh : string;
-        strBuildCmd : string;
-    begin
+    var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.sh.inc}
-        createTextFile(dir + '/build.sh', strBuildSh);
-
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cmd.inc}
+    begin
+        createTextFile(dir + '/build.sh', strBuildSh);
         createTextFile(dir + '/build.cmd', strBuildCmd);
     end;
 

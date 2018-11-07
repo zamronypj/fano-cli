@@ -29,11 +29,7 @@ type
     TCreateDirTask = class(TBaseProjectTask)
     private
         function createDirIfNotExists(const dir : string) : string;
-        procedure createDirectoryStructures(
-            const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
-        );
+        procedure createDirectoryStructures(const baseDir : string);
     public
         function run(
             const opt : ITaskOptions;

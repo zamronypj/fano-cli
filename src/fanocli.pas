@@ -12,12 +12,15 @@ program fanocli;
 
 uses
     fanoapp,
+    TaskIntf,
+    TaskFactoryIntf,
     InfoTaskImpl,
     NullTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskFactoryImpl;
 
 var
     app : TFanoCliApplication;
+    createProjectFactory : ITaskFactory;
 
 begin
     app := TFanoCliApplication.create(nil);
@@ -30,13 +33,14 @@ begin
             'Display help information',
             TInfoTask.create(app.getTaskList())
         );
+        createProjectFactory := TCreateProjectTaskFactory.create();
         app.registerTask(
             'c',
             'create-project',
             '-c [project name]',
             '--create-project=[project name]',
             'Create project task',
-            TCreateProjectTask.create()
+            createProjectFactory.build()
         );
         app.run();
     finally

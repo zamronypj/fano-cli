@@ -15,7 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    BaseProjectTaskImpl;
 
 type
 
@@ -35,7 +36,8 @@ implementation
 
 uses
 
-    sysutils;
+    sysutils,
+    classes;
 
     procedure TCreateFileTask.createTextFile(const filename : string; const content : string);
     var fStream : TFileStream;
@@ -44,7 +46,7 @@ uses
         fStream := TFileStream.create(filename, fmCreate);
         str := TStringStream.create(content);
         try
-            fStream.copyFrom(str);
+            fStream.copyFrom(str, str.size);
         finally
             str.free();
             fStream.free();
