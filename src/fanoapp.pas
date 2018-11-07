@@ -17,11 +17,12 @@ uses
     classes,
     custapp,
     contnrs,
+    TaskOptionsIntf,
     TaskIntf;
 
 type
 
-    TFanoCliApplication = class (TCustomApplication)
+    TFanoCliApplication = class (TCustomApplication, ITaskOptions)
     private
         taskList : TFPHashList;
 
@@ -122,7 +123,7 @@ resourcestring
             item := taskList[i];
             if (hasOption(item^.shortOption, item^.longOption)) then
             begin
-                item^.task.run();
+                item^.task.run(self, item^.shortOption, item^.longOption);
                 terminate();
                 exit();
             end;
@@ -132,7 +133,7 @@ resourcestring
         begin
             //default task is at zero-index
             item := taskList[0];
-            item^.task.run();
+            item^.task.run(self, item^.shortOption, item^.longOption);
         end;
         terminate();
     end;

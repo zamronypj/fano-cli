@@ -14,6 +14,7 @@ interface
 
 uses
 
+    TaskOptionsIntf,
     TaskIntf;
 
 type
@@ -25,17 +26,83 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateProjectTask = class(TInterfacedObject, ITask)
+    private
+        function createBaseDirectory(
+            const opt : ITaskOptions;
+            const shortOpt : char;
+            const longOpt : string
+        ) : string;
+        function createAppDirectory(const baseDir : string) : string;
+        procedure createDirectoryStructures(
+            const opt : ITaskOptions;
+            const shortOpt : char;
+            const longOpt : string
+        );
     public
-        function run() : ITask;
+        function run(
+            const opt : ITaskOptions;
+            const shortOpt : char;
+            const longOpt : string
+        ) : ITask;
     end;
 
 implementation
 
-    function TCreateProjectTask.run() : ITask;
+uses
+
+    sysutils;
+
+resourcestring
+
+    sErrCannotCreateDir = 'Cannot create directory %s';
+
+    function TCreateProjectTask.createBaseDirectory(
+        const opt : ITaskOptions;
+        const shortOpt : char;
+        const longOpt : string
+    ) : string;
+    begin
+        result := opt.getOptionValue(shortOpt, longOpt);
+        if (not directoryExists(result)) then
+        begin
+            mkdir(result);
+        end;
+    end;
+
+    function TCreateProjectTask.createAppDirectory(const baseDir : string) : string;
+    begin
+        result := 'app';
+        if (not directoryExists(result)) then
+        begin
+            mkdir(result);
+        end;
+    end;
+
+    procedure TCreateProjectTask.createDirectoryStructures(
+        const opt : ITaskOptions;
+        const shortOpt : char;
+        const longOpt : string
+    );
+    var baseDir, currentDir : string;
+    begin
+        baseDir := createBaseDirectory(opt, shortOpt, longOpt);
+        currentDir := getCurrentDir();
+        chDir(baseDir);
+        createAppDirectory(baseDir);
+        chDir(currentDir);
+    end;
+
+    function TCreateProjectTask.run(
+        const opt : ITaskOptions;
+        const shortOpt : char;
+        const longOpt : string
+    ) : ITask;
     begin
         writeln('Start creating project.');
+
         writeln('Creating directories structures..');
-        //TODO: create directories structures
+        createDirectoryStructures(opt, shortOpt, longOpt);
+
         writeln('Creating shell scripts..');
         //TODO: create shell scripts
         writeln('Creating application compiler config..');

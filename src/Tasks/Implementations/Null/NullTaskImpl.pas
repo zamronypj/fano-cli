@@ -14,6 +14,7 @@ interface
 
 uses
 
+    TaskOptionsIntf,
     TaskIntf;
 
 type
@@ -25,12 +26,20 @@ type
      *---------------------------------------*)
     TNullTask = class(TInterfacedObject, ITask)
     public
-        function run() : ITask;
+        function run(
+            const opt : ITaskOptions;
+            const shortOpt : char;
+            const longOpt : string
+        ) : ITask;
     end;
 
 implementation
 
-    function TNullTask.run() : ITask;
+    function TNullTask.run(
+        const opt : ITaskOptions;
+        const shortOpt : char;
+        const longOpt : string
+    ) : ITask;
     begin
         result := self;
     end;

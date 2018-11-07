@@ -15,6 +15,7 @@ interface
 uses
 
     contnrs,
+    TaskOptionsIntf,
     TaskIntf;
 
 type
@@ -29,7 +30,11 @@ type
         taskList : TFPHashList;
     public
         constructor create(const tasks : TFPHashList);
-        function run() : ITask;
+        function run(
+            const opt : ITaskOptions;
+            const shortOpt : char;
+            const longOpt : string
+        ) : ITask;
     end;
 
 implementation
@@ -43,7 +48,11 @@ uses
         taskList := tasks;
     end;
 
-    function TInfoTask.run() : ITask;
+    function TInfoTask.run(
+        const opt : ITaskOptions;
+        const shortOpt : char;
+        const longOpt : string
+    ) : ITask;
     var i:integer;
         item : PTaskItem;
     begin
