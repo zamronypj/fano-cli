@@ -1,0 +1,51 @@
+#------------------------------------------------------------
+# Fano CLI Application (https://fanoframework.github.io)
+#
+# @link      https://github.com/fanoframework/fano-cli
+# @copyright Copyright (c) 2018 Zamrony P. Juhara
+# @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
+#-------------------------------------------------------------
+
+#----------------------------------------------
+# User configuration that applies to both
+# development and production environment
+# Please see FreePascal Documentation for available
+# compiler configurations
+#----------------------------------------------
+
+#----------------------------------------------
+# Target OS
+# linux : Linux
+# win64 : Windows (not tested yet)
+# freebsd : FreeBSD (not tested yet)
+#----------------------------------------------
+-Tlinux
+
+#----------------------------------------------
+# Output Windows console application
+#
+# Uncomment if target OS is Windows
+#----------------------------------------------
+#-WC
+
+#----------------------------------------------
+# Target CPU
+# x86_64 : Intel 64-bit architecture (default)
+# i386 : Intel 32-bit architecture
+#----------------------------------------------
+#-Px86_64
+
+#----------------------------------------------
+# Application Unit search path
+# user application base directory
+#----------------------------------------------
+#-Fusrc/path/to/other/units
+#-Fu$USER_APP_DIR$/path/to/other/units
+
+#----------------------------------------------
+# Include configuration based on build type (default is prod)
+# using #INCLUDE directive
+# For example
+# $ BUILD_TYPE=prod ./build.sh
+#----------------------------------------------
+#INCLUDE build.$BUILD_TYPE$.cfg
