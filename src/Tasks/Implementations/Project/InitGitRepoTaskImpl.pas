@@ -49,8 +49,16 @@ uses
 
     procedure TInitGitRepoTask.initGitRepository(const baseDir : string);
     var outputString : string;
+        status : boolean;
     begin
-        if (runCommandInDir(baseDir, '/usr/bin/git', ['init'], outputString)) then
+        status := runCommandInDir(
+            baseDir,
+            '/usr/bin/git',
+            ['init'],
+            outputString,
+            [poStderrToOutPut]
+        );
+        if (status) then
         begin
             writeln(outputString);
         end;
@@ -64,7 +72,8 @@ uses
             baseDir,
             '/usr/bin/git',
             ['submodule', 'add', 'https://github.com/fanoframework/fano.git'],
-            outputString
+            outputString,
+            [poStderrToOutPut]
         );
         if (status) then
         begin
@@ -80,7 +89,8 @@ uses
             baseDir,
             '/usr/bin/git',
             ['add', '.'],
-            outputString
+            outputString,
+            [poStderrToOutPut]
         );
         if (status) then
         begin
@@ -96,7 +106,8 @@ uses
             baseDir,
             '/usr/bin/git',
             ['commit', '-m', '"Initial commit"'],
-            outputString
+            outputString,
+            [poStderrToOutPut]
         );
         if (status) then
         begin
