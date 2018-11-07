@@ -41,6 +41,9 @@ implementation
 
 uses
 
+    {$IFDEF UNIX}
+    baseunix, unix,
+    {$ENDIF}
     sysutils;
 
     procedure TCreateShellScriptsTask.createShellScripts(const dir : string);
@@ -50,6 +53,9 @@ uses
     begin
         createTextFile(dir + '/build.sh', strBuildSh);
         createTextFile(dir + '/build.cmd', strBuildCmd);
+        {$IFDEF UNIX}
+        fpChmod(dir + '/build.sh', &775);
+        {$ENDIF}
     end;
 
 
