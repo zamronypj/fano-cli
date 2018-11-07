@@ -29,6 +29,7 @@ type
     TCreateShellScriptsTask = class(TCreateFileTask)
     private
         procedure createShellScripts(const dir : string);
+        procedure createToolsScripts(const dir : string);
     public
         function run(
             const opt : ITaskOptions;
@@ -58,16 +59,27 @@ uses
         {$ENDIF}
     end;
 
+    procedure TCreateShellScriptsTask.createToolsScripts(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.cmd.inc}
+    begin
+        createTextFile(dir + '/clear.compiled.units.sh', strClearUnitsSh);
+        createTextFile(dir + '/clear.compiled.units.cmd', strClearUnitsCmd);
+        {$IFDEF UNIX}
+        fpChmod(dir + '/clear.compiled.units.sh', &775);
+        {$ENDIF}
+    end;
 
     function TCreateShellScriptsTask.run(
         const opt : ITaskOptions;
         const shortOpt : char;
         const longOpt : string
     ) : ITask;
-    var baseDir : string;
     begin
-        baseDir := opt.getOptionValue(shortOpt, longOpt);
-        createShellScripts(baseDir);
+        inherited run(opt, shortOpt, longOpt);
+        createShellScripts(baseDirectory);
+        createToolsScripts(baseDirectory + '/tools');
         result := self;
     end;
 end.
