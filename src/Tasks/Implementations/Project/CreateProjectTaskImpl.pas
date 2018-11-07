@@ -33,10 +33,16 @@ implementation
 
     function TCreateProjectTask.run() : ITask;
     begin
+        writeln('Start creating project.');
+        writeln('Creating directories structures..');
         //TODO: create directories structures
+        writeln('Creating shell scripts..');
         //TODO: create shell scripts
+        writeln('Creating application compiler config..');
         //TODO: create application compiler config
+        writeln('Creating application bootstrap..');
         //TODO: create application bootstrap file
+        writeln('Finish creating project.');
         result := self;
     end;
 end.

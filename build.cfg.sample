@@ -43,6 +43,7 @@
 -Fusrc/Tasks/Implementations/Null
 -Fusrc/Tasks/Implementations/Info
 -Fusrc/Tasks/Implementations/Project
+-Fusrc/Tasks/Types
 #-Fu$USER_APP_DIR$/path/to/other/units
 
 #----------------------------------------------

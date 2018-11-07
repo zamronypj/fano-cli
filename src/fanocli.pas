@@ -20,12 +20,24 @@ var
     app : TFanoCliApplication;
 
 begin
-    app := TFanoCliApplication.create(
-        nil,
-        TInfoTask.create(),
-        TCreateProjectTask.create()
-    );
+    app := TFanoCliApplication.create(nil);
     try
+        app.registerTask(
+            'h',
+            'help',
+            '-h',
+            '--help',
+            'Display help information',
+            TInfoTask.create(app.getTaskList())
+        );
+        app.registerTask(
+            'c',
+            'create-project',
+            '-c [project name]',
+            '--create-project=[project name]',
+            'Create project task',
+            TCreateProjectTask.create()
+        );
         app.run();
     finally
         app.free();

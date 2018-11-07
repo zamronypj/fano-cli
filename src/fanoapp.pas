@@ -16,69 +16,125 @@ uses
     sysutils,
     classes,
     custapp,
+    contnrs,
     TaskIntf;
 
 type
 
     TFanoCliApplication = class (TCustomApplication)
     private
-        infoTask : ITask;
-        createProjectTask : ITask;
+        taskList : TFPHashList;
+
+        procedure clearTasks();
     protected
         procedure doRun(); override;
     public
         constructor create(AOwner : TComponent); override;
-        constructor create(
-            const AOwner : TComponent;
-            const info : ITask;
-            const createProject : ITask
-        );
         destructor destroy(); override;
+        procedure registerTask(
+            const shortOpt : char;
+            const longOpt : string;
+            const shortOptDesc : string;
+            const longOptDesc : string;
+            const desc : string;
+            const task : ITask
+        );
+        function getTaskList() : TFPHashList;
     end;
 
 implementation
 
+uses
+
+    TaskItemTypes;
+
+resourcestring
+    sErrTaskAlreadyRegistered = 'Task -%s --%s is already registered';
+
+
     constructor TFanoCliApplication.create(AOwner : TComponent);
     begin
         inherited create(AOwner);
-        infoTask := nil;
-        createProjectTask := nil;
+        taskList := TFPHashList.create();
     end;
 
-    constructor TFanoCliApplication.create(
-        const AOwner : TComponent;
-        const info : ITask;
-        const createProject : ITask
+    procedure TFanoCliApplication.registerTask(
+        const shortOpt : char;
+        const longOpt : string;
+        const shortOptDesc : string;
+        const longOptDesc : string;
+        const desc : string;
+        const task : ITask
     );
+    var item : PTaskItem;
     begin
-        inherited create(AOwner);
-        infoTask := info;
-        createProjectTask := createProject;
+        item := taskList.find(shortOpt);
+        if (item <> nil) then
+        begin
+            raise Exception.createFmt(sErrTaskAlreadyRegistered, [shortOpt, longOpt]);
+        end;
+
+        new(item);
+        item^.shortOption := shortOpt;
+        item^.longOption := longOpt;
+        item^.description := desc;
+        item^.shortOptionDesc := shortOptDesc;
+        item^.longOptionDesc := longOptDesc;
+        item^.task := task;
+        taskList.add(shortOpt, item);
+    end;
+
+    procedure TFanoCliApplication.clearTasks();
+    var item : PTaskItem;
+        i : integer;
+    begin
+        for i:= taskList.count-1 downto 0 do
+        begin
+            item := taskList[i];
+            item^.task := nil;
+            setLength(item^.longOption, 0);
+            setLength(item^.description, 0);
+            setLength(item^.shortOptionDesc, 0);
+            setLength(item^.longOptionDesc, 0);
+            dispose(item);
+            taskList.delete(i);
+        end;
+    end;
+
+    function TFanoCliApplication.getTaskList() : TFPHashList;
+    begin
+        result := taskList;
     end;
 
     destructor TFanoCliApplication.destroy();
     begin
         inherited destroy();
-        infoTask := nil;
-        createProjectTask := nil;
+        clearTasks();
+        freeAndNil(taskList);
     end;
 
     procedure TFanoCliApplication.doRun();
+    var item : PTaskItem;
+        i : integer;
     begin
-        if (hasOption('c', 'create-project')) then
+        for i:=0 to taskList.count-1 do
         begin
-            createProjectTask.run();
-            halt();
+            item := taskList[i];
+            if (hasOption(item^.shortOption, item^.longOption)) then
+            begin
+                item^.task.run();
+                terminate();
+                exit();
+            end;
         end;
 
-        if (hasOption('h', 'help')) then
+        if (taskList.count>0) then
         begin
-            infoTask.run();
-            halt();
+            //default task is at zero-index
+            item := taskList[0];
+            item^.task.run();
         end;
-
-        infoTask.run();
-        halt();
+        terminate();
     end;
 
 end.
