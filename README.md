@@ -1,6 +1,6 @@
 # fano-cli
 
-Fano command line tools to help scaffolding web application using Fano web framework.
+Fano command line tools to help scaffolding web application using [Fano Web Framework](https://github.com/fanoframework/fano).
 
 ## Requirement
 

@@ -37,6 +37,7 @@ uses
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
+    InitGitRepoTaskImpl,
     CreateProjectTaskImpl;
 
     function TCreateProjectTaskFactory.build() : ITask;
@@ -45,7 +46,8 @@ uses
             TCreateDirTask.create(),
             TCreateShellScriptsTask.create(),
             TCreateAppConfigsTask.create(),
-            TCreateAdditionalFilesTask.create()
+            TCreateAdditionalFilesTask.create(),
+            TInitGitRepoTask.create()
         );
     end;
 

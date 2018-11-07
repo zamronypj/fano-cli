@@ -32,12 +32,14 @@ type
         createShellScriptsTask : ITask;
         createAppConfigsTask : ITask;
         createAdditionalFilesTask : ITask;
+        createGitRepoTask : ITask;
     public
         constructor create(
             const createDirTask : ITask;
             const createScriptsTask : ITask;
             const createConfigsTask : ITask;
-            const createAddFilesTask : ITask
+            const createAddFilesTask : ITask;
+            const createRepoTask : ITask
         );
         destructor destroy(); override;
 
@@ -58,13 +60,15 @@ uses
         const createDirTask : ITask;
         const createScriptsTask : ITask;
         const createConfigsTask : ITask;
-        const createAddFilesTask : ITask
+        const createAddFilesTask : ITask;
+        const createRepoTask : ITask
     );
     begin
         createDirectoryTask := createDirTask;
         createShellScriptsTask := createScriptsTask;
         createAppConfigsTask := createConfigsTask;
         createAdditionalFilesTask := createAddFilesTask;
+        createGitRepoTask := createRepoTask;
     end;
 
     destructor TCreateProjectTask.destroy();
@@ -74,6 +78,7 @@ uses
         createShellScriptsTask := nil;
         createAppConfigsTask := nil;
         createAdditionalFilesTask := nil;
+        createGitRepoTask := nil;
     end;
 
     function TCreateProjectTask.run(
@@ -89,9 +94,8 @@ uses
         createShellScriptsTask.run(opt, shortOpt, longOpt);
         createAppConfigsTask.run(opt, shortOpt, longOpt);
         createAdditionalFilesTask.run(opt, shortOpt, longOpt);
-
-        writeln('Creating application bootstrap..');
         //TODO: create application bootstrap file
+        createGitRepoTask.run(opt, shortOpt, longOpt);
         writeln('Finish creating project.');
         result := self;
     end;
