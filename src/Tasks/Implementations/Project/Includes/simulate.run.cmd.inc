@@ -1,10 +1,10 @@
 strSimulateCmd: string =
     'REM------------------------------------------------------------' + LineEnding +
-    'REM Fano Web Framework Skeleton Application (https://fanoframework.github.io)' + LineEnding +
+    'REM [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     'REM' + LineEnding +
-    'REM @link      https://github.com/fanoframework/fano-app' + LineEnding +
-    'REM @copyright Copyright (c) 2018 Zamrony P. Juhara' + LineEnding +
-    'REM @license   https://github.com/fanoframework/fano-app/blob/master/LICENSE (GPL 3.0)' + LineEnding +
+    'REM @link      [[APP_REPOSITORY_URL]]' + LineEnding +
+    'REM @copyright Copyright (c) [[COPYRIGHT_YEAR]] [[COPYRIGHT_HOLDER]]' + LineEnding +
+    'REM @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
     'REM-------------------------------------------------------------' + LineEnding +
     '' + LineEnding +
     'REM------------------------------------------------------' + LineEnding +

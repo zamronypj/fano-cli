@@ -1,11 +1,11 @@
 strClearUnitsSh: string =
     '#------------------------------------------------------------' + LineEnding +
-    '# Fano Web Framework Skeleton Application (https://fanoframework.github.io)' + LineEnding +
+    '# [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     '#' + LineEnding +
-    '# @link      https://github.com/fanoframework/fano-app' + LineEnding +
-    '# @copyright Copyright (c) 2018 Zamrony P. Juhara' + LineEnding +
-    '# @license   https://github.com/fanoframework/fano-app/blob/master/LICENSE (GPL 3.0)' + LineEnding +
-    '#-------------------------------------------------------------' + LineEnding +
+    '# @link      [[APP_REPOSITORY_URL]]' + LineEnding +
+    '# @copyright Copyright (c) [[COPYRIGHT_YEAR]] [[COPYRIGHT_HOLDER]]' + LineEnding +
+    '# @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
+    '#--------------------------------------------------------------' + LineEnding +
     '#!/bin/bash' + LineEnding +
     '' + LineEnding +
     '#------------------------------------------------------' + LineEnding +
