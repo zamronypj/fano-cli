@@ -34,8 +34,8 @@ begin
     try
         appInst.registerTask(
             'create-project',
-            '--create-project=[project name]',
-            'Create project task',
+            '--create-project=[project-name]',
+            'Create new project',
             taskFactory.build()
         );
     finally
@@ -46,7 +46,7 @@ begin
     try
         appInst.registerTask(
             'create-project-without-git',
-            '--create-project-without-git=[project name]',
+            '--create-project-without-git=[project-name]',
             'Create project without GIT repository',
             taskFactory.build()
         );
