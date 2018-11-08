@@ -37,6 +37,7 @@ uses
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
+    CreateAppBootstrapTaskImpl,
     InitGitRepoTaskImpl,
     CreateProjectTaskImpl;
 
@@ -47,6 +48,7 @@ uses
             TCreateShellScriptsTask.create(),
             TCreateAppConfigsTask.create(),
             TCreateAdditionalFilesTask.create(),
+            TCreateAppBootstrapTask.create(),
             TInitGitRepoTask.create()
         );
     end;

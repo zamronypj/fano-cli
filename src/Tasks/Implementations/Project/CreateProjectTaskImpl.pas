@@ -33,12 +33,14 @@ type
         createAppConfigsTask : ITask;
         createAdditionalFilesTask : ITask;
         createGitRepoTask : ITask;
+        createAppBootstrapTask : ITask;
     public
         constructor create(
             const createDirTask : ITask;
             const createScriptsTask : ITask;
             const createConfigsTask : ITask;
             const createAddFilesTask : ITask;
+            const createAppTask : ITask;
             const createRepoTask : ITask
         );
         destructor destroy(); override;
@@ -60,6 +62,7 @@ uses
         const createScriptsTask : ITask;
         const createConfigsTask : ITask;
         const createAddFilesTask : ITask;
+        const createAppTask : ITask;
         const createRepoTask : ITask
     );
     begin
@@ -67,6 +70,7 @@ uses
         createShellScriptsTask := createScriptsTask;
         createAppConfigsTask := createConfigsTask;
         createAdditionalFilesTask := createAddFilesTask;
+        createAppBootstrapTask := createAppTask;
         createGitRepoTask := createRepoTask;
     end;
 
@@ -77,6 +81,7 @@ uses
         createShellScriptsTask := nil;
         createAppConfigsTask := nil;
         createAdditionalFilesTask := nil;
+        createAppBootstrapTask := nil;
         createGitRepoTask := nil;
     end;
 
@@ -93,7 +98,7 @@ uses
         createShellScriptsTask.run(opt, longOpt);
         createAppConfigsTask.run(opt, longOpt);
         createAdditionalFilesTask.run(opt, longOpt);
-        //TODO: create application bootstrap file
+        createAppBootstrapTask.run(opt, longOpt);
         createGitRepoTask.run(opt, longOpt);
         writeln('Finish creating project.');
         result := self;

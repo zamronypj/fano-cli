@@ -65,6 +65,7 @@ uses
         createDirIfNotExists('app/Dependencies');
         createDirIfNotExists('app/public');
         createDirIfNotExists('app/Routes');
+        createDirIfNotExists('app/Templates');
         createDirIfNotExists('app/storages');
         createDirIfNotExists('app/storages/logs');
 

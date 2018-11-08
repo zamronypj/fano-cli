@@ -38,6 +38,7 @@ uses
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
+    CreateAppBootstrapTaskImpl,
     CreateProjectTaskImpl;
 
     function TCreateProjectNoGitTaskFactory.build() : ITask;
@@ -47,6 +48,7 @@ uses
             TCreateShellScriptsTask.create(),
             TCreateAppConfigsTask.create(),
             TCreateAdditionalFilesTask.create(),
+            TCreateAppBootstrapTask.create(),
             //replace git task with NullTaskImpl to disable GIT
             TNullTask.create()
         );
