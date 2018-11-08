@@ -39,7 +39,6 @@
 # Application Unit search path
 # user application base directory
 #----------------------------------------------
--Fusrc/Apps/Contracts
 -Fusrc/Apps/Implementations
 -Fusrc/Libs/List/Contracts
 -Fusrc/Libs/List/Implementations

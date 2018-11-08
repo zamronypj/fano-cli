@@ -11,7 +11,6 @@ program fanocli;
 {$H+}
 
 uses
-    AppIntf,
     TaskIntf,
     TaskFactoryIntf,
     TaskListAwareIntf,
@@ -20,7 +19,7 @@ uses
     CreateProjectTaskFactoryImpl,
     CreateProjectNoGitTaskFactoryImpl;
 
-function registerTask(const appInst : IFanoCliApplication; const taskList : ITaskListAware) : IFanoCliApplication;
+procedure registerTask(const appInst : TFanoCliApplication);
 var
     taskFactory : ITaskFactory;
 begin
@@ -28,7 +27,7 @@ begin
         'help',
         '--help',
         'Display help information',
-        TInfoTask.create(taskList.getTaskList())
+        TInfoTask.create(appInst.getTaskList())
     );
 
     taskFactory := TCreateProjectTaskFactory.create();
@@ -55,18 +54,17 @@ begin
         taskFactory := nil;
     end;
 
-    result := appInst;
 end;
 
 var
-    app : IFanoCliApplication;
+    app : TFanoCliApplication;
 
 begin
     app := TFanoCliApplication.create(nil);
     try
-        registerTask(app, app as ITaskListAware);
+        registerTask(app);
         app.run();
     finally
-        app := nil;
+        app.free();
     end;
 end.

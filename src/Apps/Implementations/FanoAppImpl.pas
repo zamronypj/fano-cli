@@ -17,14 +17,13 @@ uses
     classes,
     custapp,
     ListIntf,
-    AppIntf,
     TaskOptionsIntf,
     TaskListAwareIntf,
     TaskIntf;
 
 type
 
-    TFanoCliApplication = class (TCustomApplication, IFanoCliApplication, ITaskOptions, ITaskListAware)
+    TFanoCliApplication = class (TCustomApplication, ITaskOptions, ITaskListAware)
     private
         taskList : IList;
 
@@ -83,9 +82,10 @@ resourcestring
 
     procedure TFanoCliApplication.clearTasks();
     var item : PTaskItem;
-        i : integer;
+        i, taskCount : integer;
     begin
-        for i:= taskList.count-1 downto 0 do
+        taskCount := taskList.count();
+        for i:= taskCount-1 downto 0 do
         begin
             item := taskList.get(i);
             item^.task := nil;
@@ -111,9 +111,10 @@ resourcestring
 
     procedure TFanoCliApplication.doRun();
     var item : PTaskItem;
-        i : integer;
+        i, taskCount : integer;
     begin
-        for i:=0 to taskList.count-1 do
+        taskCount := taskList.count();
+        for i:=0 to taskCount-1 do
         begin
             item := taskList.get(i);
             if (hasOption(item^.longOption)) then
@@ -124,7 +125,7 @@ resourcestring
             end;
         end;
 
-        if (taskList.count() > 0) then
+        if (taskCount > 0) then
         begin
             //default task is at zero-index
             item := taskList.get(0);
