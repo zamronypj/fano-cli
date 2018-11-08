@@ -45,8 +45,7 @@ type
 
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask; override;
     end;
 
@@ -83,19 +82,19 @@ uses
 
     function TCreateProjectTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
     begin
-        inherited run(opt, shortOpt, longOpt);
+        //need to call parent run() so baseDirectory can be initialized
+        inherited run(opt, longOpt);
         writeln('Start creating project in ', baseDirectory, ' directory.');
 
-        createDirectoryTask.run(opt, shortOpt, longOpt);
-        createShellScriptsTask.run(opt, shortOpt, longOpt);
-        createAppConfigsTask.run(opt, shortOpt, longOpt);
-        createAdditionalFilesTask.run(opt, shortOpt, longOpt);
+        createDirectoryTask.run(opt, longOpt);
+        createShellScriptsTask.run(opt, longOpt);
+        createAppConfigsTask.run(opt, longOpt);
+        createAdditionalFilesTask.run(opt, longOpt);
         //TODO: create application bootstrap file
-        createGitRepoTask.run(opt, shortOpt, longOpt);
+        createGitRepoTask.run(opt, longOpt);
         writeln('Finish creating project.');
         result := self;
     end;

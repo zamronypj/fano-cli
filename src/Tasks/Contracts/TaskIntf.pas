@@ -22,8 +22,7 @@ type
 
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask;
     end;
 

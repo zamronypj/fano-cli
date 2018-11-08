@@ -16,7 +16,6 @@ type
 
     ITaskInfo = interface
         ['{D3051780-EFA0-465D-8181-2096DD419BE1}']
-        function getShortOption() : char;
         function getLongOption() : string;
         function getDescription() : string;
     end;

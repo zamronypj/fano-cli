@@ -31,8 +31,7 @@ type
     public
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask; virtual;
     end;
 
@@ -44,11 +43,10 @@ uses
 
     function TBaseProjectTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
     begin
-        baseDirectory := opt.getOptionValue(shortOpt, longOpt);
+        baseDirectory := opt.getOptionValue(longOpt);
         result := self;
     end;
 end.

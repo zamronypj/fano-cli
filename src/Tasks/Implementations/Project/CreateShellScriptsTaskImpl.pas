@@ -35,8 +35,7 @@ type
     public
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask; override;
     end;
 
@@ -99,11 +98,11 @@ uses
 
     function TCreateShellScriptsTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
     begin
-        inherited run(opt, shortOpt, longOpt);
+        //need to call parent run() so baseDirectory can be initialized
+        inherited run(opt, longOpt);
         createShellScripts(baseDirectory);
         createCleanScripts(baseDirectory + '/tools');
         createConfigSetupScripts(baseDirectory + '/tools');

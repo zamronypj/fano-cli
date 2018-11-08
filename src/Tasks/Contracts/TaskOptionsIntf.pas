@@ -16,7 +16,7 @@ type
 
     ITaskOptions = interface
         ['{D2AF03BD-3B30-4C1D-9F14-3BAEE0E17C23}']
-        function getOptionValue(const shortOpt: char; const longOpt: string) : string;
+        function getOptionValue(const longOpt: string) : string;
     end;
 
 implementation

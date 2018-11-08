@@ -28,8 +28,7 @@ type
     public
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask;
     end;
 
@@ -37,10 +36,10 @@ implementation
 
     function TNullTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
     begin
+        //intentionally does nothing
         result := self;
     end;
 end.

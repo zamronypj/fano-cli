@@ -28,6 +28,11 @@ type
      *---------------------------------------*)
     TInitGitRepoTask = class(TBaseProjectTask)
     private
+        function runGit(
+            const baseDir : string;
+            const params : array of string;
+            out outputString : string
+        ) : boolean;
         procedure initGitRepository(const baseDir : string);
         procedure addFanoRepository(const baseDir : string);
         procedure stageFileToRepository(const baseDir : string);
@@ -35,8 +40,7 @@ type
     public
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask; override;
     end;
 
@@ -47,81 +51,66 @@ uses
     sysutils,
     process;
 
-    procedure TInitGitRepoTask.initGitRepository(const baseDir : string);
-    var outputString : string;
-        status : boolean;
+const
+
+    GIT_BIN = '/usr/bin/git';
+    FANO_REPO = 'https://github.com/fanoframework/fano.git';
+
+    function TInitGitRepoTask.runGit(
+        const baseDir : string;
+        const params : array of string;
+        out outputString : string
+    ) : boolean;
     begin
-        status := runCommandInDir(
+        result := runCommandInDir(
             baseDir,
-            '/usr/bin/git',
-            ['init'],
+            GIT_BIN,
+            params,
             outputString,
             [poStderrToOutPut]
         );
-        if (status) then
-        begin
-            writeln(outputString);
-        end;
+    end;
+
+    procedure TInitGitRepoTask.initGitRepository(const baseDir : string);
+    var outputString : string;
+    begin
+        //$ git init
+        runGit(baseDir, ['init'], outputString);
+        writeln(outputString);
     end;
 
     procedure TInitGitRepoTask.addFanoRepository(const baseDir : string);
     var outputString : string;
-        status : boolean;
     begin
-        status := runCommandInDir(
-            baseDir,
-            '/usr/bin/git',
-            ['submodule', 'add', 'https://github.com/fanoframework/fano.git'],
-            outputString,
-            [poStderrToOutPut]
-        );
-        if (status) then
-        begin
-            writeln(outputString);
-        end;
+        //$ git submodule add fano_repo_url
+        runGit(baseDir, ['submodule', 'add', FANO_REPO], outputString);
+        writeln(outputString);
     end;
 
     procedure TInitGitRepoTask.stageFileToRepository(const baseDir : string);
     var outputString : string;
-        status : boolean;
     begin
-        status := runCommandInDir(
-            baseDir,
-            '/usr/bin/git',
-            ['add', '.'],
-            outputString,
-            [poStderrToOutPut]
-        );
-        if (status) then
-        begin
-            writeln(outputString);
-        end;
+        //$ git add .
+        runGit(baseDir, ['add', '.'], outputString);
+        writeln(outputString);
     end;
 
     procedure TInitGitRepoTask.initialCommitRepository(const baseDir : string);
     var outputString : string;
         status : boolean;
     begin
-        status := runCommandInDir(
-            baseDir,
-            '/usr/bin/git',
-            ['commit', '-m', '"Initial commit"'],
-            outputString,
-            [poStderrToOutPut]
-        );
-        if (status) then
-        begin
-            writeln(outputString);
-        end;
+        //$ git commit -m "Initial commit"
+        runGit(baseDir, ['commit', '-m', '"Initial commit"'], outputString);
+        writeln(outputString);
     end;
 
     function TInitGitRepoTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
     begin
-        inherited run(opt, shortOpt, longOpt);
+        //need to call parent run() so baseDirectory can be initialized
+        inherited run(opt, longOpt);
         initGitRepository(baseDirectory);
         addFanoRepository(baseDirectory);
         stageFileToRepository(baseDirectory);

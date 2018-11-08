@@ -19,10 +19,8 @@ uses
 type
 
     TTaskItem = record
-        shortOption : char;
         longOption : string;
         description : string;
-        shortOptionDesc : string;
         longOptionDesc : string;
         task : ITask;
     end;

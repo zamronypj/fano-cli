@@ -14,7 +14,7 @@ interface
 
 uses
 
-    contnrs,
+    ListIntf,
     TaskOptionsIntf,
     TaskIntf;
 
@@ -27,13 +27,13 @@ type
      *---------------------------------------*)
     TInfoTask = class(TInterfacedObject, ITask)
     private
-        taskList : TFPHashList;
+        taskList : IList;
+        function displayAvailableTask() : ITask;
     public
-        constructor create(const tasks : TFPHashList);
+        constructor create(const tasks : IList);
         function run(
             const opt : ITaskOptions;
-            const shortOpt : char;
-            const longOpt : string
+            const longOpt : shortstring
         ) : ITask;
     end;
 
@@ -43,28 +43,33 @@ uses
 
     TaskItemTypes;
 
-    constructor TInfoTask.create(const tasks : TFPHashList);
+    constructor TInfoTask.create(const tasks : IList);
     begin
         taskList := tasks;
     end;
 
+    function TInfoTask.displayAvailableTask() : ITask;
+    var i, taskCount : integer;
+        item : PTaskItem;
+    begin
+        taskCount := taskList.count();
+        for i:=0 to taskCount-1 do
+        begin
+            item := taskList.get(i);
+            writeln('   ', item^.longOptionDesc, ' ', item^.description);
+        end;
+        result := self;
+    end;
+
     function TInfoTask.run(
         const opt : ITaskOptions;
-        const shortOpt : char;
-        const longOpt : string
+        const longOpt : shortstring
     ) : ITask;
-    var i:integer;
-        item : PTaskItem;
     begin
         writeln('Fano CLI 0.1, utility for Fano Web Framework');
         writeln('(c) Zamrony P. Juhara');
         writeln('Usage: fanocli [Task] [Task Parameters]');
         writeln('Available task:');
-        for i:=0 to taskList.count-1 do
-        begin
-            item := taskList[i];
-            writeln('   ', item^.shortOptionDesc, ', ', item^.longOptionDesc, ' ', item^.description);
-        end;
-        result := self;
+        result := displayAvailableTask();
     end;
 end.

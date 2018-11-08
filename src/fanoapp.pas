@@ -16,15 +16,16 @@ uses
     sysutils,
     classes,
     custapp,
-    contnrs,
+    ListIntf,
+    AppIntf,
     TaskOptionsIntf,
     TaskIntf;
 
 type
 
-    TFanoCliApplication = class (TCustomApplication, ITaskOptions)
+    TFanoCliApplication = class (TCustomApplication, IFanoCliApplication, ITaskOptions)
     private
-        taskList : TFPHashList;
+        taskList : IList;
 
         procedure clearTasks();
     protected
@@ -33,20 +34,18 @@ type
         constructor create(AOwner : TComponent); override;
         destructor destroy(); override;
         procedure registerTask(
-            const shortOpt : char;
-            const longOpt : string;
-            const shortOptDesc : string;
+            const longOpt : shortstring;
             const longOptDesc : string;
             const desc : string;
             const task : ITask
         );
-        function getTaskList() : TFPHashList;
+        function getTaskList() : IList;
     end;
 
 implementation
 
 uses
-
+    HashListImpl,
     TaskItemTypes;
 
 resourcestring
@@ -56,33 +55,29 @@ resourcestring
     constructor TFanoCliApplication.create(AOwner : TComponent);
     begin
         inherited create(AOwner);
-        taskList := TFPHashList.create();
+        taskList := THashList.create();
     end;
 
     procedure TFanoCliApplication.registerTask(
-        const shortOpt : char;
-        const longOpt : string;
-        const shortOptDesc : string;
+        const longOpt : shortstring;
         const longOptDesc : string;
         const desc : string;
         const task : ITask
     );
     var item : PTaskItem;
     begin
-        item := taskList.find(shortOpt);
+        item := taskList.find(longOpt);
         if (item <> nil) then
         begin
-            raise Exception.createFmt(sErrTaskAlreadyRegistered, [shortOpt, longOpt]);
+            raise Exception.createFmt(sErrTaskAlreadyRegistered, [longOpt]);
         end;
 
         new(item);
-        item^.shortOption := shortOpt;
         item^.longOption := longOpt;
         item^.description := desc;
-        item^.shortOptionDesc := shortOptDesc;
         item^.longOptionDesc := longOptDesc;
         item^.task := task;
-        taskList.add(shortOpt, item);
+        taskList.add(longOpt, item);
     end;
 
     procedure TFanoCliApplication.clearTasks();
@@ -91,18 +86,17 @@ resourcestring
     begin
         for i:= taskList.count-1 downto 0 do
         begin
-            item := taskList[i];
+            item := taskList.get(i);
             item^.task := nil;
             setLength(item^.longOption, 0);
             setLength(item^.description, 0);
-            setLength(item^.shortOptionDesc, 0);
             setLength(item^.longOptionDesc, 0);
             dispose(item);
             taskList.delete(i);
         end;
     end;
 
-    function TFanoCliApplication.getTaskList() : TFPHashList;
+    function TFanoCliApplication.getTaskList() : IList;
     begin
         result := taskList;
     end;
@@ -111,7 +105,7 @@ resourcestring
     begin
         inherited destroy();
         clearTasks();
-        freeAndNil(taskList);
+        taskList := nil;
     end;
 
     procedure TFanoCliApplication.doRun();
@@ -120,20 +114,20 @@ resourcestring
     begin
         for i:=0 to taskList.count-1 do
         begin
-            item := taskList[i];
-            if (hasOption(item^.shortOption, item^.longOption)) then
+            item := taskList.get(i);
+            if (hasOption(item^.longOption)) then
             begin
-                item^.task.run(self, item^.shortOption, item^.longOption);
+                item^.task.run(self, item^.longOption);
                 terminate();
                 exit();
             end;
         end;
 
-        if (taskList.count>0) then
+        if (taskList.count() > 0) then
         begin
             //default task is at zero-index
-            item := taskList[0];
-            item^.task.run(self, item^.shortOption, item^.longOption);
+            item := taskList.get(0);
+            item^.task.run(self, item^.longOption);
         end;
         terminate();
     end;

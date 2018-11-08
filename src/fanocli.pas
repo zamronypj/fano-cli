@@ -26,18 +26,14 @@ begin
     app := TFanoCliApplication.create(nil);
     try
         app.registerTask(
-            'h',
             'help',
-            '-h',
             '--help',
             'Display help information',
             TInfoTask.create(app.getTaskList())
         );
         createProjectFactory := TCreateProjectTaskFactory.create();
         app.registerTask(
-            'c',
             'create-project',
-            '-c [project name]',
             '--create-project=[project name]',
             'Create project task',
             createProjectFactory.build()
