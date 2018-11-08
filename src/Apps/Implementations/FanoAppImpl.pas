@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit fanoapp;
+unit FanoAppImpl;
 
 interface
 
@@ -19,11 +19,12 @@ uses
     ListIntf,
     AppIntf,
     TaskOptionsIntf,
+    TaskListAwareIntf,
     TaskIntf;
 
 type
 
-    TFanoCliApplication = class (TCustomApplication, IFanoCliApplication, ITaskOptions)
+    TFanoCliApplication = class (TCustomApplication, IFanoCliApplication, ITaskOptions, ITaskListAware)
     private
         taskList : IList;
 

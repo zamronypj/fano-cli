@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit AppIntf;
+unit TaskListAwareIntf;
 
 interface
 
@@ -13,21 +13,14 @@ interface
 {$H+}
 
 uses
-    TaskIntf;
+
+    ListIntf;
 
 type
 
-    IFanoCliApplication = interface
-        ['{34391655-1357-4DD1-9CD9-FCB81561F903}']
-
-        procedure registerTask(
-            const longOpt : shortstring;
-            const longOptDesc : string;
-            const desc : string;
-            const task : ITask
-        );
-
-        procedure run();
+    ITaskListAware = interface
+        ['{662D0179-97D9-492F-A395-1AFE459D64FD}']
+        function getTaskList() : IList;
     end;
 
 implementation
