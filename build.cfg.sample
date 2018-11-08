@@ -48,6 +48,8 @@
 -Fusrc/Tasks/Implementations/Info
 -Fusrc/Tasks/Implementations/Project
 -Fusrc/Tasks/Implementations/Project/Factories
+-Fusrc/Tasks/Implementations/ProjectNoGit
+-Fusrc/Tasks/Implementations/ProjectNoGit/Factories
 -Fusrc/Tasks/Types
 #-Fu$USER_APP_DIR$/path/to/other/units
 

@@ -17,12 +17,12 @@ uses
     TaskListAwareIntf,
     FanoAppImpl,
     InfoTaskImpl,
-    NullTaskImpl,
-    CreateProjectTaskFactoryImpl;
+    CreateProjectTaskFactoryImpl,
+    CreateProjectNoGitTaskFactoryImpl;
 
 function registerTask(const appInst : IFanoCliApplication; const taskList : ITaskListAware) : IFanoCliApplication;
 var
-    createProjectFactory : ITaskFactory;
+    taskFactory : ITaskFactory;
 begin
     appInst.registerTask(
         'help',
@@ -31,13 +31,30 @@ begin
         TInfoTask.create(taskList.getTaskList())
     );
 
-    createProjectFactory := TCreateProjectTaskFactory.create();
-    appInst.registerTask(
-        'create-project',
-        '--create-project=[project name]',
-        'Create project task',
-        createProjectFactory.build()
-    );
+    taskFactory := TCreateProjectTaskFactory.create();
+    try
+        appInst.registerTask(
+            'create-project',
+            '--create-project=[project name]',
+            'Create project task',
+            taskFactory.build()
+        );
+    finally
+        taskFactory := nil;
+    end;
+
+    taskFactory := TCreateProjectNoGitTaskFactory.create();
+    try
+        appInst.registerTask(
+            'create-project-without-git',
+            '--create-project-without-git=[project name]',
+            'Create project without GIT repository',
+            taskFactory.build()
+        );
+    finally
+        taskFactory := nil;
+    end;
+
     result := appInst;
 end;
 
