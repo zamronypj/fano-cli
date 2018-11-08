@@ -47,7 +47,7 @@ begin
         appInst.registerTask(
             'create-project-without-git',
             '--create-project-without-git=[project-name]',
-            'Create project without GIT repository',
+            'Create project without Git repository',
             taskFactory.build()
         );
     finally
