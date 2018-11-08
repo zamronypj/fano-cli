@@ -1,5 +1,36 @@
+#------------------------------------------------------------
+# Fano CLI Application (https://fanoframework.github.io)
+#
+# @link      https://github.com/fanoframework/fano-cli
+# @copyright Copyright (c) 2018 Zamrony P. Juhara
+# @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
+#-------------------------------------------------------------
+
+#----------------------------------------------
+# Ignore any compiler switches config
+#----------------------------------------------
 *.cfg
+
+#----------------------------------------------
+# Ignore any generated compiled units
+#----------------------------------------------
 bin/unit/*
+
+#----------------------------------------------
+# Ignore generated binary executable
+#----------------------------------------------
 bin/out/*
+
+#----------------------------------------------
+# Do not ignore README.md
+# This file is provided to make git create
+# /bin/unit when repository is cloned
+#----------------------------------------------
 !bin/unit/README.md
+
+#----------------------------------------------
+# Do not ignore README.md
+# This file is provided to make git create
+# /bin/out when repository is cloned
+#----------------------------------------------
 !bin/out/README.md
