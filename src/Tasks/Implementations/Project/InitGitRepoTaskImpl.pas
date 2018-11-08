@@ -53,7 +53,7 @@ uses
 
 const
 
-    GIT_BIN = '/usr/bin/git';
+    GIT_BIN = 'git';
     FANO_REPO = 'https://github.com/fanoframework/fano.git';
 
     function TInitGitRepoTask.runGit(
@@ -74,7 +74,7 @@ const
     procedure TInitGitRepoTask.initGitRepository(const baseDir : string);
     var outputString : string;
     begin
-        //$ git init
+        ///$ git init
         runGit(baseDir, ['init'], outputString);
         writeln(outputString);
     end;
@@ -82,7 +82,7 @@ const
     procedure TInitGitRepoTask.addFanoRepository(const baseDir : string);
     var outputString : string;
     begin
-        //$ git submodule add fano_repo_url
+        ///$ git submodule add fano_repo_url
         runGit(baseDir, ['submodule', 'add', FANO_REPO], outputString);
         writeln(outputString);
     end;
@@ -90,16 +90,15 @@ const
     procedure TInitGitRepoTask.stageFileToRepository(const baseDir : string);
     var outputString : string;
     begin
-        //$ git add .
+        ///$ git add .
         runGit(baseDir, ['add', '.'], outputString);
         writeln(outputString);
     end;
 
     procedure TInitGitRepoTask.initialCommitRepository(const baseDir : string);
     var outputString : string;
-        status : boolean;
     begin
-        //$ git commit -m "Initial commit"
+        ///$ git commit -m "Initial commit"
         runGit(baseDir, ['commit', '-m', '"Initial commit"'], outputString);
         writeln(outputString);
     end;
