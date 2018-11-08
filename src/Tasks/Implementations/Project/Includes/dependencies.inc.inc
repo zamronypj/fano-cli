@@ -7,4 +7,4 @@ strDependenciesInc: string =
     ' * @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
     ' *------------------------------------------------------------- *)' + LineEnding +
     '{---put your dependencies registration here---}' + LineEnding +
-    '{ container.add('db', TMySqlDbFactory.create()); }';
+    '{ container.add(''db'', TMySqlDbFactory.create()); }';
