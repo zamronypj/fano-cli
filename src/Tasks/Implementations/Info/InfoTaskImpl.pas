@@ -68,8 +68,11 @@ uses
     begin
         writeln('Fano CLI 0.1, utility for Fano Web Framework');
         writeln('(c) Zamrony P. Juhara');
+        writeln();
         writeln('Usage: fanocli [Task] [Task Parameters]');
+        writeln();
         writeln('Available task:');
+        writeln();
         result := displayAvailableTask();
     end;
 end.
