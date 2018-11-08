@@ -2,6 +2,8 @@
 
 Fano CLI is command line tools to help scaffolding web application using [Fano Web Framework](https://github.com/fanoframework/fano).
 
+- [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-with-fano-cli/)
+
 ## Requirement
 
 - [Free Pascal](https://www.freepascal.org/) >= 3.0
