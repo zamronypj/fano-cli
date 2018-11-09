@@ -62,13 +62,13 @@ uses
 
     procedure TCreateShellScriptsTask.createCleanScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/clear.compiled.units.cmd.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/clean.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/clean.cmd.inc}
     begin
-        createTextFile(dir + '/clear.compiled.units.sh', strClearUnitsSh);
-        createTextFile(dir + '/clear.compiled.units.cmd', strClearUnitsCmd);
+        createTextFile(dir + '/clean.sh', strClearUnitsSh);
+        createTextFile(dir + '/clean.cmd', strClearUnitsCmd);
         {$IFDEF UNIX}
-        fpChmod(dir + '/clear.compiled.units.sh', &775);
+        fpChmod(dir + '/clean.sh', &775);
         {$ENDIF}
     end;
 

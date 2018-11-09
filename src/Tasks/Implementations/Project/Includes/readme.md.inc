@@ -208,7 +208,7 @@ strReadme: string =
     '' + LineEnding +
     '    $ find bin/unit ! -name ''README.md'' -type f -exec rm -f {} +' + LineEnding +
     '' + LineEnding +
-    '`tools/clear.compiled.units.sh` script is provided to simplify this task.' + LineEnding +
+    '`tools/clean.sh` script is provided to simplify this task.' + LineEnding +
     '' + LineEnding +
     '### Windows user' + LineEnding +
     '' + LineEnding +
