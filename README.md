@@ -113,7 +113,7 @@ Git repository.
 
 ### Scaffolding project directory structure with Git without initial commit
 
-To scaffold project structure using Fano framework with Git repository initialized but without creatting initial commit, run with  `--create-project-no-commit` command line options
+To scaffold project structure using Fano framework with Git repository initialized but without creating initial commit, run with  `--create-project-no-commit` command line options
 
 ```
 $ fanocli --create-project-no-commit=test-fano
