@@ -93,7 +93,7 @@ $ fanocli --help
 
 ### Scaffolding project directory structure
 
-To scaffolding project structure using Fano framework, run with  `--create-project` command line options
+To scaffold project structure using Fano framework, run with  `--create-project` command line options
 
 ```
 $ fanocli --create-project=[another project name]
@@ -113,7 +113,7 @@ GIT repository.
 
 ### Scaffolding project directory structure without GIT
 
-To scaffolding project structure using Fano framework but without initializing
+To scaffold project structure using Fano framework but without initializing
 GIT repository, run with  `--create-project-without-git` command line options
 
 ```
