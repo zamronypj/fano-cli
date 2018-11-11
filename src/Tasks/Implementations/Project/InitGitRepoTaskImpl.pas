@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseProjectTaskImpl;
+    BaseGitRepoTaskImpl;
 
 type
 
@@ -26,18 +26,16 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TInitGitRepoTask = class(TBaseProjectTask)
+    TInitGitRepoTask = class(TBaseGitRepoTask)
     private
-        function runGit(
-            const baseDir : string;
-            const params : array of string;
-            out outputString : string
-        ) : boolean;
+        commitRepoTask : ITask;
         procedure initGitRepository(const baseDir : string);
         procedure addFanoRepository(const baseDir : string);
         procedure stageFileToRepository(const baseDir : string);
-        procedure initialCommitRepository(const baseDir : string);
     public
+        constructor create(const commitRepo : ITask);
+        destructor destroy(); override;
+
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
@@ -48,27 +46,18 @@ implementation
 
 uses
 
-    sysutils,
-    process;
+    sysutils;
 
-const
 
-    GIT_BIN = 'git';
-    FANO_REPO = 'https://github.com/fanoframework/fano.git';
-
-    function TInitGitRepoTask.runGit(
-        const baseDir : string;
-        const params : array of string;
-        out outputString : string
-    ) : boolean;
+    constructor TInitGitRepoTask.create(const commitRepo : ITask);
     begin
-        result := runCommandInDir(
-            baseDir,
-            GIT_BIN,
-            params,
-            outputString,
-            [poStderrToOutPut]
-        );
+        commitRepoTask := commitRepo;
+    end;
+
+    destructor TInitGitRepoTask.destroy();
+    begin
+        inherited destroy();
+        commitRepoTask := nil;
     end;
 
     procedure TInitGitRepoTask.initGitRepository(const baseDir : string);
@@ -95,14 +84,6 @@ const
         writeln(outputString);
     end;
 
-    procedure TInitGitRepoTask.initialCommitRepository(const baseDir : string);
-    var outputString : string;
-    begin
-        ///$ git commit -m "Initial commit"
-        runGit(baseDir, ['commit', '-m', '"Initial commit"'], outputString);
-        writeln(outputString);
-    end;
-
     function TInitGitRepoTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
@@ -113,7 +94,7 @@ const
         initGitRepository(baseDirectory);
         addFanoRepository(baseDirectory);
         stageFileToRepository(baseDirectory);
-        initialCommitRepository(baseDirectory);
+        commitRepoTask.run(opt, longOpt);
         result := self;
     end;
 end.

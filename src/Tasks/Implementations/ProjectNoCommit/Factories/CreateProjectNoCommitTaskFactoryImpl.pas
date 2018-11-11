@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit CreateProjectTaskFactoryImpl;
+unit CreateProjectNoCommitTaskFactoryImpl;
 
 interface
 
@@ -20,11 +20,13 @@ uses
 type
 
     (*!--------------------------------------
-     * Factory class for create project task
+     * Factory class for create project task that
+     * initialize git repository but without actually
+     * commit them.
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateProjectTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TCreateProjectNoCommitTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
         function build() : ITask;
     end;
@@ -32,17 +34,16 @@ type
 implementation
 
 uses
-
+    NullTaskImpl,
     CreateDirTaskImpl,
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
     InitGitRepoTaskImpl,
-    CommitGitRepoTaskImpl,
     CreateProjectTaskImpl;
 
-    function TCreateProjectTaskFactory.build() : ITask;
+    function TCreateProjectNoCommitTaskFactory.build() : ITask;
     begin
         result := TCreateProjectTask.create(
             TCreateDirTask.create(),
@@ -50,7 +51,8 @@ uses
             TCreateAppConfigsTask.create(),
             TCreateAdditionalFilesTask.create(),
             TCreateAppBootstrapTask.create(),
-            TInitGitRepoTask.create(TCommitGitRepoTask.create())
+            //replace git commit task with NullTaskImpl to disable Git commit
+            TInitGitRepoTask.create(TNullTask.create())
         );
     end;
 

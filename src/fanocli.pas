@@ -17,7 +17,8 @@ uses
     FanoAppImpl,
     InfoTaskImpl,
     CreateProjectTaskFactoryImpl,
-    CreateProjectNoGitTaskFactoryImpl;
+    CreateProjectNoGitTaskFactoryImpl,
+    CreateProjectNoCommitTaskFactoryImpl;
 
 procedure registerTask(const appInst : TFanoCliApplication);
 var
@@ -48,6 +49,18 @@ begin
             'create-project-without-git',
             '--create-project-without-git=[project-name]',
             'Create project without Git repository',
+            taskFactory.build()
+        );
+    finally
+        taskFactory := nil;
+    end;
+
+    taskFactory := TCreateProjectNoCommitTaskFactory.create();
+    try
+        appInst.registerTask(
+            'create-project-no-commit',
+            '--create-project-no-commit=[project-name]',
+            'Create project with Git repository but without commit them',
             taskFactory.build()
         );
     finally
