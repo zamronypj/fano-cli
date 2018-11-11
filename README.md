@@ -108,13 +108,29 @@ $ fanocli --create-project=test-fano
 This command line options creates Git repository and initial commit for you  automatically. This behavior may cause problem if you already create remote repository and try to merge local repository with remote one. Git may refuses
 to merge because they have unrelated commit histories.
 
-To workaround this problem, you can run `git merge` with option `--allow-unrelated-histories` or create project directory structure without
+To workaround this problem, you can run `git merge` with option `--allow-unrelated-histories` or create project directory without creating initial commit or create project directory structure without
 Git repository.
+
+### Scaffolding project directory structure with Git without initial commit
+
+To scaffold project structure using Fano framework with Git repository initialized but without creatting initial commit, run with  `--create-project-no-commit` command line options
+
+```
+$ fanocli --create-project-no-commit=test-fano
+```
+
+This command line options is provided to enable you to commit Git repository manually. So you can merge local repository with a remote repository before
+running git commit. After project directory is constructed, you need to execute following shell command,
+
+```
+$ cd test-fano
+$ git commit -m "Initial commit"
+```
 
 ### Scaffolding project directory structure without Git
 
 To scaffold project structure using Fano framework but without initializing
-GIT repository, run with  `--create-project-without-git` command line options
+Git repository, run with  `--create-project-without-git` command line options
 
 ```
 $ fanocli --create-project-without-git=test-fano
