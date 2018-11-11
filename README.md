@@ -109,9 +109,9 @@ This command line options creates GIT repository and initial commit for you  aut
 to merge because they have unrelated commit histories.
 
 To workaround this problem, you can run `git merge` with option `--allow-unrelated-histories` or create project directory structure without
-GIT repository.
+Git repository.
 
-### Scaffolding project directory structure without GIT
+### Scaffolding project directory structure without Git
 
 To scaffold project structure using Fano framework but without initializing
 GIT repository, run with  `--create-project-without-git` command line options
@@ -120,7 +120,15 @@ GIT repository, run with  `--create-project-without-git` command line options
 $ fanocli --create-project-without-git=test-fano
 ```
 
-This command line options is provided to enable you to initialize GIT repository manually.
+This command line options is provided to enable you to initialize Git repository manually. After project directory is constructed, you need to execute following shell command,
+
+```
+$ cd test-fano
+$ git init
+$ git submodule add https://github.com/fanoframework/fano.git
+$ git add .
+$ git commit -m "Initial commit"
+```
 
 ## Known Issues
 
