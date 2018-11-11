@@ -60,7 +60,7 @@ begin
         appInst.registerTask(
             'create-project-no-commit',
             '--create-project-no-commit=[project-name]',
-            'Create project with Git repository but without commit them',
+            'Create project with Git repository but without committing them',
             taskFactory.build()
         );
     finally
