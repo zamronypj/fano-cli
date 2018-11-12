@@ -50,6 +50,8 @@ uses
     begin
         createTextFile(dir + '/README.md', strReadme);
         createTextFile(dir + '/.gitignore', strGitignore);
+        createTextFile(dir + '/bin/README.md', '# directory for binary output');
+        createTextFile(dir + '/bin/unit/README.md', '# directory for compiled units');
     end;
 
     function TCreateAdditionalFilesTask.run(
