@@ -92,6 +92,15 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
+
+        if (baseDirectory.length = 0) then
+        begin
+            writeln('Project target directory can not be empty.');
+            writeln('Run with --help to view available task.');
+            result := self;
+            exit();
+        end;
+
         writeln('Start creating project in ', baseDirectory, ' directory.');
 
         createDirectoryTask.run(opt, longOpt);
