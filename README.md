@@ -84,8 +84,13 @@ environment variable. By default is `bin/unit` directory.
 
 ## Run
 
-Copy `bin/out/fanocli` executable file to directory that is accessible globally,
-for example `/usr/local/bin`, then you can run
+Copy `bin/out/fanocli` executable file to directory that is accessible globally, for example `/usr/local/bin`,
+
+```
+$ sudo cp bin/out/fanocli /usr/local/bin
+```
+
+then you can run
 
 ```
 $ fanocli --help
