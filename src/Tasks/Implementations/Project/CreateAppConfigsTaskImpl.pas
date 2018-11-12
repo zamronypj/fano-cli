@@ -29,6 +29,7 @@ type
     TCreateAppConfigsTask = class(TCreateFileTask)
     private
         procedure createAppConfigs(const dir : string);
+        procedure createCompilerConfigs(const dir : string);
     public
         function run(
             const opt : ITaskOptions;
@@ -42,7 +43,7 @@ uses
 
     sysutils;
 
-    procedure TCreateAppConfigsTask.createAppConfigs(const dir : string);
+    procedure TCreateAppConfigsTask.createCompilerConfigs(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cfg.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.dev.cfg.inc}
@@ -58,6 +59,12 @@ uses
         createTextFile(dir + '/build.prod.cfg.sample', strBuildCfgProd);
     end;
 
+    procedure TCreateAppConfigsTask.createAppConfigs(const dir : string);
+    begin
+        createTextFile(dir + '/config.json', '{ "appName" : "MyApp" }');
+        createTextFile(dir + '/config.json.sample', '{ "appName" : "MyApp" }');
+    end;
+
     function TCreateAppConfigsTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
@@ -65,7 +72,8 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createAppConfigs(baseDirectory);
+        createCompilerConfigs(baseDirectory);
+        createAppConfigs(baseDirectory + '/app/config');
         result := self;
     end;
 end.
