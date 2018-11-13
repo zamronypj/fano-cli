@@ -26,8 +26,7 @@ var
 begin
     appInst.registerTask(
         'help',
-        '--help',
-        'Display help information',
+        '--help Display help information',
         TInfoTask.create(appInst.getTaskList())
     );
 
@@ -35,8 +34,7 @@ begin
     try
         appInst.registerTask(
             'create-project',
-            '--create-project=[project-name]',
-            'Create new project',
+            '--create-project=[project-name] Create new project',
             taskFactory.build()
         );
     finally
@@ -47,7 +45,7 @@ begin
     try
         appInst.registerTask(
             'create-project-without-git',
-            '--create-project-without-git=[project-name]',
+            '--create-project-without-git=[project-name] ' +
             'Create project without Git repository',
             taskFactory.build()
         );
@@ -59,7 +57,7 @@ begin
     try
         appInst.registerTask(
             'create-project-no-commit',
-            '--create-project-no-commit=[project-name]',
+            '--create-project-no-commit=[project-name] ' +
             'Create project with Git repository but without committing them',
             taskFactory.build()
         );

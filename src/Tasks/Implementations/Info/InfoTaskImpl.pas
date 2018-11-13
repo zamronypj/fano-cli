@@ -56,7 +56,7 @@ uses
         for i:=0 to taskCount-1 do
         begin
             item := taskList.get(i);
-            writeln('   ', item^.longOptionDesc, ' ', item^.description);
+            writeln('   ', item^.description);
         end;
         result := self;
     end;

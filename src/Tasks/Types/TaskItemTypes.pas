@@ -21,7 +21,6 @@ type
     TTaskItem = record
         longOption : string;
         description : string;
-        longOptionDesc : string;
         task : ITask;
     end;
     PTaskItem = ^TTaskItem;
