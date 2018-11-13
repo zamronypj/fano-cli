@@ -62,8 +62,10 @@ uses
     procedure TCreateAppBootstrapTask.createDependencies(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/main.dependencies.inc.inc}
     begin
         createTextFile(dir + '/dependencies.inc', strDependenciesInc);
+        createTextFile(dir + '/main.dependencies.inc', strMainDependenciesInc);
     end;
 
     procedure TCreateAppBootstrapTask.createRoutes(const dir : string);
