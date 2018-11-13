@@ -23,6 +23,11 @@ uses
 
 type
 
+    (*!------------------------------------------------------------
+     * Main application
+     *
+     * @author Zamrony P. Juhara <zamronypj@yahoo.com>
+     *------------------------------------------------------------- *)
     TFanoCliApplication = class (TCustomApplication, ITaskOptions, ITaskListAware)
     private
         taskList : IList;
@@ -33,9 +38,20 @@ type
     public
         constructor create(AOwner : TComponent); override;
         destructor destroy(); override;
+
+        (*!------------------------------------------------------------
+         * register task to application
+         *-------------------------------------------------------------
+         * @param longOpt long option value for example value of
+         *        'create-project' will make the task available via
+         *        --create-project option
+         * @param desc description that is used
+         *        to display descriptive information how to use
+         *        task when displaying help.
+         * @param task actual instance that will handle task
+         *------------------------------------------------------------- *)
         procedure registerTask(
             const longOpt : shortstring;
-            const longOptDesc : string;
             const desc : string;
             const task : ITask
         );
@@ -60,7 +76,6 @@ resourcestring
 
     procedure TFanoCliApplication.registerTask(
         const longOpt : shortstring;
-        const longOptDesc : string;
         const desc : string;
         const task : ITask
     );
@@ -75,7 +90,6 @@ resourcestring
         new(item);
         item^.longOption := longOpt;
         item^.description := desc;
-        item^.longOptionDesc := longOptDesc;
         item^.task := task;
         taskList.add(longOpt, item);
     end;
@@ -91,7 +105,6 @@ resourcestring
             item^.task := nil;
             setLength(item^.longOption, 0);
             setLength(item^.description, 0);
-            setLength(item^.longOptionDesc, 0);
             dispose(item);
             taskList.delete(i);
         end;
