@@ -20,7 +20,7 @@ strAppPas: string =
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Bootstrap application' + LineEnding +
     '     *' + LineEnding +
-    '     *' + LineEnding +
+    '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
     '    appInstance := TBootstrapApp.create(' + LineEnding +
     '        TDependencyContainer.create(TDependencyList.create()),' + LineEnding +
