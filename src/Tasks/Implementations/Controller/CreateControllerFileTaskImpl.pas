@@ -53,7 +53,7 @@ uses
         {$INCLUDE src/Tasks/Implementations/Controller/Includes/rest.controller.pas.inc}
     begin
         createTextFile(
-            dir + '/' + ctrlName + 'Controller.pas',
+            dir + DirectorySeparator + ctrlName + 'Controller.pas',
             format(
                 strRestControllerPasInc,
                 [ ctrlName, lowerCase(ctrlName), ctrlName, ctrlName, ctrlName ]
@@ -69,9 +69,9 @@ uses
         baseDir : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + '/' + controllerName;
+        baseDir := baseDirectory + DirectorySeparator + controllerName;
         createDirIfNotExists(baseDir);
-        baseDir := baseDir + '/Controllers';
+        baseDir := baseDir + DirectorySeparator + 'Controllers';
         createDirIfNotExists(baseDir);
         createControllerFile(baseDir, controllerName);
         result := self;

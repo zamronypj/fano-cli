@@ -53,7 +53,7 @@ uses
         {$INCLUDE src/Tasks/Implementations/Controller/Includes/rest.controller.factory.pas.inc}
     begin
         createTextFile(
-            dir + '/' + ctrlName +'ControllerFactory.pas',
+            dir + DirectorySeparator + ctrlName +'ControllerFactory.pas',
             format(
                 strRestControllerFactoryPasInc,
                 [ ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName ]
@@ -69,7 +69,9 @@ uses
         baseDir : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + '/' + controllerName + '/Controllers/Factories';
+        baseDir := baseDirectory + DirectorySeparator +
+            controllerName + DirectorySeparator + 'Controllers' +
+            DirectorySeparator + 'Factories';
         createDirIfNotExists(baseDir);
         createControllerFactoryFile(baseDir, controllerName);
         result := self;

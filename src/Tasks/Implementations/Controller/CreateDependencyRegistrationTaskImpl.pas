@@ -74,16 +74,19 @@ uses
     ) : ITask;
     var controllerName : string;
         depContent : string;
+        depFile : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
+        depFile := 'app' + DirectorySeparator + 'Dependencies' +
+            DirectorySeparator + 'controllers.dependencies.inc';
         //create main entry to controller dependencies file
-        depContent := fileReader.read('app/Dependencies/controllers.dependencies.inc');
+        depContent := fileReader.read(depFile);
         depContent := depContent + LineEnding +
             format(
                 'container.add(''%sController'', T%sControllerFactory.create());',
                 [lowerCase(controllerName), controllerName]
             );
-        fileWriter.write('app/Dependencies/controllers.dependencies.inc', depContent);
+        fileWriter.write(depFile, depContent);
 
         result := self;
     end;
