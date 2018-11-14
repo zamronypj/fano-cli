@@ -41,6 +41,7 @@ uses
     FileContentWriterIntf,
     FileHelperImpl,
 
+    RunCheckTaskImpl,
     CreateControllerFileTaskImpl,
     CreateControllerFactoryFileTaskImpl,
     AddCtrlToUsesClauseTaskImpl,
@@ -55,12 +56,13 @@ uses
         directoryCreator : IDirectoryCreator;
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        task : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
         directoryCreator := TDirectoryCreator.create();
         fileReader := TFileHelper.create();
         fileWriter := fileReader as IFileContentWriter;
-        result := TCreateControllerTask.create(
+        task := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
             TCreateDependencyTask.create(
@@ -70,6 +72,7 @@ uses
             ),
             TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
         );
+        result := TRunCheckTask.create(task);
     end;
 
 end.
