@@ -33,6 +33,7 @@ type
         taskList : IList;
 
         procedure clearTasks();
+        procedure tryRun();
     protected
         procedure doRun(); override;
     public
@@ -122,7 +123,7 @@ resourcestring
         taskList := nil;
     end;
 
-    procedure TFanoCliApplication.doRun();
+    procedure TFanoCliApplication.tryRun();
     var item : PTaskItem;
         i, taskCount : integer;
     begin
@@ -147,4 +148,13 @@ resourcestring
         terminate();
     end;
 
+    procedure TFanoCliApplication.doRun();
+    begin
+        try
+            tryRun();
+        except
+            terminate();
+            raise;
+        end;
+    end;
 end.

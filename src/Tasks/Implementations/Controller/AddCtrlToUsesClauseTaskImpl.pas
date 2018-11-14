@@ -15,7 +15,9 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    FileContentReaderIntf,
+    FileContentWriterIntf;
 
 type
 
@@ -27,15 +29,18 @@ type
      *---------------------------------------*)
     TAddCtrlToUsesClauseTask = class(TInterfacedObject, ITask)
     private
-        function readFileContent(const unitFilename : string) : string;
-
-        procedure writeFileContent(
-            const unitFilename : string;
-            const unitContent : string
-        );
+        fileReader : IFileContentReader;
+        fileWriter : IFileContentWriter;
 
         function getUnitNamesFromUsesClause(const unitContent : string) : string;
     public
+        constructor create(
+            fReader : IFileContentReader;
+            fWriter : IFileContentWriter
+        );
+
+        destructor destroy(); override;
+
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
@@ -77,36 +82,20 @@ const
           '\s+([a-zA-Z0-9,\s\{\*\!\-\\(\)}]+);';
 
 
-    function TAddCtrlToUsesClauseTask.readFileContent(const unitFilename : string) : string;
-    var fstream : TFileStream;
-        strStream : TStringStream;
+    constructor TAddCtrlToUsesClauseTask.create(
+        fReader : IFileContentReader;
+        fWriter : IFileContentWriter
+    );
     begin
-        fstream := TFileStream.create(unitFilename, fmOpenRead);
-        strStream := TStringStream.create('');
-        try
-            strStream.copyfrom(fstream, fstream.size);
-            result := strStream.dataString;
-        finally
-            fstream.free();
-            strStream.free();
-        end;
+        fileReader := fReader;
+        fileWriter := fWriter;
     end;
 
-    procedure TAddCtrlToUsesClauseTask.writeFileContent(
-        const unitFilename : string;
-        const unitContent : string
-    );
-    var fstream : TFileStream;
-        strStream : TStringStream;
+    destructor TAddCtrlToUsesClauseTask.destroy();
     begin
-        fstream := TFileStream.create(unitFilename, fmOpenWrite);
-        strStream := TStringStream.create(unitContent);
-        try
-            fstream.copyfrom(strStream, strStream.size);
-        finally
-            fstream.free();
-            strStream.free();
-        end;
+        inherited destroy();
+        fileReader := nil;
+        fileWriter := nil;
     end;
 
     function TAddCtrlToUsesClauseTask.getUnitNamesFromUsesClause(
@@ -139,7 +128,7 @@ const
         modifiedUsesUnits : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        bootstrapUnitContent := readFileContent('app/bootstrap.pas');
+        bootstrapUnitContent := fileReader.read('app/bootstrap.pas');
         usesUnits := getUnitNamesFromUsesClause(bootstrapUnitContent);
         if (length(usesUnits) > 0) then
         begin
@@ -153,7 +142,7 @@ const
                 modifiedUsesUnits,
                 []
             );
-            writeFileContent('app/bootstrap.pas', modifiedUnitContent);
+            fileWriter.write('app/bootstrap.pas', modifiedUnitContent);
         end;
         result := self;
     end;

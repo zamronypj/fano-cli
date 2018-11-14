@@ -71,6 +71,8 @@ uses
         controllerName := opt.getOptionValue(longOpt);
         baseDir := baseDirectory + '/' + controllerName;
         createDirIfNotExists(baseDir);
+        baseDir := baseDir + '/Controllers';
+        createDirIfNotExists(baseDir);
         createControllerFile(baseDir, controllerName);
         result := self;
     end;

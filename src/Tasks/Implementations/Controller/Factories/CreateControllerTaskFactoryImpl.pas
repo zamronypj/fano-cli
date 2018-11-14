@@ -37,27 +37,34 @@ uses
     TextFileCreatorImpl,
     DirectoryCreatorIntf,
     DirectoryCreatorImpl,
+    FileContentReaderIntf,
+    FileContentWriterIntf,
+    FileHelperImpl,
+
     NullTaskImpl,
     CreateControllerFileTaskImpl,
     CreateControllerFactoryFileTaskImpl,
     AddCtrlToUsesClauseTaskImpl,
+    AddCtrlToUnitSearchTaskImpl,
     CreateDependencyTaskImpl,
     CreateControllerTaskImpl;
 
     function TCreateControllerTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         directoryCreator : IDirectoryCreator;
+        fileReader : IFileContentReader;
+        fileWriter : IFileContentWriter;
     begin
         textFileCreator := TTextFileCreator.create();
         directoryCreator := TDirectoryCreator.create();
+        fileReader := TFileHelper.create();
+        fileWriter := fileReader as IFileContentWriter;
         result := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
             TCreateDependencyTask.create(
-                TAddCtrlToUsesClauseTask.create(),
-                //temporary disable add controller to unit search
-                //as they are not ready
-                TNullTask.create()
+                TAddCtrlToUsesClauseTask.create(fileReader, fileWriter),
+                TAddCtrlToUnitSearchTask.create(fileReader, fileWriter)
             ),
             //temporary disable controller route creation as they are not ready
             TNullTask.create()

@@ -42,11 +42,6 @@ strBuildCfg: string =
     '#----------------------------------------------' + LineEnding +
     '-Fu$USER_APP_DIR$/Dependencies' + LineEnding +
     '-Fu$USER_APP_DIR$/Routes' + LineEnding +
-    '-Fu$USER_APP_DIR$/App/Hello/Controllers' + LineEnding +
-    '-Fu$USER_APP_DIR$/App/Hello/Controllers/Factories' + LineEnding +
-    '-Fu$USER_APP_DIR$/App/Hello/Views' + LineEnding +
-    '-Fu$USER_APP_DIR$/App/Hi/Controllers' + LineEnding +
-    '-Fu$USER_APP_DIR$/App/Hi/Controllers/Factories' + LineEnding +
     '#-Fu$USER_APP_DIR$/path/to/other/units' + LineEnding +
     '#-Fu$USER_APP_DIR$/path/to/other/units' + LineEnding +
     '' + LineEnding +

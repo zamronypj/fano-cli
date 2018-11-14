@@ -69,7 +69,7 @@ uses
         baseDir : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + '/' + controllerName + '/Factories';
+        baseDir := baseDirectory + '/' + controllerName + '/Controllers/Factories';
         createDirIfNotExists(baseDir);
         createControllerFactoryFile(baseDir, controllerName);
         result := self;
