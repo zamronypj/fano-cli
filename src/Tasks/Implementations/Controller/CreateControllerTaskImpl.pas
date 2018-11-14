@@ -28,11 +28,13 @@ type
     private
         createControllerFileTask : ITask;
         createControllerFactoryFileTask : ITask;
+        createDependenciesTask : ITask;
         createRouteTask : ITask;
     public
         constructor create(
             const createCtrlFileTask : ITask;
             const createCtrlFactoryFileTask : ITask;
+            const createCtrlDependenciesTask : ITask;
             const createCtrlRouteTask : ITask
         );
         destructor destroy(); override;
@@ -47,11 +49,13 @@ implementation
     constructor TCreateControllerTask.create(
         const createCtrlFileTask : ITask;
         const createCtrlFactoryFileTask : ITask;
+        const createCtrlDependenciesTask : ITask;
         const createCtrlRouteTask : ITask
     );
     begin
         createControllerFileTask := createCtrlFileTask;
         createControllerFactoryFileTask := createCtrlFactoryFileTask;
+        createDependenciesTask := createCtrlDependenciesTask;
         createRouteTask := createCtrlRouteTask;
     end;
 
@@ -60,6 +64,7 @@ implementation
         inherited destroy();
         createControllerFileTask := nil;
         createControllerFactoryFileTask := nil;
+        createDependenciesTask := nil;
         createRouteTask := nil;
     end;
 
@@ -67,10 +72,23 @@ implementation
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
+    var controllerName : string;
     begin
+        controllerName := opt.getOptionValue(longOpt);
+        if (length(controllerName) = 0) then
+        begin
+            writeln('Controller name can not be empty.');
+            writeln('Run with --help to view available task.');
+            result := self;
+            exit();
+        end;
+
+        writeln('Creating ' +controllerName +'Controller class.');
         createControllerFileTask.run(opt, longOpt);
         createControllerFactoryFileTask.run(opt, longOpt);
+        createDependenciesTask.run(opt, longOpt);
         createRouteTask.run(opt, longOpt);
+        writeln(controllerName +'Controller class is created.');
         result := self;
     end;
 end.

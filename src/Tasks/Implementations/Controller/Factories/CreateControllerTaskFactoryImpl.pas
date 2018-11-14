@@ -51,6 +51,9 @@ uses
         result := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
+            //temporary disable controller depdendencies registration
+            //and its route creation as they are not ready
+            TNullTask.create(),
             TNullTask.create()
         );
     end;
