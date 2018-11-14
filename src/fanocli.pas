@@ -21,12 +21,12 @@ uses
     CreateProjectNoCommitTaskFactoryImpl,
     CreateControllerTaskFactoryImpl;
 
-procedure registerTask(const appInst : TFanoCliApplication);
-var
-    taskFactory : ITaskFactory;
-begin
-    {$INCLUDE Tasks/Includes/task.registrations.inc}
-end;
+    procedure registerTask(const appInst : TFanoCliApplication);
+    var
+        taskFactory : ITaskFactory;
+    begin
+        {$INCLUDE Tasks/Includes/task.registrations.inc}
+    end;
 
 var
     app : TFanoCliApplication;
