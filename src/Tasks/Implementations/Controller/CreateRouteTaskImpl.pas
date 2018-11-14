@@ -84,7 +84,7 @@ uses
         controllerName := opt.getOptionValue(longOpt);
         //create main entry to main routes file
         routeContent := fileReader.read('app/Routes/routes.inc');
-        routeContent := routeContent + LineEnding +
+        routeContent := routeContent +
             '{$INCLUDE ' + controllerName + '/routes.inc}' + LineEnding;
         fileWriter.write('app/Routes/routes.inc', routeContent);
 
