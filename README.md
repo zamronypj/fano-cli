@@ -151,6 +151,20 @@ $ git add .
 $ git commit -m "Initial commit"
 ```
 
+### Creating controller
+
+After you create project structure, to scaffold controller class, run with  `--create-controller` command line options
+
+```
+$ cd test-fano
+$ fanocli --create-controller=Hello
+```
+
+It will create following files
+
+- `test-fano/app/App/Hello/HelloController.pas`
+- `test-fano/app/App/Hello/Factories/HelloControllerFactory.pas`
+
 ## Known Issues
 
 ### Issue with GNU Linker
