@@ -40,6 +40,8 @@ uses
     NullTaskImpl,
     CreateControllerFileTaskImpl,
     CreateControllerFactoryFileTaskImpl,
+    AddCtrlToUsesClauseTaskImpl,
+    CreateDependencyTaskImpl,
     CreateControllerTaskImpl;
 
     function TCreateControllerTaskFactory.build() : ITask;
@@ -51,9 +53,8 @@ uses
         result := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
-            //temporary disable controller depdendencies registration
-            //and its route creation as they are not ready
-            TNullTask.create(),
+            TCreateDependencyTask.create(TAddCtrlToUsesClauseTask.create()),
+            //temporary disable controller route creation as they are not ready
             TNullTask.create()
         );
     end;
