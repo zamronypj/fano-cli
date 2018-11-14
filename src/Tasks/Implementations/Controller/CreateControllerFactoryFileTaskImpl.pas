@@ -56,7 +56,7 @@ uses
             dir + '/' + ctrlName +'ControllerFactory.pas',
             format(
                 strRestControllerFactoryPasInc,
-                [ ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName ]
+                [ ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName ]
             )
         );
     end;

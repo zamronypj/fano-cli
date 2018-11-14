@@ -17,9 +17,6 @@ strRestControllerFactoryPasInc: string =
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Factory for controller T%sController' + LineEnding +
-    '     * %s' + LineEnding +
-    '     *' + LineEnding +
-    '     * See Routes/%s/routes.inc' + LineEnding +
     '     *' + LineEnding +
     '     * @author [[AUTHOR_NAME]] <[[AUTHOR_EMAIL]]>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
