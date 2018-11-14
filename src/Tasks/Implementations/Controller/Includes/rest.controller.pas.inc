@@ -38,7 +38,6 @@ strRestControllerPasInc: string =
     '          const request : IRequest;' + LineEnding +
     '          const response : IResponse' + LineEnding +
     '    ) : IResponse;' + LineEnding +
-    '    var strName : string;' + LineEnding +
     '    begin' + LineEnding +
     '        {---put your code here---}' + LineEnding +
     '        result := response;' + LineEnding +

@@ -75,7 +75,7 @@ uses
     var fstream : TFileStream;
         strStream : TStringStream;
     begin
-        fstream := TFileStream.create(filename, fmOpenWrite);
+        fstream := TFileStream.create(filename, fmCreate);
         strStream := TStringStream.create(content);
         try
             fstream.copyfrom(strStream, strStream.size);

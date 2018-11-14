@@ -28,10 +28,12 @@ type
     private
         addControllerToUsesClauseTask : ITask;
         addControllerToUnitSearchTask : ITask;
+        createDependencyRegistrationTask : ITask;
     public
         constructor create(
             const addCtrlToUsesClauseTask : ITask;
-            const addCtrlToUnitSearchTask : ITask
+            const addCtrlToUnitSearchTask : ITask;
+            const createDepRegistrationTask : ITask
         );
         destructor destroy(); override;
         function run(
@@ -44,11 +46,13 @@ implementation
 
     constructor TCreateDependencyTask.create(
         const addCtrlToUsesClauseTask : ITask;
-        const addCtrlToUnitSearchTask : ITask
+        const addCtrlToUnitSearchTask : ITask;
+        const createDepRegistrationTask : ITask
     );
     begin
         addControllerToUsesClauseTask := addCtrlToUsesClauseTask;
         addControllerToUnitSearchTask := addCtrlToUnitSearchTask;
+        createDependencyRegistrationTask := createDepRegistrationTask;
     end;
 
     destructor TCreateDependencyTask.destroy();
@@ -56,6 +60,7 @@ implementation
         inherited destroy();
         addControllerToUsesClauseTask := nil;
         addControllerToUnitSearchTask := nil;
+        createDependencyRegistrationTask := nil;
     end;
 
     function TCreateDependencyTask.run(
@@ -65,6 +70,7 @@ implementation
     begin
         addControllerToUsesClauseTask.run(opt, longOpt);
         addControllerToUnitSearchTask.run(opt, longOpt);
+        createDependencyRegistrationTask.run(opt, longOpt);
         result := self;
     end;
 end.

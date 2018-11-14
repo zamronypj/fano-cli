@@ -1,4 +1,4 @@
-strDependenciesInc: string =
+strCtrlRoutesInc: string =
     '(*!------------------------------------------------------------' + LineEnding +
     ' * [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     ' *' + LineEnding +
@@ -6,10 +6,4 @@ strDependenciesInc: string =
     ' * @copyright Copyright (c) [[COPYRIGHT_YEAR]] [[COPYRIGHT_HOLDER]]' + LineEnding +
     ' * @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
     ' *------------------------------------------------------------- *)' + LineEnding +
-    '' + LineEnding +
-    '{$INCLUDE main.dependencies.inc}' + LineEnding +
-    '' + LineEnding +
-    '{---put your dependencies registration here---}' + LineEnding +
-    '{ container.add(''db'', TMySqlDbFactory.create()); }' + LineEnding +
-    '{$INCLUDE controllers.dependencies.inc}' + LineEnding +
     '';

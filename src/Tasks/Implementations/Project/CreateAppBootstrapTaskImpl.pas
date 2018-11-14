@@ -63,9 +63,11 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/dependencies.inc.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/main.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/controllers.dependencies.inc.inc}
     begin
         createTextFile(dir + '/dependencies.inc', strDependenciesInc);
         createTextFile(dir + '/main.dependencies.inc', strMainDependenciesInc);
+        createTextFile(dir + '/controllers.dependencies.inc', strCtrlDependenciesInc);
     end;
 
     procedure TCreateAppBootstrapTask.createRoutes(const dir : string);

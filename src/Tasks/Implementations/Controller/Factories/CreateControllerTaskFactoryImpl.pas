@@ -41,11 +41,12 @@ uses
     FileContentWriterIntf,
     FileHelperImpl,
 
-    NullTaskImpl,
     CreateControllerFileTaskImpl,
     CreateControllerFactoryFileTaskImpl,
     AddCtrlToUsesClauseTaskImpl,
     AddCtrlToUnitSearchTaskImpl,
+    CreateDependencyRegistrationTaskImpl,
+    CreateRouteTaskImpl,
     CreateDependencyTaskImpl,
     CreateControllerTaskImpl;
 
@@ -64,10 +65,10 @@ uses
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
             TCreateDependencyTask.create(
                 TAddCtrlToUsesClauseTask.create(fileReader, fileWriter),
-                TAddCtrlToUnitSearchTask.create(fileReader, fileWriter)
+                TAddCtrlToUnitSearchTask.create(fileReader, fileWriter),
+                TCreateDependencyRegistrationTask.create(fileReader, fileWriter)
             ),
-            //temporary disable controller route creation as they are not ready
-            TNullTask.create()
+            TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
         );
     end;
 
