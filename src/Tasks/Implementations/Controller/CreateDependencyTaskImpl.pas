@@ -27,9 +27,11 @@ type
     TCreateDependencyTask = class(TInterfacedObject, ITask)
     private
         addControllerToUsesClauseTask : ITask;
+        addControllerToUnitSearchTask : ITask;
     public
         constructor create(
-            const addCtrlToUsesClauseTask : ITask
+            const addCtrlToUsesClauseTask : ITask;
+            const addCtrlToUnitSearchTask : ITask
         );
         destructor destroy(); override;
         function run(
@@ -41,16 +43,19 @@ type
 implementation
 
     constructor TCreateDependencyTask.create(
-        const addCtrlToUsesClauseTask : ITask
+        const addCtrlToUsesClauseTask : ITask;
+        const addCtrlToUnitSearchTask : ITask
     );
     begin
         addControllerToUsesClauseTask := addCtrlToUsesClauseTask;
+        addControllerToUnitSearchTask := addCtrlToUnitSearchTask;
     end;
 
     destructor TCreateDependencyTask.destroy();
     begin
         inherited destroy();
         addControllerToUsesClauseTask := nil;
+        addControllerToUnitSearchTask := nil;
     end;
 
     function TCreateDependencyTask.run(
@@ -59,6 +64,7 @@ implementation
     ) : ITask;
     begin
         addControllerToUsesClauseTask.run(opt, longOpt);
+        addControllerToUnitSearchTask.run(opt, longOpt);
         result := self;
     end;
 end.

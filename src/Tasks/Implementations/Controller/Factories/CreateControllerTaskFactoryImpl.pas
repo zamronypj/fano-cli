@@ -53,7 +53,12 @@ uses
         result := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
             TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
-            TCreateDependencyTask.create(TAddCtrlToUsesClauseTask.create()),
+            TCreateDependencyTask.create(
+                TAddCtrlToUsesClauseTask.create(),
+                //temporary disable add controller to unit search
+                //as they are not ready
+                TNullTask.create()
+            ),
             //temporary disable controller route creation as they are not ready
             TNullTask.create()
         );
