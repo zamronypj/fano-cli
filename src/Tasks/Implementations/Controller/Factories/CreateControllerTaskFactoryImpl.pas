@@ -39,6 +39,7 @@ uses
     DirectoryCreatorImpl,
     NullTaskImpl,
     CreateControllerFileTaskImpl,
+    CreateControllerFactoryFileTaskImpl,
     CreateControllerTaskImpl;
 
     function TCreateControllerTaskFactory.build() : ITask;
@@ -49,7 +50,7 @@ uses
         directoryCreator := TDirectoryCreator.create();
         result := TCreateControllerTask.create(
             TCreateControllerFileTask.create(textFileCreator, directoryCreator),
-            TNullTask.create(),
+            TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
             TNullTask.create()
         );
     end;

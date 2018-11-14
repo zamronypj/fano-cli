@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit CreateControllerFileTaskImpl;
+unit CreateControllerFactoryFileTaskImpl;
 
 interface
 
@@ -21,14 +21,14 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that scaffolding controller class
-     * file
+     * Task that scaffolding controller factory
+     * class file
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateControllerFileTask = class(TBaseCreateFileTask)
+    TCreateControllerFactoryFileTask = class(TBaseCreateFileTask)
     private
-        procedure createControllerFile(
+        procedure createControllerFactoryFile(
             const dir :string;
             const ctrlName : string
         );
@@ -45,23 +45,23 @@ uses
 
     SysUtils;
 
-    procedure TCreateControllerFileTask.createControllerFile(
+    procedure TCreateControllerFactoryFileTask.createControllerFactoryFile(
         const dir :string;
         const ctrlName : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Controller/Includes/rest.controller.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Controller/Includes/rest.controller.factory.pas.inc}
     begin
         createTextFile(
-            dir + '/' + ctrlName + 'Controller.pas',
+            dir + '/' + ctrlName +'ControllerFactory.pas',
             format(
-                strRestControllerPasInc,
-                [ ctrlName, lowerCase(ctrlName), ctrlName, ctrlName, ctrlName ]
+                strRestControllerFactoryPasInc,
+                [ ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName, ctrlName ]
             )
         );
     end;
 
-    function TCreateControllerFileTask.run(
+    function TCreateControllerFactoryFileTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
@@ -69,9 +69,9 @@ uses
         baseDir : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + '/' + controllerName;
+        baseDir := baseDirectory + '/' + controllerName + '/Factories';
         createDirIfNotExists(baseDir);
-        createControllerFile(baseDir, controllerName);
+        createControllerFactoryFile(baseDir, controllerName);
         result := self;
     end;
 end.

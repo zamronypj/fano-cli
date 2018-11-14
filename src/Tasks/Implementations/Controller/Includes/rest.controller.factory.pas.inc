@@ -1,4 +1,4 @@
-strRestControllerFactoryInc: string =
+strRestControllerFactoryPasInc: string =
     '(*!------------------------------------------------------------' + LineEnding +
     ' * [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     ' *' + LineEnding +

@@ -19,6 +19,8 @@ uses
     TextFileCreatorIntf,
     DirectoryCreatorIntf;
 
+const BASE_DIRECTORY = 'app/App';
+
 type
 
     (*!--------------------------------------
@@ -32,12 +34,14 @@ type
         textFileCreator : ITextFileCreator;
         directoryCreator : IDirectoryCreator;
     protected
+        baseDirectory : string;
         procedure createTextFile(const filename : string; const content : string);
         function createDirIfNotExists(const dir : string) : string;
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
-            const dirCreator : IDirectoryCreator
+            const dirCreator : IDirectoryCreator;
+            const baseDir : string = BASE_DIRECTORY
         );
         destructor destroy(); override;
 
@@ -51,11 +55,13 @@ implementation
 
     constructor TBaseCreateFileTask.create(
         const txtFileCreator : ITextFileCreator;
-        const dirCreator : IDirectoryCreator
+        const dirCreator : IDirectoryCreator;
+        const baseDir : string = BASE_DIRECTORY
     );
     begin
         textFileCreator := txtFileCreator;
         directoryCreator := dirCreator;
+        baseDirectory := baseDir;
     end;
 
     destructor TBaseCreateFileTask.destroy();
