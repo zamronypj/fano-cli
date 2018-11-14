@@ -51,7 +51,7 @@ implementation
     );
     begin
         createControllerFileTask := createCtrlFileTask;
-        createControllerFactoryTask := createCtrlFactoryFileTask;
+        createControllerFactoryFileTask := createCtrlFactoryFileTask;
         createRouteTask := createCtrlRouteTask;
     end;
 
@@ -70,7 +70,7 @@ implementation
     begin
         createControllerFileTask.run(opt, longOpt);
         createControllerFactoryFileTask.run(opt, longOpt);
-        createRoutesTask.run(opt, longOpt);
+        createRouteTask.run(opt, longOpt);
         result := self;
     end;
 end.

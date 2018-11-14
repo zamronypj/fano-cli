@@ -15,7 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    BaseCreateFileTaskImpl;
 
 type
 
@@ -25,15 +26,40 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateControllerFileTask = class(TInterfacedObject, ITask)
+    TCreateControllerFileTask = class(TBaseCreateFileTask)
+    private
+        procedure createControllerFile(
+            const dir :string;
+            const ctrlName : string
+        );
     public
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask;
+        ) : ITask; override;
     end;
 
 implementation
+
+uses
+
+    SysUtils;
+
+    procedure TCreateControllerFileTask.createControllerFile(
+        const dir :string;
+        const ctrlName : string
+    );
+    var
+        {$INCLUDE src/Tasks/Implementations/Controller/Includes/rest.controller.pas.inc}
+    begin
+        createTextFile(
+            dir + '/' + ctrlName + 'Controller.pas',
+            format(
+                strRestControllerPasInc,
+                [ ctrlName, lowerCase(ctrlName), ctrlName, ctrlName, ctrlName ]
+            )
+        );
+    end;
 
     function TCreateControllerFileTask.run(
         const opt : ITaskOptions;
@@ -42,6 +68,8 @@ implementation
     var controllerName : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
+        createDirIfNotExists('app/App/' + controllerName);
+        createControllerFile('app/App/' + controllerName, controllerName);
         result := self;
     end;
 end.

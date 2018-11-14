@@ -33,6 +33,9 @@ implementation
 
 uses
 
+    TextFileCreatorIntf,
+    TextFileCreatorImpl,
+    DirectoryCreatorImpl,
     CreateDirTaskImpl,
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
@@ -43,13 +46,15 @@ uses
     CreateProjectTaskImpl;
 
     function TCreateProjectTaskFactory.build() : ITask;
+    var textFileCreator : ITextFileCreator;
     begin
+        textFileCreator := TTextFileCreator.create();
         result := TCreateProjectTask.create(
-            TCreateDirTask.create(),
-            TCreateShellScriptsTask.create(),
-            TCreateAppConfigsTask.create(),
-            TCreateAdditionalFilesTask.create(),
-            TCreateAppBootstrapTask.create(),
+            TCreateDirTask.create(TDirectoryCreator.create()),
+            TCreateShellScriptsTask.create(textFileCreator),
+            TCreateAppConfigsTask.create(textFileCreator),
+            TCreateAdditionalFilesTask.create(textFileCreator),
+            TCreateAppBootstrapTask.create(textFileCreator),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
     end;

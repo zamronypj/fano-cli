@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-unit CreateFileTaskImpl;
+unit BaseCreateFileTaskImpl;
 
 interface
 
@@ -17,7 +17,7 @@ uses
     TaskOptionsIntf,
     TaskIntf,
     TextFileCreatorIntf,
-    BaseProjectTaskImpl;
+    DirectoryCreatorIntf;
 
 type
 
@@ -27,30 +27,50 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateFileTask = class(TBaseProjectTask)
+    TBaseCreateFileTask = class(TInterfacedObject, ITask)
     private
         textFileCreator : ITextFileCreator;
+        directoryCreator : IDirectoryCreator;
     protected
         procedure createTextFile(const filename : string; const content : string);
+        function createDirIfNotExists(const dir : string) : string;
     public
-        constructor create(const txtFileCreator : ITextFileCreator);
+        constructor create(
+            const txtFileCreator : ITextFileCreator;
+            const dirCreator : IDirectoryCreator
+        );
         destructor destroy(); override;
+
+        function run(
+            const opt : ITaskOptions;
+            const longOpt : shortstring
+        ) : ITask; virtual; abstract;
     end;
 
 implementation
 
-    constructor TCreateFileTask.create(const txtFileCreator : ITextFileCreator);
+    constructor TBaseCreateFileTask.create(
+        const txtFileCreator : ITextFileCreator;
+        const dirCreator : IDirectoryCreator
+    );
     begin
         textFileCreator := txtFileCreator;
+        directoryCreator := dirCreator;
     end;
 
-    destructor TCreateFileTask.destroy();
+    destructor TBaseCreateFileTask.destroy();
     begin
         inherited destroy();
         textFileCreator := nil;
+        directoryCreator := nil;
     end;
 
-    procedure TCreateFileTask.createTextFile(const filename : string; const content : string);
+    function TBaseCreateFileTask.createDirIfNotExists(const dir : string) : string;
+    begin
+        result := directoryCreator.createDirIfNotExists(dir);
+    end;
+
+    procedure TBaseCreateFileTask.createTextFile(const filename : string; const content : string);
     begin
         textFileCreator.createTextFile(filename, content);
     end;

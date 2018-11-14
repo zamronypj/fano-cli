@@ -40,6 +40,10 @@
 # user application base directory
 #----------------------------------------------
 -Fusrc/Apps/Implementations
+-Fusrc/Libs/File/Contracts
+-Fusrc/Libs/File/Implementations
+-Fusrc/Libs/Dir/Contracts
+-Fusrc/Libs/Dir/Implementations
 -Fusrc/Libs/List/Contracts
 -Fusrc/Libs/List/Implementations
 -Fusrc/Tasks/Types
@@ -52,6 +56,8 @@
 -Fusrc/Tasks/Implementations/ProjectNoGit/Factories
 -Fusrc/Tasks/Implementations/ProjectNoCommit
 -Fusrc/Tasks/Implementations/ProjectNoCommit/Factories
+-Fusrc/Tasks/Implementations/Controller
+-Fusrc/Tasks/Implementations/Controller/Factories
 #-Fu$USER_APP_DIR$/path/to/other/units
 
 #----------------------------------------------

@@ -18,53 +18,14 @@ uses
     InfoTaskImpl,
     CreateProjectTaskFactoryImpl,
     CreateProjectNoGitTaskFactoryImpl,
-    CreateProjectNoCommitTaskFactoryImpl;
+    CreateProjectNoCommitTaskFactoryImpl,
+    CreateControllerTaskFactoryImpl;
 
 procedure registerTask(const appInst : TFanoCliApplication);
 var
     taskFactory : ITaskFactory;
 begin
-    appInst.registerTask(
-        'help',
-        '--help Display help information',
-        TInfoTask.create(appInst.getTaskList())
-    );
-
-    taskFactory := TCreateProjectTaskFactory.create();
-    try
-        appInst.registerTask(
-            'create-project',
-            '--create-project=[project-name] Create new project',
-            taskFactory.build()
-        );
-    finally
-        taskFactory := nil;
-    end;
-
-    taskFactory := TCreateProjectNoGitTaskFactory.create();
-    try
-        appInst.registerTask(
-            'create-project-without-git',
-            '--create-project-without-git=[project-name] ' +
-            'Create project without Git repository',
-            taskFactory.build()
-        );
-    finally
-        taskFactory := nil;
-    end;
-
-    taskFactory := TCreateProjectNoCommitTaskFactory.create();
-    try
-        appInst.registerTask(
-            'create-project-no-commit',
-            '--create-project-no-commit=[project-name] ' +
-            'Create project with Git repository but without committing them',
-            taskFactory.build()
-        );
-    finally
-        taskFactory := nil;
-    end;
-
+    {$INCLUDE Tasks/Includes/task.registrations.inc}
 end;
 
 var

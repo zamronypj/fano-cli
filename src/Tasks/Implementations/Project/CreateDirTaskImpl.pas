@@ -16,6 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
+    DirectoryCreatorIntf,
     BaseProjectTaskImpl;
 
 type
@@ -28,9 +29,12 @@ type
      *---------------------------------------*)
     TCreateDirTask = class(TBaseProjectTask)
     private
+        directoryCreator : IDirectoryCreator;
         function createDirIfNotExists(const dir : string) : string;
         procedure createDirectoryStructures(const baseDir : string);
     public
+        constructor create(const dirCreator : IDirectoryCreator);
+        destructor destroy(); override;
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
@@ -43,13 +47,20 @@ uses
 
     sysutils;
 
+    constructor TCreateDirTask.create(const dirCreator : IDirectoryCreator);
+    begin
+        directoryCreator := dirCreator;
+    end;
+
+    destructor TCreateDirTask.destroy();
+    begin
+        inherited destroy();
+        directoryCreator := nil;
+    end;
+
     function TCreateDirTask.createDirIfNotExists(const dir : string) : string;
     begin
-        result := dir;
-        if (not directoryExists(result)) then
-        begin
-            mkdir(result);
-        end;
+        result := directoryCreator.createDirIfNotExists(dir);
     end;
 
     procedure TCreateDirTask.createDirectoryStructures(const baseDir : string);

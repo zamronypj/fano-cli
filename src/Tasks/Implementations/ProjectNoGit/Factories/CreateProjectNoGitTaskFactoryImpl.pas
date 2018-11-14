@@ -33,6 +33,10 @@ type
 implementation
 
 uses
+
+    TextFileCreatorIntf,
+    TextFileCreatorImpl,
+    DirectoryCreatorImpl,
     NullTaskImpl,
     CreateDirTaskImpl,
     CreateAppConfigsTaskImpl,
@@ -42,14 +46,16 @@ uses
     CreateProjectTaskImpl;
 
     function TCreateProjectNoGitTaskFactory.build() : ITask;
+    var textFileCreator : ITextFileCreator;
     begin
+        textFileCreator := TTextFileCreator.create();
         result := TCreateProjectTask.create(
-            TCreateDirTask.create(),
-            TCreateShellScriptsTask.create(),
-            TCreateAppConfigsTask.create(),
-            TCreateAdditionalFilesTask.create(),
-            TCreateAppBootstrapTask.create(),
-            //replace git task with NullTaskImpl to disable GIT
+            TCreateDirTask.create(TDirectoryCreator.create()),
+            TCreateShellScriptsTask.create(textFileCreator),
+            TCreateAppConfigsTask.create(textFileCreator),
+            TCreateAdditionalFilesTask.create(textFileCreator),
+            TCreateAppBootstrapTask.create(textFileCreator),
+            //replace git task with NullTaskImpl to disable git repo creation
             TNullTask.create()
         );
     end;

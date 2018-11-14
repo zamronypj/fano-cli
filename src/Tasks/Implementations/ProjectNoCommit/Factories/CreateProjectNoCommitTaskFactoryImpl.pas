@@ -34,6 +34,10 @@ type
 implementation
 
 uses
+
+    TextFileCreatorIntf,
+    TextFileCreatorImpl,
+    DirectoryCreatorImpl,
     NullTaskImpl,
     CreateDirTaskImpl,
     CreateAppConfigsTaskImpl,
@@ -44,13 +48,15 @@ uses
     CreateProjectTaskImpl;
 
     function TCreateProjectNoCommitTaskFactory.build() : ITask;
+    var textFileCreator : ITextFileCreator;
     begin
+        textFileCreator := TTextFileCreator.create();
         result := TCreateProjectTask.create(
-            TCreateDirTask.create(),
-            TCreateShellScriptsTask.create(),
-            TCreateAppConfigsTask.create(),
-            TCreateAdditionalFilesTask.create(),
-            TCreateAppBootstrapTask.create(),
+            TCreateDirTask.create(TDirectoryCreator.create()),
+            TCreateShellScriptsTask.create(textFileCreator),
+            TCreateAppConfigsTask.create(textFileCreator),
+            TCreateAdditionalFilesTask.create(textFileCreator),
+            TCreateAppBootstrapTask.create(textFileCreator),
             //replace git commit task with NullTaskImpl to disable Git commit
             TInitGitRepoTask.create(TNullTask.create())
         );

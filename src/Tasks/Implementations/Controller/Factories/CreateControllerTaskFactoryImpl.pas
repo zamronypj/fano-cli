@@ -33,17 +33,24 @@ implementation
 
 uses
 
+    TextFileCreatorIntf,
+    TextFileCreatorImpl,
+    DirectoryCreatorIntf,
+    DirectoryCreatorImpl,
+    NullTaskImpl,
+    CreateControllerFileTaskImpl,
     CreateControllerTaskImpl;
 
     function TCreateControllerTaskFactory.build() : ITask;
+    var textFileCreator : ITextFileCreator;
+        directoryCreator : IDirectoryCreator;
     begin
+        textFileCreator := TTextFileCreator.create();
+        directoryCreator := TDirectoryCreator.create();
         result := TCreateControllerTask.create(
-            TCreateDirTask.create(),
-            TCreateShellScriptsTask.create(),
-            TCreateAppConfigsTask.create(),
-            TCreateAdditionalFilesTask.create(),
-            TCreateAppBootstrapTask.create(),
-            TInitGitRepoTask.create(TCommitGitRepoTask.create())
+            TCreateControllerFileTask.create(textFileCreator, directoryCreator),
+            TNullTask.create(),
+            TNullTask.create()
         );
     end;
 
