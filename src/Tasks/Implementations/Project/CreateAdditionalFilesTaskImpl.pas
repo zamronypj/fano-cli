@@ -47,9 +47,12 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/readme.md.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/gitignore.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/htaccess.example.inc}
     begin
         createTextFile(dir + '/README.md', strReadme);
         createTextFile(dir + '/.gitignore', strGitignore);
+        createTextFile(dir + '/app/public/htaccess.example', strHtaccessExampleInc);
+        createTextFile(dir + '/app/public/.htaccess', strHtaccessExampleInc);
         createTextFile(dir + '/bin/README.md', '# directory for binary output');
         createTextFile(dir + '/bin/unit/README.md', '# directory for compiled units');
     end;
