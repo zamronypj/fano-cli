@@ -3,7 +3,7 @@ REM Fano CLI Application (https://fanoframework.github.io)
 REM
 REM @link      https://github.com/fanoframework/fano-cli
 REM @copyright Copyright (c) 2018 Zamrony P. Juhara
-REM @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (GPL 3.0)
+REM @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
 REM-------------------------------------------------------------
 
 REM ------------------------------------
