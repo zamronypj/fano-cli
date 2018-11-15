@@ -59,6 +59,7 @@
 -Fusrc/Tasks/Implementations/Controller
 -Fusrc/Tasks/Implementations/Controller/Factories
 -Fusrc/Tasks/Implementations/RunCheck
+-Fusrc/Tasks/Implementations/InvRunCheck
 #-Fu$USER_APP_DIR$/path/to/other/units
 
 #----------------------------------------------

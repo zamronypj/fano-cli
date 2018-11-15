@@ -43,13 +43,15 @@ uses
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskImpl,
+    InvRunCheckTaskImpl;
 
     function TCreateProjectNoGitTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
+        createPrjTask : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
-        result := TCreateProjectTask.create(
+        createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator),
             TCreateAppConfigsTask.create(textFileCreator),
@@ -58,6 +60,10 @@ uses
             //replace git task with NullTaskImpl to disable git repo creation
             TNullTask.create()
         );
+
+        //protect to avoid accidentally creating another project inside Fano-CLI
+        //project directory structure
+        result := TInvRunCheckTask.create(createPrjTask);
     end;
 
 end.

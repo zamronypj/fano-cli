@@ -72,6 +72,8 @@ uses
             ),
             TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
         );
+        //protect to avoid accidentally creating controller in non Fano-CLI
+        //project directory structure
         result := TRunCheckTask.create(task);
     end;
 

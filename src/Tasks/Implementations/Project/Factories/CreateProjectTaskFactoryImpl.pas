@@ -43,13 +43,15 @@ uses
     CreateAppBootstrapTaskImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskImpl,
+    InvRunCheckTaskImpl;
 
     function TCreateProjectTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
+        createPrjTask : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
-        result := TCreateProjectTask.create(
+        createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator),
             TCreateAppConfigsTask.create(textFileCreator),
@@ -57,6 +59,10 @@ uses
             TCreateAppBootstrapTask.create(textFileCreator),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
+
+        //protect to avoid accidentally creating another project inside Fano-CLI
+        //project directory structure
+        result := TInvRunCheckTask.create(createPrjTask);
     end;
 
 end.

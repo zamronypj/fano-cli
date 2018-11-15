@@ -20,14 +20,18 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that run other task only if if
+     * Task that run other task only if
      * we are in project directory that is generated
      * by Fano CLI tools
-     *
+     *------------------------------------------
+     * This is to protect creating controller accidentally
+     * outside non Fano-CLI generated project directory
+     * structure.
+     *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TRunCheckTask = class(TInterfacedObject, ITask)
-    private
+    protected
         actualTask : ITask;
         function inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
     public
@@ -37,7 +41,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask;
+        ) : ITask; virtual;
     end;
 
 implementation
