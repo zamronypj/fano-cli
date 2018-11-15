@@ -40,6 +40,8 @@ strRestControllerPasInc: string =
     '    ) : IResponse;' + LineEnding +
     '    begin' + LineEnding +
     '        {---put your code here---}' + LineEnding +
+    '        //response.headers().setHeader(''Content-Type'', ''text/html'');' + LineEnding +
+    '        //response.body().write(''nice'');' + LineEnding +
     '        result := response;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
