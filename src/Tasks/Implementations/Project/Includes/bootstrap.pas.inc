@@ -40,9 +40,9 @@ strBootstrapPas: string =
     '    end;' + LineEnding +
     '' + LineEnding +
     '    procedure TBootstrapApp.buildRoutes(const container : IDependencyContainer);' + LineEnding +
-    '    var router : IRouteCollection;' + LineEnding +
+    '    var router : IRouter;' + LineEnding +
     '    begin' + LineEnding +
-    '        router := container.get(''router'') as IRouteCollection;' + LineEnding +
+    '        router := container.get(''router'') as IRouter;' + LineEnding +
     '        try' + LineEnding +
     '            {$INCLUDE Routes/routes.inc}' + LineEnding +
     '        finally' + LineEnding +
