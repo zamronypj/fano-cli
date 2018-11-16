@@ -58,8 +58,10 @@
 -Fusrc/Tasks/Implementations/ProjectNoCommit/Factories
 -Fusrc/Tasks/Implementations/Controller
 -Fusrc/Tasks/Implementations/Controller/Factories
+-Fusrc/Tasks/Implementations/Decorator
 -Fusrc/Tasks/Implementations/RunCheck
 -Fusrc/Tasks/Implementations/InvRunCheck
+-Fusrc/Tasks/Implementations/EmptyDirCheck
 #-Fu$USER_APP_DIR$/path/to/other/units
 
 #----------------------------------------------

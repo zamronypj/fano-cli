@@ -44,11 +44,13 @@ uses
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
-    InvRunCheckTaskImpl;
+    InvRunCheckTaskImpl,
+    EmptyDirCheckTaskImpl;
 
     function TCreateProjectTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         createPrjTask : ITask;
+        invRunCheckTask : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
         createPrjTask := TCreateProjectTask.create(
@@ -62,7 +64,11 @@ uses
 
         //protect to avoid accidentally creating another project inside Fano-CLI
         //project directory structure
-        result := TInvRunCheckTask.create(createPrjTask);
+        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
+
+        //protect to avoid accidentally creating project inside
+        //existing and non empty directory
+        result := TEmptyDirCheckTask.create(invRunCheckTask);
     end;
 
 end.
