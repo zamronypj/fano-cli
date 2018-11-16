@@ -63,14 +63,14 @@ uses
 
     function TRunCheckTask.inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
     begin
-        result := directoryExists('fano') and
-            directoryExists('app/Dependencies') and
-            fileExists('build.sh') and
-            fileExists('build.cfg') and
-            fileExists('build.cfg.sample') and
-            fileExists('app/bootstrap.pas') and
-            fileExists('app/app.pas') and
-            fileExists('app/Dependencies/dependencies.inc');
+        result := directoryExists(currDir + 'fano') and
+            directoryExists(currDir + 'src/Dependencies') and
+            fileExists(currDir + 'build.sh') and
+            fileExists(currDir + 'build.cfg') and
+            fileExists(currDir + 'build.cfg.sample') and
+            fileExists(currDir + 'src/bootstrap.pas') and
+            fileExists(currDir + 'src/app.pas') and
+            fileExists(currDir + 'src/Dependencies/dependencies.inc');
     end;
 
     function TRunCheckTask.run(
@@ -78,7 +78,7 @@ uses
         const longOpt : shortstring
     ) : ITask;
     begin
-        if (inFanoCliGeneratedProjectDir(getCurrentDir())) then
+        if (inFanoCliGeneratedProjectDir(getCurrentDir() + DirectorySeparator)) then
         begin
             actualTask.run(opt, longOpt);
         end else

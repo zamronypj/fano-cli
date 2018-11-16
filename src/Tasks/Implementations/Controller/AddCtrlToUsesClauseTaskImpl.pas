@@ -128,7 +128,7 @@ const
         modifiedUsesUnits : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        bootstrapUnitContent := fileReader.read('app/bootstrap.pas');
+        bootstrapUnitContent := fileReader.read('src/bootstrap.pas');
         usesUnits := getUnitNamesFromUsesClause(bootstrapUnitContent);
         if (length(usesUnits) > 0) then
         begin
@@ -142,7 +142,7 @@ const
                 modifiedUsesUnits,
                 []
             );
-            fileWriter.write('app/bootstrap.pas', modifiedUnitContent);
+            fileWriter.write('src/bootstrap.pas', modifiedUnitContent);
         end;
         result := self;
     end;

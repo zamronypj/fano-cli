@@ -52,6 +52,11 @@ uses
     SysUtils,
     Classes;
 
+const
+
+    DEP_FILE = 'src' + DirectorySeparator + 'Dependencies' +
+        DirectorySeparator + 'controllers.dependencies.inc';
+
     constructor TCreateDependencyRegistrationTask.create(
         fReader : IFileContentReader;
         fWriter : IFileContentWriter
@@ -74,19 +79,16 @@ uses
     ) : ITask;
     var controllerName : string;
         depContent : string;
-        depFile : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        depFile := 'app' + DirectorySeparator + 'Dependencies' +
-            DirectorySeparator + 'controllers.dependencies.inc';
         //create main entry to controller dependencies file
-        depContent := fileReader.read(depFile);
+        depContent := fileReader.read(DEP_FILE);
         depContent := depContent + LineEnding +
             format(
                 'container.add(''%sController'', T%sControllerFactory.create());',
                 [lowerCase(controllerName), controllerName]
             );
-        fileWriter.write(depFile, depContent);
+        fileWriter.write(DEP_FILE, depContent);
 
         result := self;
     end;

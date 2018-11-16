@@ -70,19 +70,17 @@ uses
         currentDir := getCurrentDir();
         chDir(baseDir);
 
-        createDirIfNotExists('app');
-        createDirIfNotExists('app/App');
-        createDirIfNotExists('app/config');
-        createDirIfNotExists('app/Dependencies');
-        createDirIfNotExists('app/public');
-        createDirIfNotExists('app/Routes');
-        createDirIfNotExists('app/Templates');
-        createDirIfNotExists('app/storages');
-        createDirIfNotExists('app/storages/logs');
-
+        createDirIfNotExists('src');
+        createDirIfNotExists('src/App');
+        createDirIfNotExists('src/config');
+        createDirIfNotExists('src/Dependencies');
+        createDirIfNotExists('src/Routes');
+        createDirIfNotExists('src/Templates');
+        createDirIfNotExists('public');
+        createDirIfNotExists('storages');
+        createDirIfNotExists('storages/logs');
         createDirIfNotExists('bin');
         createDirIfNotExists('bin/unit');
-
         createDirIfNotExists('tools');
         chDir(currentDir);
     end;

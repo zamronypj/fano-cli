@@ -84,10 +84,10 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createApp(baseDirectory + '/app');
-        createBootstrap(baseDirectory + '/app');
-        createDependencies(baseDirectory + '/app/Dependencies');
-        createRoutes(baseDirectory + '/app/Routes');
+        createApp(baseDirectory + '/src');
+        createBootstrap(baseDirectory + '/src');
+        createDependencies(baseDirectory + '/src/Dependencies');
+        createRoutes(baseDirectory + '/src/Routes');
         result := self;
     end;
 end.

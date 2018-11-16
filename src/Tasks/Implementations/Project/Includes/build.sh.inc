@@ -19,7 +19,7 @@ strBuildSh: string =
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${USER_APP_DIR}" ]]; then' + LineEnding +
-    'export USER_APP_DIR="app"' + LineEnding +
+    'export USER_APP_DIR="src"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then' + LineEnding +
@@ -27,7 +27,7 @@ strBuildSh: string =
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then' + LineEnding +
-    'export EXEC_OUTPUT_DIR="app/public"' + LineEnding +
+    'export EXEC_OUTPUT_DIR="public"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${EXEC_OUTPUT_NAME}" ]]; then' + LineEnding +

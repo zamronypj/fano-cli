@@ -14,9 +14,9 @@ strBuildCmd: string =
     'SET FANO_DIR="fano"' + LineEnding +
     '' + LineEnding +
     'IF NOT DEFINED BUILD_TYPE (SET BUILD_TYPE="prod")' + LineEnding +
-    'IF NOT DEFINED USER_APP_DIR (SET USER_APP_DIR="app")' + LineEnding +
+    'IF NOT DEFINED USER_APP_DIR (SET USER_APP_DIR="src")' + LineEnding +
     'IF NOT DEFINED UNIT_OUTPUT_DIR (SET UNIT_OUTPUT_DIR="bin\unit")' + LineEnding +
-    'IF NOT DEFINED EXEC_OUTPUT_DIR (SET EXEC_OUTPUT_DIR="app\public")' + LineEnding +
+    'IF NOT DEFINED EXEC_OUTPUT_DIR (SET EXEC_OUTPUT_DIR="public")' + LineEnding +
     'IF NOT DEFINED EXEC_OUTPUT_NAME (SET EXEC_OUTPUT_NAME="app.cgi")' + LineEnding +
     'IF NOT DEFINED SOURCE_PROGRAM_NAME (SET SOURCE_PROGRAM_NAME="app.pas")' + LineEnding +
     '' + LineEnding +

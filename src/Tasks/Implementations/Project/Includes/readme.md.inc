@@ -42,10 +42,10 @@ strReadme: string =
     'These `*.cfg` files contain some Free Pascal compiler switches that you can turn on/off to change how executable is compiled and generated. For complete' + LineEnding +
     'explanation on available compiler switches, consult Free Pascal documentation.' + LineEnding +
     '' + LineEnding +
-    'Also copy `app/config/config.json.sample` to `app/config/config.json` and edit' + LineEnding +
+    'Also copy `src/config/config.json.sample` to `src/config/config.json` and edit' + LineEnding +
     'configuration as needed. For example, you may need to change `baseUrl` to match your own base url so JavaScript or CSS stylesheets point to correct URL.' + LineEnding +
     '' + LineEnding +
-    '    $ cp app/config/config.json.sample app/config/config.json' + LineEnding +
+    '    $ cp src/config/config.json.sample src/config/config.json' + LineEnding +
     '    $ cp build.prod.cfg.sample build.prod.cfg' + LineEnding +
     '    $ cp build.dev.cfg.sample build.dev.cfg' + LineEnding +
     '    $ cp build.cfg.sample build.cfg' + LineEnding +
@@ -57,7 +57,7 @@ strReadme: string =
     '    $ ./tools/config.setup.sh' + LineEnding +
     '    $ ./build.sh' + LineEnding +
     '' + LineEnding +
-    'By default, it will output binary executable in `app/public` directory.' + LineEnding +
+    'By default, it will output binary executable in `public` directory.' + LineEnding +
     '' + LineEnding +
     '### Build for different environment' + LineEnding +
     '' + LineEnding +

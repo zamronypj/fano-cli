@@ -54,6 +54,10 @@ uses
     SysUtils,
     Classes;
 
+const
+
+    BASE_ROUTE_DIR = 'src' + DirectorySeparator + 'Routes' + DirectorySeparator;
+
     constructor TCreateRouteTask.create(
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
@@ -79,23 +83,24 @@ uses
     ) : ITask;
     var controllerName : string;
         routeContent : string;
+        baseRouteDir : string;
         {$INCLUDE src/Tasks/Implementations/Controller/Includes/routes.inc.inc}
     begin
         controllerName := opt.getOptionValue(longOpt);
         //create main entry to main routes file
-        routeContent := fileReader.read('app/Routes/routes.inc');
+        routeContent := fileReader.read(BASE_ROUTE_DIR + 'routes.inc');
         routeContent := routeContent +
             '{$INCLUDE ' + controllerName + '/routes.inc}' + LineEnding;
-        fileWriter.write('app/Routes/routes.inc', routeContent);
+        fileWriter.write(BASE_ROUTE_DIR + 'routes.inc', routeContent);
 
         //create controller route file
-        directoryCreator.createDirIfNotExists('app/Routes/' + controllerName);
+        directoryCreator.createDirIfNotExists(BASE_ROUTE_DIR + controllerName);
         strCtrlRoutesInc := strCtrlRoutesInc + LineEnding +
             format(
               'router.get(''/%s'', container.get(''%sController'') as IRouteHandler);',
               [lowerCase(controllerName), lowerCase(controllerName)]
             ) + LineEnding;
-        fileWriter.write('app/Routes/' + controllerName + '/routes.inc', strCtrlRoutesInc);
+        fileWriter.write(BASE_ROUTE_DIR + controllerName + '/routes.inc', strCtrlRoutesInc);
 
         result := self;
     end;

@@ -50,7 +50,7 @@ uses
         const longOpt : shortstring
     ) : ITask;
     begin
-        if (not inFanoCliGeneratedProjectDir(getCurrentDir())) then
+        if (not inFanoCliGeneratedProjectDir(getCurrentDir() + DirectorySeparator)) then
         begin
             actualTask.run(opt, longOpt);
         end else

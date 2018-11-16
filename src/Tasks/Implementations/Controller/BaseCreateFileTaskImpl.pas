@@ -19,7 +19,7 @@ uses
     TextFileCreatorIntf,
     DirectoryCreatorIntf;
 
-const BASE_DIRECTORY = 'app/App';
+const BASE_DIRECTORY = 'src' + DirectorySeparator + 'App';
 
 type
 
