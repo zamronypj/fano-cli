@@ -31,7 +31,7 @@ strGitignore: string =
     '#----------------------------------------------' + LineEnding +
     '# Do not ignore README.md' + LineEnding +
     '# This file is provided so Git can create' + LineEnding +
-    '# app/storages/logs directory when this repository' + LineEnding +
+    '# storages/logs directory when this repository' + LineEnding +
     '# is cloned.' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '!storages/logs/README.md' + LineEnding +
