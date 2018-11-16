@@ -83,7 +83,6 @@ const
     ) : ITask;
     var controllerName : string;
         routeContent : string;
-        baseRouteDir : string;
         {$INCLUDE src/Tasks/Implementations/Controller/Includes/routes.inc.inc}
     begin
         controllerName := opt.getOptionValue(longOpt);
