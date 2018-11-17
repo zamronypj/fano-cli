@@ -80,7 +80,7 @@ strReadme: string =
     '## Change executable output directory' + LineEnding +
     '' + LineEnding +
     'Compilation will output executable to directory defined in `EXEC_OUTPUT_DIR`' + LineEnding +
-    'environment variable. By default is `app/public` directory.' + LineEnding +
+    'environment variable. By default is `public` directory.' + LineEnding +
     '' + LineEnding +
     '    $ EXEC_OUTPUT_DIR=/path/to/public/dir ./build.sh' + LineEnding +
     '' + LineEnding +
@@ -102,9 +102,9 @@ strReadme: string =
     '```' + LineEnding +
     '<VirtualHost *:80>' + LineEnding +
     '     ServerName www.example.com' + LineEnding +
-    '     DocumentRoot /home/example/app/public' + LineEnding +
+    '     DocumentRoot /home/example/public' + LineEnding +
     '' + LineEnding +
-    '     <Directory "/home/example/app/public">' + LineEnding +
+    '     <Directory "/home/example/public">' + LineEnding +
     '         Options +ExecCGI' + LineEnding +
     '         AllowOverride FileInfo' + LineEnding +
     '         Require all granted' + LineEnding +
@@ -132,14 +132,14 @@ strReadme: string =
     '    RewriteRule ^(.*)$ app.cgi [L]' + LineEnding +
     '</IfModule>' + LineEnding +
     '```' + LineEnding +
-    'and put `.htaccess` file in same directory as `app.cgi` file (i.e., in `app/public` directory).' + LineEnding +
+    'and put `.htaccess` file in same directory as `app.cgi` file (i.e., in `public` directory).' + LineEnding +
     '' + LineEnding +
     'Content of `.htaccess` basically tells Apache to serve existing files/directories directly. For any non-existing files/directories, pass them to our application.' + LineEnding +
     '' + LineEnding +
     '### Simulate run on command line' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '$ cd app/public' + LineEnding +
+    '$ cd public' + LineEnding +
     '$ REQUEST_METHOD=GET \' + LineEnding +
     '  REQUEST_URI=/test/test \' + LineEnding +
     '  SERVER_NAME=juhara.com \' + LineEnding +
@@ -179,7 +179,7 @@ strReadme: string =
     'When running `build.sh` script, you may encounter following warning:' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '/usr/bin/ld: warning: app/public/link.res contains output sections; did you forget -T?' + LineEnding +
+    '/usr/bin/ld: warning: public/link.res contains output sections; did you forget -T?' + LineEnding +
     '```' + LineEnding +
     '' + LineEnding +
     'This is known issue between FreePascal and GNU Linker. See' + LineEnding +
