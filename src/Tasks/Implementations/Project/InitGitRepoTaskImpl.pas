@@ -71,8 +71,8 @@ uses
     procedure TInitGitRepoTask.addFanoRepository(const baseDir : string);
     var outputString : string;
     begin
-        ///$ git submodule add fano_repo_url
-        runGit(baseDir, ['submodule', 'add', FANO_REPO], outputString);
+        ///$ git submodule add fano_repo_url vendor/fano
+        runGit(baseDir, ['submodule', 'add', FANO_REPO, 'vendor/fano'], outputString);
         writeln(outputString);
     end;
 

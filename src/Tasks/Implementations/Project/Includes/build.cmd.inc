@@ -11,7 +11,7 @@ strBuildCmd: string =
     'REM -- build script for Windows' + LineEnding +
     'REM ------------------------------------' + LineEnding +
     '' + LineEnding +
-    'SET FANO_DIR="fano"' + LineEnding +
+    'SET FANO_DIR="vendor/fano"' + LineEnding +
     '' + LineEnding +
     'IF NOT DEFINED BUILD_TYPE (SET BUILD_TYPE="prod")' + LineEnding +
     'IF NOT DEFINED USER_APP_DIR (SET USER_APP_DIR="src")' + LineEnding +
@@ -20,4 +20,4 @@ strBuildCmd: string =
     'IF NOT DEFINED EXEC_OUTPUT_NAME (SET EXEC_OUTPUT_NAME="app.cgi")' + LineEnding +
     'IF NOT DEFINED SOURCE_PROGRAM_NAME (SET SOURCE_PROGRAM_NAME="app.pas")' + LineEnding +
     '' + LineEnding +
-    'fpc @fano/fano.cfg @build.cfg %USER_APP_DIR%\%SOURCE_PROGRAM_NAME%';
+    'fpc @vendor/fano/fano.cfg @build.cfg %USER_APP_DIR%\%SOURCE_PROGRAM_NAME%';

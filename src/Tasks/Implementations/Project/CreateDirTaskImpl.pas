@@ -82,6 +82,7 @@ uses
         createDirIfNotExists('bin');
         createDirIfNotExists('bin/unit');
         createDirIfNotExists('tools');
+        createDirIfNotExists('vendor');
         chDir(currentDir);
     end;
 
