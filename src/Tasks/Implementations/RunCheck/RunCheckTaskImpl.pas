@@ -54,7 +54,7 @@ resourcestring
 
     function TRunCheckTask.inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
     begin
-        result := directoryExists(currDir + 'fano') and
+        result := directoryExists(currDir + 'vendor/fano') and
             directoryExists(currDir + 'src/Dependencies') and
             fileExists(currDir + 'build.sh') and
             fileExists(currDir + 'build.cfg') and
