@@ -20,7 +20,6 @@ strBuildCfgDev: string =
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Generate debugging information for debugging with gdb.' + LineEnding +
-    '# For production, this should be commented out' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '-g' + LineEnding +
     '' + LineEnding +
