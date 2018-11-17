@@ -21,7 +21,7 @@ strReadme: string =
     '' + LineEnding +
     'Clone this repository' + LineEnding +
     '' + LineEnding +
-    '    $ git clone git@github.com:zamronypj/fano-app.git --recursive' + LineEnding +
+    '    $ git clone git@github.com:fanofamework/fano-app.git --recursive' + LineEnding +
     '' + LineEnding +
     '`--recursive` is needed so git also pull [Fano](https://github.com/fanoframework/fano) repository.' + LineEnding +
     '' + LineEnding +
@@ -67,13 +67,13 @@ strReadme: string =
     '' + LineEnding +
     '    $ BUILD_TYPE=prod ./build.sh' + LineEnding +
     '' + LineEnding +
-    'Build process will use compiler configuration defined in `fano/fano.cfg`, `build.cfg` and `build.prod.cfg`. By default, `build.prod.cfg` contains some compiler switches that will aggressively optimize executable both in speed and size.' + LineEnding +
+    'Build process will use compiler configuration defined in `vendor/fano/fano.cfg`, `build.cfg` and `build.prod.cfg`. By default, `build.prod.cfg` contains some compiler switches that will aggressively optimize executable both in speed and size.' + LineEnding +
     '' + LineEnding +
     '#### Build for development environment' + LineEnding +
     '' + LineEnding +
     '    $ BUILD_TYPE=dev ./build.sh' + LineEnding +
     '' + LineEnding +
-    'Build process will use compiler configuration defined in `fano/fano.cfg`, `build.cfg` and `build.dev.cfg`.' + LineEnding +
+    'Build process will use compiler configuration defined in `vendor/fano/fano.cfg`, `build.cfg` and `build.dev.cfg`.' + LineEnding +
     '' + LineEnding +
     'If `BUILD_TYPE` environment variable is not set, production environment will be assumed.' + LineEnding +
     '' + LineEnding +
