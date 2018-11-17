@@ -9,7 +9,9 @@
 #----------------------------------------------
 # Ignore any compiler switches config files
 #----------------------------------------------
-*.cfg
+build.cfg
+build.prod.cfg
+build.dev.cfg
 
 #----------------------------------------------
 # Ignore any generated compiled units

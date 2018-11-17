@@ -23,4 +23,4 @@ if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then
 export EXEC_OUTPUT_DIR="bin/out"
 fi
 
-fpc @build.cfg src/fanocli.pas
+fpc @unit.search.cfg @build.cfg src/fanocli.pas

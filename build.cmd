@@ -15,4 +15,4 @@ IF NOT DEFINED BUILD_TYPE (SET BUILD_TYPE="prod")
 IF NOT DEFINED UNIT_OUTPUT_DIR (SET UNIT_OUTPUT_DIR="bin\unit")
 IF NOT DEFINED EXEC_OUTPUT_DIR (SET EXEC_OUTPUT_DIR="bin\out")
 
-fpc @build.cfg src/fanocli.pas
+fpc @unit.search.cfg @build.cfg src/fanocli.pas
