@@ -16,7 +16,7 @@ strSimulateSh: string =
     '' + LineEnding +
     '# change current working dir, to simulate how cgi' + LineEnding +
     '# app executed by web server' + LineEnding +
-    'cd app/public' + LineEnding +
+    'cd public' + LineEnding +
     '' + LineEnding +
     'if [ -z "$REQUEST_METHOD" ]; then' + LineEnding +
     '    export REQUEST_METHOD="GET"' + LineEnding +

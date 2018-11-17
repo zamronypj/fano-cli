@@ -15,7 +15,7 @@ strSimulateCmd: string =
     '' + LineEnding +
     'REM change current working dir, to simulate how cgi' + LineEnding +
     'REM app executed by web server' + LineEnding +
-    'cd app\public' + LineEnding +
+    'cd public' + LineEnding +
     '' + LineEnding +
     'IF NOT DEFINED REQUEST_METHOD (SET REQUEST_METHOD="GET")' + LineEnding +
     'IF NOT DEFINED REQUEST_URI (SET REQUEST_URI="/")' + LineEnding +
