@@ -110,8 +110,7 @@ For example, following command will cause a new project created in directory nam
 $ fanocli --create-project=test-fano
 ```
 
-This command line options creates Git repository and initial commit for you  automatically. This behavior may cause problem if you already create remote repository and try to merge local repository with remote one. Git may refuses
-to merge because they have unrelated commit histories.
+This command line options creates Git repository and initial commit for you  automatically. This behavior may cause problem if you already create remote repository with commit and try to merge local repository with remote one. Git may refuses to merge when they have unrelated commit histories.
 
 To workaround this problem, you can run `git merge` with option `--allow-unrelated-histories` or create project directory without creating initial commit or create project directory structure without
 Git repository.
