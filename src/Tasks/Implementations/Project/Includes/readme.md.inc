@@ -25,7 +25,7 @@ strReadme: string =
     '' + LineEnding +
     '`--recursive` is needed so git also pull [Fano](https://github.com/fanoframework/fano) repository.' + LineEnding +
     '' + LineEnding +
-    'If you are missing `--recursive` when you clone, you may find that `fano` directory is empty. In this case run' + LineEnding +
+    'If you are missing `--recursive` when you clone, you may find that `vendor/fano` directory is empty. In this case run' + LineEnding +
     '' + LineEnding +
     '    $ git submodule update --init' + LineEnding +
     '' + LineEnding +
