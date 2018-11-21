@@ -159,6 +159,15 @@ $ cd test-fano
 $ fanocli --create-controller=Hello
 ```
 
+### Creating view
+
+After you create project structure, to scaffold view class, run with  `--create-view` command line options
+
+```
+$ cd test-fano
+$ fanocli --create-view=Hello
+```
+
 ## Known Issues
 
 ### Issue with GNU Linker
