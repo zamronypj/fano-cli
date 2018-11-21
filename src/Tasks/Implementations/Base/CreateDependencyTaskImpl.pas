@@ -26,13 +26,13 @@ type
      *---------------------------------------*)
     TCreateDependencyTask = class(TInterfacedObject, ITask)
     private
-        addControllerToUsesClauseTask : ITask;
-        addControllerToUnitSearchTask : ITask;
+        addObjectToUsesClauseTask : ITask;
+        addObjectToUnitSearchTask : ITask;
         createDependencyRegistrationTask : ITask;
     public
         constructor create(
-            const addCtrlToUsesClauseTask : ITask;
-            const addCtrlToUnitSearchTask : ITask;
+            const addToUsesClauseTask : ITask;
+            const addToUnitSearchTask : ITask;
             const createDepRegistrationTask : ITask
         );
         destructor destroy(); override;
@@ -45,21 +45,21 @@ type
 implementation
 
     constructor TCreateDependencyTask.create(
-        const addCtrlToUsesClauseTask : ITask;
-        const addCtrlToUnitSearchTask : ITask;
+        const addToUsesClauseTask : ITask;
+        const addToUnitSearchTask : ITask;
         const createDepRegistrationTask : ITask
     );
     begin
-        addControllerToUsesClauseTask := addCtrlToUsesClauseTask;
-        addControllerToUnitSearchTask := addCtrlToUnitSearchTask;
+        addObjectToUsesClauseTask := addToUsesClauseTask;
+        addObjectToUnitSearchTask := addToUnitSearchTask;
         createDependencyRegistrationTask := createDepRegistrationTask;
     end;
 
     destructor TCreateDependencyTask.destroy();
     begin
         inherited destroy();
-        addControllerToUsesClauseTask := nil;
-        addControllerToUnitSearchTask := nil;
+        addObjectToUsesClauseTask := nil;
+        addObjectToUnitSearchTask := nil;
         createDependencyRegistrationTask := nil;
     end;
 
@@ -68,8 +68,8 @@ implementation
         const longOpt : shortstring
     ) : ITask;
     begin
-        addControllerToUsesClauseTask.run(opt, longOpt);
-        addControllerToUnitSearchTask.run(opt, longOpt);
+        addObjectToUsesClauseTask.run(opt, longOpt);
+        addObjectToUnitSearchTask.run(opt, longOpt);
         createDependencyRegistrationTask.run(opt, longOpt);
         result := self;
     end;

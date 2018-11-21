@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit AddCtrlToUnitSearchTaskImpl;
+unit AddToUnitSearchTaskImpl;
 
 interface
 
@@ -27,20 +27,23 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TAddCtrlToUnitSearchTask = class(TInterfacedObject, ITask)
+    TAddToUnitSearchTask = class(TInterfacedObject, ITask)
     private
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        //object type = ['Model', 'View', 'Controller']
+        objectType : string;
 
         function getUnitSearchEntry(const content : string) : string;
         function addUnitSearchEntry(
             const filename : string;
-            const controllerName : string
+            const objectName : string
         ) : ITask;
     public
         constructor create(
-            fReader : IFileContentReader;
-            fWriter : IFileContentWriter
+            const fReader : IFileContentReader;
+            const fWriter : IFileContentWriter;
+            const objType : string
         );
 
         destructor destroy(); override;
@@ -87,23 +90,25 @@ const
      *-------------------------------------*)
     UNIT_SEARCH_REGEX_PATTERN = '^-Fu[a-zA-Z0-9\/\$\_]+$';
 
-    constructor TAddCtrlToUnitSearchTask.create(
-        fReader : IFileContentReader;
-        fWriter : IFileContentWriter
+    constructor TAddToUnitSearchTask.create(
+        const fReader : IFileContentReader;
+        const fWriter : IFileContentWriter;
+        const objType : string
     );
     begin
         fileReader := fReader;
         fileWriter := fWriter;
+        objectType := objType;
     end;
 
-    destructor TAddCtrlToUnitSearchTask.destroy();
+    destructor TAddToUnitSearchTask.destroy();
     begin
         inherited destroy();
         fileReader := nil;
         fileWriter := nil;
     end;
 
-    function TAddCtrlToUnitSearchTask.getUnitSearchEntry(
+    function TAddToUnitSearchTask.getUnitSearchEntry(
         const content : string
     ) : string;
     var regex : TRegExpr;
@@ -128,9 +133,9 @@ const
         end;
     end;
 
-    function TAddCtrlToUnitSearchTask.addUnitSearchEntry(
+    function TAddToUnitSearchTask.addUnitSearchEntry(
         const filename : string;
-        const controllerName : string
+        const objectName : string
     ) : ITask;
     var content : string;
         modifiedContent : string;
@@ -143,7 +148,7 @@ const
         if (length(unitSearch) > 0) then
         begin
             //add new unit search entry
-            baseDir := '-Fu$USER_APP_DIR$/App/' + controllerName + '/Controllers';
+            baseDir := '-Fu$USER_APP_DIR$/App/' + objectName + '/' + objectType + 's';
             modifiedunitSearch := unitSearch + LineEnding +
                 baseDir + LineEnding +
                 baseDir + '/Factories' + LineEnding;
@@ -160,15 +165,15 @@ const
         result := self;
     end;
 
-    function TAddCtrlToUnitSearchTask.run(
+    function TAddToUnitSearchTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var controllerName : string;
+    var objectName : string;
     begin
-        controllerName := opt.getOptionValue(longOpt);
-        addUnitSearchEntry('build.cfg', controllerName);
-        addUnitSearchEntry('build.cfg.sample', controllerName);
+        objectName := opt.getOptionValue(longOpt);
+        addUnitSearchEntry('build.cfg', objectName);
+        addUnitSearchEntry('build.cfg.sample', objectName);
         result := self;
     end;
 end.

@@ -6,11 +6,15 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
-{%fanocli.pas}
+{%../Includes/task.registrations.inc}
 
-{$INCLUDE Info/task.registrations.inc}
-{$INCLUDE Project/task.registrations.inc}
-{$INCLUDE ProjectNoGit/task.registrations.inc}
-{$INCLUDE ProjectNoCommit/task.registrations.inc}
-{$INCLUDE Controller/task.registrations.inc}
-{$INCLUDE View/task.registrations.inc}
+taskFactory := TCreateViewTaskFactory.create();
+try
+    appInst.registerTask(
+        'create-view',
+        '--create-view=[view-name] Create new view',
+        taskFactory.build()
+    );
+finally
+    taskFactory := nil;
+end;

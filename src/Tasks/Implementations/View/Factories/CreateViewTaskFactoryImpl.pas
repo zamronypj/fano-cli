@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateControllerTaskFactoryImpl;
+unit CreateViewTaskFactoryImpl;
 
 interface
 
@@ -20,11 +20,11 @@ uses
 type
 
     (*!--------------------------------------
-     * Factory class for create controller task
+     * Factory class for create view task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateControllerTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TCreateViewTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
         function build() : ITask;
     end;
@@ -42,16 +42,15 @@ uses
     FileHelperImpl,
 
     RunCheckTaskImpl,
-    CreateControllerFileTaskImpl,
-    CreateControllerFactoryFileTaskImpl,
+    CreateViewFileTaskImpl,
+    CreateViewFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
     AddToUnitSearchTaskImpl,
     CreateDependencyRegistrationTaskImpl,
-    CreateRouteTaskImpl,
     CreateDependencyTaskImpl,
-    CreateControllerTaskImpl;
+    CreateViewTaskImpl;
 
-    function TCreateControllerTaskFactory.build() : ITask;
+    function TCreateViewTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         directoryCreator : IDirectoryCreator;
         fileReader : IFileContentReader;
@@ -62,17 +61,16 @@ uses
         directoryCreator := TDirectoryCreator.create();
         fileReader := TFileHelper.create();
         fileWriter := fileReader as IFileContentWriter;
-        task := TCreateControllerTask.create(
-            TCreateControllerFileTask.create(textFileCreator, directoryCreator),
-            TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
+        task := TCreateViewTask.create(
+            TCreateViewFileTask.create(textFileCreator, directoryCreator),
+            TCreateViewFactoryFileTask.create(textFileCreator, directoryCreator),
             TCreateDependencyTask.create(
-                TAddToUsesClauseTask.create(fileReader, fileWriter, 'Controller'),
-                TAddToUnitSearchTask.create(fileReader, fileWriter, 'Controller'),
-                TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'Controller')
-            ),
-            TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
+                TAddToUsesClauseTask.create(fileReader, fileWriter, 'View'),
+                TAddToUnitSearchTask.create(fileReader, fileWriter, 'View'),
+                TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'View')
+            )
         );
-        //protect to avoid accidentally creating controller in non Fano-CLI
+        //protect to avoid accidentally creating view in non Fano-CLI
         //project directory structure
         result := TRunCheckTask.create(task);
     end;

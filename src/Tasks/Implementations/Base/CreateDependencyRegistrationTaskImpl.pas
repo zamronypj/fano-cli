@@ -31,10 +31,12 @@ type
     private
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        objectType : string;
     public
         constructor create(
-            fReader : IFileContentReader;
-            fWriter : IFileContentWriter
+            const fReader : IFileContentReader;
+            const fWriter : IFileContentWriter;
+            const objType : string
         );
 
         destructor destroy(); override;
@@ -54,16 +56,17 @@ uses
 
 const
 
-    DEP_FILE = 'src' + DirectorySeparator + 'Dependencies' +
-        DirectorySeparator + 'controllers.dependencies.inc';
+    DEP_DIR = 'src' + DirectorySeparator + 'Dependencies' + DirectorySeparator;
 
     constructor TCreateDependencyRegistrationTask.create(
-        fReader : IFileContentReader;
-        fWriter : IFileContentWriter
+        const fReader : IFileContentReader;
+        const fWriter : IFileContentWriter;
+        const objType : string
     );
     begin
         fileReader := fReader;
         fileWriter := fWriter;
+        objectType := objType;
     end;
 
     destructor TCreateDependencyRegistrationTask.destroy();
@@ -77,18 +80,21 @@ const
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var controllerName : string;
+    var objectName : string;
         depContent : string;
     begin
-        controllerName := opt.getOptionValue(longOpt);
-        //create main entry to controller dependencies file
-        depContent := fileReader.read(DEP_FILE);
+        objectName := opt.getOptionValue(longOpt);
+        //create main entry to dependencies file
+        depContent := fileReader.read(DEP_DIR + lowerCase(objectType) + 's.dependencies.inc');
         depContent := depContent + LineEnding +
             format(
-                'container.add(''%sController'', T%sControllerFactory.create());',
-                [lowerCase(controllerName), controllerName]
+                'container.add(''%s%s'', T%s%sFactory.create());',
+                [lowerCase(objectName), objectType, objectName, objectType]
             );
-        fileWriter.write(DEP_FILE, depContent);
+        fileWriter.write(
+            DEP_DIR + lowerCase(objectType) + 's.dependencies.inc',
+            depContent
+        );
 
         result := self;
     end;

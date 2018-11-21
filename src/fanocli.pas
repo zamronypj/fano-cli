@@ -19,7 +19,8 @@ uses
     CreateProjectTaskFactoryImpl,
     CreateProjectNoGitTaskFactoryImpl,
     CreateProjectNoCommitTaskFactoryImpl,
-    CreateControllerTaskFactoryImpl;
+    CreateControllerTaskFactoryImpl,
+    CreateViewTaskFactoryImpl;
 
     procedure registerTask(const appInst : TFanoCliApplication);
     var

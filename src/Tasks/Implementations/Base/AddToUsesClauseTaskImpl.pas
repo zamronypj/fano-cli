@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit AddCtrlToUsesClauseTaskImpl;
+unit AddToUsesClauseTaskImpl;
 
 interface
 
@@ -22,21 +22,24 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that add controller unit to uses
+     * Task that add unit to uses
      * clause of bootstrap application unit
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TAddCtrlToUsesClauseTask = class(TInterfacedObject, ITask)
+    TAddToUsesClauseTask = class(TInterfacedObject, ITask)
     private
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        //object type = ['View', 'Model', 'Controller']
+        objectType : string;
 
         function getUnitNamesFromUsesClause(const unitContent : string) : string;
     public
         constructor create(
-            fReader : IFileContentReader;
-            fWriter : IFileContentWriter
+            const fReader : IFileContentReader;
+            const fWriter : IFileContentWriter;
+            const objType : string
         );
 
         destructor destroy(); override;
@@ -82,23 +85,25 @@ const
           '\s+([a-zA-Z0-9,\s\{\*\!\-\\(\)}]+);';
 
 
-    constructor TAddCtrlToUsesClauseTask.create(
-        fReader : IFileContentReader;
-        fWriter : IFileContentWriter
+    constructor TAddToUsesClauseTask.create(
+        const fReader : IFileContentReader;
+        const fWriter : IFileContentWriter;
+        const objType : string
     );
     begin
         fileReader := fReader;
         fileWriter := fWriter;
+        objectType := objType;
     end;
 
-    destructor TAddCtrlToUsesClauseTask.destroy();
+    destructor TAddToUsesClauseTask.destroy();
     begin
         inherited destroy();
         fileReader := nil;
         fileWriter := nil;
     end;
 
-    function TAddCtrlToUsesClauseTask.getUnitNamesFromUsesClause(
+    function TAddToUsesClauseTask.getUnitNamesFromUsesClause(
         const unitContent : string
     ) : string;
     var regex : TRegExpr;
@@ -117,24 +122,24 @@ const
         end;
     end;
 
-    function TAddCtrlToUsesClauseTask.run(
+    function TAddToUsesClauseTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var controllerName : string;
+    var objectName : string;
         bootstrapUnitContent : string;
         modifiedUnitContent : string;
         usesUnits : string;
         modifiedUsesUnits : string;
     begin
-        controllerName := opt.getOptionValue(longOpt);
+        objectName := opt.getOptionValue(longOpt);
         bootstrapUnitContent := fileReader.read('src/bootstrap.pas');
         usesUnits := getUnitNamesFromUsesClause(bootstrapUnitContent);
         if (length(usesUnits) > 0) then
         begin
             //add new controller factory unit with nicely 4 space format
             modifiedUsesUnits := usesUnits + ',' + LineEnding +
-                '    ' + controllerName + 'ControllerFactory';
+                '    ' + objectName + objectType + 'Factory';
             //replace app/bootstrap.pas with modified content
             modifiedUnitContent := stringReplace(
                 bootstrapUnitContent,
