@@ -20,7 +20,8 @@ uses
     CreateProjectNoGitTaskFactoryImpl,
     CreateProjectNoCommitTaskFactoryImpl,
     CreateControllerTaskFactoryImpl,
-    CreateViewTaskFactoryImpl;
+    CreateViewTaskFactoryImpl,
+    CreateModelTaskFactoryImpl;
 
     procedure registerTask(const appInst : TFanoCliApplication);
     var
