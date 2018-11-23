@@ -39,7 +39,9 @@ uses
     DirectoryCreatorImpl,
     FileContentReaderIntf,
     FileContentWriterIntf,
+    ContentModifierIntf,
     FileHelperImpl,
+    CopyrightContentModifierImpl,
 
     RunCheckTaskImpl,
     CreateModelFileTaskImpl,
@@ -55,15 +57,17 @@ uses
         directoryCreator : IDirectoryCreator;
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        contentModifier : IContentModifier;
         task : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
         directoryCreator := TDirectoryCreator.create();
+        contentModifier := TCopyrightContentModifier.create();
         fileReader := TFileHelper.create();
         fileWriter := fileReader as IFileContentWriter;
         task := TCreateModelTask.create(
-            TCreateModelFileTask.create(textFileCreator, directoryCreator),
-            TCreateModelFactoryFileTask.create(textFileCreator, directoryCreator),
+            TCreateModelFileTask.create(textFileCreator, directoryCreator, contentModifier),
+            TCreateModelFactoryFileTask.create(textFileCreator, directoryCreator, contentModifier),
             TCreateDependencyTask.create(
                 TAddToUsesClauseTask.create(fileReader, fileWriter, 'Model'),
                 TAddToUnitSearchTask.create(fileReader, fileWriter, 'Model'),

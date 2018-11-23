@@ -68,6 +68,7 @@ uses
     var controllerName : string;
         baseDir : string;
     begin
+        inherited run(opt, longOpt);
         controllerName := opt.getOptionValue(longOpt);
         baseDir := baseDirectory + DirectorySeparator +
             controllerName + DirectorySeparator + 'Controllers' +

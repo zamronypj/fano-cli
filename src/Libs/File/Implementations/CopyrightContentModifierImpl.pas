@@ -27,7 +27,19 @@ type
      *---------------------------------------*)
     TCopyrightContentModifier = class(TInterfacedObject, IContentModifier)
     private
-        variables : TStringHashTable;
+        variables : TFPStringHashTable;
+
+        (*!------------------------------------------
+         * try modify content
+         *-------------------------------------------
+         * @param content original content to modify
+         * @return modified content
+         *-------------------------------------------*)
+        function tryModify(
+            const oldPattern : string;
+            const newPattern : string;
+            const content : string
+        ) : string;
     public
         constructor create();
         destructor destroy(); override;
@@ -62,10 +74,10 @@ uses
         //default constructor create() initialize 196613 hash size
         //which is quite big, and for our particular usage is too big
         //so we initialize smaller hash size
-        variables := TStringHashTable.CreateWith(193, @RSHash);
+        variables := TFPStringHashTable.CreateWith(193, @RSHash);
     end;
 
-    destructor TCopyrightContentModifier.destroy(); override;
+    destructor TCopyrightContentModifier.destroy();
     begin
         inherited destroy();
         variables.free();
@@ -78,7 +90,7 @@ uses
      * @param varValue value to replace
      * @return current instance
      *-------------------------------------------*)
-    function setVar(const varName : string; const varValue : string) : IContentModifier;
+    function TCopyrightContentModifier.setVar(const varName : string; const varValue : string) : IContentModifier;
     begin
         if (variables[varName] = '') then
         begin
@@ -86,6 +98,26 @@ uses
         end else
         begin
             variables[varName] := varValue;
+        end;
+        result := self;
+    end;
+
+    (*!------------------------------------------
+     * try modify content
+     *-------------------------------------------
+     * @param content original content to modify
+     * @return modified content
+     *-------------------------------------------*)
+    function TCopyrightContentModifier.tryModify(
+        const oldPattern : string;
+        const newPattern : string;
+        const content : string
+    ) : string;
+    begin
+        result := content;
+        if (length(newPattern) > 0 ) then
+        begin
+            result := stringReplace(result, oldPattern, newPattern, [rfReplaceAll]);
         end;
     end;
 
@@ -97,59 +129,30 @@ uses
      *-------------------------------------------*)
     function TCopyrightContentModifier.modify(const content : string) : string;
     begin
-        result := stringReplace(
-            content,
-            '[[APP_NAME]]',
-            variables['[[APP_NAME]]'],
-            [sfReplaceAll]
-        );
-        result := stringReplace(
-            result,
-            '[[APP_URL]]',
-            variables['[[APP_URL]]'],
-            [sfReplaceAll]
-        );
-        result := stringReplace(
-            result,
+        result := tryModify('[[APP_NAME]]', variables['[[APP_NAME]]'], content);
+        result := tryModify('[[APP_URL]]', variables['[[APP_URL]]'], result);
+        result := tryModify(
             '[[APP_REPOSITORY_URL]]',
             variables['[[APP_REPOSITORY_URL]]'],
-            [sfReplaceAll]
+            result
         );
-        result := stringReplace(
-            result,
+        result := tryModify(
             '[[COPYRIGHT_YEAR]]',
             variables['[[COPYRIGHT_YEAR]]'],
-            [sfReplaceAll]
+            result
         );
-        result := stringReplace(
-            result,
+        result := tryModify(
             '[[COPYRIGHT_HOLDER]]',
             variables['[[COPYRIGHT_HOLDER]]'],
-            [sfReplaceAll]
+            result
         );
-        result := stringReplace(
-            result,
-            '[[LICENSE_URL]]',
-            variables['[[LICENSE_URL]]'],
-            [sfReplaceAll]
-        );
-        result := stringReplace(
-            result,
-            '[[LICENSE]]',
-            variables['[[LICENSE]]'],
-            [sfReplaceAll]
-        );
-        result := stringReplace(
-            result,
-            '[[AUTHOR_NAME]]',
-            variables['[[AUTHOR_NAME]]'],
-            [sfReplaceAll]
-        );
-        result := stringReplace(
-            result,
+        result := tryModify('[[LICENSE_URL]]', variables['[[LICENSE_URL]]'], result);
+        result := tryModify('[[LICENSE]]', variables['[[LICENSE]]'], result);
+        result := tryModify('[[AUTHOR_NAME]]', variables['[[AUTHOR_NAME]]'], result);
+        result := tryModify(
             '[[AUTHOR_EMAIL]]',
             variables['[[AUTHOR_EMAIL]]'],
-            [sfReplaceAll]
+            result
         );
     end;
 end.

@@ -17,6 +17,7 @@ uses
     TaskOptionsIntf,
     TaskIntf,
     TextFileCreatorIntf,
+    ContentModifierIntf,
     DirectoryCreatorIntf;
 
 const BASE_DIRECTORY = 'src' + DirectorySeparator + 'App';
@@ -35,12 +36,14 @@ type
         directoryCreator : IDirectoryCreator;
     protected
         baseDirectory : string;
+        contentModifier : IContentModifier;
         procedure createTextFile(const filename : string; const content : string);
         function createDirIfNotExists(const dir : string) : string;
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
             const dirCreator : IDirectoryCreator;
+            const cntModifier : IContentModifier;
             const baseDir : string = BASE_DIRECTORY
         );
         destructor destroy(); override;
@@ -48,7 +51,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; virtual; abstract;
+        ) : ITask; virtual;
     end;
 
 implementation
@@ -56,11 +59,13 @@ implementation
     constructor TBaseCreateFileTask.create(
         const txtFileCreator : ITextFileCreator;
         const dirCreator : IDirectoryCreator;
+        const cntModifier : IContentModifier;
         const baseDir : string = BASE_DIRECTORY
     );
     begin
         textFileCreator := txtFileCreator;
         directoryCreator := dirCreator;
+        contentModifier := cntModifier;
         baseDirectory := baseDir;
     end;
 
@@ -69,6 +74,7 @@ implementation
         inherited destroy();
         textFileCreator := nil;
         directoryCreator := nil;
+        contentModifier := nil;
     end;
 
     function TBaseCreateFileTask.createDirIfNotExists(const dir : string) : string;
@@ -78,6 +84,22 @@ implementation
 
     procedure TBaseCreateFileTask.createTextFile(const filename : string; const content : string);
     begin
-        textFileCreator.createTextFile(filename, content);
+        textFileCreator.createTextFile(
+            filename,
+            contentModifier.modify(content)
+        );
+    end;
+
+    function TBaseCreateFileTask.run(
+        const opt : ITaskOptions;
+        const longOpt : shortstring
+    ) : ITask;
+    var appName : string;
+    begin
+        appName := opt.getOptionValue('app-name');
+        if (length(appName) > 0) then
+        begin
+            contentModifier.setVar('[[APP_NAME]]', appName);
+        end;
     end;
 end.

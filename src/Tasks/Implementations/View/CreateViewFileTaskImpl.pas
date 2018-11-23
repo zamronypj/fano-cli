@@ -68,6 +68,7 @@ uses
     var viewName : string;
         baseDir : string;
     begin
+        inherited run(opt, longOpt);
         viewName := opt.getOptionValue(longOpt);
         baseDir := baseDirectory + DirectorySeparator + viewName;
         createDirIfNotExists(baseDir);

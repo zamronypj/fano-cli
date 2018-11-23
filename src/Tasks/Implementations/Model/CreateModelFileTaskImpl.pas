@@ -80,6 +80,7 @@ uses
     var modelName : string;
         baseDir : string;
     begin
+        inherited run(opt, longOpt);
         modelName := opt.getOptionValue(longOpt);
         baseDir := baseDirectory + DirectorySeparator + modelName;
         createDirIfNotExists(baseDir);

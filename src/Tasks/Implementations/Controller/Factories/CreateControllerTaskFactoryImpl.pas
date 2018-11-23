@@ -39,7 +39,9 @@ uses
     DirectoryCreatorImpl,
     FileContentReaderIntf,
     FileContentWriterIntf,
+    ContentModifierIntf,
     FileHelperImpl,
+    CopyrightContentModifierImpl,
 
     RunCheckTaskImpl,
     CreateControllerFileTaskImpl,
@@ -56,15 +58,17 @@ uses
         directoryCreator : IDirectoryCreator;
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
+        contentModifier : IContentModifier;
         task : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
         directoryCreator := TDirectoryCreator.create();
+        contentModifier := TCopyrightContentModifier.create();
         fileReader := TFileHelper.create();
         fileWriter := fileReader as IFileContentWriter;
         task := TCreateControllerTask.create(
-            TCreateControllerFileTask.create(textFileCreator, directoryCreator),
-            TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator),
+            TCreateControllerFileTask.create(textFileCreator, directoryCreator, contentModifier),
+            TCreateControllerFactoryFileTask.create(textFileCreator, directoryCreator, contentModifier),
             TCreateDependencyTask.create(
                 TAddToUsesClauseTask.create(fileReader, fileWriter, 'Controller'),
                 TAddToUnitSearchTask.create(fileReader, fileWriter, 'Controller'),
