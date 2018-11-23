@@ -21,7 +21,8 @@ uses
     CreateProjectNoCommitTaskFactoryImpl,
     CreateControllerTaskFactoryImpl,
     CreateViewTaskFactoryImpl,
-    CreateModelTaskFactoryImpl;
+    CreateModelTaskFactoryImpl,
+    CreateMvcTaskFactoryImpl;
 
     procedure registerTask(const appInst : TFanoCliApplication);
     var
