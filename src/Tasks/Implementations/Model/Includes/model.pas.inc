@@ -88,7 +88,8 @@ strModelPasInc: string =
     '        const params : IModelWriteOnlyData = nil' + LineEnding +
     '    ) : IModelReadOnlyData;' + LineEnding +
     '    begin' + LineEnding +
-    '        resultSet := mysqlDb.exec(''SELECT * FROM %ss'');' + LineEnding +
+    '        {---put code to retrieve data from storage here---}' + LineEnding +
+    '        //resultSet := mysqlDb.prepare(''SELECT * FROM %ss'').execute();' + LineEnding +
     '        result := self;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
