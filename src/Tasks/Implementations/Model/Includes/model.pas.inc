@@ -26,7 +26,7 @@ strModelPasInc: string =
     '     *------------------------------------------------*)' + LineEnding +
     '    T%sModel = class(TInjectableObject, IModelReader, IModelReadOnlyData)' + LineEnding +
     '    private' + LineEnding +
-    '        mysqlDb : IRdbms;' + LineEnding +
+    '        rdbmsInstance : IRdbms;' + LineEnding +
     '        resultSet : IRdbmsResultSet;' + LineEnding +
     '    public' + LineEnding +
     '        constructor create(const db : IRdbms);' + LineEnding +
@@ -73,14 +73,14 @@ strModelPasInc: string =
     '' + LineEnding +
     '    constructor T%sModel.create(const db : IRdbms);' + LineEnding +
     '    begin' + LineEnding +
-    '        mysqlDb := db;' + LineEnding +
+    '        rdbmsInstance := db;' + LineEnding +
     '        resultSet := nil;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     '    destructor T%sModel.destroy();' + LineEnding +
     '    begin' + LineEnding +
     '        inherited destroy();' + LineEnding +
-    '        mysqlDb := nil;' + LineEnding +
+    '        rdbmsInstance := nil;' + LineEnding +
     '        resultSet := nil;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
@@ -89,7 +89,7 @@ strModelPasInc: string =
     '    ) : IModelReadOnlyData;' + LineEnding +
     '    begin' + LineEnding +
     '        {---put code to retrieve data from storage here---}' + LineEnding +
-    '        //resultSet := mysqlDb.prepare(''SELECT * FROM %ss'').execute();' + LineEnding +
+    '        //resultSet := rdbmsInstance.prepare(''SELECT * FROM %ss'').execute();' + LineEnding +
     '        result := self;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
