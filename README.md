@@ -168,6 +168,24 @@ $ cd test-fano
 $ fanocli --create-view=Hello
 ```
 
+### Creating model
+
+After you create project structure, to scaffold model class, run with  `--create-model` command line options
+
+```
+$ cd test-fano
+$ fanocli --create-model=Hello
+```
+
+### Creating Model, View and Controller
+
+After you create project structure, to scaffold model, view and controller class, run with  `--create-mvc` command line options
+
+```
+$ cd test-fano
+$ fanocli --create-mvc=Hello
+```
+
 ## Known Issues
 
 ### Issue with GNU Linker
