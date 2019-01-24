@@ -1,7 +1,10 @@
 strReadme: string =
     '# Fano Web Framework Skeleton Application' + LineEnding +
     '' + LineEnding +
-    'Web application skeleton using Fano, Pascal web application framework' + LineEnding +
+    'Web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
+    '' + LineEnding +
+    'This project is generated using [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
+    'command line tools to help scaffolding web application using Fano Framework.' + LineEnding +
     '' + LineEnding +
     '## Requirement' + LineEnding +
     '' + LineEnding +
