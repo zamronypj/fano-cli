@@ -11,7 +11,7 @@ strConfigSetupCmd: string =
     'REM Scripts to setup configuration files' + LineEnding +
     'REM------------------------------------------------------' + LineEnding +
     '' + LineEnding +
-    'copy src\config\config.json.sample src\config\config.json' + LineEnding +
+    'copy config\config.json.sample config\config.json' + LineEnding +
     'copy build.prod.cfg.sample build.prod.cfg' + LineEnding +
     'copy build.dev.cfg.sample build.dev.cfg' + LineEnding +
     'copy build.cfg.sample build.cfg';

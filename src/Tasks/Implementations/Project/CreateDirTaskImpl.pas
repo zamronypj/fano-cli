@@ -72,10 +72,13 @@ uses
 
         createDirIfNotExists('src');
         createDirIfNotExists('src/App');
-        createDirIfNotExists('src/config');
         createDirIfNotExists('src/Dependencies');
         createDirIfNotExists('src/Routes');
-        createDirIfNotExists('src/Templates');
+        createDirIfNotExists('config');
+        createDirIfNotExists('resources');
+        createDirIfNotExists('resources/Templates');
+        createDirIfNotExists('resources/scss');
+        createDirIfNotExists('resources/js');
         createDirIfNotExists('public');
         createDirIfNotExists('storages');
         createDirIfNotExists('storages/logs');

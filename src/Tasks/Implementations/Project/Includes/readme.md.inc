@@ -48,7 +48,7 @@ strReadme: string =
     'Also copy `src/config/config.json.sample` to `src/config/config.json` and edit' + LineEnding +
     'configuration as needed. For example, you may need to change `baseUrl` to match your own base url so JavaScript or CSS stylesheets point to correct URL.' + LineEnding +
     '' + LineEnding +
-    '    $ cp src/config/config.json.sample src/config/config.json' + LineEnding +
+    '    $ cp config/config.json.sample config/config.json' + LineEnding +
     '    $ cp build.prod.cfg.sample build.prod.cfg' + LineEnding +
     '    $ cp build.dev.cfg.sample build.dev.cfg' + LineEnding +
     '    $ cp build.cfg.sample build.cfg' + LineEnding +

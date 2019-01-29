@@ -73,7 +73,7 @@ uses
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
         createCompilerConfigs(baseDirectory);
-        createAppConfigs(baseDirectory + '/src/config');
+        createAppConfigs(baseDirectory + '/config');
         result := self;
     end;
 end.
