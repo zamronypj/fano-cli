@@ -20,4 +20,7 @@ strBuildCmd: string =
     'IF NOT DEFINED EXEC_OUTPUT_NAME (SET EXEC_OUTPUT_NAME="app.cgi")' + LineEnding +
     'IF NOT DEFINED SOURCE_PROGRAM_NAME (SET SOURCE_PROGRAM_NAME="app.pas")' + LineEnding +
     '' + LineEnding +
-    'fpc @vendor/fano/fano.cfg @build.cfg %USER_APP_DIR%\%SOURCE_PROGRAM_NAME%';
+    'SET FPC="fpc"' + LineEnding +
+    'IF DEFINED FPC_BIN (SET FPC=%FPC_BIN%)' + LineEnding +
+    '' + LineEnding +
+    '%FPC% @vendor/fano/fano.cfg @build.cfg %USER_APP_DIR%\%SOURCE_PROGRAM_NAME%';

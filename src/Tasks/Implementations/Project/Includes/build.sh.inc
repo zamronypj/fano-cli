@@ -38,4 +38,9 @@ strBuildSh: string =
     'SOURCE_PROGRAM_NAME="app.pas"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
-    'fpc @vendor/fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}';
+    'export FPC="fpc"' + LineEnding +
+    'if [[ -n "${FPC_BIN}" ]]; then' + LineEnding +
+    'FPC="${FPC_BIN}"' + LineEnding +
+    'fi' + LineEnding +
+    '' + LineEnding +
+    '${FPC} @vendor/fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}';
