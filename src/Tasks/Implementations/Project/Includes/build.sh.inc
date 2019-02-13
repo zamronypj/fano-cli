@@ -12,7 +12,10 @@ strBuildSh: string =
     '# Build script for Linux' + LineEnding +
     '#------------------------------------------------------' + LineEnding +
     '' + LineEnding +
+    '' + LineEnding +
+    'if [[ -z "${FANO_DIR}" ]]; then' + LineEnding +
     'export FANO_DIR="vendor/fano"' + LineEnding +
+    'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${BUILD_TYPE}" ]]; then' + LineEnding +
     'export BUILD_TYPE="prod"' + LineEnding +
@@ -35,12 +38,11 @@ strBuildSh: string =
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${SOURCE_PROGRAM_NAME}" ]]; then' + LineEnding +
-    'SOURCE_PROGRAM_NAME="app.pas"' + LineEnding +
+    'export SOURCE_PROGRAM_NAME="app.pas"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
-    'export FPC="fpc"' + LineEnding +
-    'if [[ -n "${FPC_BIN}" ]]; then' + LineEnding +
-    'FPC="${FPC_BIN}"' + LineEnding +
+    'if [[ -z "${FPC_BIN}" ]]; then' + LineEnding +
+    'export FPC_BIN="fpc"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
-    '${FPC} @vendor/fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}';
+    '${FPC_BIN} @vendor/fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}';
