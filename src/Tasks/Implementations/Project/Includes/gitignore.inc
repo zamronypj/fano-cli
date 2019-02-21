@@ -10,7 +10,7 @@ strGitignore: string =
     '#----------------------------------------------' + LineEnding +
     '# Ignore any application configuration' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    'src/config/config.json' + LineEnding +
+    'config/config.json' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Ignore Apache any configuration' + LineEnding +
