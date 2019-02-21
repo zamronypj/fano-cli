@@ -156,7 +156,7 @@ strReadme: string =
     '' + LineEnding +
     'or to change route to access, set `REQUEST_URI` variable.' + LineEnding +
     '' + LineEnding +
-    '    $ REQUEST_URI=/test/test ./simulate.run.sh' + LineEnding +
+    '    $ REQUEST_URI=/test/test ./tools/simulate.run.sh' + LineEnding +
     '' + LineEnding +
     'This is similar to simulating browser requesting this page,for example,' + LineEnding +
     '' + LineEnding +
