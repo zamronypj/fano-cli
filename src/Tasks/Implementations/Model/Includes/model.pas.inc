@@ -33,7 +33,7 @@ strModelPasInc: string =
     '        destructor destroy(); override;' + LineEnding +
     '' + LineEnding +
     '        function read(const params : IModelParams = nil) : IModelResultSet;' + LineEnding +
-    '        function data() : IModelParams;' + LineEnding +
+    '        function data() : IModelResultSet;' + LineEnding +
     '' + LineEnding +
     '        (*!------------------------------------------------' + LineEnding +
     '         * get total data' + LineEnding +
