@@ -24,7 +24,7 @@ strModelPasInc: string =
     '     *' + LineEnding +
     '     * @author [[AUTHOR_NAME]] <[[AUTHOR_EMAIL]]>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    T%sModel = class(TInjectableObject, IModelReader, IModelReadOnlyData)' + LineEnding +
+    '    T%sModel = class(TInjectableObject, IModelReader, IModelResultSet)' + LineEnding +
     '    private' + LineEnding +
     '        rdbmsInstance : IRdbms;' + LineEnding +
     '        resultSet : IRdbmsResultSet;' + LineEnding +
@@ -32,8 +32,8 @@ strModelPasInc: string =
     '        constructor create(const db : IRdbms);' + LineEnding +
     '        destructor destroy(); override;' + LineEnding +
     '' + LineEnding +
-    '        function read(const params : IModelWriteOnlyData = nil) : IModelReadOnlyData;' + LineEnding +
-    '        function data() : IModelReadOnlyData;' + LineEnding +
+    '        function read(const params : IModelParams = nil) : IModelResultSet;' + LineEnding +
+    '        function data() : IModelParams;' + LineEnding +
     '' + LineEnding +
     '        (*!------------------------------------------------' + LineEnding +
     '         * get total data' + LineEnding +
@@ -85,15 +85,15 @@ strModelPasInc: string =
     '    end;' + LineEnding +
     '' + LineEnding +
     '    function T%sModel.read(' + LineEnding +
-    '        const params : IModelWriteOnlyData = nil' + LineEnding +
-    '    ) : IModelReadOnlyData;' + LineEnding +
+    '        const params : IModelParams = nil' + LineEnding +
+    '    ) : IModelResultSet;' + LineEnding +
     '    begin' + LineEnding +
     '        {---put code to retrieve data from storage here---}' + LineEnding +
     '        //resultSet := rdbmsInstance.prepare(''SELECT * FROM %ss'').execute();' + LineEnding +
     '        result := self;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
-    '    function T%sModel.data() : IModelReadOnlyData;' + LineEnding +
+    '    function T%sModel.data() : IModelResultSet;' + LineEnding +
     '    begin' + LineEnding +
     '        result := self;' + LineEnding +
     '    end;' + LineEnding +
