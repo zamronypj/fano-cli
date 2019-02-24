@@ -9,12 +9,38 @@ strReadme: string =
     '## Requirement' + LineEnding +
     '' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
+    '- [libcurl development](https://curl.haxx.se/libcurl/)' + LineEnding +
     '- Web Server (Apache, nginx)' + LineEnding +
     '- [Fano Web Framework](https://github.com/fanoframework/fano)' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +
     '' + LineEnding +
     '### Build' + LineEnding +
+    '' + LineEnding +
+
+    '#### libcurl development package installation' + LineEnding +
+    '' + LineEnding +
+    'Check if libcurl package for development is installed by running `curl-config`.' + LineEnding +
+    '' + LineEnding +
+    '```' + LineEnding +
+    '$ curl-config --version' + LineEnding +
+    '```' + LineEnding +
+    'If libcurl installed you will get something like `libcurl x.xx.x` where `x.xx.x` is version. For example `libcurl 7.47.0` otherwise you get' + LineEnding +
+    '' + LineEnding +
+    '```' + LineEnding +
+    'The program ''curl-config'' can be found in the following packages:' + LineEnding +
+    ' * libcurl4-gnutls-dev' + LineEnding +
+    ' * libcurl4-nss-dev' + LineEnding +
+    ' * libcurl4-openssl-dev' + LineEnding +
+    'Try: sudo apt install <selected package>' + LineEnding +
+    '```' + LineEnding +
+    '' + LineEnding +
+    'In case libcurl not installed, run' + LineEnding +
+    '```' + LineEnding +
+    '$ sudo apt install libcurl4-gnutls-dev' + LineEnding +
+    '```' + LineEnding +
+    '' + LineEnding +
+    '### Free Pascal installation' + LineEnding +
     '' + LineEnding +
     'Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run' + LineEnding +
     '' + LineEnding +
