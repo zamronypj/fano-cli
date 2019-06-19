@@ -36,3 +36,21 @@ bin/out/*
 # /bin/out when repository is cloned
 #----------------------------------------------
 !bin/out/README.md
+
+#----------------------------------------------
+# Ignore FreePascal built-in console IDE generated files
+#----------------------------------------------
+fp.dir
+fp.cfg
+fp.dsk
+fp.ini
+
+#----------------------------------------------
+# Ignore Lazarus local files (user-specific info)
+#----------------------------------------------
+*.lps
+
+#---------------------------------------------------------
+# ignore any visual code studio generated files
+#---------------------------------------------------------
+.vscode/
