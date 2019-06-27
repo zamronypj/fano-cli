@@ -17,6 +17,7 @@ uses
     FanoAppImpl,
     InfoTaskImpl,
     CreateProjectTaskFactoryImpl,
+    CreateProjectFastCgiTaskFactoryImpl,
     CreateProjectNoGitTaskFactoryImpl,
     CreateProjectNoCommitTaskFactoryImpl,
     CreateControllerTaskFactoryImpl,

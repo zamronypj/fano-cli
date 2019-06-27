@@ -27,11 +27,11 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateAppBootstrapTask = class(TCreateFileTask)
-    private
-        procedure createApp(const dir : string);
-        procedure createBootstrap(const dir : string);
-        procedure createDependencies(const dir : string);
-        procedure createRoutes(const dir : string);
+    protected
+        procedure createApp(const dir : string); virtual;
+        procedure createBootstrap(const dir : string); virtual;
+        procedure createDependencies(const dir : string); virtual;
+        procedure createRoutes(const dir : string); virtual;
     public
         function run(
             const opt : ITaskOptions;
