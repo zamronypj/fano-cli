@@ -11,8 +11,24 @@
 # Build script for Linux
 #------------------------------------------------------
 
+BUILD_CFG=build.cfg
+BUILD_DEV_CFG=build.dev.cfg
+BUILD_PROD_CFG=build.prod.cfg
+
+if [ ! -f "BUILD_CFG" ]; then
+    cp build.cfg.sample build.cfg
+fi
+
+if [ ! -f "BUILD_DEV_CFG" ]; then
+    cp build.dev.cfg.sample build.dev.cfg
+fi
+
+if [ ! -f "BUILD_PROD_CFG" ]; then
+    cp build.prod.cfg.sample build.prod.cfg
+fi
+
 if [[ -z "${BUILD_TYPE}" ]]; then
-export BUILD_TYPE="prod"
+    export BUILD_TYPE="prod"
 fi
 
 if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then
@@ -20,7 +36,7 @@ if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then
 fi
 
 if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then
-export EXEC_OUTPUT_DIR="bin/out"
+    export EXEC_OUTPUT_DIR="bin/out"
 fi
 
 fpc @unit.search.cfg @build.cfg src/fanocli.pas

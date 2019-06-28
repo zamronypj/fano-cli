@@ -10,6 +10,9 @@ REM ------------------------------------
 REM -- build script for Windows
 REM ------------------------------------
 
+IF NOT EXIST build.cfg (copy build.cfg.sample build.cfg)
+IF NOT EXIST build.dev.cfg (copy build.dev.cfg.sample build.dev.cfg)
+IF NOT EXIST build.prod.cfg (copy build.prod.cfg.sample build.prod.cfg)
 
 IF NOT DEFINED BUILD_TYPE (SET BUILD_TYPE="prod")
 IF NOT DEFINED UNIT_OUTPUT_DIR (SET UNIT_OUTPUT_DIR="bin\unit")
