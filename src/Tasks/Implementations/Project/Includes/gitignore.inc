@@ -61,8 +61,17 @@ strGitignore: string =
     '# Ignore FreePascal built-in console IDE generated files' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     'fp.dir' + LineEnding +
+    'fp.cfg' + LineEnding +
+    'fp.dsk' + LineEnding +
+    'fp.ini' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Ignore Lazarus local files (user-specific info)' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '*.lps';
+    '*.lps' + LineEnding +
+    '' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
+    '# Ignore Visual Studio Code generated files' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
+    '.vscode/' + LineEnding +
+    '' + LineEnding;
