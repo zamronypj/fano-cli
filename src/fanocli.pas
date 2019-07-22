@@ -18,6 +18,7 @@ uses
     InfoTaskImpl,
     CreateProjectTaskFactoryImpl,
     CreateProjectFastCgiTaskFactoryImpl,
+    CreateProjectScgiTaskFactoryImpl,
     CreateProjectNoGitTaskFactoryImpl,
     CreateProjectNoCommitTaskFactoryImpl,
     CreateControllerTaskFactoryImpl,

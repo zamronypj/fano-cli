@@ -16,7 +16,7 @@ strBootstrapPas: string =
     '' + LineEnding +
     'type' + LineEnding +
     '' + LineEnding +
-    '    TBootstrapApp = class(TSimpleFastCGIWebApplication)' + LineEnding +
+    '    TBootstrapApp = class(TSimpleScgiWebApplication)' + LineEnding +
     '    protected' + LineEnding +
     '        procedure buildDependencies(const container : IDependencyContainer); override;' + LineEnding +
     '        procedure buildRoutes(const container : IDependencyContainer); override;' + LineEnding +
@@ -41,7 +41,7 @@ strBootstrapPas: string =
     '    procedure TBootstrapApp.buildRoutes(const container : IDependencyContainer);' + LineEnding +
     '    var router : IRouter;' + LineEnding +
     '    begin' + LineEnding +
-    '        router := container.get(GUIDTOString(IRouter)) as IRouter;' + LineEnding +
+    '        router := container.get(GUIDToString(IRouter)) as IRouter;' + LineEnding +
     '        try' + LineEnding +
     '            {$INCLUDE Routes/routes.inc}' + LineEnding +
     '        finally' + LineEnding +

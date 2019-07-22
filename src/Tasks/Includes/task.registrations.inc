@@ -11,6 +11,7 @@
 {$INCLUDE Info/task.registrations.inc}
 {$INCLUDE Project/task.registrations.inc}
 {$INCLUDE ProjectFastCgi/task.registrations.inc}
+{$INCLUDE ProjectScgi/task.registrations.inc}
 {$INCLUDE ProjectNoGit/task.registrations.inc}
 {$INCLUDE ProjectNoCommit/task.registrations.inc}
 {$INCLUDE Controller/task.registrations.inc}
