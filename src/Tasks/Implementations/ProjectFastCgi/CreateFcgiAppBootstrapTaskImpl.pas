@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateAppBootstrapTaskImpl;
+    CreateSimpleAppBootstrapTaskImpl;
 
 type
 
@@ -26,7 +26,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateFcgiAppBootstrapTask = class(TCreateAppBootstrapTask)
+    TCreateFcgiAppBootstrapTask = class(TCreateSimpleAppBootstrapTask)
     protected
         procedure createApp(const dir : string); override;
         procedure createBootstrap(const dir : string); override;
