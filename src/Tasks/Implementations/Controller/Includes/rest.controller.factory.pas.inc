@@ -40,10 +40,7 @@ strRestControllerFactoryPasInc: string =
     '    begin' + LineEnding +
     '        routeMiddlewares := container.get(''routeMiddlewares'') as IMiddlewareCollectionAware;' + LineEnding +
     '        try' + LineEnding +
-    '            result := T%sController.create(' + LineEnding +
-    '                routeMiddlewares.getBefore(),' + LineEnding +
-    '                routeMiddlewares.getAfter()' + LineEnding +
-    '            );' + LineEnding +
+    '            result := T%sController.create(routeMiddlewares);' + LineEnding +
     '        finally' + LineEnding +
     '            routeMiddlewares := nil;' + LineEnding +
     '        end;' + LineEnding +
