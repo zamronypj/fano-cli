@@ -16,11 +16,10 @@ strBootstrapPas: string =
     '' + LineEnding +
     'type' + LineEnding +
     '' + LineEnding +
-    '    TBootstrapApp = class(TFanoWebApplication)' + LineEnding +
+    '    TBootstrapApp = class(TSimpleWebApplication)' + LineEnding +
     '    protected' + LineEnding +
     '        procedure buildDependencies(const container : IDependencyContainer); override;' + LineEnding +
     '        procedure buildRoutes(const container : IDependencyContainer); override;' + LineEnding +
-    '        function initDispatcher(const container : IDependencyContainer) : IDispatcher; override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     'implementation' + LineEnding +
@@ -48,10 +47,5 @@ strBootstrapPas: string =
     '        finally' + LineEnding +
     '            router := nil;' + LineEnding +
     '        end;' + LineEnding +
-    '    end;' + LineEnding +
-    '' + LineEnding +
-    '    function TBootstrapApp.initDispatcher(const container : IDependencyContainer) : IDispatcher;' + LineEnding +
-    '    begin' + LineEnding +
-    '        result := container.get(''dispatcher'') as IDispatcher;' + LineEnding +
     '    end;' + LineEnding +
     'end.';

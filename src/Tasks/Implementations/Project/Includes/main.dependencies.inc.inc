@@ -17,20 +17,4 @@ strMainDependenciesInc: string =
     ' ------------------------------------------------}' + LineEnding +
     ' container.factory(''routeMiddlewares'', TNullMiddlewareCollectionAwareFactory.create());' + LineEnding +
     '' + LineEnding +
-    ' {-----------------------------------------------' + LineEnding +
-    '   register application simple router instance' + LineEnding +
-    '   Replace with your own implementation if required' + LineEnding +
-    ' ------------------------------------------------}' + LineEnding +
-    ' container.add(''router'', TSimpleRouterFactory.create());' + LineEnding +
-    '' + LineEnding +
-    ' {-----------------------------------------------' + LineEnding +
-    '   setup application request dispatcher' + LineEnding +
-    '   replace with TDispatcherFactory if middleware support is requred' + LineEnding +
-    ' ------------------------------------------------}' + LineEnding +
-    ' container.add(' + LineEnding +
-    '     ''dispatcher'',' + LineEnding +
-    '     TSimpleDispatcherFactory.create(' + LineEnding +
-    '         container.get(''router'') as IRouteMatcher' + LineEnding +
-    '     )' + LineEnding +
-    ' );' + LineEnding +
     '';
