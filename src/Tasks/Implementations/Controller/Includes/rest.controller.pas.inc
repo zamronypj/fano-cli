@@ -24,7 +24,7 @@ strRestControllerPasInc: string =
     '     *' + LineEnding +
     '     * @author [[AUTHOR_NAME]] <[[AUTHOR_EMAIL]]>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    T%sController = class(TRouteHandler, IDependency)' + LineEnding +
+    '    T%sController = class(TRouteHandler)' + LineEnding +
     '    public' + LineEnding +
     '        function handleRequest(' + LineEnding +
     '            const request : IRequest;' + LineEnding +
