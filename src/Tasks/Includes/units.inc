@@ -6,6 +6,10 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
+DeployCgiTaskFactoryImpl,
+DeployFcgiTaskFactoryImpl,
+DeployFcgidTaskFactoryImpl,
+DeployScgiTaskFactoryImpl,
 InfoTaskImpl,
 CreateProjectTaskFactoryImpl,
 CreateProjectFastCgiTaskFactoryImpl,

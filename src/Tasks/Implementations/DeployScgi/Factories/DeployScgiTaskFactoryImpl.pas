@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit DeployFcgiTaskFactoryImpl;
+unit DeployScgiTaskFactoryImpl;
 
 interface
 
@@ -20,11 +20,11 @@ uses
 type
 
     (*!--------------------------------------
-     * Factory class for deploy CGI application
+     * Factory class for deploy SCGI application
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TDeployFcgiTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TDeployScgiTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
         function build() : ITask;
     end;
@@ -38,17 +38,17 @@ uses
     WebServerTaskImpl,
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
-    ApacheVirtualHostFcgiTaskImpl,
+    ApacheVirtualHostScgiTaskImpl,
     AdddomainToEtcHostTaskImpl,
     RootCheckTaskImpl;
 
-    function TDeployFcgiTaskFactory.build() : ITask;
+    function TDeployScgiTaskFactory.build() : ITask;
     var deployTask : ITask;
     begin
         deployTask := TDeployTaskTask.create(
             TWebServerTask.create(
-                TApacheVirtualHostFcgiTask.create(),
-                //TNginxVirtualHostFcgiTask.create()
+                TApacheVirtualHostScgiTask.create(),
+                //TNginxVirtualHostScgiTask.create()
                 TNullTask.create()
             ),
             TWebServerTask.create(
