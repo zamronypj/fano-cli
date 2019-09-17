@@ -98,10 +98,10 @@ uses
         begin
             //fedora-based
             createTextFile(
-                '/etc/httpd/sites-available/' + serverName + '.conf',
+                '/etc/httpd/conf.d/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /etc/httpd/sites-available/' + serverName + '.conf');
+            writeln('Create virtual host /etc/httpd/conf.d/' + serverName + '.conf');
         end else
         begin
             writeln('Unsupported platform or web server');
