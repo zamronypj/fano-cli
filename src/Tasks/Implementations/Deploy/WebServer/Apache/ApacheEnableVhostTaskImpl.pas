@@ -30,7 +30,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; override;
+        ) : ITask;
     end;
 
 implementation
@@ -46,15 +46,17 @@ uses
     ) : ITask;
     var serverName : shortString;
     begin
+        serverName := opt.getOptionValue(longOpt);
         if directoryExists('/etc/apache2/sites-enabled') then
         begin
             //debian-based
             if not fileExists('/etc/apache2/sites-enabled/' + serverName + '.conf') then
             begin
                 fpSymlink(
-                    '/etc/apache2/sites-available/' + serverName + '.conf',
-                    '/etc/apache2/sites-enabled/' + serverName + '.conf'
+                    PChar('/etc/apache2/sites-available/' + serverName + '.conf'),
+                    PChar('/etc/apache2/sites-enabled/' + serverName + '.conf')
                 );
+                writeln('Enable virtual host /etc/apache2/sites-enabled/' + serverName + '.conf');
             end;
         end else
         if directoryExists('/etc/httpd/sites-enabled') then
@@ -63,9 +65,10 @@ uses
             if not fileExists('/etc/httpd/sites-enabled/' + serverName + '.conf') then
             begin
                 fpSymlink(
-                    '/etc/httpd/sites-available/' + serverName + '.conf',
-                    '/etc/httpd/sites-enabled/' + serverName + '.conf'
+                    PChar('/etc/httpd/sites-available/' + serverName + '.conf'),
+                    PChar('/etc/httpd/sites-enabled/' + serverName + '.conf')
                 );
+                writeln('Enable virtual host /etc/httpd/sites-enabled/' + serverName + '.conf');
             end;
         end else
         begin

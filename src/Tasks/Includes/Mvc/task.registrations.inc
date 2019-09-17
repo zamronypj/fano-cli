@@ -11,8 +11,8 @@
 taskFactory := TCreateMvcTaskFactory.create();
 try
     appInst.registerTask(
-        'create-mvc',
-        '--create-mvc=[name] Create new controller, model and view',
+        'mvc',
+        '--mvc=[name] Create new controller, model and view',
         taskFactory.build()
     );
 finally

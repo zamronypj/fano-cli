@@ -33,22 +33,36 @@ implementation
 
 uses
 
+    FileContentWriterIntf,
+    FileContentReaderIntf,
     NullTaskImpl,
     DeployTaskImpl,
-    WebServerTaskImpl,
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     ApacheVirtualHostFcgiTaskImpl,
-    AdddomainToEtcHostTaskImpl,
-    RootCheckTaskImpl;
+    AddDomainToEtcHostTaskImpl,
+    RootCheckTaskImpl,
+    WebServerTaskImpl,
+    TextFileCreatorImpl,
+    DirectoryCreatorImpl,
+    ContentModifierImpl,
+    FileHelperImpl;
 
     function TDeployFcgiTaskFactory.build() : ITask;
     var deployTask : ITask;
+        fReader : IFileContentReader;
+        fWriter : IFileContentWriter;
     begin
-        deployTask := TDeployTaskTask.create(
+        fReader := TFileHelper.create();
+        fWriter := fReader as IFileContentWriter;
+        deployTask := TDeployTask.create(
             TWebServerTask.create(
-                TApacheVirtualHostFcgiTask.create(),
-                //TNginxVirtualHostFcgiTask.create()
+                TApacheVirtualHostFcgiTask.create(
+                    TTextFileCreator.create(),
+                    TDirectoryCreator.create(),
+                    TContentModifier.create()
+                ),
+                //TNginxVirtualHostCgiTask.create()
                 TNullTask.create()
             ),
             TWebServerTask.create(
@@ -56,7 +70,7 @@ uses
                 //TNginxEnableVirtualHostTask.create()
                 TNullTask.create()
             ),
-            TAddDomainToEtcHostHostTask.create(),
+            TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
                 //TNginxReloadWebServerTask.create()

@@ -15,7 +15,9 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    FileContentReaderIntf,
+    FileContentWriterIntf;
 
 type
 
@@ -26,12 +28,21 @@ type
      *---------------------------------------*)
     TAddDomainToEtcHostTask = class(TInterfacedObject, ITask)
     private
+        fReader : IFileContentReader;
+        fWriter : IFileContentWriter;
+
         function getIp(const opt : ITaskOptions) : string;
     public
+        constructor create(
+            const afreader : IFileContentReader;
+            const afwriter : IFileContentWriter
+        );
+        destructor destroy(); override;
+
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; override;
+        ) : ITask;
     end;
 
 implementation
@@ -39,6 +50,22 @@ implementation
 uses
 
     SysUtils;
+
+    constructor TAddDomainToEtcHostTask.create(
+        const afreader : IFileContentReader;
+        const afwriter : IFileContentWriter
+    );
+    begin
+        fReader := afreader;
+        fWriter := afwriter;
+    end;
+
+    destructor TAddDomainToEtcHostTask.destroy();
+    begin
+        fReader := nil;
+        fWriter := nil;
+        inherited destroy();
+    end;
 
     function TAddDomainToEtcHostTask.getIp(const opt : ITaskOptions) : string;
     begin
@@ -60,10 +87,11 @@ uses
         serverName := opt.getOptionValue(longOpt);
         serverIp := getIp(opt);
         //create domain entry in /etc/hosts
-        etcHosts := fileReader.read('/etc/hosts');
+        etcHosts := fReader.read('/etc/hosts');
         etcHosts := etcHosts + LineEnding +
                 serverIp + ' ' + serverName + LineEnding;
-        fileWriter.write('/etc/hosts', etcHosts);
+        fWriter.write('/etc/hosts', etcHosts);
+        writeln('Add ' + serverIp + ' ' + serverName +' to /etc/hosts ');
         result := self;
     end;
 end.

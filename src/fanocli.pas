@@ -11,20 +11,8 @@ program fanocli;
 {$H+}
 
 uses
-    TaskIntf,
-    TaskFactoryIntf,
-    TaskListAwareIntf,
-    FanoAppImpl,
-    InfoTaskImpl,
-    CreateProjectTaskFactoryImpl,
-    CreateProjectFastCgiTaskFactoryImpl,
-    CreateProjectScgiTaskFactoryImpl,
-    CreateProjectNoGitTaskFactoryImpl,
-    CreateProjectNoCommitTaskFactoryImpl,
-    CreateControllerTaskFactoryImpl,
-    CreateViewTaskFactoryImpl,
-    CreateModelTaskFactoryImpl,
-    CreateMvcTaskFactoryImpl;
+
+    {$INCLUDE main.units.inc}
 
     procedure registerTask(const appInst : TFanoCliApplication);
     var

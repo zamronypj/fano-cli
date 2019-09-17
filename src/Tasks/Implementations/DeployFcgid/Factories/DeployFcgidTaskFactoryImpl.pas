@@ -34,22 +34,36 @@ implementation
 
 uses
 
+    FileContentWriterIntf,
+    FileContentReaderIntf,
     NullTaskImpl,
     DeployTaskImpl,
-    WebServerTaskImpl,
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     ApacheVirtualHostFcgidTaskImpl,
-    AdddomainToEtcHostTaskImpl,
-    RootCheckTaskImpl;
+    AddDomainToEtcHostTaskImpl,
+    RootCheckTaskImpl,
+    WebServerTaskImpl,
+    TextFileCreatorImpl,
+    DirectoryCreatorImpl,
+    ContentModifierImpl,
+    FileHelperImpl;
 
     function TDeployFcgidTaskFactory.build() : ITask;
     var deployTask : ITask;
+        fReader : IFileContentReader;
+        fWriter : IFileContentWriter;
     begin
-        deployTask := TDeployTaskTask.create(
+        fReader := TFileHelper.create();
+        fWriter := fReader as IFileContentWriter;
+        deployTask := TDeployTask.create(
             TWebServerTask.create(
-                TApacheVirtualHostFcgidTask.create(),
-                //TNginxVirtualHostFcgidTask.create()
+                TApacheVirtualHostFcgidTask.create(
+                    TTextFileCreator.create(),
+                    TDirectoryCreator.create(),
+                    TContentModifier.create()
+                ),
+                //TNginxVirtualHostCgiTask.create()
                 TNullTask.create()
             ),
             TWebServerTask.create(
@@ -57,7 +71,7 @@ uses
                 //TNginxEnableVirtualHostTask.create()
                 TNullTask.create()
             ),
-            TAddDomainToEtcHostHostTask.create(),
+            TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
                 //TNginxReloadWebServerTask.create()
@@ -68,5 +82,6 @@ uses
         //protect to avoid accidentally running without root privilege
         result := TRootCheckTask.create(deployTask);
     end;
+
 
 end.

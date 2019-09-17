@@ -25,7 +25,7 @@ type
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TBaseApacheVirtualHostTask = class(TBaseCreateTask)
+    TBaseApacheVirtualHostTask = class(TBaseCreateFileTask)
     private
         function getDocumentRoot(const opt : ITaskOptions) : string;
         function getHost(const opt : ITaskOptions) : string;
@@ -76,7 +76,7 @@ uses
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var serverName : string
+    var serverName : string;
     begin
         inherited run(opt, longOpt);
         serverName := opt.getOptionValue(longOpt);
@@ -92,6 +92,7 @@ uses
                 '/etc/apache2/sites-available/' + serverName + '.conf',
                 getVhostTemplate()
             );
+            writeln('Create virtual host /etc/apache2/sites-available/' + serverName + '.conf');
         end else
         if directoryExists('/etc/httpd') then
         begin
@@ -100,6 +101,7 @@ uses
                 '/etc/httpd/sites-available/' + serverName + '.conf',
                 getVhostTemplate()
             );
+            writeln('Create virtual host /etc/httpd/sites-available/' + serverName + '.conf');
         end else
         begin
             writeln('Unsupported platform or web server');

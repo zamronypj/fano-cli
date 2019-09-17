@@ -6,6 +6,6 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
-{$INCLUDE Apps/Includes/contracts.inc}
+{$INCLUDE Apps/Includes/units.inc}
 {$INCLUDE Tasks/Includes/contracts.inc}
 {$INCLUDE Tasks/Includes/units.inc}

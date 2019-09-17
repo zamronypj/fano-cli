@@ -13,9 +13,9 @@ try
     appInst.registerTask(
         'deploy-cgi',
         '--deploy-cgi=[server name] Deploy as CGI web application.' + LineEnding +
-        '    --web-server=[web server] if omited, apache is assumed.' + LineEnding +
-        '    --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
-        '    --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.',
+        '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
+        '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
+        '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.',
         taskFactory.build()
     );
 finally

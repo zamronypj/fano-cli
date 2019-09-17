@@ -11,8 +11,8 @@
 taskFactory := TCreateProjectFastCgiTaskFactory.create();
 try
     appInst.registerTask(
-        'create-project-fcgi',
-        '--create-project-fcgi=[project-name] Create new FastCGI project',
+        'project-fcgi',
+        '--project-fcgi=[project-name] Create new FastCGI project.',
         taskFactory.build()
     );
 finally

@@ -11,8 +11,8 @@
 taskFactory := TCreateControllerTaskFactory.create();
 try
     appInst.registerTask(
-        'create-controller',
-        '--create-controller=[controller-name] Create new controller',
+        'controller',
+        '--controller=[controller-name] Create new controller',
         taskFactory.build()
     );
 finally

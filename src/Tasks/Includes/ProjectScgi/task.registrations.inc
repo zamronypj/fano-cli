@@ -11,8 +11,8 @@
 taskFactory := TCreateProjectScgiTaskFactory.create();
 try
     appInst.registerTask(
-        'create-project-scgi',
-        '--create-project-scgi=[project-name] Create new SCGI project',
+        'project-scgi',
+        '--project-scgi=[project-name] Create new SCGI project',
         taskFactory.build()
     );
 finally

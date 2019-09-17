@@ -47,7 +47,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; override;
+        ) : ITask;
     end;
 
 implementation
@@ -63,7 +63,7 @@ uses
         aReloadWebServerTask : ITask
     );
     begin
-        fCgiVirtualHostCreateTask := aCgiVirtualHostCreateTask;
+        fVirtualHostCreateTask := aVirtualHostCreateTask;
         fEnableVirtualHostTask := aEnableVirtualHostTask;
         fAddDomainToEtcHostTask := aAddDomainToEtcHostTask;
         fReloadWebServerTask := aReloadWebServerTask;

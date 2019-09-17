@@ -11,8 +11,8 @@
 taskFactory := TCreateViewTaskFactory.create();
 try
     appInst.registerTask(
-        'create-view',
-        '--create-view=[view-name] Create new view',
+        'view',
+        '--view=[view-name] Create new view',
         taskFactory.build()
     );
 finally

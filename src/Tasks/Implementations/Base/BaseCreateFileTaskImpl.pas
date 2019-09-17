@@ -101,5 +101,6 @@ implementation
         begin
             contentModifier.setVar('[[APP_NAME]]', appName);
         end;
+        result := self;
     end;
 end.

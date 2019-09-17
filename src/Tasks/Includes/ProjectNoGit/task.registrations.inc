@@ -11,8 +11,8 @@
 taskFactory := TCreateProjectNoGitTaskFactory.create();
 try
     appInst.registerTask(
-        'create-project-without-git',
-        '--create-project-without-git=[project-name] ' +
+        'project-without-git',
+        '--project-without-git=[project-name] ' +
         'Create project without Git repository',
         taskFactory.build()
     );
