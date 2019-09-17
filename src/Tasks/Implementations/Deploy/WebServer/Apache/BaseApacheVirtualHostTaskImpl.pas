@@ -88,6 +88,7 @@ uses
         if directoryExists('/etc/apache2') then
         begin
             //debian-based
+            contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/apache2');
             createTextFile(
                 '/etc/apache2/sites-available/' + serverName + '.conf',
                 getVhostTemplate()
@@ -97,6 +98,7 @@ uses
         if directoryExists('/etc/httpd') then
         begin
             //fedora-based
+            contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
             createTextFile(
                 '/etc/httpd/conf.d/' + serverName + '.conf',
                 getVhostTemplate()
