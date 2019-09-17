@@ -59,17 +59,10 @@ uses
                 writeln('Enable virtual host /etc/apache2/sites-enabled/' + serverName + '.conf');
             end;
         end else
-        if directoryExists('/etc/httpd/sites-enabled') then
+        if directoryExists('/etc/httpd') then
         begin
-            //fedora-based
-            if not fileExists('/etc/httpd/sites-enabled/' + serverName + '.conf') then
-            begin
-                fpSymlink(
-                    PChar('/etc/httpd/sites-available/' + serverName + '.conf'),
-                    PChar('/etc/httpd/sites-enabled/' + serverName + '.conf')
-                );
-                writeln('Enable virtual host /etc/httpd/sites-enabled/' + serverName + '.conf');
-            end;
+            //fedora-based we do nothing
+            writeln('Enable virtual host /etc/httpd/conf.d/' + serverName + '.conf');
         end else
         begin
             writeln('Cannot create vhost symlink. Unsupported platform or web server');
