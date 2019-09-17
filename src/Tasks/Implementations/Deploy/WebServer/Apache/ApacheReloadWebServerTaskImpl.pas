@@ -76,7 +76,7 @@ uses
                 outputString,
                 [poStderrToOutPut]
             );
-            writeln(outputString);
+            writeln('Reload Apache service');
         end else
         begin
             writeln('Cannot reload web server. Unsupported platform or web server.');
