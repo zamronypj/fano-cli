@@ -17,6 +17,7 @@ uses
     TaskOptionsIntf,
     TaskIntf,
     TextFileCreatorIntf,
+    ContentModifierIntf,
     BaseProjectTaskImpl;
 
 type
@@ -31,27 +32,36 @@ type
     private
         textFileCreator : ITextFileCreator;
     protected
+        fContentModifier : IContentModifier;
         procedure createTextFile(const filename : string; const content : string);
     public
-        constructor create(const txtFileCreator : ITextFileCreator);
+        constructor create(
+            const txtFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        );
         destructor destroy(); override;
     end;
 
 implementation
 
-    constructor TCreateFileTask.create(const txtFileCreator : ITextFileCreator);
+    constructor TCreateFileTask.create(
+        const txtFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    );
     begin
         textFileCreator := txtFileCreator;
+        fContentModifier := contentModifier;
     end;
 
     destructor TCreateFileTask.destroy();
     begin
-        inherited destroy();
         textFileCreator := nil;
+        fContentModifier := nil;
+        inherited destroy();
     end;
 
     procedure TCreateFileTask.createTextFile(const filename : string; const content : string);
     begin
-        textFileCreator.createTextFile(filename, content);
+        textFileCreator.createTextFile(filename, fContentModifier.modify(content));
     end;
 end.

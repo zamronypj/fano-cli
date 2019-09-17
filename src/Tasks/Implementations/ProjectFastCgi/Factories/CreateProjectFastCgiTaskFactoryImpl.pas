@@ -36,6 +36,8 @@ uses
 
     TextFileCreatorIntf,
     TextFileCreatorImpl,
+    ContentModifierIntf,
+    ContentModifierImpl,
     DirectoryCreatorImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
@@ -50,16 +52,20 @@ uses
 
     function TCreateProjectFastCgiTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
+        contentModifier : IContentModifier;
         createPrjTask : ITask;
         invRunCheckTask : ITask;
     begin
+        //TODO: refactor as this is similar to TCreateProjectScgiTaskFactory
+        //or TCreateProjectTaskFactory
         textFileCreator := TTextFileCreator.create();
+        contentModifier := TContentModifier.create();
         createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator),
-            TCreateAppConfigsTask.create(textFileCreator),
-            TCreateAdditionalFilesTask.create(textFileCreator),
-            TCreateFcgiAppBootstrapTask.create(textFileCreator),
+            TCreateShellScriptsTask.create(textFileCreator, contentModifier),
+            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
+            TCreateFcgiAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
 

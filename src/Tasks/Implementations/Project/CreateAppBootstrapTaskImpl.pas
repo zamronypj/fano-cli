@@ -28,10 +28,29 @@ type
      *---------------------------------------*)
     TCreateAppBootstrapTask = class(TCreateFileTask)
     protected
-        procedure createApp(const dir : string); virtual;
-        procedure createBootstrap(const dir : string); virtual;
-        procedure createDependencies(const dir : string); virtual;
-        procedure createRoutes(const dir : string); virtual;
+        procedure createApp(
+            const opt : ITaskOptions;
+            const longOpt : shortstring;
+            const dir : string
+        ); virtual;
+
+        procedure createBootstrap(
+            const opt : ITaskOptions;
+            const longOpt : shortstring;
+            const dir : string
+        ); virtual;
+
+        procedure createDependencies(
+            const opt : ITaskOptions;
+            const longOpt : shortstring;
+            const dir : string
+        ); virtual;
+
+        procedure createRoutes(
+            const opt : ITaskOptions;
+            const longOpt : shortstring;
+            const dir : string
+        ); virtual;
     public
         function run(
             const opt : ITaskOptions;
@@ -45,21 +64,33 @@ uses
 
     sysutils;
 
-    procedure TCreateAppBootstrapTask.createApp(const dir : string);
+    procedure TCreateAppBootstrapTask.createApp(
+        const opt : ITaskOptions;
+        const longOpt : shortstring;
+        const dir : string
+    );
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/app.pas.inc}
     begin
         createTextFile(dir + '/app.pas', strAppPas);
     end;
 
-    procedure TCreateAppBootstrapTask.createBootstrap(const dir : string);
+    procedure TCreateAppBootstrapTask.createBootstrap(
+        const opt : ITaskOptions;
+        const longOpt : shortstring;
+        const dir : string
+    );
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/bootstrap.pas.inc}
     begin
         createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
 
-    procedure TCreateAppBootstrapTask.createDependencies(const dir : string);
+    procedure TCreateAppBootstrapTask.createDependencies(
+        const opt : ITaskOptions;
+        const longOpt : shortstring;
+        const dir : string
+    );
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/dependencies.inc.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/main.dependencies.inc.inc}
@@ -74,7 +105,11 @@ uses
         createTextFile(dir + '/controllers.dependencies.inc', strCtrlDependenciesInc);
     end;
 
-    procedure TCreateAppBootstrapTask.createRoutes(const dir : string);
+    procedure TCreateAppBootstrapTask.createRoutes(
+        const opt : ITaskOptions;
+        const longOpt : shortstring;
+        const dir : string
+    );
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/routes.inc.inc}
     begin
@@ -88,10 +123,10 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createApp(baseDirectory + '/src');
-        createBootstrap(baseDirectory + '/src');
-        createDependencies(baseDirectory + '/src/Dependencies');
-        createRoutes(baseDirectory + '/src/Routes');
+        createApp(opt, longOpt, baseDirectory + '/src');
+        createBootstrap(opt, longOpt, baseDirectory + '/src');
+        createDependencies(opt, longOpt, baseDirectory + '/src/Dependencies');
+        createRoutes(opt, longOpt, baseDirectory + '/src/Routes');
         result := self;
     end;
 end.

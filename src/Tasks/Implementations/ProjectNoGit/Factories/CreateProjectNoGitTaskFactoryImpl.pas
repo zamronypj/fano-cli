@@ -36,6 +36,8 @@ uses
 
     TextFileCreatorIntf,
     TextFileCreatorImpl,
+    ContentModifierIntf,
+    ContentModifierImpl,
     DirectoryCreatorImpl,
     NullTaskImpl,
     CreateDirTaskImpl,
@@ -49,16 +51,18 @@ uses
 
     function TCreateProjectNoGitTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
+        contentModifier : IContentModifier;
         createPrjTask : ITask;
         invRunCheckTask : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
+        contentModifier := TContentModifier.create();
         createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator),
-            TCreateAppConfigsTask.create(textFileCreator),
-            TCreateAdditionalFilesTask.create(textFileCreator),
-            TCreateAppBootstrapTask.create(textFileCreator),
+            TCreateShellScriptsTask.create(textFileCreator, contentModifier),
+            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
+            TCreateAppBootstrapTask.create(textFileCreator, contentModifier),
             //replace git task with NullTaskImpl to disable git repo creation
             TNullTask.create()
         );

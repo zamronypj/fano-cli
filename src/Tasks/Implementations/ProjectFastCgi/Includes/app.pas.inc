@@ -17,13 +17,13 @@ strAppPas: string =
     '    appInstance : IWebApplication;' + LineEnding +
     '' + LineEnding +
     'begin' + LineEnding +
-    '    writeln(''Starting application at 127.0.0.1:9090'');' + LineEnding +
+    '    writeln(''Starting application at [[HOST]]:[[PORT]]'');' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Bootstrap FastCGI application' + LineEnding +
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    appInstance := TBootstrapApp.create(''127.0.0.1'', 9090);' + LineEnding +
+    '    appInstance := TBootstrapApp.create(''[[HOST]]'', [[PORT]]);' + LineEnding +
     '    appInstance.run();' + LineEnding +
     'end.';

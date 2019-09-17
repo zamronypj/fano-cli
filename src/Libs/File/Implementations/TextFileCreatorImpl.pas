@@ -24,6 +24,8 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TTextFileCreator = class(TInterfacedObject, ITextFileCreator)
+    protected
+        function modifyContent(const content : string) : string; virtual;
     public
         procedure createTextFile(const filename : string; const content : string);
     end;
@@ -35,12 +37,17 @@ uses
     sysutils,
     classes;
 
+    function TTextFileCreator.modifyContent(const content : string) : string;
+    begin
+        result := content;
+    end;
+
     procedure TTextFileCreator.createTextFile(const filename : string; const content : string);
     var fStream : TFileStream;
         str : TStringStream;
     begin
         fStream := TFileStream.create(filename, fmCreate);
-        str := TStringStream.create(content);
+        str := TStringStream.create(modifyContent(content));
         try
             fStream.copyFrom(str, str.size);
         finally
