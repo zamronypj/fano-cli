@@ -24,23 +24,25 @@ strRestControllerPasInc: string =
     '     *' + LineEnding +
     '     * @author [[AUTHOR_NAME]] <[[AUTHOR_EMAIL]]>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    T%sController = class(TRouteHandler)' + LineEnding +
+    '    T%sController = class(TAbstractController)' + LineEnding +
     '    public' + LineEnding +
     '        function handleRequest(' + LineEnding +
     '            const request : IRequest;' + LineEnding +
-    '            const response : IResponse' + LineEnding +
+    '            const response : IResponse;' + LineEnding +
+    '            const args : IRouteArgsReader' + LineEnding +
     '        ) : IResponse; override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     'implementation' + LineEnding +
     '' + LineEnding +
     '    function T%sController.handleRequest(' + LineEnding +
-    '          const request : IRequest;' + LineEnding +
-    '          const response : IResponse' + LineEnding +
+    '        const request : IRequest;' + LineEnding +
+    '        const response : IResponse;' + LineEnding +
+    '        const args : IRouteArgsReader' + LineEnding +
     '    ) : IResponse;' + LineEnding +
     '    begin' + LineEnding +
-    '        {---put your code here---}' + LineEnding +
-    '        //response.body().write(''nice'');' + LineEnding +
+    '        {---put your code here, for example : ---}' + LineEnding +
+    '        response.body().write(''%s controller'');' + LineEnding +
     '        result := response;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +

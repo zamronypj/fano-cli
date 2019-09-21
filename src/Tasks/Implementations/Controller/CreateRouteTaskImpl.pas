@@ -96,7 +96,7 @@ const
         directoryCreator.createDirIfNotExists(BASE_ROUTE_DIR + controllerName);
         strCtrlRoutesInc := strCtrlRoutesInc + LineEnding +
             format(
-              'router.get(''/%s'', container.get(''%sController'') as IRouteHandler);',
+              'router.get(''/%s'', container.get(''%sController'') as IRequestHandler);',
               [lowerCase(controllerName), lowerCase(controllerName)]
             ) + LineEnding;
         fileWriter.write(BASE_ROUTE_DIR + controllerName + '/routes.inc', strCtrlRoutesInc);

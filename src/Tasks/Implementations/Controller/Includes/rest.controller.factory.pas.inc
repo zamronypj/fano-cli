@@ -36,14 +36,10 @@ strRestControllerFactoryPasInc: string =
     '    %sController;' + LineEnding +
     '' + LineEnding +
     '    function T%sControllerFactory.build(const container : IDependencyContainer) : IDependency;' + LineEnding +
-    '    var routeMiddlewares : IMiddlewareCollectionAware;' + LineEnding +
     '    begin' + LineEnding +
-    '        routeMiddlewares := container.get(''routeMiddlewares'') as IMiddlewareCollectionAware;' + LineEnding +
-    '        try' + LineEnding +
-    '            result := T%sController.create(routeMiddlewares);' + LineEnding +
-    '        finally' + LineEnding +
-    '            routeMiddlewares := nil;' + LineEnding +
-    '        end;' + LineEnding +
+    '        //build your controller instance here.' + LineEnding +
+    '        //container will gives you access to all registered services' + LineEnding +
+    '        result := T%sController.create();' + LineEnding +
     '    end;' + LineEnding +
     'end.' + LineEnding +
     '';
