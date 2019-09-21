@@ -70,8 +70,8 @@ uses
     begin
         inherited run(opt, longOpt);
         middlewareName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + DirectorySeparator +
-            middlewareName + DirectorySeparator + 'Middlewares' +
+        baseDir := ExtractFileDir(baseDirectory) + DirectorySeparator +
+            'Middlewares' + DirectorySeparator + middlewareName +
             DirectorySeparator + 'Factories';
         createDirIfNotExists(baseDir);
         createMiddlewareFactoryFile(baseDir, middlewareName);

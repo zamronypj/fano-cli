@@ -65,16 +65,16 @@ uses
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var controllerName : string;
+    var middlewareName : string;
         baseDir : string;
     begin
         inherited run(opt, longOpt);
-        controllerName := opt.getOptionValue(longOpt);
-        baseDir := baseDirectory + DirectorySeparator + controllerName;
+        middlewareName := opt.getOptionValue(longOpt);
+        baseDir := ExtractFileDir(baseDirectory) + DirectorySeparator + 'Middlewares';
         createDirIfNotExists(baseDir);
-        baseDir := baseDir + DirectorySeparator + 'Middlewares';
+        baseDir := baseDir + DirectorySeparator + middlewareName;
         createDirIfNotExists(baseDir);
-        createMiddlewareFile(baseDir, controllerName);
+        createMiddlewareFile(baseDir, middlewareName);
         result := self;
     end;
 end.
