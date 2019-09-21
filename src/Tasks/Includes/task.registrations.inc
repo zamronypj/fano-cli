@@ -18,6 +18,7 @@
 {$INCLUDE View/task.registrations.inc}
 {$INCLUDE Model/task.registrations.inc}
 {$INCLUDE Mvc/task.registrations.inc}
+{$INCLUDE Middleware/task.registrations.inc}
 {$INCLUDE DeployScgi/task.registrations.inc}
 {$INCLUDE DeployCgi/task.registrations.inc}
 {$INCLUDE DeployFcgi/task.registrations.inc}
