@@ -97,12 +97,14 @@ uses
         {$INCLUDE src/Tasks/Implementations/Project/Includes/models.dependencies.inc.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/controllers.dependencies.inc.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/views.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Includes/middlewares.dependencies.inc.inc}
     begin
         createTextFile(dir + '/dependencies.inc', strDependenciesInc);
         createTextFile(dir + '/main.dependencies.inc', strMainDependenciesInc);
         createTextFile(dir + '/models.dependencies.inc', strModelDependenciesInc);
         createTextFile(dir + '/views.dependencies.inc', strViewDependenciesInc);
         createTextFile(dir + '/controllers.dependencies.inc', strCtrlDependenciesInc);
+        createTextFile(dir + '/middlewares.dependencies.inc', strMiddlewaresDependenciesInc);
     end;
 
     procedure TCreateAppBootstrapTask.createRoutes(
