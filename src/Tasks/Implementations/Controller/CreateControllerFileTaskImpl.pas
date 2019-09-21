@@ -56,7 +56,7 @@ uses
             dir + DirectorySeparator + ctrlName + 'Controller.pas',
             format(
                 strRestControllerPasInc,
-                [ ctrlName, lowerCase(ctrlName), ctrlName, ctrlName, ctrlName ]
+                [ ctrlName, lowerCase(ctrlName), ctrlName, ctrlName, ctrlName, ctrlName ]
             )
         );
     end;
