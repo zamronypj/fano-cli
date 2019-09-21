@@ -19,4 +19,5 @@ CreateProjectNoCommitTaskFactoryImpl,
 CreateControllerTaskFactoryImpl,
 CreateViewTaskFactoryImpl,
 CreateModelTaskFactoryImpl,
-CreateMvcTaskFactoryImpl;
+CreateMvcTaskFactoryImpl,
+CreateMiddlewareTaskFactoryImpl;
