@@ -10,6 +10,17 @@ Fano CLI is command line tools to help scaffolding web application using [Fano W
 
 ## Installation
 
+### TLDR
+
+Run
+
+```
+$ git clone git@github.com:fanoframework/fano-cli.git && \
+cd fano-cli && \
+./tools/config.setup.sh && \
+./build.sh
+```
+
 ### Setting up
 
 Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run
@@ -96,113 +107,7 @@ then you can run
 $ fanocli --help
 ```
 
-### Scaffolding project directory structure
-
-To scaffold project structure using Fano framework, run with  `--create-project` command line options
-
-```
-$ fanocli --create-project=[another project name]
-```
-
-For example, following command will cause a new project created in directory name `test-fano` inside current directory.
-
-```
-$ fanocli --create-project=test-fano
-```
-
-This command line options creates Git repository and initial commit for you  automatically. This behavior may cause problem if you already create remote repository with commit and try to merge local repository with remote one. Git may refuses to merge when they have unrelated commit histories.
-
-To workaround this problem, you can run `git merge` with option `--allow-unrelated-histories` or create project directory without creating initial commit or create project directory structure without
-Git repository.
-
-### Scaffolding FastCGI project directory structure
-
-To scaffold FastCGI project structure using Fano framework, run with  `--create-project-fcgi` command line options
-
-```
-$ fanocli --create-project-fcgi=[another project name]
-```
-
-For example, following command will cause a new project created in directory name `test-fano-fcgi` inside current directory.
-
-```
-$ fanocli --create-project-fcgi=test-fano-fcgi
-```
-
-Generated files are mostly similar to `--create-project` output except
-`src/app.pas` and `src/bootstrap.pas` which will generate FastCGI web application
-as daemon.
-
-### Scaffolding project directory structure with Git without initial commit
-
-To scaffold project structure using Fano framework with Git repository initialized but without creating initial commit, run with  `--create-project-no-commit` command line options
-
-```
-$ fanocli --create-project-no-commit=test-fano
-```
-
-This command line options is provided to enable you to commit Git repository manually. So you can merge local repository with a remote repository before
-running git commit. After project directory is constructed, you need to execute following shell command,
-
-```
-$ cd test-fano
-$ git commit -m "Initial commit"
-```
-
-### Scaffolding project directory structure without Git
-
-To scaffold project structure using Fano framework but without initializing
-Git repository, run with  `--create-project-without-git` command line options
-
-```
-$ fanocli --create-project-without-git=test-fano
-```
-
-This command line options is provided to enable you to initialize Git repository manually. After project directory is constructed, you need to execute following shell command,
-
-```
-$ cd test-fano
-$ git init
-$ git submodule add https://github.com/fanoframework/fano.git
-$ git add .
-$ git commit -m "Initial commit"
-```
-
-### Creating controller
-
-After you create project structure, to scaffold controller class, run with  `--create-controller` command line options
-
-```
-$ cd test-fano
-$ fanocli --create-controller=Hello
-```
-
-### Creating view
-
-After you create project structure, to scaffold view class, run with  `--create-view` command line options
-
-```
-$ cd test-fano
-$ fanocli --create-view=Hello
-```
-
-### Creating model
-
-After you create project structure, to scaffold model class, run with  `--create-model` command line options
-
-```
-$ cd test-fano
-$ fanocli --create-model=Hello
-```
-
-### Creating Model, View and Controller
-
-After you create project structure, to scaffold model, view and controller class, run with  `--create-mvc` command line options
-
-```
-$ cd test-fano
-$ fanocli --create-mvc=Hello
-```
+Read [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-with-fano-cli/) for more information.
 
 ## Known Issues
 
