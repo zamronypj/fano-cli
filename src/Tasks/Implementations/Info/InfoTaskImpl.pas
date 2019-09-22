@@ -66,8 +66,8 @@ uses
         const longOpt : shortstring
     ) : ITask;
     begin
-        writeln('Fano CLI v0.1, utility for Fano Framework');
-        writeln('(c) Zamrony P. Juhara');
+        writeln('Fano CLI, utility for Fano Framework');
+        writeln('https://fanoframework.github.io');
         writeln();
         writeln('Usage: fanocli [Task] [Task Parameters]');
         writeln();
