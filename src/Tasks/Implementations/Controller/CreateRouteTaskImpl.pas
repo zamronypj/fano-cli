@@ -71,21 +71,31 @@ const
 
     destructor TCreateRouteTask.destroy();
     begin
-        inherited destroy();
         fileReader := nil;
         fileWriter := nil;
         directoryCreator := nil;
+        inherited destroy();
     end;
 
     function TCreateRouteTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var controllerName : string;
+    var controllerName, lowerCtrlName : string;
         routeContent : string;
+        routePattern : string;
+        routeMethod : string;
         {$INCLUDE src/Tasks/Implementations/Controller/Includes/routes.inc.inc}
     begin
         controllerName := opt.getOptionValue(longOpt);
+        lowerCtrlName := lowerCase(controllerName);
+        routePattern := opt.getOptionValueDef('route', '/' + lowerCtrlName);
+        if (routePattern[1] <> '/') then
+        begin
+            routePattern := '/' + routePattern;
+        end;
+        routeMethod := lowerCase(opt.getOptionValueDef('method', 'get'));
+
         //create main entry to main routes file
         routeContent := fileReader.read(BASE_ROUTE_DIR + 'routes.inc');
         routeContent := routeContent +
@@ -96,8 +106,8 @@ const
         directoryCreator.createDirIfNotExists(BASE_ROUTE_DIR + controllerName);
         strCtrlRoutesInc := strCtrlRoutesInc + LineEnding +
             format(
-              'router.get(''/%s'', container.get(''%sController'') as IRequestHandler);',
-              [lowerCase(controllerName), lowerCase(controllerName)]
+              'router.%s(''%s'', container.get(''%sController'') as IRequestHandler);',
+              [routeMethod, routePattern, lowerCtrlName]
             ) + LineEnding;
         fileWriter.write(BASE_ROUTE_DIR + controllerName + '/routes.inc', strCtrlRoutesInc);
 

@@ -57,6 +57,7 @@ type
             const task : ITask
         );
         function getTaskList() : IList;
+        function getOptionValueDef(const longOpt: string; const defValue : string) : string;
     end;
 
 implementation
@@ -146,6 +147,15 @@ resourcestring
             item^.task.run(self, item^.longOption);
         end;
         terminate();
+    end;
+
+    function TFanoCliApplication.getOptionValueDef(const longOpt: string; const defValue : string) : string;
+    begin
+        result := getOptionValue(longOpt);
+        if (result = '') then
+        begin
+            result := defValue;
+        end;
     end;
 
     procedure TFanoCliApplication.doRun();
