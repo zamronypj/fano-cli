@@ -6,7 +6,8 @@ Fano CLI is command line tools to help scaffolding web application using [Fano W
 
 ## Requirement
 
-- [Free Pascal](https://www.freepascal.org/) >= 3.0
+- [Free Pascal](https://www.freepascal.org/) >= 3.0,
+- git
 
 ## Installation
 
@@ -19,6 +20,11 @@ $ git clone git@github.com:fanoframework/fano-cli.git && \
 cd fano-cli && \
 ./tools/config.setup.sh && \
 ./build.sh
+```
+For easier access, copy `bin/out/fanocli` executable binary to globally accessible location, for example
+
+```
+$ sudo cp bin/out/fanocli /usr/local/bin/fanocli
 ```
 
 ### Setting up
