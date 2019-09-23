@@ -9,7 +9,7 @@ strBuildCfgProd: string =
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# User configuration for production build' + LineEnding +
-    '# Please see FreePascal Documentation for available' + LineEnding +
+    '# Please see Free Pascal Documentation for available' + LineEnding +
     '# compiler switch configurations' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '' + LineEnding +

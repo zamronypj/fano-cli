@@ -38,7 +38,7 @@ bin/out/*
 !bin/out/README.md
 
 #----------------------------------------------
-# Ignore FreePascal built-in console IDE generated files
+# Ignore Free Pascal built-in console IDE generated files
 #----------------------------------------------
 fp.dir
 fp.cfg

@@ -10,7 +10,7 @@ strBuildCfg: string =
     '#----------------------------------------------' + LineEnding +
     '# User configuration that applies to both' + LineEnding +
     '# development and production environment' + LineEnding +
-    '# Please see FreePascal Documentation for available' + LineEnding +
+    '# Please see Free Pascal Documentation for available' + LineEnding +
     '# compiler configurations' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '' + LineEnding +

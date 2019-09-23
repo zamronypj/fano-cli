@@ -211,14 +211,14 @@ strReadme: string =
     '/usr/bin/ld: warning: public/link.res contains output sections; did you forget -T?' + LineEnding +
     '```' + LineEnding +
     '' + LineEnding +
-    'This is known issue between FreePascal and GNU Linker. See' + LineEnding +
+    'This is known issue between Free Pascal and GNU Linker. See' + LineEnding +
     '[FAQ: link.res syntax error, or "did you forget -T?"](https://www.freepascal.org/faq.var#unix-ld219)' + LineEnding +
     '' + LineEnding +
     'However, this warning is minor and can be ignored. It does not affect output executable.' + LineEnding +
     '' + LineEnding +
     '### Issue with unsynchronized compiled unit with unit source' + LineEnding +
     '' + LineEnding +
-    'Sometime FreePascal can not compile your code because, for example, you deleted a' + LineEnding +
+    'Sometime Free Pascal can not compile your code because, for example, you deleted a' + LineEnding +
     'unit source code (.pas) but old generated unit (.ppu, .o, .a files) still there' + LineEnding +
     'or when you switch between git branches. Solution is to remove those files.' + LineEnding +
     '' + LineEnding +

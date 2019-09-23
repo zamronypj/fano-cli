@@ -58,7 +58,7 @@ strGitignore: string =
     '!bin/unit/README.md' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '# Ignore FreePascal built-in console IDE generated files' + LineEnding +
+    '# Ignore Free Pascal built-in console IDE generated files' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     'fp.dir' + LineEnding +
     'fp.cfg' + LineEnding +

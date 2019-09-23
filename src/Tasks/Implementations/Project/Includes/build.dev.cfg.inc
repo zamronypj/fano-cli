@@ -9,7 +9,7 @@ strBuildCfgDev: string =
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# User configuration for development build' + LineEnding +
-    '# Please see FreePascal Documentation for available' + LineEnding +
+    '# Please see Free Pascal Documentation for available' + LineEnding +
     '# compiler switch configurations' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '' + LineEnding +
@@ -76,7 +76,7 @@ strBuildCfgDev: string =
     '#----------------------------------------------' + LineEnding +
     '# Verbose unit searching info,' + LineEnding +
     '# Remove comment, in case unit file is not found' + LineEnding +
-    '# so FreePascal will output verbose message where' + LineEnding +
+    '# so Free Pascal will output verbose message where' + LineEnding +
     '# it tries to look for unit file' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '#-vut';
