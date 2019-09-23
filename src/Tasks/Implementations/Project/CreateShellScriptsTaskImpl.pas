@@ -28,11 +28,18 @@ type
      *---------------------------------------*)
     TCreateShellScriptsTask = class(TCreateFileTask)
     private
+        fExecBinOutput : string;
         procedure createShellScripts(const dir : string);
         procedure createCleanScripts(const dir : string);
         procedure createConfigSetupScripts(const dir : string);
         procedure createSimulateScripts(const dir : string);
     public
+        constructor create(
+            const txtFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier;
+            const execBinOutDir : string = 'public'
+        );
+
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
@@ -48,13 +55,24 @@ uses
     {$ENDIF}
     sysutils;
 
+    constructor TCreateShellScriptsTask.create(
+        const txtFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier;
+        const execBinOutDir : string = 'public'
+    );
+    begin
+        inherited create(txtFileCreator, contentModifier);
+        fExecBinOutput := execBinOutDir;
+    end;
+
     procedure TCreateShellScriptsTask.createShellScripts(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.sh.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cmd.inc}
     begin
-        createTextFile(dir + '/build.sh', strBuildSh);
-        createTextFile(dir + '/build.cmd', strBuildCmd);
+        fContentModifier.setVar('[[EXEC_OUTPUT_DIR]]', fExecBinOutput);
+        createTextFile(dir + '/build.sh', fContentModifier.modify(strBuildSh));
+        createTextFile(dir + '/build.cmd', fContentModifier.modify(strBuildCmd));
         {$IFDEF UNIX}
         fpChmod(dir + '/build.sh', &775);
         {$ENDIF}

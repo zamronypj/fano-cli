@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateProjectScgiTaskFactoryImpl;
+unit CreateProjectFcgidTaskFactoryImpl;
 
 interface
 
@@ -21,11 +21,11 @@ type
 
     (*!--------------------------------------
      * Factory class for create project task for
-     * FastCGI web application
+     * FastCGI web application running with mod_fcgid
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateProjectScgiTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TCreateProjectFcgidTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
         function build() : ITask;
     end;
@@ -45,27 +45,27 @@ uses
     CreateAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
-    CreateScgiAppBootstrapTaskImpl,
+    CreateFcgidAppBootstrapTaskImpl,
     CreateProjectTaskImpl,
     InvRunCheckTaskImpl,
     EmptyDirCheckTaskImpl;
 
-    function TCreateProjectScgiTaskFactory.build() : ITask;
+    function TCreateProjectFastCgiTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         contentModifier : IContentModifier;
         createPrjTask : ITask;
         invRunCheckTask : ITask;
     begin
-        //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
+        //TODO: refactor as this is similar to TCreateProjectScgiTaskFactory
         //or TCreateProjectTaskFactory
         textFileCreator := TTextFileCreator.create();
         contentModifier := TContentModifier.create();
         createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
+            TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-            TCreateScgiAppBootstrapTask.create(textFileCreator, contentModifier),
+            TCreateFcgidAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
 

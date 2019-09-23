@@ -30,7 +30,7 @@ strBuildSh: string =
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then' + LineEnding +
-    'export EXEC_OUTPUT_DIR="public"' + LineEnding +
+    'export EXEC_OUTPUT_DIR="[[EXEC_OUTPUT_DIR]]"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [[ -z "${EXEC_OUTPUT_NAME}" ]]; then' + LineEnding +

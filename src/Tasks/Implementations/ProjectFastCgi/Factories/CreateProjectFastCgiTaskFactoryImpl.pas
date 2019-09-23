@@ -62,7 +62,7 @@ uses
         contentModifier := TContentModifier.create();
         createPrjTask := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator, contentModifier),
+            TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             TCreateFcgiAppBootstrapTask.create(textFileCreator, contentModifier),
