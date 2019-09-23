@@ -62,7 +62,7 @@ uses
                     TDirectoryCreator.create(),
                     TContentModifier.create()
                 ),
-                //TNginxVirtualHostCgiTask.create()
+                //nginx does not support CGI
                 TNullTask.create()
             ),
             TWebServerTask.create(

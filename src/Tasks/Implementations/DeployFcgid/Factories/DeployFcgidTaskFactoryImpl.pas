@@ -63,7 +63,7 @@ uses
                     TDirectoryCreator.create(),
                     TContentModifier.create()
                 ),
-                //TNginxVirtualHostCgiTask.create()
+                //nginx does not support something similar like mod_fcgid
                 TNullTask.create()
             ),
             TWebServerTask.create(
