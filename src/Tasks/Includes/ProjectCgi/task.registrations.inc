@@ -11,8 +11,8 @@
 taskFactory := TCreateProjectTaskFactory.create();
 try
     appInst.registerTask(
-        'project-cgi',
-        '--project-cgi=[project-name] Create new CGI project. This is alias of --project',
+        'project',
+        '--project=[project-name] Create new CGI project.',
         taskFactory.build()
     );
 finally

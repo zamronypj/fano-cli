@@ -16,6 +16,8 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
     CreateFileTaskImpl;
 
 type

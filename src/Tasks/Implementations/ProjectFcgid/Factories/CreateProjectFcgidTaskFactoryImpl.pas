@@ -50,7 +50,7 @@ uses
     InvRunCheckTaskImpl,
     EmptyDirCheckTaskImpl;
 
-    function TCreateProjectFastCgiTaskFactory.build() : ITask;
+    function TCreateProjectFcgidTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         contentModifier : IContentModifier;
         createPrjTask : ITask;

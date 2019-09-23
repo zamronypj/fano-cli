@@ -10,6 +10,7 @@
 
 {$INCLUDE Info/task.registrations.inc}
 {$INCLUDE Project/task.registrations.inc}
+{$INCLUDE ProjectCgi/task.registrations.inc}
 {$INCLUDE ProjectFastCgi/task.registrations.inc}
 {$INCLUDE ProjectScgi/task.registrations.inc}
 {$INCLUDE ProjectFcgid/task.registrations.inc}
