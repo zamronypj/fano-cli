@@ -61,11 +61,11 @@ implementation
 
     destructor TCreateControllerTask.destroy();
     begin
-        inherited destroy();
         createControllerFileTask := nil;
         createControllerFactoryFileTask := nil;
         createDependenciesTask := nil;
         createRouteTask := nil;
+        inherited destroy();
     end;
 
     function TCreateControllerTask.run(
@@ -83,12 +83,12 @@ implementation
             exit();
         end;
 
-        writeln('Creating ' +controllerName +'Controller class.');
+        writeln('Creating ', controllerName, 'Controller class.');
         createControllerFileTask.run(opt, longOpt);
         createControllerFactoryFileTask.run(opt, longOpt);
         createDependenciesTask.run(opt, longOpt);
         createRouteTask.run(opt, longOpt);
-        writeln(controllerName +'Controller class is created.');
+        writeln(controllerName, 'Controller class is created.');
         result := self;
     end;
 end.

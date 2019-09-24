@@ -15,7 +15,10 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
+    CreateProjectTaskFactoryImpl;
 
 type
 
@@ -25,19 +28,18 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateProjectNoGitTaskFactory = class(TInterfacedObject, ITaskFactory)
-    public
-        function build() : ITask;
+    TCreateProjectNoGitTaskFactory = class(TCreateProjectTaskFactory)
+    protected
+        function buildProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask; override;
     end;
 
 implementation
 
 uses
 
-    TextFileCreatorIntf,
-    TextFileCreatorImpl,
-    ContentModifierIntf,
-    ContentModifierImpl,
     DirectoryCreatorImpl,
     NullTaskImpl,
     CreateDirTaskImpl,
@@ -45,19 +47,14 @@ uses
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
-    CreateProjectTaskImpl,
-    InvRunCheckTaskImpl,
-    EmptyDirCheckTaskImpl;
+    CreateProjectTaskImpl;
 
-    function TCreateProjectNoGitTaskFactory.build() : ITask;
-    var textFileCreator : ITextFileCreator;
-        contentModifier : IContentModifier;
-        createPrjTask : ITask;
-        invRunCheckTask : ITask;
+    function TCreateProjectNoGitTaskFactory.buildProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
     begin
-        textFileCreator := TTextFileCreator.create();
-        contentModifier := TContentModifier.create();
-        createPrjTask := TCreateProjectTask.create(
+        result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
@@ -66,14 +63,6 @@ uses
             //replace git task with NullTaskImpl to disable git repo creation
             TNullTask.create()
         );
-
-        //protect to avoid accidentally creating another project inside Fano-CLI
-        //project directory structure
-        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
-
-        //protect to avoid accidentally creating project inside
-        //existing and non empty directory
-        result := TEmptyDirCheckTask.create(invRunCheckTask);
     end;
 
 end.

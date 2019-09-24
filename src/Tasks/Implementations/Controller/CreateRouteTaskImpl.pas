@@ -111,6 +111,7 @@ const
             ) + LineEnding;
         fileWriter.write(BASE_ROUTE_DIR + controllerName + '/routes.inc', strCtrlRoutesInc);
 
+        writeln('Create route ', routePattern, ' (', uppercase(routeMethod), ')');
         result := self;
     end;
 end.

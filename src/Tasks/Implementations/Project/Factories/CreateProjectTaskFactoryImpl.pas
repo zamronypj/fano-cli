@@ -15,7 +15,9 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf;
 
 type
 
@@ -25,17 +27,20 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateProjectTaskFactory = class(TInterfacedObject, ITaskFactory)
+    protected
+        function buildProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask; virtual;
     public
-        function build() : ITask;
+        function build() : ITask; virtual;
     end;
 
 implementation
 
 uses
 
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
-    ContentModifierIntf,
     ContentModifierImpl,
     DirectoryCreatorImpl,
     CreateDirTaskImpl,
@@ -47,19 +52,15 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
     InvRunCheckTaskImpl,
+    ChangeDirTaskImpl,
     EmptyDirCheckTaskImpl;
 
-    function TCreateProjectTaskFactory.build() : ITask;
-    var textFileCreator : ITextFileCreator;
-        contentModifier : IContentModifier;
-        createPrjTask : ITask;
-        invRunCheckTask : ITask;
+    function TCreateProjectTaskFactory.buildProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
     begin
-        //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
-        //or TCreateProjectScgiTaskFactory
-        textFileCreator := TTextFileCreator.create();
-        contentModifier := TContentModifier.create();
-        createPrjTask := TCreateProjectTask.create(
+        result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
@@ -67,10 +68,27 @@ uses
             TCreateAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
+    end;
+
+    function TCreateProjectTaskFactory.build() : ITask;
+    var textFileCreator : ITextFileCreator;
+        contentModifier : IContentModifier;
+        createPrjTask : ITask;
+        chdirTask : ITask;
+        invRunCheckTask : ITask;
+    begin
+        //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
+        //or TCreateProjectScgiTaskFactory
+        textFileCreator := TTextFileCreator.create();
+        contentModifier := TContentModifier.create();
+        createPrjTask := buildProjectTask(textFileCreator, contentModifier);
+
+        //wrap with change dir task so active directory can be changed with --cd parameter
+        chDirTask := TChangeDirTask.create(createPrjTask);
 
         //protect to avoid accidentally creating another project inside Fano-CLI
         //project directory structure
-        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
+        invRunCheckTask := TInvRunCheckTask.create(chDirTask);
 
         //protect to avoid accidentally creating project inside
         //existing and non empty directory

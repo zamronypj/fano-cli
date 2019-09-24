@@ -15,7 +15,10 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
+    CreateProjectTaskFactoryImpl;
 
 type
 
@@ -25,19 +28,18 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateProjectScgiTaskFactory = class(TInterfacedObject, ITaskFactory)
-    public
-        function build() : ITask;
+    TCreateProjectScgiTaskFactory = class(TCreateProjectTaskFactory)
+    protected
+        function buildProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask; override;
     end;
 
 implementation
 
 uses
 
-    TextFileCreatorIntf,
-    TextFileCreatorImpl,
-    ContentModifierIntf,
-    ContentModifierImpl,
     DirectoryCreatorImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
@@ -46,21 +48,14 @@ uses
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateScgiAppBootstrapTaskImpl,
-    CreateProjectTaskImpl,
-    InvRunCheckTaskImpl,
-    EmptyDirCheckTaskImpl;
+    CreateProjectTaskImpl;
 
-    function TCreateProjectScgiTaskFactory.build() : ITask;
-    var textFileCreator : ITextFileCreator;
-        contentModifier : IContentModifier;
-        createPrjTask : ITask;
-        invRunCheckTask : ITask;
+    function TCreateProjectScgiTaskFactory.buildProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
     begin
-        //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
-        //or TCreateProjectTaskFactory
-        textFileCreator := TTextFileCreator.create();
-        contentModifier := TContentModifier.create();
-        createPrjTask := TCreateProjectTask.create(
+        result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
@@ -68,14 +63,6 @@ uses
             TCreateScgiAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
-
-        //protect to avoid accidentally creating another project inside Fano-CLI
-        //project directory structure
-        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
-
-        //protect to avoid accidentally creating project inside
-        //existing and non empty directory
-        result := TEmptyDirCheckTask.create(invRunCheckTask);
     end;
 
 end.
