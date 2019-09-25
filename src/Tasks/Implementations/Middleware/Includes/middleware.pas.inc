@@ -28,7 +28,7 @@ strMiddlewarePasInc: string =
     '            const response : IResponse;' + LineEnding +
     '            const args : IRouteArgsReader;' + LineEnding +
     '            const next : IRequestHandler' + LineEnding +
-    '        ) : IResponse; override;' + LineEnding +
+    '        ) : IResponse;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     'implementation' + LineEnding +
