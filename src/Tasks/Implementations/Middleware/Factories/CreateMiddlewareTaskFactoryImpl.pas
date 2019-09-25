@@ -47,7 +47,7 @@ uses
     CreateMiddlewareFileTaskImpl,
     CreateMiddlewareFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
-    AddToUnitSearchTaskImpl,
+    MiddlewareAddToUnitSearchTaskImpl,
     CreateDependencyRegistrationTaskImpl,
     CreateRouteTaskImpl,
     CreateDependencyTaskImpl,
@@ -71,7 +71,7 @@ uses
             TCreateMiddlewareFactoryFileTask.create(textFileCreator, directoryCreator, contentModifier),
             TCreateDependencyTask.create(
                 TAddToUsesClauseTask.create(fileReader, fileWriter, 'Middleware'),
-                TAddToUnitSearchTask.create(fileReader, fileWriter, 'Middleware'),
+                TMiddlewareAddToUnitSearchTask.create(fileReader, fileWriter, 'Middleware'),
                 TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'Middleware')
             )
         );

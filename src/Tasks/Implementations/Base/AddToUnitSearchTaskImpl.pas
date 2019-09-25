@@ -28,17 +28,16 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TAddToUnitSearchTask = class(TInterfacedObject, ITask)
-    private
+    protected
         fileReader : IFileContentReader;
         fileWriter : IFileContentWriter;
         //object type = ['Model', 'View', 'Controller']
         objectType : string;
-
         function getUnitSearchEntry(const content : string) : string;
         function addUnitSearchEntry(
             const filename : string;
             const objectName : string
-        ) : ITask;
+        ) : ITask; virtual;
     public
         constructor create(
             const fReader : IFileContentReader;

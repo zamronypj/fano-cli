@@ -37,7 +37,7 @@ strMiddlewarePasInc: string =
     '        const request : IRequest;' + LineEnding +
     '        const response : IResponse;' + LineEnding +
     '        const args : IRouteArgsReader;' + LineEnding +
-    '        var canContinue : boolean' + LineEnding +
+    '        const next : IRequestHandler' + LineEnding +
     '    ) : IResponse;' + LineEnding +
     '    begin' + LineEnding +
     '        {---put your code here, for example : ---}' + LineEnding +
