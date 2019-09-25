@@ -27,7 +27,7 @@ strMiddlewarePasInc: string =
     '            const request : IRequest;' + LineEnding +
     '            const response : IResponse;' + LineEnding +
     '            const args : IRouteArgsReader;' + LineEnding +
-    '            var canContinue : boolean' + LineEnding +
+    '            const next : IRequestHandler' + LineEnding +
     '        ) : IResponse; override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
@@ -42,7 +42,7 @@ strMiddlewarePasInc: string =
     '    begin' + LineEnding +
     '        {---put your code here, for example : ---}' + LineEnding +
     '        response.body().write(''%s middleware'');' + LineEnding +
-    '        result := response;' + LineEnding +
+    '        result := next.handleRequest(request, response, args);' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     'end.' + LineEnding +
