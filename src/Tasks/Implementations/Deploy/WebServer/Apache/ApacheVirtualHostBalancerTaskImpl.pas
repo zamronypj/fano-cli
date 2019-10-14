@@ -107,7 +107,7 @@ uses
         if not ((balancerMethod = 'byrequests') or
             (balancerMethod = 'bybusiness') or
             (balancerMethod = 'bytraffic') or
-            (balancerMethod = 'byheartbeat')) then
+            (balancerMethod = 'heartbeat')) then
         begin
             balancerMethod := 'byrequests';
         end;
