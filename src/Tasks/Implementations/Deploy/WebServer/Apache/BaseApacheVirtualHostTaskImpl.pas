@@ -28,9 +28,9 @@ type
     TBaseApacheVirtualHostTask = class(TBaseCreateFileTask)
     private
         function getDocumentRoot(const opt : ITaskOptions) : string;
+    protected
         function getHost(const opt : ITaskOptions) : string;
         function getPort(const opt : ITaskOptions) : string;
-    protected
         function getVhostTemplate() : string; virtual; abstract;
     public
         function run(

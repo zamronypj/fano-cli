@@ -8,11 +8,12 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployFcgiTaskFactory.create();
+taskFactory := TDeployFcgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
-        'deploy-fcgi',
-        '--deploy-fcgi=[server name] Deploy as FastCGI web application with mod_proxy_fcgi.' + LineEnding +
+        'deploy-lb-fcgi',
+        '--deploy-lb=[server name] Deploy as FastCGI web application with mod_proxy_balancer.' + LineEnding +
+        '     --total-member=[number of balancer member] if omited, 2 members is assumed.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.' + LineEnding +

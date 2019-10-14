@@ -1,4 +1,4 @@
-strFcgiVhostConf: string =
+strBalancerVhostConf: string =
     '<VirtualHost *:80>' + LineEnding +
     '' + LineEnding +
     '    ServerAdmin admin@[[SERVER_NAME]]' + LineEnding +
@@ -16,7 +16,11 @@ strFcgiVhostConf: string =
     '        Require all granted' + LineEnding +
     '    </Directory>' + LineEnding +
     '' + LineEnding +
+    '    <Proxy balancer://[[SERVER_NAME]]> ' + LineEnding +
+    '        [[LOAD_BALANCER_MEMBERS]] ' + LineEnding +
+    '        ProxySet lbmethod=[[LOAD_BALANCER_METHOD]] ' + LineEnding +
+    '    </Proxy> ' + LineEnding +
     '    ProxyRequests Off' + LineEnding +
     '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
-    '    ProxyPassMatch ^/(.*)$ "fcgi://[[HOST]]:[[PORT]]"' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ "balancer://[[SERVER_NAME]]/"' + LineEnding +
     '</VirtualHost>';

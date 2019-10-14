@@ -16,8 +16,8 @@ try
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --host=[host where FastCGI app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where FastCGI app listen] if omited, 9090 is assumed.',
+        '     --host=[host where SCGI app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
+        '     --port=[port where SCGI app listen] if omited, 20477 is assumed.',
         taskFactory.build()
     );
 finally

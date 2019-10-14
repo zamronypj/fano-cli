@@ -16,7 +16,7 @@ strScgiVhostConf: string =
     '        Require all granted' + LineEnding +
     '    </Directory>' + LineEnding +
     '' + LineEnding +
-    '   ProxyRequests Off' + LineEnding +
-    '   ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
-    '   ProxyPassMatch ^/(.*)$ "scgi://[[HOST]]:[[PORT]]"' + LineEnding +
+    '    ProxyRequests Off' + LineEnding +
+    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ "scgi://[[HOST]]:[[PORT]]"' + LineEnding +
     '</VirtualHost>';
