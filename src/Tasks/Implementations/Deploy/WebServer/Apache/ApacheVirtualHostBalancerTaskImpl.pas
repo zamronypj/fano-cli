@@ -104,7 +104,7 @@ uses
     begin
         balancerMethod := opt.getOptionValue('lbmethod');
         if not ((balancerMethod = 'byrequests') or
-            (balancerMethod = 'bybusiness') or
+            (balancerMethod = 'bybusyness') or
             (balancerMethod = 'bytraffic') or
             (balancerMethod = 'heartbeat')) then
         begin
