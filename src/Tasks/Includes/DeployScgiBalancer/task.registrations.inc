@@ -13,7 +13,7 @@ try
     appInst.registerTask(
         'deploy-lb-scgi',
         '--deploy-lb=[server name] Deploy as SCGI web application with mod_proxy_balancer.' + LineEnding +
-        '     --total-member=[number of balancer member] if omited, 2 members is assumed.' + LineEnding +
+        '     --members=[host1:port1,host2:port2,...], if omited, 2 default members is assumed.' + LineEnding +
         '     --lbmethod=[load balancing scheduler algorithm] if omited, byrequests is assumed.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +

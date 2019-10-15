@@ -54,7 +54,8 @@ implementation
 
 uses
 
-    SysUtils;
+    SysUtils,
+    RegExpr;
 
     constructor TApacheVirtualHostBalancerTask.create(
         const txtFileCreator : ITextFileCreator;
@@ -76,28 +77,19 @@ uses
     end;
 
     function TApacheVirtualHostBalancerTask.getBalancerMember(const opt : ITaskOptions) : string;
-    var i, totalMember, aport : integer;
-        host, port : string;
+    var aport : integer;
+        members, host, port : string;
     begin
         host := getHost(opt);
         port := getPort(opt);
         aport := strToInt(port);
-        if (not tryStrToInt(opt.getOptionValueDef('total-member', '2'), totalMember)) or
-            (totalMember <= 0) then
-        begin
-            totalMember := 2;
-        end;
-
-        result := '';
-        for i := 0 to totalMember - 1 do
-        begin
-            result := result +
-                format(
-                    'BalancerMember %s://%s:%d' + LineEnding,
-                    [fProtocol, host, aport]
-                );
-            inc(aport);
-        end;
+        members := opt.getOptionValueDef('members', format('%s:%d,%s:%d', [host, aport, host, aport + 1]));
+        result := ReplaceRegExpr(
+            '(([a-zA-Z0-9\.]+):([0-9]{1,5}))[,]?',
+            members,
+            format('BalancerMember %s://$2:$3' + LineEnding, [fProtocol]),
+            [ rroModifierG, rroUseSubstitution, rroUseOsLineEnd ]
+        );
     end;
 
     function TApacheVirtualHostBalancerTask.getBalancerMethod(const opt : ITaskOptions) : string;
