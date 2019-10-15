@@ -12,7 +12,7 @@ taskFactory := TDeployScgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-scgi',
-        '--deploy-lb=[server name] Deploy as SCGI web application with mod_proxy_balancer.' + LineEnding +
+        '--deploy-lb-scgi=[server name] Deploy as SCGI web application with mod_proxy_balancer.' + LineEnding +
         '     --members=[host1:port1,host2:port2,...], if omited, 2 default members is assumed.' + LineEnding +
         '     --lbmethod=[load balancing scheduler algorithm] if omited, byrequests is assumed.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +

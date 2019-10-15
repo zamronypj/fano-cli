@@ -12,7 +12,7 @@ taskFactory := TDeployFcgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-fcgi',
-        '--deploy-lb=[server name] Deploy as FastCGI web application with mod_proxy_balancer.' + LineEnding +
+        '--deploy-lb-fcgi=[server name] Deploy as FastCGI web application with mod_proxy_balancer.' + LineEnding +
         '     --members=[host1:port1,host2:port2,...], if omited, 2 default members is assumed.' + LineEnding +
         '     --lbmethod=[load balancing scheduler algorithm] if omited, byrequests is assumed.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +

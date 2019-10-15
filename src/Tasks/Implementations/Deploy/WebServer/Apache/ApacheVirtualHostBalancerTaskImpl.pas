@@ -79,17 +79,24 @@ uses
     function TApacheVirtualHostBalancerTask.getBalancerMember(const opt : ITaskOptions) : string;
     var aport : integer;
         members, host, port : string;
+        regex : TRegExpr;
     begin
         host := getHost(opt);
         port := getPort(opt);
         aport := strToInt(port);
         members := opt.getOptionValueDef('members', format('%s:%d,%s:%d', [host, aport, host, aport + 1]));
-        result := ReplaceRegExpr(
-            '(([a-zA-Z0-9\.]+):([0-9]{1,5}))[,]?',
-            members,
-            format('BalancerMember %s://$2:$3' + LineEnding, [fProtocol]),
-            [ rroModifierG, rroUseSubstitution, rroUseOsLineEnd ]
-        );
+        regex := TRegExpr.Create();
+        try
+            regex.Expression := '(([a-zA-Z0-9\.]+):([0-9]{1,5}))[,]?';
+            regex.ModifierG := true;
+            result := regex.replace(
+                members,
+                format('BalancerMember %s://$2:$3' + LineEnding, [fProtocol]),
+                true
+            );
+        finally
+            regex.free();
+        end;
     end;
 
     function TApacheVirtualHostBalancerTask.getBalancerMethod(const opt : ITaskOptions) : string;
