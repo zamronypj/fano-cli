@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit BaseApacheVirtualHostTaskImpl;
+unit BaseNginxVirtualHostTaskImpl;
 
 interface
 
@@ -21,11 +21,11 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that creates apache virtual host file
+     * Task that creates nginx virtual host file
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TBaseApacheVirtualHostTask = class(TBaseWebServerVirtualHostTask)
+    TBaseNginxVirtualHostTask = class(TBaseWebServerVirtualHostTask)
     protected
         procedure createVhostFile(
             const opt : ITaskOptions;
@@ -39,30 +39,19 @@ uses
 
     SysUtils;
 
-    procedure TBaseApacheVirtualHostTask.createVhostFile(
+    procedure TBaseNginxVirtualHostTask.createVhostFile(
         const opt : ITaskOptions;
         const serverName : string
     );
     begin
-        if directoryExists('/etc/apache2') then
+        if directoryExists('/etc/nginx') then
         begin
-            //debian-based
-            contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/apache2');
+            contentModifier.setVar('[[NGINX_LOG_DIR]]', '/var/log/nginx');
             createTextFile(
-                '/etc/apache2/sites-available/' + serverName + '.conf',
+                '/etc/nginx/conf.d/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /etc/apache2/sites-available/' + serverName + '.conf');
-        end else
-        if directoryExists('/etc/httpd') then
-        begin
-            //fedora-based
-            contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
-            createTextFile(
-                '/etc/httpd/conf.d/' + serverName + '.conf',
-                getVhostTemplate()
-            );
-            writeln('Create virtual host /etc/httpd/conf.d/' + serverName + '.conf');
+            writeln('Create virtual host /etc/nginx/conf.d/' + serverName + '.conf');
         end else
         begin
             writeln('Unsupported platform or web server');
