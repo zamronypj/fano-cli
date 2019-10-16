@@ -16,10 +16,10 @@ Fano CLI is command line tools to help scaffolding web application using [Fano W
 Run
 
 ```
-$ git clone git@github.com:fanoframework/fano-cli.git && \
-cd fano-cli && \
-./tools/config.setup.sh && \
-./build.sh
+$ git clone https://github.com/fanoframework/fano-cli.git
+$ cd fano-cli
+$ ./tools/config.setup.sh
+$ ./build.sh
 ```
 For easier access, copy `bin/out/fanocli` executable binary to globally accessible location, for example
 
@@ -37,7 +37,7 @@ If you see something like `Free Pascal Compiler version 3.0.4`,  you are good to
 
 Clone this repository
 
-    $ git clone git@github.com:fanoframework/fano-cli.git
+    $ git clone https://github.com/fanoframework/fano-cli.git
 
 ## Copy compiler configurations
 
