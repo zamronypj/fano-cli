@@ -40,6 +40,8 @@ uses
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     ApacheVirtualHostScgiTaskImpl,
+    NginxReloadWebServerTaskImpl,
+    NginxVirtualHostScgiTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
     WebServerTaskImpl,

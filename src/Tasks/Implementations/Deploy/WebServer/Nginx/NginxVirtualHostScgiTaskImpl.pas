@@ -41,7 +41,7 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/scgi.vhost.conf.inc}
     begin
-        result := strFcgiVhostConf;
+        result := strScgiVhostConf;
     end;
 
 end.
