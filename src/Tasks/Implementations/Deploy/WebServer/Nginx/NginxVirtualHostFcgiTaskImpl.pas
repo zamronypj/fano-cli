@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheReloadWebServerTaskImpl;
+unit NginxVirtualHostFcgiTaskImpl;
 
 interface
 
@@ -16,18 +16,19 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    ReloadWebServerTaskImpl;
+    BaseNginxVirtualHostTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that reload Apache web server
+     * Task that creates Nginx virtual host file
+     * for FastCGI application
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheReloadWebServerTask = class(TReloadWebServerTask)
+    TNginxVirtualHostFcgiTask = class(TBaseNginxVirtualHostTask)
     protected
-        function getSvcName() : string; override;
+        function getVhostTemplate() : string; override;
     end;
 
 implementation
@@ -36,20 +37,11 @@ uses
 
     SysUtils;
 
-    function TApacheReloadWebServerTask.getSvcName() : string;
+    function TNginxVirtualHostFcgiTask.getVhostTemplate() : string;
+    var
+        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/fcgi.vhost.conf.inc}
     begin
-        if directoryExists('/etc/apache2') then
-        begin
-            //debian-based
-            result := 'apache2';
-        end else
-        if directoryExists('/etc/httpd') then
-        begin
-            result := 'httpd';
-        end else
-        begin
-            //unsupported
-            result := '';
-        end;
+        result := strFcgiVhostConf;
     end;
+
 end.

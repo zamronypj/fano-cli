@@ -96,7 +96,7 @@ uses
         if (baseDirectory.length = 0) then
         begin
             writeln('Project target directory can not be empty.');
-            writeln('Run with --help to view available task.');
+            writeln('Run with --help to view available tasks.');
             result := self;
             exit();
         end;
@@ -109,7 +109,9 @@ uses
         createAdditionalFilesTask.run(opt, longOpt);
         createAppBootstrapTask.run(opt, longOpt);
         createGitRepoTask.run(opt, longOpt);
-        writeln('Finish creating project.');
+
+        writeln('Finish creating project in ', baseDirectory, ' directory.');
+        writeln('Change directory to ', baseDirectory, ' to start creating controller, view, etc.');
         result := self;
     end;
 end.

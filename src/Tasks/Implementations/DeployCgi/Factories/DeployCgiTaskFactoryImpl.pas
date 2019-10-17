@@ -62,18 +62,18 @@ uses
                     TDirectoryCreator.create(),
                     TContentModifier.create()
                 ),
-                //nginx does not support CGI
+                //do nothing as nginx does not support CGI
                 TNullTask.create()
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
-                //TNginxEnableVirtualHostTask.create()
+                //do nothing as nginx does not support CGI
                 TNullTask.create()
             ),
             TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
-                //TNginxReloadWebServerTask.create()
+                //do nothing as nginx does not support CGI
                 TNullTask.create()
             )
         );

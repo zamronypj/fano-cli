@@ -68,13 +68,13 @@ uses
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
-                //TNginxEnableVirtualHostTask.create()
+                //nginx does not support so do nothing
                 TNullTask.create()
             ),
             TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
-                //TNginxReloadWebServerTask.create()
+                //nginx does not support so do nothing
                 TNullTask.create()
             )
         );

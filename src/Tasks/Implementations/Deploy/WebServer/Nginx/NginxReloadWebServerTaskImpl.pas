@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheReloadWebServerTaskImpl;
+unit NginxReloadWebServerTaskImpl;
 
 interface
 
@@ -21,35 +21,20 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that reload Apache web server
+     * Task that adds domain name entry to /etc/hosts
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheReloadWebServerTask = class(TReloadWebServerTask)
+    TNginxReloadWebServerTask = class(TReloadWebServerTask)
     protected
         function getSvcName() : string; override;
     end;
 
 implementation
 
-uses
-
-    SysUtils;
-
-    function TApacheReloadWebServerTask.getSvcName() : string;
+    function TNginxReloadWebServerTask.getSvcName() : string;
     begin
-        if directoryExists('/etc/apache2') then
-        begin
-            //debian-based
-            result := 'apache2';
-        end else
-        if directoryExists('/etc/httpd') then
-        begin
-            result := 'httpd';
-        end else
-        begin
-            //unsupported
-            result := '';
-        end;
+        result := 'nginx';
     end;
+
 end.

@@ -40,6 +40,8 @@ uses
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     ApacheVirtualHostFcgiTaskImpl,
+    NginxReloadWebServerTaskImpl,
+    NginxVirtualHostFcgiTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
     WebServerTaskImpl,
@@ -62,19 +64,22 @@ uses
                     TDirectoryCreator.create(),
                     TContentModifier.create()
                 ),
-                //TNginxVirtualHostCgiTask.create()
-                TNullTask.create()
+                TNginxVirtualHostFcgiTask.create(
+                    TTextFileCreator.create(),
+                    TDirectoryCreator.create(),
+                    TContentModifier.create()
+                )
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
-                //TNginxEnableVirtualHostTask.create()
+                //do nothing. In Nginx we create config in virtual host directory
+                //so it automatically enabled
                 TNullTask.create()
             ),
             TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
-                //TNginxReloadWebServerTask.create()
-                TNullTask.create()
+                TNginxReloadWebServerTask.create()
             )
         );
 

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheReloadWebServerTaskImpl;
+unit NginxVirtualHostScgiTaskImpl;
 
 interface
 
@@ -16,18 +16,19 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    ReloadWebServerTaskImpl;
+    BaseNginxVirtualHostTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that reload Apache web server
+     * Task that creates Nginx virtual host file
+     * for SCGI application
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheReloadWebServerTask = class(TReloadWebServerTask)
+    TNginxVirtualHostScgiTask = class(TBaseNginxVirtualHostTask)
     protected
-        function getSvcName() : string; override;
+        function getVhostTemplate() : string; override;
     end;
 
 implementation
@@ -36,20 +37,11 @@ uses
 
     SysUtils;
 
-    function TApacheReloadWebServerTask.getSvcName() : string;
+    function TNginxVirtualHostScgiTask.getVhostTemplate() : string;
+    var
+        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/scgi.vhost.conf.inc}
     begin
-        if directoryExists('/etc/apache2') then
-        begin
-            //debian-based
-            result := 'apache2';
-        end else
-        if directoryExists('/etc/httpd') then
-        begin
-            result := 'httpd';
-        end else
-        begin
-            //unsupported
-            result := '';
-        end;
+        result := strScgiVhostConf;
     end;
+
 end.
