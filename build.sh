@@ -27,15 +27,15 @@ if [ ! -f "BUILD_PROD_CFG" ]; then
     cp build.prod.cfg.sample build.prod.cfg
 fi
 
-if [[ -z "${BUILD_TYPE}" ]]; then
+if [ -z "${BUILD_TYPE}" ]; then
     export BUILD_TYPE="prod"
 fi
 
-if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then
+if [ -z "${UNIT_OUTPUT_DIR}" ]; then
     export UNIT_OUTPUT_DIR="bin/unit"
 fi
 
-if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then
+if [ -z "${EXEC_OUTPUT_DIR}" ]; then
     export EXEC_OUTPUT_DIR="bin/out"
 fi
 
