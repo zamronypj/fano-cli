@@ -104,8 +104,7 @@ uses
     var balancerMethod : string;
     begin
         balancerMethod := opt.getOptionValue('lbmethod');
-        if not ((balancerMethod = '') or
-            (balancerMethod = 'ip_hash') or
+        if not ((balancerMethod = 'ip_hash') or
             (balancerMethod = 'least_conn') or
             (balancerMethod = 'random')) then
         begin

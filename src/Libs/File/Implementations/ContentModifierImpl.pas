@@ -118,11 +118,7 @@ uses
         const content : string
     ) : string;
     begin
-        //result := content;
-        //if (length(newPattern) > 0 ) then
-        //begin
         result := stringReplace(content, oldPattern, newPattern, [rfReplaceAll]);
-        //end;
     end;
 
     procedure TContentModifier.iterateKey(item: string; const key: string; var continue: boolean);
