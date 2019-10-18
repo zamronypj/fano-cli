@@ -1,6 +1,6 @@
 strBalancerVhostConf: string =
     'upstream lb-[[SERVER_NAME]] {' + LineEnding +
-    '    [[LOAD_BALANCER_METHOD]];' + LineEnding +
+    '    [[LOAD_BALANCER_METHOD]]' + LineEnding +
     '    [[LOAD_BALANCER_MEMBERS]]' + LineEnding +
     '}'+ LineEnding +
     '' + LineEnding +
