@@ -109,9 +109,11 @@ uses
             (balancerMethod = 'least_conn') or
             (balancerMethod = 'random')) then
         begin
-            balancerMethod := '';
+            result := '';
+        end else
+        begin
+            result := balancerMethod + ';';
         end;
-        result := balancerMethod;
     end;
 
     function TNginxVirtualHostBalancerTask.run(
