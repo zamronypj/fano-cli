@@ -43,6 +43,8 @@ uses
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     ApacheVirtualHostBalancerTaskImpl,
+    NginxReloadWebServerTaskImpl,
+    NginxVirtualHostBalancerTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
     WebServerTaskImpl,
@@ -68,19 +70,24 @@ uses
                     BASE_DIRECTORY,
                     getProtocol()
                 ),
-                //TNginxVirtualHostCgiTask.create()
-                TNullTask.create()
+                TNginxVirtualHostBalancerTask.create(
+                    TTextFileCreator.create(),
+                    TDirectoryCreator.create(),
+                    TContentModifier.create(),
+                    BASE_DIRECTORY,
+                    getProtocol()
+                ),
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
-                //TNginxEnableVirtualHostTask.create()
+                //do nothing. In Nginx we create config in virtual host directory
+                //so it automatically enabled
                 TNullTask.create()
             ),
             TAddDomainToEtcHostTask.create(fReader, fWriter),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
-                //TNginxReloadWebServerTask.create()
-                TNullTask.create()
+                TNginxReloadWebServerTask.create()
             )
         );
 
