@@ -76,7 +76,7 @@ uses
                     TContentModifier.create(),
                     BASE_DIRECTORY,
                     getProtocol()
-                ),
+                )
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
