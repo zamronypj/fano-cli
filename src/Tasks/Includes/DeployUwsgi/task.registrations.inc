@@ -8,16 +8,16 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployScgiTaskFactory.create();
+taskFactory := TDeployUwsgiTaskFactory.create();
 try
     appInst.registerTask(
-        'deploy-scgi',
-        '--deploy-scgi=[server name] Deploy as SCGI web application.' + LineEnding +
+        'deploy-uwsgi',
+        '--deploy-uwsgi=[server name] Deploy as uwsgi web application.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --host=[host where SCGI app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where SCGI app listen] if omited, 20477 is assumed.',
+        '     --host=[host where uwsgi app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
+        '     --port=[port where uwsgi app listen] if omited, 20477 is assumed.',
         taskFactory.build()
     );
 finally

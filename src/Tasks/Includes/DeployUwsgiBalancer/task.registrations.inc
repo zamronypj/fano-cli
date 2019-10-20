@@ -8,16 +8,18 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployScgiTaskFactory.create();
+taskFactory := TDeployUwsgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
-        'deploy-scgi',
-        '--deploy-scgi=[server name] Deploy as SCGI web application.' + LineEnding +
+        'deploy-lb-uwsgi',
+        '--deploy-lb-uwsgi=[server name] Deploy as uwsgi web application with mod_proxy_balancer.' + LineEnding +
+        '     --members=[host1:port1,host2:port2,...], if omited, 2 default members is assumed.' + LineEnding +
+        '     --lbmethod=[load balancing scheduler algorithm] if omited, byrequests is assumed.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --host=[host where SCGI app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where SCGI app listen] if omited, 20477 is assumed.',
+        '     --host=[host where uwsgi app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
+        '     --port=[port where uwsgi app listen] if omited, 20477 is assumed.',
         taskFactory.build()
     );
 finally

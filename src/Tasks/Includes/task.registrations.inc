@@ -25,6 +25,8 @@
 {$INCLUDE DeployScgi/task.registrations.inc}
 {$INCLUDE DeployCgi/task.registrations.inc}
 {$INCLUDE DeployFcgi/task.registrations.inc}
+{$INCLUDE DeployUwsgi/task.registrations.inc}
 {$INCLUDE DeployFcgid/task.registrations.inc}
 {$INCLUDE DeployScgiBalancer/task.registrations.inc}
 {$INCLUDE DeployFcgiBalancer/task.registrations.inc}
+{$INCLUDE DeployUwsgiBalancer/task.registrations.inc}
