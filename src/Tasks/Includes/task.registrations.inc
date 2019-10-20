@@ -13,6 +13,7 @@
 {$INCLUDE ProjectCgi/task.registrations.inc}
 {$INCLUDE ProjectFastCgi/task.registrations.inc}
 {$INCLUDE ProjectScgi/task.registrations.inc}
+{$INCLUDE ProjectUwsgi/task.registrations.inc}
 {$INCLUDE ProjectFcgid/task.registrations.inc}
 {$INCLUDE ProjectNoGit/task.registrations.inc}
 {$INCLUDE ProjectNoCommit/task.registrations.inc}
