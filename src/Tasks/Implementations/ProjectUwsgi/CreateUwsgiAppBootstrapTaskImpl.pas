@@ -26,7 +26,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateScgiAppBootstrapTask = class(TCreateAppBootstrapTask)
+    TCreateUwsgiAppBootstrapTask = class(TCreateAppBootstrapTask)
     private
         function getHost(const opt : ITaskOptions) : string;
         function getPort(const opt : ITaskOptions) : string;
@@ -89,7 +89,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/ProjectUswsgi/Includes/bootstrap.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/ProjectUwsgi/Includes/bootstrap.pas.inc}
     begin
         createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
