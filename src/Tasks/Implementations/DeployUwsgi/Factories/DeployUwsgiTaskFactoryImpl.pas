@@ -50,7 +50,7 @@ uses
     ContentModifierImpl,
     FileHelperImpl;
 
-    function TDeployUwsgTaskFactory.build() : ITask;
+    function TDeployUwsgiTaskFactory.build() : ITask;
     var deployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
