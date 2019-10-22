@@ -22,6 +22,7 @@ strGitignore: string =
     '#----------------------------------------------' + LineEnding +
     'public/app.cgi' + LineEnding +
     'cgi-bin/app.cgi' + LineEnding +
+    'bin/app.cgi' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Ignore generated log files' + LineEnding +
