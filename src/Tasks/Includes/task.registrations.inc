@@ -9,6 +9,7 @@
 {%fanocli.pas}
 
 {$INCLUDE Info/task.registrations.inc}
+{$INCLUDE KeyGen/task.registrations.inc}
 {$INCLUDE Project/task.registrations.inc}
 {$INCLUDE ProjectCgi/task.registrations.inc}
 {$INCLUDE ProjectFastCgi/task.registrations.inc}
