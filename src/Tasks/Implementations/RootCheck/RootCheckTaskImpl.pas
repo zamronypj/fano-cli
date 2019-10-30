@@ -43,15 +43,16 @@ uses
 
 resourcestring
 
-    sErrMustRunAsRoot = 'Cannot run privileged task as ordinary user. Try run with sudo.';
+    sErrMustRunAsRoot = 'Cannot run privileged task as ordinary user. Try to run with sudo.';
 
     function TRootCheckTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
+    const ROOT = 0;
     begin
         //get effective user id, 0 mean root
-        if fpgeteuid() = 0 then
+        if fpgeteuid() = ROOT then
         begin
             actualTask.run(opt, longOpt);
         end else
