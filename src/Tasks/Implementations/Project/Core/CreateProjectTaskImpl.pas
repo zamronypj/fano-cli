@@ -105,9 +105,9 @@ uses
 
         createDirectoryTask.run(opt, longOpt);
         createShellScriptsTask.run(opt, longOpt);
-        createAppConfigsTask.run(opt, longOpt);
         createAdditionalFilesTask.run(opt, longOpt);
         createAppBootstrapTask.run(opt, longOpt);
+        createAppConfigsTask.run(opt, longOpt);
         createGitRepoTask.run(opt, longOpt);
 
         writeln('Finish creating project in ', baseDirectory, ' directory.');

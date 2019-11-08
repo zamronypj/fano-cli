@@ -59,21 +59,47 @@ uses
         createTextFile(dir + '/build.prod.cfg.sample', strBuildCfgProd);
     end;
 
-    procedure TCreateAppConfigsTask.createAppConfigs(const dir : string);
+    procedure TCreateAppConfigsTask.createJsonAppConfigs(const dir : string);
     begin
         createTextFile(dir + '/config.json', '{ "appName" : "MyApp" }');
         createTextFile(dir + '/config.json.sample', '{ "appName" : "MyApp" }');
+    end;
+
+    procedure TCreateAppConfigsTask.createIniAppConfigs(const dir : string);
+    begin
+        createTextFile(
+            dir + '/config.ini',
+            '[fano]' + LineEnding +
+            'appName=MyApp'
+        );
+        createTextFile(
+            dir + '/config.ini.sample',
+            '[fano]' + LineEnding +
+            'appName=MyApp'
+        );
     end;
 
     function TCreateAppConfigsTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
+    var configType : string;
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
         createCompilerConfigs(baseDirectory);
-        createAppConfigs(baseDirectory + '/config');
+
+        if (opt.hasOption('config')) then
+        begin
+            configType := opt.getOptionValueDef('config', 'json');
+            if (configType = 'ini') then
+            begin
+                createIniAppConfigs(baseDirectory + '/config');
+            end else
+            begin
+                createJsonAppConfigs(baseDirectory + '/config');
+            end;
+        end;
         result := self;
     end;
 end.

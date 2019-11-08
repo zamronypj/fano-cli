@@ -52,8 +52,10 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
     InvRunCheckTaskImpl,
-    ChangeDirTaskImpl,
-    EmptyDirCheckTaskImpl;
+    EmptyDirCheckTaskImpl,
+    RegisterConfigDependencyTaskImpl,
+    FileHelperAppendImpl,
+    CompositeTaskImpl;
 
     function TCreateProjectTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -63,7 +65,14 @@ uses
         result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
-            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TCompositeTask.create(
+                TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+                TRegisterConfigDependencyTask.create(
+                    textFileCreator,
+                    contentModifier,
+                    TFileHelperAppender.create()
+                )
+            ),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             TCreateAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
@@ -74,7 +83,6 @@ uses
     var textFileCreator : ITextFileCreator;
         contentModifier : IContentModifier;
         createPrjTask : ITask;
-        chdirTask : ITask;
         invRunCheckTask : ITask;
     begin
         //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
@@ -83,12 +91,9 @@ uses
         contentModifier := TContentModifier.create();
         createPrjTask := buildProjectTask(textFileCreator, contentModifier);
 
-        //wrap with change dir task so active directory can be changed with --cd parameter
-        chDirTask := TChangeDirTask.create(createPrjTask);
-
         //protect to avoid accidentally creating another project inside Fano-CLI
         //project directory structure
-        invRunCheckTask := TInvRunCheckTask.create(chDirTask);
+        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
 
         //protect to avoid accidentally creating project inside
         //existing and non empty directory
