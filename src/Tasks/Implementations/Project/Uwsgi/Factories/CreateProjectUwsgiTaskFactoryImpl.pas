@@ -18,7 +18,10 @@ uses
     TaskFactoryIntf,
     TextFileCreatorIntf,
     ContentModifierIntf,
-    CreateProjectTaskFactoryImpl;
+    CreateProjectTaskFactoryImpl,
+    RegisterConfigDependencyTaskImpl,
+    FileHelperAppendImpl,
+    CompositeTaskImpl;
 
 type
 
@@ -58,7 +61,14 @@ uses
         result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
-            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TCompositeTask.create(
+                TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+                TRegisterConfigDependencyTask.create(
+                    textFileCreator,
+                    contentModifier,
+                    TFileHelperAppender.create()
+                )
+            ),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             TCreateUwsgiAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())

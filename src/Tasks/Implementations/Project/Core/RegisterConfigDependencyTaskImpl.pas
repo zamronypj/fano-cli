@@ -75,6 +75,7 @@ implementation
     var
         factoryClass : string;
         configPath : string;
+        appDir : string;
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/appconfig.dependencies.inc.inc}
     begin
         if (configType = 'ini') then
@@ -115,10 +116,17 @@ implementation
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
+    var configType : string;
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        registerConfigDependency(baseDirectory, configType, longOpt);
+
+        if (opt.hasOption('config')) then
+        begin
+            configType := opt.getOptionValueDef('config', 'json');
+            registerConfigDependency(baseDirectory + '/src/Dependencies', configType, longOpt);
+        end;
+
         result := self;
     end;
 end.

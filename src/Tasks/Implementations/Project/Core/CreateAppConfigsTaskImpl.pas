@@ -28,7 +28,8 @@ type
      *---------------------------------------*)
     TCreateAppConfigsTask = class(TCreateFileTask)
     private
-        procedure createAppConfigs(const dir : string);
+        procedure createJsonAppConfigs(const dir : string);
+        procedure createIniAppConfigs(const dir : string);
         procedure createCompilerConfigs(const dir : string);
     public
         function run(

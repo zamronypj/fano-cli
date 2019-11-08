@@ -48,7 +48,10 @@ uses
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateFcgidAppBootstrapTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskImpl,
+    RegisterConfigDependencyTaskImpl,
+    FileHelperAppendImpl,
+    CompositeTaskImpl;
 
     function TCreateProjectFcgidTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -58,7 +61,14 @@ uses
         result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
-            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TCompositeTask.create(
+                TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+                TRegisterConfigDependencyTask.create(
+                    textFileCreator,
+                    contentModifier,
+                    TFileHelperAppender.create()
+                )
+            ),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             TCreateFcgidAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())

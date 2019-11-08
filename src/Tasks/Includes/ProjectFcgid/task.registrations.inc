@@ -12,7 +12,8 @@ taskFactory := TCreateProjectFcgidTaskFactory.create();
 try
     appInst.registerTask(
         'project-fcgid',
-        '--project-fcgid=[project-name] Create new FastCGI project with Apache and mod_fcgid.',
+        '--project-fcgid=[project-name] Create new FastCGI project with Apache and mod_fcgid.' + LineEnding +
+        '     --config=[ini, json] if omited, config is not setup.',
         taskFactory.build()
     );
 finally

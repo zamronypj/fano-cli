@@ -13,7 +13,8 @@ try
     appInst.registerTask(
         'project-no-commit',
         '--project-no-commit=[project-name] '+
-        'Create project with Git repository but without committing them.',
+        'Create project with Git repository but without committing them.' + LineEnding +
+        '     --config=[ini, json] if omited, config is not setup.',
         taskFactory.build()
     );
 finally

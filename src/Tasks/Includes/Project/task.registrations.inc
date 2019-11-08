@@ -12,7 +12,8 @@ taskFactory := TCreateProjectTaskFactory.create();
 try
     appInst.registerTask(
         'project-cgi',
-        '--project-cgi=[project-name] Create new CGI project. This is alias of --project',
+        '--project-cgi=[project-name] Create new CGI project. This is alias of --project' + LineEnding +
+        '     --config=[ini, json] if omited, config is not setup.',
         taskFactory.build()
     );
 finally
