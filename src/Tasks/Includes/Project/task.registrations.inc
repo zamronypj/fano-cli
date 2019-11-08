@@ -6,16 +6,13 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
-{%../Includes/task.registrations.inc}
+{%fanocli.pas}
 
-taskFactory := TCreateProjectTaskFactory.create();
-try
-    appInst.registerTask(
-        'project-cgi',
-        '--project-cgi=[project-name] Create new CGI project. This is alias of --project' + LineEnding +
-        '     --config=[ini, json] if omited, config is not setup.',
-        taskFactory.build()
-    );
-finally
-    taskFactory := nil;
-end;
+{$INCLUDE Core/task.registrations.inc}
+{$INCLUDE Cgi/task.registrations.inc}
+{$INCLUDE FastCgi/task.registrations.inc}
+{$INCLUDE Scgi/task.registrations.inc}
+{$INCLUDE Uwsgi/task.registrations.inc}
+{$INCLUDE Fcgid/task.registrations.inc}
+{$INCLUDE NoGit/task.registrations.inc}
+{$INCLUDE NoCommit/task.registrations.inc}

@@ -8,12 +8,11 @@
 
 {%fanocli.pas}
 
-{$INCLUDE Info/task.registrations.inc}
-{$INCLUDE KeyGen/task.registrations.inc}
-{$INCLUDE Project/task.registrations.inc}
-{$INCLUDE Controller/task.registrations.inc}
-{$INCLUDE View/task.registrations.inc}
-{$INCLUDE Model/task.registrations.inc}
-{$INCLUDE Mvc/task.registrations.inc}
-{$INCLUDE Middleware/task.registrations.inc}
-{$INCLUDE Deploy/task.registrations.inc}
+{$INCLUDE Scgi/task.registrations.inc}
+{$INCLUDE Cgi/task.registrations.inc}
+{$INCLUDE Fcgi/task.registrations.inc}
+{$INCLUDE Uwsgi/task.registrations.inc}
+{$INCLUDE Fcgid/task.registrations.inc}
+{$INCLUDE ScgiBalancer/task.registrations.inc}
+{$INCLUDE FcgiBalancer/task.registrations.inc}
+{$INCLUDE UwsgiBalancer/task.registrations.inc}
