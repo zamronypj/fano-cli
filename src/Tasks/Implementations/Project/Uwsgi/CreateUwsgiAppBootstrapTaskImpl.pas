@@ -76,7 +76,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/ProjectUwsgi/Includes/app.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Uwsgi/Includes/app.pas.inc}
     begin
         fContentModifier.setVar('[[HOST]]', getHost(opt));
         fContentModifier.setVar('[[PORT]]', getPort(opt));
@@ -89,7 +89,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/ProjectUwsgi/Includes/bootstrap.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Uwsgi/Includes/bootstrap.pas.inc}
     begin
         createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;

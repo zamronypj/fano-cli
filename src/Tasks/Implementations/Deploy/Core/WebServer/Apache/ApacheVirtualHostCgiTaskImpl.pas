@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheVirtualHostUwsgiTaskImpl;
+unit ApacheVirtualHostCgiTaskImpl;
 
 interface
 
@@ -22,10 +22,11 @@ type
 
     (*!--------------------------------------
      * Task that creates apache virtual host file
+     * for CGI web application
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheVirtualHostUwsgiTask = class(TBaseApacheVirtualHostTask)
+    TApacheVirtualHostCgiTask = class(TBaseApacheVirtualHostTask)
     protected
         function getVhostTemplate() : string; override;
     end;
@@ -36,11 +37,11 @@ uses
 
     SysUtils;
 
-    function TApacheVirtualHostUwsgiTask.getVhostTemplate() : string;
+    function TApacheVirtualHostCgiTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Apache/Includes/uwsgi.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Apache/Includes/cgi.vhost.conf.inc}
     begin
-        result := strUwsgiVhostConf;
+        result := strCgiVhostConf;
     end;
 
 end.

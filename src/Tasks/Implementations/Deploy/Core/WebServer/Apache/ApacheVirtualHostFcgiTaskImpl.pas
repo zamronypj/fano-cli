@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheVirtualHostScgiTaskImpl;
+unit ApacheVirtualHostFcgiTaskImpl;
 
 interface
 
@@ -22,10 +22,11 @@ type
 
     (*!--------------------------------------
      * Task that creates apache virtual host file
+     * for FastCGI application running with mod_proxy_fcgi
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheVirtualHostScgiTask = class(TBaseApacheVirtualHostTask)
+    TApacheVirtualHostFcgiTask = class(TBaseApacheVirtualHostTask)
     protected
         function getVhostTemplate() : string; override;
     end;
@@ -36,11 +37,11 @@ uses
 
     SysUtils;
 
-    function TApacheVirtualHostScgiTask.getVhostTemplate() : string;
+    function TApacheVirtualHostFcgiTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Apache/Includes/scgi.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Apache/Includes/fcgi.vhost.conf.inc}
     begin
-        result := strScgiVhostConf;
+        result := strFcgiVhostConf;
     end;
 
 end.

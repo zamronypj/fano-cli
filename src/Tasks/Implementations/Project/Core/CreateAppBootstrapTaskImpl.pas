@@ -70,7 +70,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/app.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/app.pas.inc}
     begin
         createTextFile(dir + '/app.pas', strAppPas);
     end;
@@ -81,7 +81,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/bootstrap.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/bootstrap.pas.inc}
     begin
         createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
@@ -92,12 +92,12 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/dependencies.inc.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/main.dependencies.inc.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/models.dependencies.inc.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/controllers.dependencies.inc.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/views.dependencies.inc.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/middlewares.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/main.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/models.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/controllers.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/views.dependencies.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/middlewares.dependencies.inc.inc}
     begin
         createTextFile(dir + '/dependencies.inc', strDependenciesInc);
         createTextFile(dir + '/main.dependencies.inc', strMainDependenciesInc);
@@ -113,7 +113,7 @@ uses
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/routes.inc.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/routes.inc.inc}
     begin
         createTextFile(dir + '/routes.inc', strRoutesInc);
     end;

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit NginxVirtualHostBalancerTaskImpl;
+unit ApacheVirtualHostBalancerTaskImpl;
 
 interface
 
@@ -20,17 +20,17 @@ uses
     ContentModifierIntf,
     DirectoryCreatorIntf,
     BaseCreateFileTaskImpl,
-    BaseNginxVirtualHostTaskImpl;
+    BaseApacheVirtualHostTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that creates Nginx virtual host file
-     * which use load balancer module
+     * Task that creates apache virtual host file
+     * with mod_proxy_balancer module
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TNginxVirtualHostBalancerTask = class(TBaseNginxVirtualHostTask)
+    TApacheVirtualHostBalancerTask = class(TBaseApacheVirtualHostTask)
     private
         fProtocol : shortstring;
         function getBalancerMember(const opt : ITaskOptions) : string;
@@ -58,7 +58,7 @@ uses
     SysUtils,
     RegExpr;
 
-    constructor TNginxVirtualHostBalancerTask.create(
+    constructor TApacheVirtualHostBalancerTask.create(
         const txtFileCreator : ITextFileCreator;
         const dirCreator : IDirectoryCreator;
         const cntModifier : IContentModifier;
@@ -70,14 +70,14 @@ uses
         fProtocol := protocol;
     end;
 
-    function TNginxVirtualHostBalancerTask.getVhostTemplate() : string;
+    function TApacheVirtualHostBalancerTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/balancer.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Apache/Includes/balancer.vhost.conf.inc}
     begin
         result := strBalancerVhostConf;
     end;
 
-    function TNginxVirtualHostBalancerTask.getBalancerMember(const opt : ITaskOptions) : string;
+    function TApacheVirtualHostBalancerTask.getBalancerMember(const opt : ITaskOptions) : string;
     var aport : integer;
         members, host, port : string;
         regex : TRegExpr;
@@ -92,7 +92,7 @@ uses
             regex.ModifierG := true;
             result := regex.replace(
                 members,
-                'server $1:$2;' + LineEnding,
+                format('BalancerMember %s://$1:$2' + LineEnding, [fProtocol]),
                 true
             );
         finally
@@ -100,30 +100,27 @@ uses
         end;
     end;
 
-    function TNginxVirtualHostBalancerTask.getBalancerMethod(const opt : ITaskOptions) : string;
+    function TApacheVirtualHostBalancerTask.getBalancerMethod(const opt : ITaskOptions) : string;
     var balancerMethod : string;
     begin
         balancerMethod := opt.getOptionValue('lbmethod');
-        if not ((balancerMethod = 'ip_hash') or
-            (balancerMethod = 'least_conn') or
-            (balancerMethod = 'random')) then
+        if not ((balancerMethod = 'byrequests') or
+            (balancerMethod = 'bybusyness') or
+            (balancerMethod = 'bytraffic') or
+            (balancerMethod = 'heartbeat')) then
         begin
-            result := '';
-        end else
-        begin
-            result := balancerMethod + ';';
+            balancerMethod := 'byrequests';
         end;
+        result := balancerMethod;
     end;
 
-    function TNginxVirtualHostBalancerTask.run(
+    function TApacheVirtualHostBalancerTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
     begin
         contentModifier.setVar('[[LOAD_BALANCER_MEMBERS]]', getBalancerMember(opt));
         contentModifier.setVar('[[LOAD_BALANCER_METHOD]]', getBalancerMethod(opt));
-        contentModifier.setVar('[[PROXY_PASS_TYPE]]', fProtocol + '_pass');
-        contentModifier.setVar('[[PROXY_PARAMS_TYPE]]', fProtocol + '_params');
         inherited run(opt, longOpt);
         result := self;
     end;

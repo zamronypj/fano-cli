@@ -39,7 +39,7 @@ uses
 
     function TNginxVirtualHostScgiTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/scgi.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Nginx/Includes/scgi.vhost.conf.inc}
     begin
         result := strScgiVhostConf;
     end;

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheVirtualHostFcgidTaskImpl;
+unit NginxVirtualHostUwsgiTaskImpl;
 
 interface
 
@@ -16,17 +16,17 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseApacheVirtualHostTaskImpl;
+    BaseNginxVirtualHostTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that creates apache virtual host file
-     * for FastCGI web application running with mod_fcgid
+     * Task that creates Nginx virtual host file
+     * for uwsgi application
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheVirtualHostFcgidTask = class(TBaseApacheVirtualHostTask)
+    TNginxVirtualHostUwsgiTask = class(TBaseNginxVirtualHostTask)
     protected
         function getVhostTemplate() : string; override;
     end;
@@ -37,11 +37,11 @@ uses
 
     SysUtils;
 
-    function TApacheVirtualHostFcgidTask.getVhostTemplate() : string;
+    function TNginxVirtualHostUwsgiTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Apache/Includes/fcgid.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Nginx/Includes/uwsgi.vhost.conf.inc}
     begin
-        result := strFcgidVhostConf;
+        result := strUwsgiVhostConf;
     end;
 
 end.

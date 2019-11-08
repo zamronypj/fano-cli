@@ -69,8 +69,8 @@ uses
 
     procedure TCreateShellScriptsTask.createShellScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cmd.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.cmd.inc}
     begin
         fContentModifier.setVar('[[EXEC_OUTPUT_DIR]]', fExecBinOutput);
         createTextFile(dir + '/build.sh', fContentModifier.modify(strBuildSh));
@@ -82,8 +82,8 @@ uses
 
     procedure TCreateShellScriptsTask.createCleanScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/clean.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/clean.cmd.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.cmd.inc}
     begin
         createTextFile(dir + '/clean.sh', strClearUnitsSh);
         createTextFile(dir + '/clean.cmd', strClearUnitsCmd);
@@ -94,8 +94,8 @@ uses
 
     procedure TCreateShellScriptsTask.createConfigSetupScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/config.setup.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/config.setup.cmd.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.cmd.inc}
     begin
         createTextFile(dir + '/config.setup.sh', strConfigSetupSh);
         createTextFile(dir + '/config.setup.cmd', strConfigSetupCmd);
@@ -106,8 +106,8 @@ uses
 
     procedure TCreateShellScriptsTask.createSimulateScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/simulate.run.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/simulate.run.cmd.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.sh.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.cmd.inc}
     begin
         createTextFile(dir + '/simulate.run.sh', strSimulateSh);
         createTextFile(dir + '/simulate.run.cmd', strSimulateCmd);

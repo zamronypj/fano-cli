@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit NginxVirtualHostUwsgiTaskImpl;
+unit ApacheVirtualHostUwsgiTaskImpl;
 
 interface
 
@@ -16,17 +16,16 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseNginxVirtualHostTaskImpl;
+    BaseApacheVirtualHostTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that creates Nginx virtual host file
-     * for uwsgi application
+     * Task that creates apache virtual host file
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TNginxVirtualHostUwsgiTask = class(TBaseNginxVirtualHostTask)
+    TApacheVirtualHostUwsgiTask = class(TBaseApacheVirtualHostTask)
     protected
         function getVhostTemplate() : string; override;
     end;
@@ -37,9 +36,9 @@ uses
 
     SysUtils;
 
-    function TNginxVirtualHostUwsgiTask.getVhostTemplate() : string;
+    function TApacheVirtualHostUwsgiTask.getVhostTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Deploy/WebServer/Nginx/Includes/uwsgi.vhost.conf.inc}
+        {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Apache/Includes/uwsgi.vhost.conf.inc}
     begin
         result := strUwsgiVhostConf;
     end;

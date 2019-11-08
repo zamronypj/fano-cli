@@ -45,9 +45,9 @@ uses
 
     procedure TCreateAppConfigsTask.createCompilerConfigs(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.cfg.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.dev.cfg.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Includes/build.prod.cfg.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.cfg.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.dev.cfg.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.prod.cfg.inc}
     begin
         createTextFile(dir + '/build.cfg', strBuildCfg);
         createTextFile(dir + '/build.cfg.sample', strBuildCfg);
