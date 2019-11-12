@@ -74,7 +74,7 @@ uses
                 TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'Model')
             )
         );
-        //protect to avoid accidentally creating view in non Fano-CLI
+        //protect to avoid accidentally creating model in non Fano-CLI
         //project directory structure
         result := TRunCheckTask.create(task);
     end;
