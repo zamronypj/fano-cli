@@ -10,6 +10,7 @@
 
 {$INCLUDE Info/task.registrations.inc}
 {$INCLUDE KeyGen/task.registrations.inc}
+{$INCLUDE GuidGen/task.registrations.inc}
 {$INCLUDE Project/task.registrations.inc}
 {$INCLUDE Controller/task.registrations.inc}
 {$INCLUDE View/task.registrations.inc}
