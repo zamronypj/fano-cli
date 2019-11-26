@@ -28,4 +28,5 @@ CreateControllerTaskFactoryImpl,
 CreateViewTaskFactoryImpl,
 CreateModelTaskFactoryImpl,
 CreateMvcTaskFactoryImpl,
-CreateMiddlewareTaskFactoryImpl;
+CreateMiddlewareTaskFactoryImpl,
+JsMinifierTaskFactoryImpl;

@@ -18,3 +18,4 @@
 {$INCLUDE Mvc/task.registrations.inc}
 {$INCLUDE Middleware/task.registrations.inc}
 {$INCLUDE Deploy/task.registrations.inc}
+{$INCLUDE Minifier/task.registrations.inc}
