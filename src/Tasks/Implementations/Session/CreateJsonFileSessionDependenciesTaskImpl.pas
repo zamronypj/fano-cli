@@ -52,6 +52,8 @@ implementation
         const longOpt : shortstring
     ) : ITask;
     begin
+        //need to call parent run() so baseDirectory can be initialized
+        inherited run(opt, longOpt);
         result := self;
     end;
 end.

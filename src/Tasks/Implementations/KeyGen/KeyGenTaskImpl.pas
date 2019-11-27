@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    SysUtils;
+    KeyGeneratorIntf;
 
 type
 
@@ -27,9 +27,10 @@ type
      *---------------------------------------*)
     TKeyGenTask = class(TInterfacedObject, ITask)
     private
-        function readRandomBytes(const numberOfBytes : integer) : TBytes;
-        function encodeB64(aob: TBytes): string;
+        fKeyGenerator : IKeyGenerator;
     public
+        constructor create(const keyGen : IKeyGenerator);
+        destructor destroy(); override;
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
@@ -38,48 +39,17 @@ type
 
 implementation
 
-uses
-
-    Classes,
-    Base64,
-    BaseUnix;
-
-
-    function TKeyGenTask.readRandomBytes(const numberOfBytes : integer) : TBytes;
-    var fs : TFileStream;
-        bytes : TBytes;
+    constructor TKeyGenTask.create(const keyGen : IKeyGenerator);
     begin
-        fs := TFileStream.create('/dev/urandom', fmOpenRead);
-        try
-            setLength(bytes, numberOfBytes);
-            fs.readBuffer(bytes[0], numberOfBytes);
-            result := bytes;
-        finally
-            fs.free();
-        end;
+        fKeyGenerator := keyGen;
     end;
 
-    (*!------------------------------------------------
-     * encode array of bytes to Base64 string
-     *-------------------------------------------------
-     * @param aob array of bytes
-     * @return Base64 encoded string
-     *-------------------------------------------------
-     * @author: howardpc
-     * @credit: https://forum.lazarus.freepascal.org/index.php?topic=23646.0
-     *-------------------------------------------------*)
-    function TKeyGenTask.encodeB64(aob: TBytes): string;
-    var
-        i: integer;
-        tmp: string;
+    destructor TKeyGenTask.destroy();
     begin
-        setLength(tmp, length(aob));
-        for i := low(aob) to high(aob) do
-        begin
-            tmp[i+1] := char(aob[i]);
-        end;
-        result := encodeStringBase64(tmp);
+        fKeyGenerator := nil;
+        inherited destroy();
     end;
+
 
     function TKeyGenTask.run(
         const opt : ITaskOptions;
@@ -88,7 +58,7 @@ uses
     var numberOfBytes : integer;
     begin
         numberOfBytes := strToInt(opt.getOptionValueDef(longOpt, '64'));
-        write(encodeB64(readRandomBytes(numberOfBytes)));
+        write(fKeyGenerator.generate(numberOfBytes));
         result := self;
     end;
 end.

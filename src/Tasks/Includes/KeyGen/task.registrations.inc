@@ -8,8 +8,13 @@
 
 {%../Includes/task.registrations.inc}
 
-appInst.registerTask(
-    'key',
-    '--key=[length] Generate random key.',
-    TKeyGenTask.create()
-);
+taskFactory := TKeyGenTaskFactory.create();
+try
+    appInst.registerTask(
+        'key',
+        '--key=[length] Generate random key.',
+        taskFactory.build()
+    );
+finally
+    taskFactory := nil;
+end;
