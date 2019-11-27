@@ -15,8 +15,7 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf,
-    DecoratorTaskImpl;
+    TaskIntf;
 
 type
 
@@ -25,7 +24,7 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateSessionDependenciesTask = class(TDecoratorTask)
+    TCreateSessionDependenciesTask = class(TInterfacedObject, ITask)
     private
         createFileSessionDependenciesTask : ITask;
         createCookieSessionDependenciesTask : ITask;
