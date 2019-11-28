@@ -12,7 +12,9 @@ taskFactory := TCreateProjectTaskFactory.create();
 try
     appInst.registerTask(
         'project',
-        '--project=[project-name] Create new CGI project.',
+        '--project=[project-name] Create new CGI project.' + LineEnding +
+        '     --config=[json, ini] Type of generated application config. If omitted, json is assumed.' + LineEnding +
+        '     --with-session=[file, cookie, db] Add session support',
         taskFactory.build()
     );
 finally
