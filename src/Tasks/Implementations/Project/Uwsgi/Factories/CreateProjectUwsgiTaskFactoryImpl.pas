@@ -47,11 +47,17 @@ uses
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateDirTaskImpl,
+    CreateCompilerConfigsTaskImpl,
     CreateAppConfigsTaskImpl,
+    CreateSessionJsonAppConfigsTaskImpl,
+    CreateSessionIniAppConfigsTaskImpl,
+    CreateSessionAppConfigsTaskImpl,
+    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateUwsgiAppBootstrapTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskImpl,
+    BasicKeyGeneratorImpl;
 
     function TCreateProjectUwsgiTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -62,7 +68,24 @@ uses
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
             TCompositeTask.create(
-                TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+                TCompositeTask.create(
+                    TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+                    TCompositeAppConfigsTask.create(
+                        TCreateSessionAppConfigsTask.create(
+                            TCreateSessionJsonAppConfigsTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TBasicKeyGenerator.create()
+                            ),
+                            TCreateSessionIniAppConfigsTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TBasicKeyGenerator.create()
+                            )
+                        ),
+                        TCreateAppConfigsTask.create(textFileCreator, contentModifier)
+                    )
+                ),
                 TRegisterConfigDependencyTask.create(
                     textFileCreator,
                     contentModifier,

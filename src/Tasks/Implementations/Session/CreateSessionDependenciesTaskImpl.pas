@@ -69,7 +69,7 @@ implementation
     ) : ITask;
     var sessType : string;
     begin
-        if opt.has('with-session') then
+        if opt.hasOption('with-session') then
         begin
             sessType := opt.getOptionValueDef('with-session', 'file');
             case sessType of

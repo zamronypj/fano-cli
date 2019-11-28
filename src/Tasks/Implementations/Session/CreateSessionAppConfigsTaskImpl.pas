@@ -28,22 +28,20 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateSessionAppConfigsTask = class(TCreateFileTask)
+    TCreateSessionAppConfigsTask = class(TInterfacedObject, ITask)
     private
-        fContentModifier : IContentModifier;
-        fKeyGenerator : IKeyGenerator;
-        procedure createJsonAppConfigs(const dir : string);
-        procedure createIniAppConfigs(const dir : string);
+        fJsonAppConfigTask : ITask;
+        fIniAppConfigTask : ITask;
     public
         constructor create(
-            const contentModifier : IContentModifier;
-            const keyGen : IKeyGenerator
+            const aJsonAppConfigTask : ITask;
+            const aIniAppConfigTask : ITask
         );
         destructor destroy(); override;
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; override;
+        ) : ITask;
     end;
 
 implementation
@@ -53,51 +51,19 @@ uses
     sysutils;
 
     constructor TCreateSessionAppConfigsTask.create(
-        const contentModifier : IContentModifier;
-        const keyGen : IKeyGenerator
+        const aJsonAppConfigTask : ITask;
+        const aIniAppConfigTask : ITask
     );
     begin
-        fContentModifier := contentModifier;
-        fKeyGenerator := keyGen;
+        fJsonAppConfigTask := aJsonAppConfigTask;
+        fIniAppConfigTask := aIniAppConfigTask;
     end;
 
     destructor TCreateSessionAppConfigsTask.destroy();
     begin
-        fContentModifier := nil;
+        fJsonAppConfigTask := nil;
+        fIniAppConfigTask := nil;
         inherited destroy();
-    end;
-
-    procedure TCreateSessionAppConfigsTask.createJsonAppConfigs(const dir : string);
-    var
-        configStr : string;
-        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.inc}
-    begin
-        configStr := fContentModifier
-            .setVar('[[APP_NAME]]', 'My App')
-            .setVar('[[BASE_URL]]', 'myapp.fano')
-            .setVar('[[SECRET_KEY]]', fKeyGenerator.generate(64))
-            .setVar('[[SESSION_NAME]]', 'fano_sess')
-            .setVar('[[SESSION_DIR]]', 'storages/sessions/')
-            .setVar('[[COOKIE_NAME]]', 'fano_sess')
-            .setVar('[[COOKIE_DOMAIN]]', 'myapp.fano')
-            .setVar('[[COOKIE_MAX_AGE]]', '3600')
-            .modify(strConfigJson);
-        createTextFile(dir + '/config.json', configStr);
-        createTextFile(dir + '/config.json.sample', configStr);
-    end;
-
-    procedure TCreateSessionAppConfigsTask.createIniAppConfigs(const dir : string);
-    begin
-        createTextFile(
-            dir + '/config.ini',
-            '[fano]' + LineEnding +
-            'appName=MyApp'
-        );
-        createTextFile(
-            dir + '/config.ini.sample',
-            '[fano]' + LineEnding +
-            'appName=MyApp'
-        );
     end;
 
     function TCreateSessionAppConfigsTask.run(
@@ -106,18 +72,15 @@ uses
     ) : ITask;
     var configType : string;
     begin
-        //need to call parent run() so baseDirectory can be initialized
-        inherited run(opt, longOpt);
-
         if (opt.hasOption('config')) then
         begin
             configType := opt.getOptionValueDef('config', 'json');
             if (configType = 'ini') then
             begin
-                createIniAppConfigs(baseDirectory + '/config');
+                fIniAppConfigTask.run(opt, longOpt);
             end else
             begin
-                createJsonAppConfigs(baseDirectory + '/config');
+                fJsonAppConfigTask.run(opt, longOpt);
             end;
         end;
         result := self;

@@ -30,7 +30,6 @@ type
     private
         procedure createJsonAppConfigs(const dir : string);
         procedure createIniAppConfigs(const dir : string);
-        procedure createCompilerConfigs(const dir : string);
     public
         function run(
             const opt : ITaskOptions;
@@ -43,22 +42,6 @@ implementation
 uses
 
     sysutils;
-
-    procedure TCreateAppConfigsTask.createCompilerConfigs(const dir : string);
-    var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.cfg.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.dev.cfg.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.prod.cfg.inc}
-    begin
-        createTextFile(dir + '/build.cfg', strBuildCfg);
-        createTextFile(dir + '/build.cfg.sample', strBuildCfg);
-
-        createTextFile(dir + '/build.dev.cfg', strBuildCfgDev);
-        createTextFile(dir + '/build.dev.cfg.sample', strBuildCfgDev);
-
-        createTextFile(dir + '/build.prod.cfg', strBuildCfgProd);
-        createTextFile(dir + '/build.prod.cfg.sample', strBuildCfgProd);
-    end;
 
     procedure TCreateAppConfigsTask.createJsonAppConfigs(const dir : string);
     begin
@@ -88,7 +71,6 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createCompilerConfigs(baseDirectory);
 
         if (opt.hasOption('config')) then
         begin

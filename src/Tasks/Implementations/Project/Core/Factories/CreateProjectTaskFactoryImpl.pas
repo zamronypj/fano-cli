@@ -44,7 +44,12 @@ uses
     ContentModifierImpl,
     DirectoryCreatorImpl,
     CreateDirTaskImpl,
+    CreateCompilerConfigsTaskImpl,
     CreateAppConfigsTaskImpl,
+    CreateSessionJsonAppConfigsTaskImpl,
+    CreateSessionIniAppConfigsTaskImpl,
+    CreateSessionAppConfigsTaskImpl,
+    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
@@ -55,7 +60,8 @@ uses
     EmptyDirCheckTaskImpl,
     RegisterConfigDependencyTaskImpl,
     FileHelperAppendImpl,
-    CompositeTaskImpl;
+    CompositeTaskImpl,
+    BasicKeyGeneratorImpl;
 
     function TCreateProjectTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -66,7 +72,24 @@ uses
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             TCompositeTask.create(
-                TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+                TCompositeTask.create(
+                    TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+                    TCompositeAppConfigsTask.create(
+                        TCreateSessionAppConfigsTask.create(
+                            TCreateSessionJsonAppConfigsTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TBasicKeyGenerator.create()
+                            ),
+                            TCreateSessionIniAppConfigsTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TBasicKeyGenerator.create()
+                            )
+                        ),
+                        TCreateAppConfigsTask.create(textFileCreator, contentModifier)
+                    )
+                ),
                 TRegisterConfigDependencyTask.create(
                     textFileCreator,
                     contentModifier,

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit KeyGenTaskImpl;
+unit CompositeAppConfigsTaskImpl;
 
 interface
 
@@ -15,21 +15,25 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf,
-    KeyGeneratorIntf;
+    TaskIntf;
 
 type
 
     (*!--------------------------------------
-     * Task that generate random key
+     * Task that add session-related application config
+     * to project creation or fallback to basic config
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TKeyGenTask = class(TInterfacedObject, ITask)
+    TCompositeAppConfigsTask = class(TInterfacedObject, ITask)
     private
-        fKeyGenerator : IKeyGenerator;
+        fSessionAppConfigTask : ITask;
+        fAppConfigTask : ITask;
     public
-        constructor create(const keyGen : IKeyGenerator);
+        constructor create(
+            const aSessionAppConfigTask : ITask;
+            const aAppConfigTask : ITask
+        );
         destructor destroy(); override;
         function run(
             const opt : ITaskOptions;
@@ -39,30 +43,34 @@ type
 
 implementation
 
-uses
-
-    SysUtils;
-
-    constructor TKeyGenTask.create(const keyGen : IKeyGenerator);
+    constructor TCompositeAppConfigsTask.create(
+        const aSessionAppConfigTask : ITask;
+        const aAppConfigTask : ITask
+    );
     begin
-        fKeyGenerator := keyGen;
+        fSessionAppConfigTask := aSessionAppConfigTask;
+        fAppConfigTask := aAppConfigTask;
     end;
 
-    destructor TKeyGenTask.destroy();
+    destructor TCompositeAppConfigsTask.destroy();
     begin
-        fKeyGenerator := nil;
+        fSessionAppConfigTask := nil;
+        fAppConfigTask := nil;
         inherited destroy();
     end;
 
-
-    function TKeyGenTask.run(
+    function TCompositeAppConfigsTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    var numberOfBytes : integer;
     begin
-        numberOfBytes := strToInt(opt.getOptionValueDef(longOpt, '64'));
-        write(fKeyGenerator.generate(numberOfBytes));
+        if opt.hasOption('with-session') then
+        begin
+            fSessionAppConfigTask.run(opt, longOpt);
+        end else
+        begin
+            fAppConfigTask.run(opt, longOpt);
+        end;
         result := self;
     end;
 end.

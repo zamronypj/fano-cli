@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateSessionJsonAppConfigsTaskImpl;
+unit CreateSessionIniAppConfigsTaskImpl;
 
 interface
 
@@ -23,12 +23,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that create web application json config files
+     * Task that create web application ini config files
      * using fano web framework
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateSessionJsonAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
+    TCreateSessionIniAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
     protected
         procedure createAppConfigs(const dir : string); override;
     end;
@@ -39,10 +39,10 @@ uses
 
     sysutils;
 
-    procedure TCreateSessionJsonAppConfigsTask.createAppConfigs(const dir : string);
+    procedure TCreateSessionIniAppConfigsTask.createAppConfigs(const dir : string);
     var
         configStr : string;
-        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.inc}
+        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.ini.inc}
     begin
         configStr := fContentModifier
             .setVar('[[APP_NAME]]', 'My App')
@@ -53,9 +53,9 @@ uses
             .setVar('[[COOKIE_NAME]]', 'fano_sess')
             .setVar('[[COOKIE_DOMAIN]]', 'myapp.fano')
             .setVar('[[COOKIE_MAX_AGE]]', '3600')
-            .modify(strConfigJson);
-        createTextFile(dir + '/config.json', configStr);
-        createTextFile(dir + '/config.json.sample', configStr);
+            .modify(strConfigIni);
+        createTextFile(dir + '/config.ini', configStr);
+        createTextFile(dir + '/config.ini.sample', configStr);
     end;
 
 end.
