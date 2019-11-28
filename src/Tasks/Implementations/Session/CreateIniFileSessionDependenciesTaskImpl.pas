@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateFileTaskImpl;
+    BaseCreateFileSessionDependenciesTaskImpl;
 
 type
 
@@ -25,40 +25,24 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateIniFileSessionDependenciesTask = class(TCreateFileTask)
-    private
-        procedure createIniFileSessionDependencies(const dir : string);
-    public
-        constructor create();
-        destructor destroy(); override;
-        function run(
-            const opt : ITaskOptions;
-            const longOpt : shortstring
-        ) : ITask; override;
+    TCreateIniFileSessionDependenciesTask = class(TBaseCreateFileSessionDependenciesTask)
+    protected
+        procedure createDependencies(const dir : string);
     end;
 
 implementation
 
-    constructor TCreateIniFileSessionDependenciesTask.create();
+    procedure TCreateIniFileSessionDependenciesTask.createDependencies(const dir : string);
+    var
+        depStr : string;
+        {$INCLUDE src/Tasks/Implementations/Session/Includes/ini.file.session.dependencies.inc.inc}
     begin
+        depStr := fContentModifier.modify(strIniFileSession);
+        createTextFile(dir + '/session.dependencies.inc', depStr);
+        fFileAppender.append(
+            dir + '/main.dependencies.inc',
+            LineEnding + '{$INCLUDE session.dependencies.inc}'
+        );
     end;
 
-    destructor TCreateIniFileSessionDependenciesTask.destroy();
-    begin
-        inherited destroy();
-    end;
-
-    procedure TCreateIniFileSessionDependenciesTask.createIniFileSessionDependencies(const dir : string);
-    begin
-    end;
-
-    function TCreateIniFileSessionDependenciesTask.run(
-        const opt : ITaskOptions;
-        const longOpt : shortstring
-    ) : ITask;
-    begin
-        //need to call parent run() so baseDirectory can be initialized
-        inherited run(opt, longOpt);
-        result := self;
-    end;
 end.

@@ -43,6 +43,7 @@ implementation
 
 uses
 
+    NullTaskImpl,
     DirectoryCreatorImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
@@ -52,6 +53,11 @@ uses
     CreateSessionJsonAppConfigsTaskImpl,
     CreateSessionIniAppConfigsTaskImpl,
     CreateSessionAppConfigsTaskImpl,
+    CreateSessionDependenciesTaskImpl,
+    CreateFileSessionDependenciesTaskImpl,
+    CreateJsonFileSessionDependenciesTaskImpl,
+    CreateIniFileSessionDependenciesTaskImpl,
+    CreateCookieSessionDependenciesTaskImpl,
     CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
@@ -86,10 +92,28 @@ uses
                         TCreateAppConfigsTask.create(textFileCreator, contentModifier)
                     )
                 ),
-                TRegisterConfigDependencyTask.create(
-                    textFileCreator,
-                    contentModifier,
-                    TFileHelperAppender.create()
+                TCompositeTask.create(
+                    TRegisterConfigDependencyTask.create(
+                        textFileCreator,
+                        contentModifier,
+                        TFileHelperAppender.create()
+                    ),
+                    TCreateSessionDependenciesTask.create(
+                        TCreateFileSessionDependenciesTask.create(
+                            TCreateJsonFileSessionDependenciesTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TFileHelperAppender.create()
+                            ),
+                            TCreateIniFileSessionDependenciesTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TFileHelperAppender.create()
+                            )
+                        ),
+                        TCreateCookieSessionDependenciesTask.create(),
+                        TNullTask.create()
+                    )
                 )
             ),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),

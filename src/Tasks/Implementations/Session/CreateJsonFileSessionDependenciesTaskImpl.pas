@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateFileTaskImpl;
+    BaseCreateFileSessionDependenciesTaskImpl;
 
 type
 
@@ -25,35 +25,24 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateJsonFileSessionDependenciesTask = class(TCreateFileTask)
-    private
-    public
-        constructor create();
-        destructor destroy(); override;
-        function run(
-            const opt : ITaskOptions;
-            const longOpt : shortstring
-        ) : ITask; override;
+    TCreateJsonFileSessionDependenciesTask = class(TBaseCreateFileSessionDependenciesTask)
+    protected
+        procedure createDependencies(const dir : string); override;
     end;
 
 implementation
 
-    constructor TCreateJsonFileSessionDependenciesTask.create();
-    begin
-    end;
 
-    destructor TCreateJsonFileSessionDependenciesTask.destroy();
+    procedure TCreateJsonFileSessionDependenciesTask.createDependencies(const dir : string);
+    var
+        depStr : string;
+        {$INCLUDE src/Tasks/Implementations/Session/Includes/json.file.session.dependencies.inc.inc}
     begin
-        inherited destroy();
-    end;
-
-    function TCreateJsonFileSessionDependenciesTask.run(
-        const opt : ITaskOptions;
-        const longOpt : shortstring
-    ) : ITask;
-    begin
-        //need to call parent run() so baseDirectory can be initialized
-        inherited run(opt, longOpt);
-        result := self;
+        depStr := fContentModifier.modify(strJsonFileSession);
+        createTextFile(dir + '/session.dependencies.inc', depStr);
+        fFileAppender.append(
+            dir + '/main.dependencies.inc',
+            LineEnding + '{$INCLUDE session.dependencies.inc}'
+        );
     end;
 end.

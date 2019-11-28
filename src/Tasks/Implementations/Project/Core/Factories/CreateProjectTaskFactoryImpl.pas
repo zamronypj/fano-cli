@@ -104,8 +104,16 @@ uses
                     ),
                     TCreateSessionDependenciesTask.create(
                         TCreateFileSessionDependenciesTask.create(
-                            TCreateJsonFileSessionDependenciesTask.create(),
-                            TCreateIniFileSessionDependenciesTask.create()
+                            TCreateJsonFileSessionDependenciesTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TFileHelperAppender.create()
+                            ),
+                            TCreateIniFileSessionDependenciesTask.create(
+                                textFileCreator,
+                                contentModifier,
+                                TFileHelperAppender.create()
+                            )
                         ),
                         TCreateCookieSessionDependenciesTask.create(),
                         TNullTask.create()
