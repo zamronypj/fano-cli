@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseCreateFileSessionDependenciesTaskImpl;
+    BaseCreateSessionDependenciesTaskImpl;
 
 type
 
@@ -25,7 +25,7 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateJsonFileSessionDependenciesTask = class(TBaseCreateFileSessionDependenciesTask)
+    TCreateJsonFileSessionDependenciesTask = class(TBaseCreateSessionDependenciesTask)
     protected
         procedure createDependencies(const dir : string); override;
     end;

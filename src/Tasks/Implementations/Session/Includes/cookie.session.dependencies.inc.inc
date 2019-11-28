@@ -20,7 +20,7 @@ strCookieSession: string =
     'container.add(' + LineEnding +
     '    ''sessionManager'',' + LineEnding +
     '    TCookieSessionManagerFactory.create(' + LineEnding +
-    '        TJsonSessionFactory.create(),' + LineEnding +
+    '        [[SESSION_FACTORY]].create(),' + LineEnding +
     '        container[''encrypter''] as IEncrypter,' + LineEnding +
     '        container[''encrypter''] as IDecrypter,' + LineEnding +
     '        (container[''config''] as IAppConfiguration).getString(''session.name'')' + LineEnding +

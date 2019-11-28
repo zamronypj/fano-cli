@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseCreateFileSessionDependenciesTaskImpl;
+    BaseCreateSessionDependenciesTaskImpl;
 
 type
 
@@ -25,9 +25,9 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateIniFileSessionDependenciesTask = class(TBaseCreateFileSessionDependenciesTask)
+    TCreateIniFileSessionDependenciesTask = class(TBaseCreateSessionDependenciesTask)
     protected
-        procedure createDependencies(const dir : string);
+        procedure createDependencies(const dir : string); override;
     end;
 
 implementation

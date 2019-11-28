@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit BaseCreateFileSessionDependenciesTaskImpl;
+unit BaseCreateSessionDependenciesTaskImpl;
 
 interface
 
@@ -28,7 +28,7 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TBaseCreateFileSessionDependenciesTask = class(TCreateFileTask)
+    TBaseCreateSessionDependenciesTask = class(TCreateFileTask)
     protected
         fFileAppender : IFileContentAppender;
         procedure createDependencies(const dir : string); virtual; abstract;
@@ -48,7 +48,7 @@ type
 
 implementation
 
-    constructor TBaseCreateFileSessionDependenciesTask.create(
+    constructor TBaseCreateSessionDependenciesTask.create(
         const txtFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier;
         const fAppend : IFileContentAppender
@@ -58,13 +58,13 @@ implementation
         fFileAppender := fAppend;
     end;
 
-    destructor TBaseCreateFileSessionDependenciesTask.destroy();
+    destructor TBaseCreateSessionDependenciesTask.destroy();
     begin
         fFileAppender := nil;
         inherited destroy();
     end;
 
-    function TBaseCreateFileSessionDependenciesTask.run(
+    function TBaseCreateSessionDependenciesTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;

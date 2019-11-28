@@ -109,7 +109,11 @@ uses
                                 TFileHelperAppender.create()
                             )
                         ),
-                        TCreateCookieSessionDependenciesTask.create(),
+                        TCreateCookieSessionDependenciesTask.create(
+                            textFileCreator,
+                            contentModifier,
+                            TFileHelperAppender.create()
+                        ),
                         TNullTask.create()
                     )
                 )
