@@ -71,7 +71,7 @@ implementation
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createDependencies(baseDirectory + '/Dependencies');
+        createDependencies(baseDirectory + '/src/Dependencies');
         result := self;
     end;
 end.

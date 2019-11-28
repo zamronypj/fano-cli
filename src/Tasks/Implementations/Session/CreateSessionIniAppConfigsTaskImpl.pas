@@ -46,7 +46,7 @@ uses
     begin
         configStr := fContentModifier
             .setVar('[[APP_NAME]]', 'My App')
-            .setVar('[[BASE_URL]]', 'myapp.fano')
+            .setVar('[[BASE_URL]]', 'http://myapp.fano')
             .setVar('[[SECRET_KEY]]', fKeyGenerator.generate(64))
             .setVar('[[SESSION_NAME]]', 'fano_sess')
             .setVar('[[SESSION_DIR]]', 'storages/sessions/')
