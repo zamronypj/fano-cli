@@ -67,7 +67,10 @@ implementation
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createDependencies(baseDirectory + '/src/Dependencies');
+        if (opt.hasOption('with-middleware')) then
+        begin
+            createDependencies(baseDirectory + '/src/Dependencies');
+        end;
         result := self;
     end;
 
@@ -77,10 +80,10 @@ implementation
         {$INCLUDE src/Tasks/Implementations/Middleware/Support/Includes/middleware.dependencies.inc.inc}
     begin
         depStr := fContentModifier.modify(strMiddlewareDependencies);
-        createTextFile(dir + '/middleware.dependencies.inc', depStr);
+        createTextFile(dir + '/middleware.support.dependencies.inc', depStr);
         fFileAppender.append(
             dir + '/main.dependencies.inc',
-            LineEnding + '{$INCLUDE middleware.dependencies.inc}'
+            LineEnding + '{$INCLUDE middleware.support.dependencies.inc}'
         );
     end;
 end.
