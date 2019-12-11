@@ -73,53 +73,7 @@ uses
         result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
             TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
-            TCompositeTask.create(
-                TCompositeTask.create(
-                    TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
-                    TCompositeAppConfigsTask.create(
-                        TCreateSessionAppConfigsTask.create(
-                            TCreateSessionJsonAppConfigsTask.create(
-                                textFileCreator,
-                                contentModifier,
-                                TBasicKeyGenerator.create()
-                            ),
-                            TCreateSessionIniAppConfigsTask.create(
-                                textFileCreator,
-                                contentModifier,
-                                TBasicKeyGenerator.create()
-                            )
-                        ),
-                        TCreateAppConfigsTask.create(textFileCreator, contentModifier)
-                    )
-                ),
-                TCompositeTask.create(
-                    TRegisterConfigDependencyTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TFileHelperAppender.create()
-                    ),
-                    TCreateSessionDependenciesTask.create(
-                        TCreateFileSessionDependenciesTask.create(
-                            TCreateJsonFileSessionDependenciesTask.create(
-                                textFileCreator,
-                                contentModifier,
-                                TFileHelperAppender.create()
-                            ),
-                            TCreateIniFileSessionDependenciesTask.create(
-                                textFileCreator,
-                                contentModifier,
-                                TFileHelperAppender.create()
-                            )
-                        ),
-                        TCreateCookieSessionDependenciesTask.create(
-                            textFileCreator,
-                            contentModifier,
-                            TFileHelperAppender.create()
-                        ),
-                        TNullTask.create()
-                    )
-                )
-            ),
+            fProjectDepTaskFactory.build(),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             TCreateUwsgiAppBootstrapTask.create(textFileCreator, contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())

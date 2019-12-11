@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectNoCommitTaskFactory.create();
+taskFactory := TCreateProjectNoCommitTaskFactory.create(TCreateProjectDependenciesTaskFactory.create());
 try
     appInst.registerTask(
         'project-no-commit',

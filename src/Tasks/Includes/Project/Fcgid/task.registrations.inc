@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectFcgidTaskFactory.create();
+taskFactory := TCreateProjectFcgidTaskFactory.create(TCreateProjectDependenciesTaskFactory.create());
 try
     appInst.registerTask(
         'project-fcgid',
