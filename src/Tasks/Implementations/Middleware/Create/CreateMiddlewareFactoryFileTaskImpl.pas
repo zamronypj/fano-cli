@@ -50,7 +50,7 @@ uses
         const ctrlName : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Middleware/Includes/middleware.factory.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Middleware/Create/Includes/middleware.factory.pas.inc}
     begin
         createTextFile(
             dir + DirectorySeparator + ctrlName +'MiddlewareFactory.pas',

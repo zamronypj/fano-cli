@@ -113,16 +113,15 @@ uses
     function TCreateProjectDependenciesTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
         contentModifier : IContentModifier;
-        task : ITask;
     begin
         textFileCreator := TTextFileCreator.create();
         try
             contentModifier := TContentModifier.create();
             try
                 try
-                    task := buildProjectTask(textFileCreator, contentModifier);
+                    result := buildProjectTask(textFileCreator, contentModifier);
                 except
-                    task := nil;
+                    result := nil;
                 end;
             finally
                 contentModifier := nil;
