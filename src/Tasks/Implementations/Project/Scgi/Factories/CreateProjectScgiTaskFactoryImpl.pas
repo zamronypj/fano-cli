@@ -40,30 +40,14 @@ implementation
 
 uses
 
-    NullTaskImpl,
     DirectoryCreatorImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateDirTaskImpl,
-    CreateCompilerConfigsTaskImpl,
-    CreateAppConfigsTaskImpl,
-    CreateSessionJsonAppConfigsTaskImpl,
-    CreateSessionIniAppConfigsTaskImpl,
-    CreateSessionAppConfigsTaskImpl,
-    CreateSessionDependenciesTaskImpl,
-    CreateFileSessionDependenciesTaskImpl,
-    CreateJsonFileSessionDependenciesTaskImpl,
-    CreateIniFileSessionDependenciesTaskImpl,
-    CreateCookieSessionDependenciesTaskImpl,
-    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateScgiAppBootstrapTaskImpl,
-    CreateProjectTaskImpl,
-    RegisterConfigDependencyTaskImpl,
-    FileHelperAppendImpl,
-    CompositeTaskImpl,
-    BasicKeyGeneratorImpl;
+    CreateProjectTaskImpl;
 
     function TCreateProjectScgiTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;

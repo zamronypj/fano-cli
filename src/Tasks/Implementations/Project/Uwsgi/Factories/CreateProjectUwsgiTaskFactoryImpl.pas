@@ -43,27 +43,14 @@ implementation
 
 uses
 
-    NullTaskImpl,
     DirectoryCreatorImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateDirTaskImpl,
-    CreateCompilerConfigsTaskImpl,
-    CreateAppConfigsTaskImpl,
-    CreateSessionJsonAppConfigsTaskImpl,
-    CreateSessionIniAppConfigsTaskImpl,
-    CreateSessionAppConfigsTaskImpl,
-    CreateSessionDependenciesTaskImpl,
-    CreateFileSessionDependenciesTaskImpl,
-    CreateJsonFileSessionDependenciesTaskImpl,
-    CreateIniFileSessionDependenciesTaskImpl,
-    CreateCookieSessionDependenciesTaskImpl,
-    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateUwsgiAppBootstrapTaskImpl,
-    CreateProjectTaskImpl,
-    BasicKeyGeneratorImpl;
+    CreateProjectTaskImpl;
 
     function TCreateProjectUwsgiTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;

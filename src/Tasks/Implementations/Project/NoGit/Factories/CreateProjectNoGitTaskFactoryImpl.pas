@@ -43,25 +43,10 @@ uses
     DirectoryCreatorImpl,
     NullTaskImpl,
     CreateDirTaskImpl,
-    CreateCompilerConfigsTaskImpl,
-    CreateAppConfigsTaskImpl,
-    CreateSessionJsonAppConfigsTaskImpl,
-    CreateSessionIniAppConfigsTaskImpl,
-    CreateSessionAppConfigsTaskImpl,
-    CreateSessionDependenciesTaskImpl,
-    CreateFileSessionDependenciesTaskImpl,
-    CreateJsonFileSessionDependenciesTaskImpl,
-    CreateIniFileSessionDependenciesTaskImpl,
-    CreateCookieSessionDependenciesTaskImpl,
-    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
-    CreateProjectTaskImpl,
-    RegisterConfigDependencyTaskImpl,
-    FileHelperAppendImpl,
-    CompositeTaskImpl,
-    BasicKeyGeneratorImpl;
+    CreateProjectTaskImpl;
 
     function TCreateProjectNoGitTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;

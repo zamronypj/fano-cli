@@ -44,22 +44,10 @@ implementation
 
 uses
 
-    NullTaskImpl,
     TextFileCreatorImpl,
     ContentModifierImpl,
     DirectoryCreatorImpl,
     CreateDirTaskImpl,
-    CreateCompilerConfigsTaskImpl,
-    CreateAppConfigsTaskImpl,
-    CreateSessionJsonAppConfigsTaskImpl,
-    CreateSessionIniAppConfigsTaskImpl,
-    CreateSessionAppConfigsTaskImpl,
-    CreateSessionDependenciesTaskImpl,
-    CreateFileSessionDependenciesTaskImpl,
-    CreateJsonFileSessionDependenciesTaskImpl,
-    CreateIniFileSessionDependenciesTaskImpl,
-    CreateCookieSessionDependenciesTaskImpl,
-    CompositeAppConfigsTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
     CreateAppBootstrapTaskImpl,
@@ -67,11 +55,7 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
     InvRunCheckTaskImpl,
-    EmptyDirCheckTaskImpl,
-    RegisterConfigDependencyTaskImpl,
-    FileHelperAppendImpl,
-    CompositeTaskImpl,
-    BasicKeyGeneratorImpl;
+    EmptyDirCheckTaskImpl;
 
     constructor TCreateProjectTaskFactory.create(const depFactory : ITaskFactory);
     begin
