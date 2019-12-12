@@ -28,6 +28,16 @@ type
      *---------------------------------------*)
     TCreateProjectDependenciesTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
+        function buildSessionProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
+
+        function buildMiddlewareProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
+
         function buildProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -58,9 +68,11 @@ uses
     RegisterConfigDependencyTaskImpl,
     FileHelperAppendImpl,
     GroupTaskImpl,
-    BasicKeyGeneratorImpl;
+    BasicKeyGeneratorImpl,
+    WithSessionOrMiddlewareTaskImpl,
+    CreateMiddlewareDependenciesTaskImpl;
 
-    function TCreateProjectDependenciesTaskFactory.buildProjectTask(
+    function TCreateProjectDependenciesTaskFactory.buildSessionProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
@@ -108,6 +120,38 @@ uses
                 TNullTask.create()
             )
         ]);
+    end;
+
+    function TCreateProjectDependenciesTaskFactory.buildMiddlewareProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TGroupTask.create([
+            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TRegisterConfigDependencyTask.create(
+                textFileCreator,
+                contentModifier,
+                TFileHelperAppender.create()
+            ),
+            TCreateMiddlewareDependenciesTask.create(
+                textFileCreator,
+                contentModifier,
+                TFileHelperAppender.create()
+            )
+        ]);
+    end;
+
+    function TCreateProjectDependenciesTaskFactory.buildProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TWithSessionOrMiddlewareTask.create(
+            buildSessionProjectTask(textFileCreator, contentModifier),
+            buildMiddlewareProjectTask(textFileCreator, contentModifier)
+        );
     end;
 
     function TCreateProjectDependenciesTaskFactory.build() : ITask;

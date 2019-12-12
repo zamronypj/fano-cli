@@ -15,7 +15,11 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
+    FileContentAppenderIntf,
+    CreateFileTaskImpl;
 
 type
 
@@ -24,7 +28,7 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateMiddlewareDependenciesTask = class(TInterfacedObject, ITask)
+    TCreateMiddlewareDependenciesTask = class(TCreateFileTask)
     private
         fFileAppender : IFileContentAppender;
         procedure createDependencies(const dir : string);
