@@ -28,8 +28,13 @@ type
     private
         fSessionTask : ITask;
         fMiddlewareTask : ITask;
+        fDefaultTask : ITask;
     public
-        constructor create(const sessionTask : ITask; const middlewareTask : ITask);
+        constructor create(
+            const sessionTask : ITask;
+            const middlewareTask : ITask;
+            const defaultTask : ITask
+        );
         destructor destroy(); override;
 
         function run(
@@ -42,17 +47,20 @@ implementation
 
     constructor TWithSessionOrMiddlewareTask.create(
         const sessionTask : ITask;
-        const middlewareTask : ITask
+        const middlewareTask : ITask;
+        const defaultTask : ITask
     );
     begin
         fSessionTask := sessionTask;
         fMiddlewareTask := middlewareTask;
+        fDefaultTask := defaultTask;
     end;
 
     destructor TWithSessionOrMiddlewareTask.destroy();
     begin
         fSessionTask := nil;
         fMiddlewareTask := nil;
+        fDefaultTask := nil;
         inherited destroy();
     end;
 
@@ -68,6 +76,9 @@ implementation
         if (opt.hasOption('with-middleware')) then
         begin
             fMiddlewareTask.run(opt, longOpt);
+        end else
+        begin
+            fDefaultTask.run(opt, longOpt);
         end;
         result := self;
     end;

@@ -38,6 +38,11 @@ type
             const contentModifier : IContentModifier
         ) : ITask;
 
+        function buildBasicProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
+
         function buildProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -51,6 +56,7 @@ implementation
 uses
 
     NullTaskImpl,
+    DirectoryCreatorImpl,
     TextFileCreatorImpl,
     ContentModifierImpl,
     CreateCompilerConfigsTaskImpl,
@@ -68,9 +74,11 @@ uses
     RegisterConfigDependencyTaskImpl,
     FileHelperAppendImpl,
     GroupTaskImpl,
+    CompositeTaskImpl,
     BasicKeyGeneratorImpl,
     WithSessionOrMiddlewareTaskImpl,
-    CreateMiddlewareDependenciesTaskImpl;
+    CreateMiddlewareDependenciesTaskImpl,
+    CreateSessionDirTaskImpl;
 
     function TCreateProjectDependenciesTaskFactory.buildSessionProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -100,17 +108,20 @@ uses
                 TFileHelperAppender.create()
             ),
             TCreateSessionDependenciesTask.create(
-                TCreateFileSessionDependenciesTask.create(
-                    TCreateJsonFileSessionDependenciesTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TFileHelperAppender.create()
+                TCompositeTask.create(
+                    TCreateFileSessionDependenciesTask.create(
+                        TCreateJsonFileSessionDependenciesTask.create(
+                            textFileCreator,
+                            contentModifier,
+                            TFileHelperAppender.create()
+                        ),
+                        TCreateIniFileSessionDependenciesTask.create(
+                            textFileCreator,
+                            contentModifier,
+                            TFileHelperAppender.create()
+                        )
                     ),
-                    TCreateIniFileSessionDependenciesTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TFileHelperAppender.create()
-                    )
+                    TCreateSessionDirTask.create(TDirectoryCreator.create())
                 ),
                 TCreateCookieSessionDependenciesTask.create(
                     textFileCreator,
@@ -143,6 +154,22 @@ uses
         ]);
     end;
 
+    function TCreateProjectDependenciesTaskFactory.buildBasicProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TGroupTask.create([
+            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            TCreateAppConfigsTask.create(textFileCreator, contentModifier),
+            TRegisterConfigDependencyTask.create(
+                textFileCreator,
+                contentModifier,
+                TFileHelperAppender.create()
+            )
+        ]);
+    end;
+
     function TCreateProjectDependenciesTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
@@ -150,7 +177,8 @@ uses
     begin
         result := TWithSessionOrMiddlewareTask.create(
             buildSessionProjectTask(textFileCreator, contentModifier),
-            buildMiddlewareProjectTask(textFileCreator, contentModifier)
+            buildMiddlewareProjectTask(textFileCreator, contentModifier),
+            buildBasicProjectTask(textFileCreator, contentModifier)
         );
     end;
 
