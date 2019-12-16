@@ -33,6 +33,14 @@ strAppPas: string =
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    appInstance := TBootstrapApp.create(host, port);' + LineEnding +
+    '    appInstance := TDaemonWebApplication.create(' + LineEnding +
+    '        TScgiAppServiceProvider.create(' + LineEnding +
+    '            TAppServiceProvider.create(' + LineEnding +
+    '                TAppServiceProvider.create(),' + LineEnding +
+    '                TInetSocketSvr.create(host, port)' + LineEnding +
+    '            )' + LineEnding +
+    '        ),' + LineEnding +
+    '        TAppRoutes.create()' + LineEnding +
+    '    );' + LineEnding +
     '    appInstance.run();' + LineEnding +
     'end.';

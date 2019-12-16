@@ -16,10 +16,17 @@ strBootstrapPas: string =
     '' + LineEnding +
     'type' + LineEnding +
     '' + LineEnding +
-    '    TBootstrapApp = class(TSimpleFastCGIWebApplication)' + LineEnding +
-    '    protected' + LineEnding +
-    '        procedure buildDependencies(const container : IDependencyContainer); override;' + LineEnding +
-    '        procedure buildRoutes(const container : IDependencyContainer); override;' + LineEnding +
+    '    TAppServiceProvider = class(TDaemonAppServiceProvider)' + LineEnding +
+    '    public' + LineEnding +
+    '        procedure register(const container : IDependencyContainer); override;' + LineEnding +
+    '    end;' + LineEnding +
+    '' + LineEnding +
+    '    TAppRoutes = class(TRouteBuilder)' + LineEnding +
+    '    public' + LineEnding +
+    '        procedure buildRoutes(' + LineEnding +
+    '            const container : IDependencyContainer;' + LineEnding +
+    '            const router : IRouter' + LineEnding +
+    '        ); override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
     'implementation' + LineEnding +
@@ -33,19 +40,16 @@ strBootstrapPas: string =
     '    {---- put your controller factory here ---};' + LineEnding +
     '' + LineEnding +
     '' + LineEnding +
-    '    procedure TBootstrapApp.buildDependencies(const container : IDependencyContainer);' + LineEnding +
+    '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +
     '        {$INCLUDE Dependencies/dependencies.inc}' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
-    '    procedure TBootstrapApp.buildRoutes(const container : IDependencyContainer);' + LineEnding +
-    '    var router : IRouter;' + LineEnding +
+    '    procedure TAppRoutes.buildRoutes(' + LineEnding +
+    '        const container : IDependencyContainer;' + LineEnding +
+    '        const router : IRouter' + LineEnding +
+    '    );' + LineEnding +
     '    begin' + LineEnding +
-    '        router := container.get(GUIDTOString(IRouter)) as IRouter;' + LineEnding +
-    '        try' + LineEnding +
-    '            {$INCLUDE Routes/routes.inc}' + LineEnding +
-    '        finally' + LineEnding +
-    '            router := nil;' + LineEnding +
-    '        end;' + LineEnding +
+    '        {$INCLUDE Routes/routes.inc}' + LineEnding +
     '    end;' + LineEnding +
     'end.';

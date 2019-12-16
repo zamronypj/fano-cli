@@ -22,10 +22,9 @@ strAppPas: string =
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
-    '    appInstance := TBootstrapApp.create(' + LineEnding +
-    '        TDependencyContainer.create(TDependencyList.create()),' + LineEnding +
-    '        TCGIEnvironment.create(),' + LineEnding +
-    '        TErrorHandler.create()' + LineEnding +
+    '    appInstance := TCgiWebApplication.create(' + LineEnding +
+    '        TAppServiceProvider.create(),' + LineEnding +
+    '        TAppRoutes.create()' + LineEnding +
     '    );' + LineEnding +
     '    appInstance.run();' + LineEnding +
     'end.';
