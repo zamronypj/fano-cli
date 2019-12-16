@@ -16,7 +16,7 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateAppBootstrapTaskImpl;
+    CreateDaemonAppBootstrapTaskImpl;
 
 type
 
@@ -26,18 +26,12 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateUwsgiAppBootstrapTask = class(TCreateAppBootstrapTask)
+    TCreateUwsgiAppBootstrapTask = class(TCreateDaemonAppBootstrapTask)
     private
         function getHost(const opt : ITaskOptions) : string;
         function getPort(const opt : ITaskOptions) : string;
     protected
         procedure createApp(
-            const opt : ITaskOptions;
-            const longOpt : shortstring;
-            const dir : string
-        ); override;
-
-        procedure createBootstrap(
             const opt : ITaskOptions;
             const longOpt : shortstring;
             const dir : string
@@ -81,17 +75,6 @@ uses
         fContentModifier.setVar('[[HOST]]', getHost(opt));
         fContentModifier.setVar('[[PORT]]', getPort(opt));
         createTextFile(dir + '/app.pas', fContentModifier.modify(strAppPas));
-    end;
-
-    procedure TCreateUwsgiAppBootstrapTask.createBootstrap(
-        const opt : ITaskOptions;
-        const longOpt : shortstring;
-        const dir : string
-    );
-    var
-        {$INCLUDE src/Tasks/Implementations/Project/Uwsgi/Includes/bootstrap.pas.inc}
-    begin
-        createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
 
 end.

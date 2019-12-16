@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateFcgidAppBootstrapTaskImpl;
+unit CreateDaemonAppBootstrapTaskImpl;
 
 interface
 
@@ -16,20 +16,19 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateDaemonAppBootstrapTaskImpl;
+    CreateAppBootstrapTaskImpl;
 
 type
 
     (*!--------------------------------------
      * Task that create FastCGI web application project
-     * with Apache web server and mod_fcgid module
      * application bootstrapper using Fano Framework
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateFcgidAppBootstrapTask = class(TCreateDaemonAppBootstrapTask)
+    TCreateDaemonAppBootstrapTask = class(TCreateAppBootstrapTask)
     protected
-        procedure createApp(
+        procedure createBootstrap(
             const opt : ITaskOptions;
             const longOpt : shortstring;
             const dir : string
@@ -42,15 +41,15 @@ uses
 
     sysutils;
 
-    procedure TCreateFcgidAppBootstrapTask.createApp(
+    procedure TCreateDaemonAppBootstrapTask.createBootstrap(
         const opt : ITaskOptions;
         const longOpt : shortstring;
         const dir : string
     );
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Fcgid/Includes/app.pas.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Daemon/Includes/bootstrap.pas.inc}
     begin
-        createTextFile(dir + '/app.pas', strAppPas);
+        createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
 
 end.

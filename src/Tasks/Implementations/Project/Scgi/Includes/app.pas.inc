@@ -35,7 +35,7 @@ strAppPas: string =
     '     *------------------------------------------------*)' + LineEnding +
     '    appInstance := TDaemonWebApplication.create(' + LineEnding +
     '        TScgiAppServiceProvider.create(' + LineEnding +
-    '            TAppServiceProvider.create(' + LineEnding +
+    '            TServerAppServiceProvider.create(' + LineEnding +
     '                TAppServiceProvider.create(),' + LineEnding +
     '                TInetSocketSvr.create(host, port)' + LineEnding +
     '            )' + LineEnding +

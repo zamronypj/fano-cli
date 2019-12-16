@@ -29,13 +29,13 @@ strAppPas: string =
     '    writeln(''Starting application at '', host, '':'', port);' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
-    '     * Bootstrap Fast CGI application' + LineEnding +
+    '     * Bootstrap uwsgi application' + LineEnding +
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
     '    appInstance := TDaemonWebApplication.create(' + LineEnding +
     '        TUwsgiAppServiceProvider.create(' + LineEnding +
-    '            TAppServiceProvider.create(' + LineEnding +
+    '            TServerAppServiceProvider.create(' + LineEnding +
     '                TAppServiceProvider.create(),' + LineEnding +
     '                TInetSocketSvr.create(host, port)' + LineEnding +
     '            )' + LineEnding +
