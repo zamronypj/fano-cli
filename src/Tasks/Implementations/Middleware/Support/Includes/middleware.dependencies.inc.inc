@@ -13,7 +13,7 @@ strMiddlewareDependencies : string =
     '    GuidToString(IDispatcher),' + LineEnding +
     '    TDispatcherFactory.create(' + LineEnding +
     '        container[''appMiddlewares''] as IMiddlewareLinkList,' + LineEnding +
-    '        container[GuidToString(IRouteMatcher)] as IRouteMatcher,' + LineEnding +
+    '        getRouteMatcher(),' + LineEnding +
     '        TRequestResponseFactory.create()' + LineEnding +
     '    )' + LineEnding +
     ');';

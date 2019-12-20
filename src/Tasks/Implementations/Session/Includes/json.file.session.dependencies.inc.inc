@@ -21,7 +21,7 @@ strJsonFileSession: string =
     '    GuidToString(IDispatcher),' + LineEnding +
     '    TSessionDispatcherFactory.create(' + LineEnding +
     '        container[''appMiddlewares''] as IMiddlewareLinkList,' + LineEnding +
-    '        container[GuidToString(IRouteMatcher)] as IRouteMatcher,' + LineEnding +
+    '        getRouteMatcher(),' + LineEnding +
     '        TRequestResponseFactory.create(),' + LineEnding +
     '        container[''sessionManager''] as ISessionManager,' + LineEnding +
     '        (TCookieFactory.create()).domain(' + LineEnding +
