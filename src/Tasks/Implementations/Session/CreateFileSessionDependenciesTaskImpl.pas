@@ -71,7 +71,7 @@ implementation
         end else
         if (fType = 'ini') then
         begin
-            fCreateJsonFileSessionTask.run(opt, longOpt);
+            fCreateIniFileSessionTask.run(opt, longOpt);
         end else
         begin
             fCreateJsonFileSessionTask.run(opt, longOpt);
