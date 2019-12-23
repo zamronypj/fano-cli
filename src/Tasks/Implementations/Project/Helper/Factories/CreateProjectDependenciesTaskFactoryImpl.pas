@@ -78,7 +78,8 @@ uses
     BasicKeyGeneratorImpl,
     WithSessionOrMiddlewareTaskImpl,
     CreateMiddlewareDependenciesTaskImpl,
-    CreateSessionDirTaskImpl;
+    CreateSessionDirTaskImpl,
+    ForceConfigDecoratorTaskImpl;
 
     function TCreateProjectDependenciesTaskFactory.buildSessionProjectTask(
         const textFileCreator : ITextFileCreator;
@@ -88,24 +89,37 @@ uses
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCompositeAppConfigsTask.create(
-                TCreateSessionAppConfigsTask.create(
-                    TCreateSessionJsonAppConfigsTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TBasicKeyGenerator.create()
-                    ),
-                    TCreateSessionIniAppConfigsTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TBasicKeyGenerator.create()
+                //force --config always set if --with-session is set
+                TForceConfigDecoratorTask.create(
+                    TCreateSessionAppConfigsTask.create(
+                        TCreateSessionJsonAppConfigsTask.create(
+                            textFileCreator,
+                            contentModifier,
+                            TBasicKeyGenerator.create()
+                        ),
+                        TCreateSessionIniAppConfigsTask.create(
+                            textFileCreator,
+                            contentModifier,
+                            TBasicKeyGenerator.create()
+                        )
                     )
                 ),
                 TCreateAppConfigsTask.create(textFileCreator, contentModifier)
             ),
-            TRegisterConfigDependencyTask.create(
-                textFileCreator,
-                contentModifier,
-                TFileHelperAppender.create()
+            TCompositeAppConfigsTask.create(
+                //force --config always set if --with-session is set
+                TForceConfigDecoratorTask.create(
+                    TRegisterConfigDependencyTask.create(
+                        textFileCreator,
+                        contentModifier,
+                        TFileHelperAppender.create()
+                    )
+                ),
+                TRegisterConfigDependencyTask.create(
+                    textFileCreator,
+                    contentModifier,
+                    TFileHelperAppender.create()
+                )
             ),
             TCreateSessionDependenciesTask.create(
                 TCompositeTask.create(

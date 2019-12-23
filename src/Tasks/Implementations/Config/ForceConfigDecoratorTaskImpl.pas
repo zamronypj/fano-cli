@@ -34,7 +34,7 @@ implementation
 
     function TForceConfigDecoratorTask.hasOption(const longOpt: string) : boolean;
     begin
-        result := fOpts.hasOption(longOpt);
+        result := fOrigOpts.hasOption(longOpt);
         if (longOpt = 'config') and (result = false) then
         begin
             //--config not set but we force --config parameter always set

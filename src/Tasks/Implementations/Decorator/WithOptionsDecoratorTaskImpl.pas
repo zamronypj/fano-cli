@@ -30,10 +30,10 @@ type
      * @link https://stackoverflow.coms/questions/57708303/why-is-this-interface-delegation-causing-memory-leak
      *---------------------------------------*)
     TWithOptionsDecoratorTask = class(TDecoratorTask, ITaskOptions)
-    private
-        fOpts : ITaskOptions;
+    protected
+        fOrigOpts : ITaskOptions;
     public
-        constructor create(const task : ITask; const opts : ITaskOptions);
+        constructor create(const task : ITask);
         destructor destroy(); override;
 
         function run(
@@ -48,18 +48,15 @@ type
 
 implementation
 
-    constructor TWithOptionsDecoratorTask.create(
-        const task : ITask;
-        const opts : ITaskOptions
-    );
+    constructor TWithOptionsDecoratorTask.create(const task : ITask);
     begin
         inherited create(task);
-        fOpts := opts;
+        fOrigOpts := nil;
     end;
 
     destructor TWithOptionsDecoratorTask.destroy();
     begin
-        fOpts := nil;
+        fOrigOpts := nil;
         inherited destroy();
     end;
 
@@ -68,22 +65,23 @@ implementation
         const longOpt : shortstring
     ) : ITask;
     begin
+        fOrigOpts := opt;
         actualTask.run(self, longOpt);
         result := self;
     end;
 
     function TWithOptionsDecoratorTask.hasOption(const longOpt: string) : boolean;
     begin
-        result := fOpts.hasOption(longOpt);
+        result := fOrigOpts.hasOption(longOpt);
     end;
 
     function TWithOptionsDecoratorTask.getOptionValue(const longOpt: string) : string;
     begin
-        result := fOpts.getOptionValue(longOpt);
+        result := fOrigOpts.getOptionValue(longOpt);
     end;
 
     function TWithOptionsDecoratorTask.getOptionValueDef(const longOpt: string; const defValue : string) : string;
     begin
-        result := fOpts.getOptionValueDef(longOpt ,defValue);
+        result := fOrigOpts.getOptionValueDef(longOpt ,defValue);
     end;
 end.
