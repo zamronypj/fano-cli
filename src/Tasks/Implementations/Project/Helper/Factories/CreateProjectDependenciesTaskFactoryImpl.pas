@@ -85,7 +85,14 @@ uses
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
+    var registerCfgTask : ITask;
     begin
+        registerCfgTask := TRegisterConfigDependencyTask.create(
+            textFileCreator,
+            contentModifier,
+            TFileHelperAppender.create()
+        );
+
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCompositeAppConfigsTask.create(
@@ -108,18 +115,8 @@ uses
             ),
             TCompositeAppConfigsTask.create(
                 //force --config always set if --with-session is set
-                TForceConfigDecoratorTask.create(
-                    TRegisterConfigDependencyTask.create(
-                        textFileCreator,
-                        contentModifier,
-                        TFileHelperAppender.create()
-                    )
-                ),
-                TRegisterConfigDependencyTask.create(
-                    textFileCreator,
-                    contentModifier,
-                    TFileHelperAppender.create()
-                )
+                TForceConfigDecoratorTask.create(registerCfgTask),
+                registerCfgTask
             ),
             TCreateSessionDependenciesTask.create(
                 TCompositeTask.create(
