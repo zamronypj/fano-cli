@@ -18,6 +18,8 @@ strBootstrapPas: string =
     '' + LineEnding +
     '    TAppServiceProvider = class(TDaemonAppServiceProvider)' + LineEnding +
     '    public' + LineEnding +
+    '[[METHOD_DECL_SECTION]]' + LineEnding +
+    '        ' + LineEnding +
     '        procedure register(const container : IDependencyContainer); override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
@@ -39,6 +41,8 @@ strBootstrapPas: string =
     '     *----------------------------------- *)' + LineEnding +
     '    {---- put your controller factory here ---};' + LineEnding +
     '' + LineEnding +
+    '' + LineEnding +
+    '[[METHOD_IMPL_SECTION]]' + LineEnding +
     '' + LineEnding +
     '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +

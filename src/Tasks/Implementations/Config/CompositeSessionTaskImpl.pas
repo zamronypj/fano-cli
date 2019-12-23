@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateIniFileSessionDependenciesTaskImpl;
+unit CompositeSessionTaskImpl;
 
 interface
 
@@ -16,24 +16,31 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    BaseCreateSessionDependenciesTaskImpl;
+    ConditionalCompositeTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that add ini file session support to project creation
+     * Task that add session-related application config
+     * to project creation or fallback to basic config
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateIniFileSessionDependenciesTask = class(TBaseCreateSessionDependenciesTask)
+    TCompositeSessionTask = class(TConditionalCompositeTask)
     protected
-        procedure createDependencies(const dir : string); override;
+        function condition(
+            const opt : ITaskOptions;
+            const longOpt : shortstring
+        ) : boolean; override;
     end;
 
 implementation
 
-    procedure TCreateIniFileSessionDependenciesTask.createDependencies(const dir : string);
+    function TCompositeSessionTask.condition(
+        const opt : ITaskOptions;
+        const longOpt : shortstring
+    ) : boolean;
     begin
+        result := opt.hasOption('with-session');
     end;
-
 end.

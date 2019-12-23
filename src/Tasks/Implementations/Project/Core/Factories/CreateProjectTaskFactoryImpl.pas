@@ -78,7 +78,7 @@ uses
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             fProjectDepTaskFactory.build(),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-            TCreateAppBootstrapTask.create(textFileCreator, contentModifier),
+            TCreateAppBootstrapTask.create(textFileCreator,contentModifier),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
     end;

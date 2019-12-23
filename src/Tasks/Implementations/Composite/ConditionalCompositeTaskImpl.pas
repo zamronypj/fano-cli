@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateFileSessionDependenciesTaskImpl;
+unit ConditionalCompositeTaskImpl;
 
 interface
 
@@ -16,31 +16,43 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    ConditionalCompositeTaskImpl;
+    CompositeTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that add file session support to project creation
+     * Task that run first task if condition is met
+     * otherwise run second task
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateFileSessionDependenciesTask = class(TConditionalCompositeTask)
+    TConditionalCompositeTask = class abstract (TCompositeTask)
     protected
         function condition(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : boolean; override;
+        ) : boolean; virtual; abstract;
+    public
+        function run(
+            const opt : ITaskOptions;
+            const longOpt : shortstring
+        ) : ITask;
     end;
 
 implementation
 
-
-    function TCreateFileSessionDependenciesTask.condition(
+    function TConditionalCompositeTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
-    ) : boolean;
+    ) : ITask;
     begin
-        result := (opt.getOptionValueDef('type', 'json') = 'json');
+        if condition(opt, longOpt) then
+        begin
+            firstTask.run(opt, longOpt);
+        end else
+        begin
+            secondTask.run(opt, longOpt);
+        end;
+        result := self;
     end;
 end.

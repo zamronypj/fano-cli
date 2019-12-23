@@ -25,7 +25,7 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCompositeTask = class(TInterfacedObject, ITask)
-    private
+    protected
         firstTask : ITask;
         secondTask : ITask;
     public
@@ -48,9 +48,9 @@ implementation
 
     destructor TCompositeTask.destroy();
     begin
-        inherited destroy();
         firstTask := nil;
         secondTask := nil;
+        inherited destroy();
     end;
 
     function TCompositeTask.run(

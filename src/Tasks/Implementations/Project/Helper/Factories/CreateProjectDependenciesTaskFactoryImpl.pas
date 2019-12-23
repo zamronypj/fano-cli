@@ -69,7 +69,7 @@ uses
     CreateJsonFileSessionDependenciesTaskImpl,
     CreateIniFileSessionDependenciesTaskImpl,
     CreateCookieSessionDependenciesTaskImpl,
-    CompositeAppConfigsTaskImpl,
+    CompositeSessionTaskImpl,
     CreateShellScriptsTaskImpl,
     RegisterConfigDependencyTaskImpl,
     FileHelperAppendImpl,
@@ -95,7 +95,7 @@ uses
 
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
-            TCompositeAppConfigsTask.create(
+            TCompositeSessionTask.create(
                 //force --config always set if --with-session is set
                 TForceConfigDecoratorTask.create(
                     TCreateSessionAppConfigsTask.create(
@@ -113,7 +113,7 @@ uses
                 ),
                 TCreateAppConfigsTask.create(textFileCreator, contentModifier)
             ),
-            TCompositeAppConfigsTask.create(
+            TCompositeSessionTask.create(
                 //force --config always set if --with-session is set
                 TForceConfigDecoratorTask.create(registerCfgTask),
                 registerCfgTask
