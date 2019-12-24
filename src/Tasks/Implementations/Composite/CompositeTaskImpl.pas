@@ -35,7 +35,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask;
+        ) : ITask; virtual;
     end;
 
 implementation

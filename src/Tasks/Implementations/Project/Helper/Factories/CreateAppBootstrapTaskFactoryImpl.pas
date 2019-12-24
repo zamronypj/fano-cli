@@ -95,13 +95,14 @@ uses
                         textFileCreator,
                         TJsonCookieSessionContentModifier.create(contentModifier)
                     ),
-                    //ini cookie file session
+                    //ini cookie session
                     buildBootstrapTask(
                         textFileCreator,
                         TIniCookieSessionContentModifier.create(contentModifier)
                     )
                 ),
 
+                //run this task if session use db as storage, not yet supported
                 TNullTask.create()
             ),
             //run this task when --with-session parameter is not set

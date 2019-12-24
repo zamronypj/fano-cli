@@ -36,7 +36,7 @@ type
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask;
+        ) : ITask; override;
     end;
 
 implementation

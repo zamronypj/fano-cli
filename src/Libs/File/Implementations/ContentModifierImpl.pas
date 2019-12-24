@@ -42,6 +42,8 @@ type
             const content : string
         ) : string;
 
+        function tryAddVar(const varName : string; const varValue : string) : boolean;
+
         procedure iterateKey(item: string; const key: string; var continue: boolean);
     public
         constructor create();
@@ -87,6 +89,20 @@ uses
         inherited destroy();
     end;
 
+    function TContentModifier.tryAddVar(const varName : string; const varValue : string) : boolean;
+    begin
+        try
+            variables.add(varName, varValue);
+            result := true;
+        except
+            on e : EDuplicate do
+            begin
+                //if we get here, variable already set
+                result := false;
+            end;
+        end;
+    end;
+
     (*!------------------------------------------
      * set variable name and its value
      *-------------------------------------------
@@ -96,11 +112,9 @@ uses
      *-------------------------------------------*)
     function TContentModifier.setVar(const varName : string; const varValue : string) : IContentModifier;
     begin
-        if (variables[varName] = '') then
+        if not tryAddVar(varName, varValue) then
         begin
-            variables.add(varName, varValue);
-        end else
-        begin
+            //if we get here then, variable varName already added, so just set it
             variables[varName] := varValue;
         end;
         result := self;
