@@ -17,13 +17,14 @@ strImplIniFileDispatcherMethod : string =
     '        container.add(' + LineEnding +
     '            GuidToString(IDispatcher),' + LineEnding +
     '            TSessionDispatcherFactory.create(' + LineEnding +
-    '            container[''appMiddlewares''] as IMiddlewareLinkList,' + LineEnding +
-    '            routeMatcher,' + LineEnding +
-    '            TRequestResponseFactory.create(),' + LineEnding +
-    '            container[''sessionManager''] as ISessionManager,' + LineEnding +
-    '            (TCookieFactory.create()).domain(' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''cookie.domain'')),' + LineEnding +
+    '                container[''appMiddlewares''] as IMiddlewareLinkList,' + LineEnding +
+    '                routeMatcher,' + LineEnding +
+    '                TRequestResponseFactory.create(),' + LineEnding +
+    '                container[''sessionManager''] as ISessionManager,' + LineEnding +
+    '                (TCookieFactory.create()).domain(' + LineEnding +
+    '                    (container[''config''] as IAppConfiguration).getString(''cookie.domain'')' + LineEnding +
+    '                ),' + LineEnding +
     '                (container[''config''] as IAppConfiguration).getInt(''cookie.maxAge'')' + LineEnding +
     '            )' + LineEnding +
-    '        );';
-    '    end;' + LineEnding +
+    '        );' + LineEnding +
+    '    end;' + LineEnding;

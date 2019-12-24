@@ -1,4 +1,4 @@
-strImplJsonFileDispatcherMethod : string =
+strImplJsonCookieDispatcherMethod : string =
     '    procedure TAppServiceProvider.buildDispatcher(' + LineEnding +
     '        const container : IDependencyContainer;' + LineEnding +
     '        const routeMatcher : IRouteMatcher' + LineEnding +
@@ -7,10 +7,20 @@ strImplJsonFileDispatcherMethod : string =
     '        container.add(''appMiddlewares'', TMiddlewareListFactory.create());' + LineEnding +
     '' + LineEnding +
     '        container.add(' + LineEnding +
+    '            ''encrypter'',' + LineEnding +
+    '            TBlowfishEncrypterFactory.create()' + LineEnding +
+    '                .secretKey(' + LineEnding +
+    '                    (container[''config''] as IAppConfiguration).getString(''secretKey'')' + LineEnding +
+    '                )' + LineEnding +
+    '        );' + LineEnding +
+    '' + LineEnding +
+    '        container.add(' + LineEnding +
     '            ''sessionManager'',' + LineEnding +
-    '            TJsonFileSessionManagerFactory.create(' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''session.name''),' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''session.dir'')' + LineEnding +
+    '            TCookieSessionManagerFactory.create(' + LineEnding +
+    '                TJsonSessionFactory.create(),' + LineEnding +
+    '                container[''encrypter''] as IEncrypter,' + LineEnding +
+    '                container[''encrypter''] as IDecrypter,' + LineEnding +
+    '                (container[''config''] as IAppConfiguration).getString(''session.name'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
     '' + LineEnding +

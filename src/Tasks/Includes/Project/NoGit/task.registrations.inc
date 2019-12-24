@@ -8,7 +8,10 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectNoGitTaskFactory.create(TCreateProjectDependenciesTaskFactory.create());
+taskFactory := TCreateProjectNoGitTaskFactory.create(
+    TCreateProjectDependenciesTaskFactory.create(),
+    TCreateAppBootstrapTaskFactory.create()
+);
 try
     appInst.registerTask(
         'project-without-git',

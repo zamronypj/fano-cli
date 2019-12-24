@@ -29,13 +29,17 @@ type
     TCreateProjectTaskFactory = class(TInterfacedObject, ITaskFactory)
     protected
         fProjectDepTaskFactory : ITaskFactory;
+        fBootstrapTaskFactory : ITaskFactory;
 
         function buildProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
         ) : ITask; virtual;
     public
-        constructor create(const depFactory : ITaskFactory);
+        constructor create(
+            const depFactory : ITaskFactory;
+            const bootstrapFactory : ITaskFactory
+        );
         destructor destroy(); override;
         function build() : ITask; virtual;
     end;
@@ -55,16 +59,22 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
     InvRunCheckTaskImpl,
-    EmptyDirCheckTaskImpl;
+    EmptyDirCheckTaskImpl,
+    CompositeSessionTaskImpl;
 
-    constructor TCreateProjectTaskFactory.create(const depFactory : ITaskFactory);
+    constructor TCreateProjectTaskFactory.create(
+        const depFactory : ITaskFactory;
+        const bootstrapFactory : ITaskFactory
+    );
     begin
         fProjectDepTaskFactory := depFactory;
+        fBootstrapTaskFactory := bootstrapFactory;
     end;
 
     destructor TCreateProjectTaskFactory.destroy();
     begin
         fProjectDepTaskFactory := nil;
+        fBootstrapTaskFactory := nil;
         inherited destroy();
     end;
 
@@ -78,7 +88,7 @@ uses
             TCreateShellScriptsTask.create(textFileCreator, contentModifier),
             fProjectDepTaskFactory.build(),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-            TCreateAppBootstrapTask.create(textFileCreator,contentModifier),
+            fBootstrapTaskFactory.build(),
             TInitGitRepoTask.create(TCommitGitRepoTask.create())
         );
     end;

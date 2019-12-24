@@ -8,7 +8,10 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectScgiTaskFactory.create(TCreateProjectDependenciesTaskFactory.create());
+taskFactory := TCreateProjectScgiTaskFactory.create(
+    TCreateProjectDependenciesTaskFactory.create(),
+    TCreateAppBootstrapTaskFactory.create()
+);
 try
     appInst.registerTask(
         'project-scgi',

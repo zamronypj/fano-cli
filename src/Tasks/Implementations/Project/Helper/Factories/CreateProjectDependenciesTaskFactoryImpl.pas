@@ -64,11 +64,11 @@ uses
     CreateSessionJsonAppConfigsTaskImpl,
     CreateSessionIniAppConfigsTaskImpl,
     CreateSessionAppConfigsTaskImpl,
-    CreateSessionDependenciesTaskImpl,
     CreateFileSessionDependenciesTaskImpl,
     CreateJsonFileSessionDependenciesTaskImpl,
     CreateIniFileSessionDependenciesTaskImpl,
     CreateCookieSessionDependenciesTaskImpl,
+    CompositeSessionTypeTaskImpl,
     CompositeSessionTaskImpl,
     CreateShellScriptsTaskImpl,
     RegisterConfigDependencyTaskImpl,
@@ -118,7 +118,7 @@ uses
                 TForceConfigDecoratorTask.create(registerCfgTask),
                 registerCfgTask
             ),
-            TCreateSessionDependenciesTask.create(
+            TCompositeSessionTypeTask.create(
                 TCompositeTask.create(
                     TCreateFileSessionDependenciesTask.create(
                         TCreateJsonFileSessionDependenciesTask.create(

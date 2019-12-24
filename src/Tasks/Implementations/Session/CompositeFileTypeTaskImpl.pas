@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CompositeSessionTaskImpl;
+unit CompositeFileTypeTaskImpl;
 
 interface
 
@@ -21,12 +21,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that add session-related application config
-     * to project creation or fallback to basic config
+     * Task that run first task if --type=json or --type
+     * otherwise run second task
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCompositeSessionTask = class(TConditionalCompositeTask)
+    TCompositeFileTypeTask = class(TConditionalCompositeTask)
     protected
         function condition(
             const opt : ITaskOptions;
@@ -36,11 +36,11 @@ type
 
 implementation
 
-    function TCompositeSessionTask.condition(
+    function TCompositeFileTypeTask.condition(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : boolean;
     begin
-        result := opt.hasOption('with-session');
+        result := (opt.getOptionValueDef('type', 'json') = 'json');
     end;
 end.
