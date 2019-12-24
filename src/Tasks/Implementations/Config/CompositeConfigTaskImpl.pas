@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CompositeSessionTaskImpl;
+unit CompositeConfigTaskImpl;
 
 interface
 
@@ -21,12 +21,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that execute first task if --with-session
+     * Task that execute first task if --config
      * parameter is set, otherwise run second task
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCompositeSessionTask = class(TConditionalCompositeTask)
+    TCompositeConfigTask = class(TConditionalCompositeTask)
     protected
         function condition(
             const opt : ITaskOptions;
@@ -36,11 +36,11 @@ type
 
 implementation
 
-    function TCompositeSessionTask.condition(
+    function TCompositeConfigTask.condition(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : boolean;
     begin
-        result := opt.hasOption('with-session');
+        result := opt.hasOption('config');
     end;
 end.

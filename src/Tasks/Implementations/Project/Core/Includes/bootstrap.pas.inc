@@ -17,8 +17,10 @@ strBootstrapPas: string =
     'type' + LineEnding +
     '' + LineEnding +
     '    TAppServiceProvider = class(TBasicAppServiceProvider)' + LineEnding +
-    '    public' + LineEnding +
+    '    protected' + LineEnding +
+    '        function buildAppConfig(const container : IDependencyContainer) : IAppConfiguration; override;' + LineEnding +
     '[[METHOD_DECL_SECTION]]' + LineEnding +
+    '    public' + LineEnding +
     '        procedure register(const container : IDependencyContainer); override;' + LineEnding +
     '    end;' + LineEnding +
     '' + LineEnding +
@@ -42,6 +44,11 @@ strBootstrapPas: string =
     '' + LineEnding +
     '' + LineEnding +
     '[[METHOD_IMPL_SECTION]]' + LineEnding +
+    '    function TAppServiceProvider.buildAppConfig(const container : IDependencyContainer) : IAppConfiguration;' + LineEnding +
+    '    begin' + LineEnding +
+    '[[CONFIG_IMPL_SECTION]]' + LineEnding +
+    '    end;' + LineEnding +
+    '' + LineEnding +
     '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +
     '        {$INCLUDE Dependencies/dependencies.inc}' + LineEnding +

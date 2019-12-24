@@ -18,7 +18,7 @@ uses
     TaskIntf,
     TextFileCreatorIntf,
     ContentModifierIntf,
-    FileContentAppenderIntf,
+    FileContentReaderIntf,
     CreateFileTaskImpl;
 
 type
@@ -30,17 +30,18 @@ type
      *---------------------------------------*)
     TRegisterConfigDependencyTask = class(TCreateFileTask)
     private
-        fFileAppender : IFileContentAppender;
+        fFileReader : IFileContentReader;
         procedure registerConfigDependency(
             const dir : string;
             const configType : string;
             const projectType : string
         );
+        procedure registerDefaultConfigDependency();
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier;
-            const fileAppender : IFileContentAppender
+            const fileReader : IFileContentReader
         );
         destructor destroy(); override;
         function run(
@@ -54,17 +55,34 @@ implementation
     constructor TRegisterConfigDependencyTask.create(
         const txtFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier;
-        const fileAppender : IFileContentAppender
+        const fileReader : IFileContentReader
     );
     begin
         inherited create(txtFileCreator, contentModifier);
-        fFileAppender := fileAppender;
+        fFileReader := fileReader;
     end;
 
     destructor TRegisterConfigDependencyTask.destroy();
     begin
-        fFileAppender := nil;
+        fFileReader := nil;
         inherited destroy();
+    end;
+
+    procedure TRegisterConfigDependencyTask.registerDefaultConfigDependency();
+    var
+        bootstrapContent : string;
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/default.appconfig.dependencies.inc.inc}
+    begin
+        fContentModifier.setVar(
+            '[[CONFIG_IMPL_SECTION]]',
+            fContentModifier.modify(strDefaultAppConfigDependenciesInc)
+        );
+
+        bootstrapContent := fFileReader.read(baseDirectory + '/src/bootstrap.pas');
+        createTextFile(
+            baseDirectory + '/src/bootstrap.pas',
+            fContentModifier.modify(bootstrapContent)
+        );
     end;
 
     procedure TRegisterConfigDependencyTask.registerConfigDependency(
@@ -76,6 +94,7 @@ implementation
         factoryClass : string;
         configPath : string;
         appDir : string;
+        bootstrapContent : string;
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/appconfig.dependencies.inc.inc}
     begin
         if (configType = 'ini') then
@@ -100,15 +119,15 @@ implementation
         fContentModifier.setVar('[[FACTORY_CLASS]]', factoryClass);
         fContentModifier.setVar('[[APP_CONFIG_FILE]]', configPath);
         fContentModifier.setVar('[[BASE_DIR]]', appDir);
-
-        createTextFile(
-            dir + '/appconfig.dependencies.inc',
+        fContentModifier.setVar(
+            '[[CONFIG_IMPL_SECTION]]',
             fContentModifier.modify(strAppConfigDependenciesInc)
         );
 
-        fFileAppender.append(
-            dir + '/main.dependencies.inc',
-            '{$INCLUDE appconfig.dependencies.inc}' + LineEnding
+        bootstrapContent := fFileReader.read(baseDirectory + '/src/bootstrap.pas');
+        createTextFile(
+            baseDirectory + '/src/bootstrap.pas',
+            fContentModifier.modify(bootstrapContent)
         );
     end;
 
@@ -125,6 +144,9 @@ implementation
         begin
             configType := opt.getOptionValueDef('config', 'json');
             registerConfigDependency(baseDirectory + '/src/Dependencies', configType, longOpt);
+        end else
+        begin
+            registerDefaultConfigDependency();
         end;
 
         result := self;
