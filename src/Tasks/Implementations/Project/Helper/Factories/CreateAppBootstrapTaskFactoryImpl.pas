@@ -32,7 +32,11 @@ type
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
         ) : ITask;
-
+    protected
+        function buildBootstrapTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask; virtual;
     public
         function build() : ITask;
     end;
@@ -53,6 +57,14 @@ uses
     JsonCookieSessionContentModifierImpl,
     IniCookieSessionContentModifierImpl;
 
+    function TCreateAppBootstrapTaskFactory.buildBootstrapTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TCreateAppBootstrapTask.create(textFileCreator, contentModifier);
+    end;
+
     function TCreateAppBootstrapTaskFactory.buildAppBootstrap(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
@@ -65,12 +77,12 @@ uses
                 //run this task if session use file as storage
                 TCompositeFileTypeTask.create(
                     //json file session
-                    TCreateAppBootstrapTask.create(
+                    buildBootstrapTask(
                         textFileCreator,
                         TJsonFileSessionContentModifier.create(contentModifier)
                     ),
                     //json ini file session
-                    TCreateAppBootstrapTask.create(
+                    buildBootstrapTask(
                         textFileCreator,
                         TIniFileSessionContentModifier.create(contentModifier)
                     )
@@ -79,12 +91,12 @@ uses
                 //run this task if session use cookie as storage
                 TCompositeFileTypeTask.create(
                     //json cookie session
-                    TCreateAppBootstrapTask.create(
+                    buildBootstrapTask(
                         textFileCreator,
                         TJsonCookieSessionContentModifier.create(contentModifier)
                     ),
                     //ini cookie file session
-                    TCreateAppBootstrapTask.create(
+                    buildBootstrapTask(
                         textFileCreator,
                         TIniCookieSessionContentModifier.create(contentModifier)
                     )
@@ -93,7 +105,7 @@ uses
                 TNullTask.create()
             ),
             //run this task when --with-session parameter is not set
-            TCreateAppBootstrapTask.create(textFileCreator, contentModifier)
+            buildBootstrapTask(textFileCreator, contentModifier)
         );
     end;
 

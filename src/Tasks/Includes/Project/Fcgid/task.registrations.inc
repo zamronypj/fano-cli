@@ -8,9 +8,9 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectFcgidTaskFactory.create(
+taskFactory := TCreateProjectTaskFactory.create(
     TCreateProjectDependenciesTaskFactory.create(),
-    TCreateAppBootstrapTaskFactory.create()
+    TCreateAppBootstrapFcgidTaskFactory.create()
 );
 try
     appInst.registerTask(

@@ -8,9 +8,9 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TCreateProjectUwsgiTaskFactory.create(
+taskFactory := TCreateProjectTaskFactory.create(
     TCreateProjectDependenciesTaskFactory.create(),
-    TCreateAppBootstrapTaskFactory.create()
+    TCreateAppBootstrapUwsgiTaskFactory.create()
 );
 try
     appInst.registerTask(
