@@ -65,9 +65,6 @@ uses
     CreateSessionIniAppConfigsTaskImpl,
     CreateSessionAppConfigsTaskImpl,
     CreateFileSessionDependenciesTaskImpl,
-    CreateJsonFileSessionDependenciesTaskImpl,
-    CreateIniFileSessionDependenciesTaskImpl,
-    CreateCookieSessionDependenciesTaskImpl,
     CompositeSessionTypeTaskImpl,
     CompositeSessionTaskImpl,
     CreateShellScriptsTaskImpl,
@@ -119,26 +116,11 @@ uses
                 registerCfgTask
             ),
             TCompositeSessionTypeTask.create(
-                TCompositeTask.create(
-                    TCreateFileSessionDependenciesTask.create(
-                        TCreateJsonFileSessionDependenciesTask.create(
-                            textFileCreator,
-                            contentModifier,
-                            TFileHelperAppender.create()
-                        ),
-                        TCreateIniFileSessionDependenciesTask.create(
-                            textFileCreator,
-                            contentModifier,
-                            TFileHelperAppender.create()
-                        )
-                    ),
-                    TCreateSessionDirTask.create(TDirectoryCreator.create())
-                ),
-                TCreateCookieSessionDependenciesTask.create(
-                    textFileCreator,
-                    contentModifier,
-                    TFileHelperAppender.create()
-                ),
+                //run this task if --with-session=file is set
+                TCreateSessionDirTask.create(TDirectoryCreator.create()),
+                //run this task if --with-session=cookie is set
+                TNullTask.create(),
+                //run this task if --with-session=db is set
                 TNullTask.create()
             )
         ]);

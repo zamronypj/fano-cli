@@ -1,8 +1,8 @@
 strImplIniCookieDispatcherMethod : string =
-    '    procedure TAppServiceProvider.buildDispatcher(' + LineEnding +
+    '    function TAppServiceProvider.buildDispatcher(' + LineEnding +
     '        const container : IDependencyContainer;' + LineEnding +
     '        const routeMatcher : IRouteMatcher' + LineEnding +
-    '    );' + LineEnding +
+    '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
     '        container.add(''appMiddlewares'', TMiddlewareListFactory.create());' + LineEnding +
     '' + LineEnding +
@@ -37,4 +37,5 @@ strImplIniCookieDispatcherMethod : string =
     '                (container[''config''] as IAppConfiguration).getInt(''cookie.maxAge'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
+    '        result := container[GuidToString(IDispatcher)] as IDispatcher;' + LineEnding +
     '    end;' + LineEnding;
