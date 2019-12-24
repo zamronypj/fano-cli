@@ -1,7 +1,8 @@
 strImplJsonCookieDispatcherMethod : string =
     '    function TAppServiceProvider.buildDispatcher(' + LineEnding +
     '        const container : IDependencyContainer;' + LineEnding +
-    '        const routeMatcher : IRouteMatcher' + LineEnding +
+    '        const routeMatcher : IRouteMatcher;' + LineEnding +
+    '        const config : IAppConfiguration' + LineEnding +
     '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
     '        container.add(''appMiddlewares'', TMiddlewareListFactory.create());' + LineEnding +
@@ -9,9 +10,7 @@ strImplJsonCookieDispatcherMethod : string =
     '        container.add(' + LineEnding +
     '            ''encrypter'',' + LineEnding +
     '            TBlowfishEncrypterFactory.create()' + LineEnding +
-    '                .secretKey(' + LineEnding +
-    '                    (container[''config''] as IAppConfiguration).getString(''secretKey'')' + LineEnding +
-    '                )' + LineEnding +
+    '                .secretKey(config.getString(''secretKey''))' + LineEnding +
     '        );' + LineEnding +
     '' + LineEnding +
     '        container.add(' + LineEnding +
@@ -20,7 +19,7 @@ strImplJsonCookieDispatcherMethod : string =
     '                TJsonSessionFactory.create(),' + LineEnding +
     '                container[''encrypter''] as IEncrypter,' + LineEnding +
     '                container[''encrypter''] as IDecrypter,' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''session.name'')' + LineEnding +
+    '                config.getString(''session.name'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
     '' + LineEnding +
@@ -32,9 +31,9 @@ strImplJsonCookieDispatcherMethod : string =
     '                TRequestResponseFactory.create(),' + LineEnding +
     '                container[''sessionManager''] as ISessionManager,' + LineEnding +
     '                (TCookieFactory.create()).domain(' + LineEnding +
-    '                    (container[''config''] as IAppConfiguration).getString(''cookie.domain'')' + LineEnding +
+    '                    config.getString(''cookie.domain'')' + LineEnding +
     '                ),' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getInt(''cookie.maxAge'')' + LineEnding +
+    '                config.getInt(''cookie.maxAge'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
     '        result := container[GuidToString(IDispatcher)] as IDispatcher;' + LineEnding +

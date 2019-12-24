@@ -1,7 +1,8 @@
 strImplJsonFileDispatcherMethod : string =
     '    function TAppServiceProvider.buildDispatcher(' + LineEnding +
     '        const container : IDependencyContainer;' + LineEnding +
-    '        const routeMatcher : IRouteMatcher' + LineEnding +
+    '        const routeMatcher : IRouteMatcher;' + LineEnding +
+    '        const config : IAppConfiguration' + LineEnding +
     '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
     '        container.add(''appMiddlewares'', TMiddlewareListFactory.create());' + LineEnding +
@@ -9,8 +10,8 @@ strImplJsonFileDispatcherMethod : string =
     '        container.add(' + LineEnding +
     '            ''sessionManager'',' + LineEnding +
     '            TJsonFileSessionManagerFactory.create(' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''session.name''),' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getString(''session.dir'')' + LineEnding +
+    '                config.getString(''session.name''),' + LineEnding +
+    '                config.getString(''session.dir'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
     '' + LineEnding +
@@ -22,9 +23,9 @@ strImplJsonFileDispatcherMethod : string =
     '                TRequestResponseFactory.create(),' + LineEnding +
     '                container[''sessionManager''] as ISessionManager,' + LineEnding +
     '                (TCookieFactory.create()).domain(' + LineEnding +
-    '                    (container[''config''] as IAppConfiguration).getString(''cookie.domain'')' + LineEnding +
+    '                    config.getString(''cookie.domain'')' + LineEnding +
     '                ),' + LineEnding +
-    '                (container[''config''] as IAppConfiguration).getInt(''cookie.maxAge'')' + LineEnding +
+    '                config.getInt(''cookie.maxAge'')' + LineEnding +
     '            )' + LineEnding +
     '        );' + LineEnding +
     '        result := container[GuidToString(IDispatcher)] as IDispatcher;' + LineEnding +
