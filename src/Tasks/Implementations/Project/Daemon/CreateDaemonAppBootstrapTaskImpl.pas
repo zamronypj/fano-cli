@@ -49,6 +49,8 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Project/Daemon/Includes/bootstrap.pas.inc}
     begin
+        fContentModifier.setVar('[[METHOD_DECL_SECTION]]', '');
+        fContentModifier.setVar('[[METHOD_IMPL_SECTION]]', '');
         createTextFile(dir + '/bootstrap.pas', strBootstrapPas);
     end;
 
