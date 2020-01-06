@@ -32,7 +32,10 @@ type
     TBaseCreateSessionAppConfigsTask = class(TCreateFileTask)
     protected
         fKeyGenerator : IKeyGenerator;
-        procedure createAppConfigs(const dir : string); virtual; abstract;
+        procedure createAppConfigs(
+            const baseDir : string;
+            const configDir : string
+        ); virtual; abstract;
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
@@ -75,7 +78,7 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createAppConfigs(baseDirectory + '/config');
+        createAppConfigs(baseDirectory, baseDirectory + '/config');
         result := self;
     end;
 end.

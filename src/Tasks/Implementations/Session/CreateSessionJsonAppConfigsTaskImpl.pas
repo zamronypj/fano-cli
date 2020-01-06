@@ -30,7 +30,10 @@ type
      *---------------------------------------*)
     TCreateSessionJsonAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
     protected
-        procedure createAppConfigs(const dir : string); override;
+        procedure createAppConfigs(
+            const baseDir : string;
+            const configDir : string
+        ); override;
     end;
 
 implementation
@@ -39,7 +42,10 @@ uses
 
     sysutils;
 
-    procedure TCreateSessionJsonAppConfigsTask.createAppConfigs(const dir : string);
+    procedure TCreateSessionJsonAppConfigsTask.createAppConfigs(
+        const baseDir : string;
+        const configDir : string
+    );
     var
         configStr : string;
         {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.inc}
@@ -49,13 +55,13 @@ uses
             .setVar('[[BASE_URL]]', 'http://myapp.fano')
             .setVar('[[SECRET_KEY]]', fKeyGenerator.generate(64))
             .setVar('[[SESSION_NAME]]', 'fano_sess')
-            .setVar('[[SESSION_DIR]]', 'storages/sessions/')
+            .setVar('[[SESSION_DIR]]', getCurrentDir() + '/' + baseDir + '/storages/sessions/')
             .setVar('[[COOKIE_NAME]]', 'fano_sess')
             .setVar('[[COOKIE_DOMAIN]]', 'myapp.fano')
             .setVar('[[COOKIE_MAX_AGE]]', '3600')
             .modify(strConfigJson);
-        createTextFile(dir + '/config.json', configStr);
-        createTextFile(dir + '/config.json.sample', configStr);
+        createTextFile(configDir + '/config.json', configStr);
+        createTextFile(configDir + '/config.json.sample', configStr);
     end;
 
 end.
