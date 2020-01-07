@@ -12,7 +12,12 @@ strConfigSetupSh: string =
     '# Scripts to setup configuration files' + LineEnding +
     '#------------------------------------------------------' + LineEnding +
     '' + LineEnding +
-    'cp config/config.json.sample config/config.json' + LineEnding +
+    'if [ -f config/config.json.sample ]; then' + LineEnding +
+    '    cp config/config.json.sample config/config.json' + LineEnding +
+    'fi' + LineEnding +
+    'if [ -f config/config.ini.sample ]; then' + LineEnding +
+    '    cp config/config.ini.sample config/config.ini' + LineEnding +
+    'fi' + LineEnding +
     'cp build.prod.cfg.sample build.prod.cfg' + LineEnding +
     'cp build.dev.cfg.sample build.dev.cfg' + LineEnding +
     'cp build.cfg.sample build.cfg';
