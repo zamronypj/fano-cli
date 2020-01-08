@@ -33,7 +33,7 @@ implementation
 
 uses
 
-    CompositeTaskImpl,
+    GroupTaskImpl,
     CreateControllerTaskFactoryImpl,
     CreateModelTaskFactoryImpl,
     CreateViewTaskFactoryImpl;
@@ -42,19 +42,15 @@ uses
     var controllerFactoryTask : ITaskFactory;
         modelFactoryTask : ITaskFactory;
         viewFactoryTask : ITaskFactory;
-        compositeTask : ITask;
     begin
         controllerFactoryTask := TCreateControllerTaskFactory.create();
         viewFactoryTask := TCreateViewTaskFactory.create();
         modelFactoryTask := TCreateModelTaskFactory.create();
-        compositeTask := TCompositeTask.create(
+        result := TGroupTask.create([
             controllerFactoryTask.build(),
-            viewFactoryTask.build()
-        );
-        result := TCompositeTask.create(
-            compositeTask,
+            viewFactoryTask.build(),
             modelFactoryTask.build()
-        );
+        ]);
     end;
 
 end.

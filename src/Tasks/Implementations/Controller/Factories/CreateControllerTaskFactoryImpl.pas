@@ -51,7 +51,8 @@ uses
     CreateDependencyRegistrationTaskImpl,
     CreateRouteTaskImpl,
     CreateDependencyTaskImpl,
-    CreateControllerTaskImpl;
+    CreateControllerTaskImpl,
+    DuplicateCtrlCheckTaskImpl;
 
     function TCreateControllerTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
@@ -77,8 +78,9 @@ uses
             TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
         );
         //protect to avoid accidentally creating controller in non Fano-CLI
-        //project directory structure
-        result := TRunCheckTask.create(task);
+        //project directory structure and also prevent accidentally create
+        //controller with same name as existing controller.
+        result := TRunCheckTask.create(TDuplicateCtrlCheckTask.create(task));
     end;
 
 end.

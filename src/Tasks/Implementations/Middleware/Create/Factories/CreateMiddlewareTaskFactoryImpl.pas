@@ -51,7 +51,8 @@ uses
     CreateDependencyRegistrationTaskImpl,
     CreateRouteTaskImpl,
     CreateDependencyTaskImpl,
-    CreateMiddlewareTaskImpl;
+    CreateMiddlewareTaskImpl,
+    DuplicateMiddlewareCheckTaskImpl;
 
     function TCreateMiddlewareTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
@@ -75,9 +76,10 @@ uses
                 TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'Middleware')
             )
         );
-        //protect to avoid accidentally creating controller in non Fano-CLI
-        //project directory structure
-        result := TRunCheckTask.create(task);
+        //protect to avoid accidentally creating middleware in non Fano-CLI
+        //project directory structure and also prevent accidentally create
+        //middleware with same name as existing middleware
+        result := TRunCheckTask.create(TDuplicateMiddlewareCheckTask.create(task));
     end;
 
 end.

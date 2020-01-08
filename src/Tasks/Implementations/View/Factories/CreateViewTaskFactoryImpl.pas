@@ -50,7 +50,8 @@ uses
     AddToUnitSearchTaskImpl,
     CreateDependencyRegistrationTaskImpl,
     CreateDependencyTaskImpl,
-    CreateViewTaskImpl;
+    CreateViewTaskImpl,
+    DuplicateViewCheckTaskImpl;
 
     function TCreateViewTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
@@ -75,8 +76,9 @@ uses
             )
         );
         //protect to avoid accidentally creating view in non Fano-CLI
-        //project directory structure
-        result := TRunCheckTask.create(task);
+        //project directory structure and also prevent accidentally create
+        //view with same name as existing view
+        result := TRunCheckTask.create(TDuplicateViewCheckTask.create(task));
     end;
 
 end.

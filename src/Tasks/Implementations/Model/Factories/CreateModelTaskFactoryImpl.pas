@@ -50,7 +50,8 @@ uses
     AddToUnitSearchTaskImpl,
     CreateDependencyRegistrationTaskImpl,
     CreateDependencyTaskImpl,
-    CreateModelTaskImpl;
+    CreateModelTaskImpl,
+    DuplicateModelCheckTaskImpl;
 
     function TCreateModelTaskFactory.build() : ITask;
     var textFileCreator : ITextFileCreator;
@@ -75,8 +76,9 @@ uses
             )
         );
         //protect to avoid accidentally creating model in non Fano-CLI
-        //project directory structure
-        result := TRunCheckTask.create(task);
+        //project directory structure and also prevent accidentatlly create
+        //model with same name as existing model
+        result := TRunCheckTask.create(TDuplicateModelCheckTask.create(task));
     end;
 
 end.
