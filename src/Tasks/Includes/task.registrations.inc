@@ -19,3 +19,4 @@
 {$INCLUDE Middleware/task.registrations.inc}
 {$INCLUDE Deploy/task.registrations.inc}
 {$INCLUDE Minifier/task.registrations.inc}
+{$INCLUDE Daemon/task.registrations.inc}
