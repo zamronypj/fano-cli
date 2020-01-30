@@ -37,7 +37,7 @@ strAppPas: string =
     '        TUwsgiAppServiceProvider.create(' + LineEnding +
     '            TServerAppServiceProvider.create(' + LineEnding +
     '                TAppServiceProvider.create(),' + LineEnding +
-    '                TInetSocketSvr.create(host, port)' + LineEnding +
+    '                (TInetSvrFactory.create(host, port) as ISocketSvrFactory).build()' + LineEnding +
     '            )' + LineEnding +
     '        ),' + LineEnding +
     '        TAppRoutes.create()' + LineEnding +

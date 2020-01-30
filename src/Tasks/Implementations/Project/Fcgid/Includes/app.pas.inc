@@ -20,13 +20,6 @@ strAppPas: string =
     '    port : word;' + LineEnding +
     '' + LineEnding +
     'begin' + LineEnding +
-    '    cliParams := (TGetOptsParams.create() as ICliParamsFactory)' + LineEnding +
-    '        .addOption(''host'', 1)' + LineEnding +
-    '        .addOption(''port'', 1)' + LineEnding +
-    '        .build();' + LineEnding +
-    '    host := cliParams.getOption(''host'', ''[[HOST]]'');' + LineEnding +
-    '    port := cliParams.getOption(''port'', [[PORT]]);' + LineEnding +
-    '    writeln(''Starting application at '', host, '':'', port);' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Bootstrap Fast CGI application' + LineEnding +
@@ -37,7 +30,7 @@ strAppPas: string =
     '        TFastCgiAppServiceProvider.create(' + LineEnding +
     '            TServerAppServiceProvider.create(' + LineEnding +
     '                TAppServiceProvider.create(),' + LineEnding +
-    '                TBoundSocketSvr.create(stdInputHandle)' + LineEnding +
+    '                (TBoundSvrFactory.create(stdInputHandle) as ISocketSvrFactory).build()' + LineEnding +
     '            )' + LineEnding +
     '        ),' + LineEnding +
     '        TAppRoutes.create()' + LineEnding +
