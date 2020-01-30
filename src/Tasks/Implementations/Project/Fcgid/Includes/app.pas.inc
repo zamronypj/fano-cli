@@ -15,9 +15,6 @@ strAppPas: string =
     '' + LineEnding +
     'var' + LineEnding +
     '    appInstance : IWebApplication;' + LineEnding +
-    '    cliParams : ICliParams;' + LineEnding +
-    '    host : string;' + LineEnding +
-    '    port : word;' + LineEnding +
     '' + LineEnding +
     'begin' + LineEnding +
     '' + LineEnding +
