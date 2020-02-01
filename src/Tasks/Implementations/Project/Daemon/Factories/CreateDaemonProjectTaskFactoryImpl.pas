@@ -28,11 +28,20 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateDaemonProjectTaskFactory = class(TCreateProjectTaskFactory)
+    private
+        fExecOutputDir : string;
     protected
         function buildProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
         ) : ITask; override;
+    public
+        constructor create(
+            const depFactory : ITaskFactory;
+            const bootstrapFactory : ITaskFactory;
+            const execOutputDir : string = 'bin'
+        );
+
     end;
 
 implementation
@@ -47,6 +56,16 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl;
 
+    constructor TCreateDaemonProjectTaskFactory.create(
+        const depFactory : ITaskFactory;
+        const bootstrapFactory : ITaskFactory;
+        const execOutputDir : string = 'bin'
+    );
+    begin
+        fExecOutputDir := execOutputDir;
+        inherited create(depFactory, bootstrapFactory);
+    end;
+
     function TCreateDaemonProjectTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
@@ -54,7 +73,7 @@ uses
     begin
         result := TCreateProjectTask.create(
             TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator, contentModifier, 'bin'),
+            TCreateShellScriptsTask.create(textFileCreator, contentModifier, fExecOutputDir),
             fProjectDepTaskFactory.build(),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             fBootstrapTaskFactory.build(),

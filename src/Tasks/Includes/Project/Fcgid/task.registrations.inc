@@ -10,7 +10,8 @@
 
 taskFactory := TCreateDaemonProjectTaskFactory.create(
     TCreateProjectDependenciesTaskFactory.create(),
-    TCreateAppBootstrapFcgidTaskFactory.create()
+    TCreateAppBootstrapFcgidTaskFactory.create(),
+    'public'
 );
 try
     appInst.registerTask(
