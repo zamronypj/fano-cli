@@ -25,9 +25,10 @@ strGitignore: string =
     'bin/app.cgi' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '# Ignore generated log files' + LineEnding +
+    '# Ignore generated log and sessions files' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     'storages/logs/*' + LineEnding +
+    'storages/sessions/*' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Do not ignore README.md' + LineEnding +
