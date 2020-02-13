@@ -82,6 +82,7 @@ uses
         createDirIfNotExists('public');
         createDirIfNotExists('storages');
         createDirIfNotExists('storages/logs');
+        createDirIfNotExists('storages/sessions');
         createDirIfNotExists('bin');
         createDirIfNotExists('bin/unit');
         createDirIfNotExists('tools');
