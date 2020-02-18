@@ -15,15 +15,15 @@ BUILD_CFG=build.cfg
 BUILD_DEV_CFG=build.dev.cfg
 BUILD_PROD_CFG=build.prod.cfg
 
-if [ ! -f "BUILD_CFG" ]; then
+if [ ! -f "${BUILD_CFG}" ]; then
     cp build.cfg.sample build.cfg
 fi
 
-if [ ! -f "BUILD_DEV_CFG" ]; then
+if [ ! -f "${BUILD_DEV_CFG}" ]; then
     cp build.dev.cfg.sample build.dev.cfg
 fi
 
-if [ ! -f "BUILD_PROD_CFG" ]; then
+if [ ! -f "${BUILD_PROD_CFG}" ]; then
     cp build.prod.cfg.sample build.prod.cfg
 fi
 
