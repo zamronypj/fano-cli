@@ -10,6 +10,9 @@ strAppPas: string =
     '' + LineEnding +
     'uses' + LineEnding +
     '' + LineEnding +
+    '    {$IFDEF UNIX}' + LineEnding +
+    '    cthreads,' + LineEnding +
+    '    {$ENDIF}' + LineEnding +
     '    fano,' + LineEnding +
     '    bootstrap;' + LineEnding +
     '' + LineEnding +
