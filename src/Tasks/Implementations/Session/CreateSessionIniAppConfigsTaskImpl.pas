@@ -30,10 +30,8 @@ type
      *---------------------------------------*)
     TCreateSessionIniAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
     protected
-        procedure createAppConfigs(
-            const baseDir : string;
-            const configDir : string
-        ); override;
+        function getConfigType() : string; override;
+        function getConfigTemplate() : string; override;
     end;
 
 implementation
@@ -42,26 +40,16 @@ uses
 
     sysutils;
 
-    procedure TCreateSessionIniAppConfigsTask.createAppConfigs(
-        const baseDir : string;
-        const configDir : string
-    );
+    function TCreateSessionIniAppConfigsTask.getConfigType() : string;
+    begin
+        result := 'ini';
+    end;
+
+    function TCreateSessionIniAppConfigsTask.getConfigTemplate() : string;
     var
-        configStr : string;
         {$INCLUDE src/Tasks/Implementations/Session/Includes/config.ini.inc}
     begin
-        configStr := fContentModifier
-            .setVar('[[APP_NAME]]', 'My App')
-            .setVar('[[BASE_URL]]', 'http://myapp.fano')
-            .setVar('[[SECRET_KEY]]', fKeyGenerator.generate(64))
-            .setVar('[[SESSION_NAME]]', 'fano_sess')
-            .setVar('[[SESSION_DIR]]', getCurrentDir() + '/' + baseDir + '/storages/sessions/')
-            .setVar('[[COOKIE_NAME]]', 'fano_sess')
-            .setVar('[[COOKIE_DOMAIN]]', 'myapp.fano')
-            .setVar('[[COOKIE_MAX_AGE]]', '3600')
-            .modify(strConfigIni);
-        createTextFile(configDir + '/config.ini', configStr);
-        createTextFile(configDir + '/config.ini.sample', configStr);
+        result := strConfigIni;
     end;
 
 end.

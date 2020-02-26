@@ -35,7 +35,10 @@ type
         procedure createAppConfigs(
             const baseDir : string;
             const configDir : string
-        ); virtual; abstract;
+        ); virtual;
+
+        function getConfigType() : string; virtual; abstract;
+        function getConfigTemplate() : string; virtual; abstract;
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
@@ -69,6 +72,39 @@ uses
     begin
         fKeyGenerator := nil;
         inherited destroy();
+    end;
+
+    procedure TBaseCreateSessionAppConfigsTask.createAppConfigs(
+        const baseDir : string;
+        const configDir : string
+    );
+    var
+        configType,
+        configStr,
+        configWithoutKey,
+        configStrWithKey : string;
+    begin
+        configStr := fContentModifier
+            .setVar('[[APP_NAME]]', 'My App')
+            .setVar('[[BASE_URL]]', 'http://myapp.fano')
+            .setVar('[[SESSION_NAME]]', 'fano_sess')
+            .setVar('[[SESSION_DIR]]', getCurrentDir() + '/' + baseDir + '/storages/sessions/')
+            .setVar('[[COOKIE_NAME]]', 'fano_sess')
+            .setVar('[[COOKIE_DOMAIN]]', 'myapp.fano')
+            .setVar('[[COOKIE_MAX_AGE]]', '3600')
+            .modify(getConfigTemplate());
+
+        configStrWithoutKey := fContentModifier
+            .setVar('[[SECRET_KEY]]', 'replace with your own secret key')
+            .modify(configStr);
+
+        configStrWithKey := fContentModifier
+            .setVar('[[SECRET_KEY]]', fKeyGenerator.generate(64))
+            .modify(configStr);
+
+        configType := getConfigType();
+        createTextFile(configDir + '/config.' + configType, configStrWithKey);
+        createTextFile(configDir + '/config.'+ configType +'.sample', configStrWithoutKey);
     end;
 
     function TBaseCreateSessionAppConfigsTask.run(
