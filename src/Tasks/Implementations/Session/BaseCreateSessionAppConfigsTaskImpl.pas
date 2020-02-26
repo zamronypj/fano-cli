@@ -81,7 +81,7 @@ uses
     var
         configType,
         configStr,
-        configWithoutKey,
+        configStrWithoutKey,
         configStrWithKey : string;
     begin
         configStr := fContentModifier
