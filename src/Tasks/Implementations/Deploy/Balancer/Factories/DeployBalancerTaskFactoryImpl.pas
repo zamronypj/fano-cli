@@ -59,7 +59,7 @@ uses
 
     function TDeployBalancerTaskFactory.getServerPrefix() : shortstring;
     begin
-        result := 'lb-';
+        result := '';
     end;
 
     function TDeployBalancerTaskFactory.build() : ITask;

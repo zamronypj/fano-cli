@@ -72,7 +72,7 @@ uses
         const protocol : shortstring = 'scgi';
         const proxyPass : shortstring = 'scgi_pass';
         const proxyParams : shortstring = 'scgi_params';
-        const serverPrefix : shortstring = 'lb-'
+        const serverPrefix : shortstring = ''
     );
     begin
         inherited create(txtFileCreator, dirCreator, cntModifier, baseDir);
