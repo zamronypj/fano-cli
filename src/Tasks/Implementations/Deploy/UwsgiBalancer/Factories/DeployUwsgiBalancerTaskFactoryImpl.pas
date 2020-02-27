@@ -39,13 +39,13 @@ implementation
         result := 'uwsgi';
     end;
 
-    function TDeployScgiBalancerTaskFactory.getProxyPass() : shortstring;
+    function TDeployUwsgiBalancerTaskFactory.getProxyPass() : shortstring;
     begin
         //this will be used by nginx
         result := 'uwscgi_pass';
     end;
 
-    function TDeployScgiBalancerTaskFactory.getProxyParams() : shortstring;
+    function TDeployUwsgiBalancerTaskFactory.getProxyParams() : shortstring;
     begin
         //this will be used by nginx
         result := 'include uwsgi_params;';

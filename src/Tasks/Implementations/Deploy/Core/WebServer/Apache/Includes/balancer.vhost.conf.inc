@@ -22,5 +22,5 @@ strBalancerVhostConf: string =
     '    </Proxy> ' + LineEnding +
     '    ProxyRequests Off' + LineEnding +
     '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
-    '    ProxyPassMatch ^/(.*)$ "balancer://[[SERVER_NAME]]/"' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ "balancer://[[SERVER_NAME]]"' + LineEnding +
     '</VirtualHost>';

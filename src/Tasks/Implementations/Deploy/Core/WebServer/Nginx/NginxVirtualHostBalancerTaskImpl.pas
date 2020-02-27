@@ -46,9 +46,9 @@ type
             const dirCreator : IDirectoryCreator;
             const cntModifier : IContentModifier;
             const baseDir : string = BASE_DIRECTORY;
-            const protocol : shortstring = 'scgi',
-            const proxyPass : shortstring = 'scgi_pass',
-            const proxyParams : shortstring = 'scgi_params',
+            const protocol : shortstring = 'scgi';
+            const proxyPass : shortstring = 'scgi_pass';
+            const proxyParams : shortstring = 'scgi_params';
             const serverPrefix : shortstring = 'lb-'
         );
         function run(
@@ -69,9 +69,9 @@ uses
         const dirCreator : IDirectoryCreator;
         const cntModifier : IContentModifier;
         const baseDir : string = BASE_DIRECTORY;
-        const protocol : shortstring = 'scgi',
-        const proxyPass : shortstring = 'scgi_pass',
-        const proxyParams : shortstring = 'scgi_params',
+        const protocol : shortstring = 'scgi';
+        const proxyPass : shortstring = 'scgi_pass';
+        const proxyParams : shortstring = 'scgi_params';
         const serverPrefix : shortstring = 'lb-'
     );
     begin

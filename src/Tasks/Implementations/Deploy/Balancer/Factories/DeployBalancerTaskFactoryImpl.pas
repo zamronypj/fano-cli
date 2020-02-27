@@ -57,7 +57,7 @@ uses
     FileHelperImpl,
     BaseCreateFileTaskImpl;
 
-    function TDeployBalancerTaskFactory.getServerPrefix() : shortstring; virtual;
+    function TDeployBalancerTaskFactory.getServerPrefix() : shortstring;
     begin
         result := 'lb-';
     end;

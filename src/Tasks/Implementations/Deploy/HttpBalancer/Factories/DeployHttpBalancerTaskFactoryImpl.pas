@@ -40,7 +40,7 @@ implementation
         result := 'http';
     end;
 
-    function TDeployHttpBalancerTaskFactory.getProxyPass() : shortstring; override;
+    function TDeployHttpBalancerTaskFactory.getProxyPass() : shortstring;
     begin
         result := 'proxy_pass';
     end;
