@@ -40,7 +40,7 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Apache/Includes/http.vhost.conf.inc}
     begin
-        result := strUwsgiVhostConf;
+        result := strHttpVhostConf;
     end;
 
 end.

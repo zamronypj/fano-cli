@@ -1,4 +1,4 @@
-strUwsgiVhostConf: string =
+strHttpVhostConf: string =
     '<VirtualHost *:80>' + LineEnding +
     '' + LineEnding +
     '    ServerAdmin admin@[[SERVER_NAME]]' + LineEnding +
