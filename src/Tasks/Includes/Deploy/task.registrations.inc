@@ -13,6 +13,8 @@
 {$INCLUDE Fcgi/task.registrations.inc}
 {$INCLUDE Uwsgi/task.registrations.inc}
 {$INCLUDE Fcgid/task.registrations.inc}
+{$INCLUDE Http/task.registrations.inc}
 {$INCLUDE ScgiBalancer/task.registrations.inc}
 {$INCLUDE FcgiBalancer/task.registrations.inc}
 {$INCLUDE UwsgiBalancer/task.registrations.inc}
+{$INCLUDE HttpBalancer/task.registrations.inc}

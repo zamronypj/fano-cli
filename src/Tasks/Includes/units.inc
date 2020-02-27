@@ -6,14 +6,8 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
-DeployCgiTaskFactoryImpl,
-DeployFcgiTaskFactoryImpl,
-DeployFcgidTaskFactoryImpl,
-DeployScgiTaskFactoryImpl,
-DeployUwsgiTaskFactoryImpl,
-DeployScgiBalancerTaskFactoryImpl,
-DeployFcgiBalancerTaskFactoryImpl,
-DeployUwsgiBalancerTaskFactoryImpl,
+{$INCLUDE Deploy/units.inc}
+
 InfoTaskImpl,
 KeyGenTaskImpl,
 KeyGenTaskFactoryImpl,
