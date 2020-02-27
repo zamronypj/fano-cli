@@ -14,5 +14,6 @@
 {$INCLUDE Scgi/task.registrations.inc}
 {$INCLUDE Uwsgi/task.registrations.inc}
 {$INCLUDE Fcgid/task.registrations.inc}
+{$INCLUDE Mhd/task.registrations.inc}
 {$INCLUDE NoGit/task.registrations.inc}
 {$INCLUDE NoCommit/task.registrations.inc}
