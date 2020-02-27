@@ -41,7 +41,7 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Deploy/Core/WebServer/Nginx/Includes/http.vhost.conf.inc}
     begin
-        result := strUwsgiVhostConf;
+        result := strHttpVhostConf;
     end;
 
 end.

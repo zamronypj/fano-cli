@@ -1,4 +1,4 @@
-strUwsgiVhostConf: string =
+strHttpVhostConf: string =
     'server {' + LineEnding +
     '' + LineEnding +
     '    listen 80;' + LineEnding +
@@ -14,7 +14,7 @@ strUwsgiVhostConf: string =
     '    }' + LineEnding +
     '' + LineEnding +
     '    location @[[SERVER_NAME]] {' + LineEnding +
-    '        proxy_pass [[HOST]]:[[PORT]];' + LineEnding +
+    '        proxy_pass http://[[HOST]]:[[PORT]];' + LineEnding +
     '    }' + LineEnding +
     '' + LineEnding +
     '}';
