@@ -28,6 +28,9 @@ type
     TDeployBalancerTaskFactory = class(TInterfacedObject, ITaskFactory)
     protected
         function getProtocol() : shortstring; virtual; abstract;
+        function getProxyPass() : shortstring; virtual; abstract;
+        function getProxyParams() : shortstring; virtual; abstract;
+        function getServerPrefix() : shortstring; virtual;
     public
         function build() : ITask;
     end;
@@ -54,6 +57,11 @@ uses
     FileHelperImpl,
     BaseCreateFileTaskImpl;
 
+    function TDeployBalancerTaskFactory.getServerPrefix() : shortstring; virtual;
+    begin
+        result := 'lb-';
+    end;
+
     function TDeployBalancerTaskFactory.build() : ITask;
     var deployTask : ITask;
         fReader : IFileContentReader;
@@ -75,7 +83,10 @@ uses
                     TDirectoryCreator.create(),
                     TContentModifier.create(),
                     BASE_DIRECTORY,
-                    getProtocol()
+                    getProtocol(),
+                    getProxyPass(),
+                    getProxyParams(),
+                    getServerPrefix()
                 )
             ),
             TWebServerTask.create(

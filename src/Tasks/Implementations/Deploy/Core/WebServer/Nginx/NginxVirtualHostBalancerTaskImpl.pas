@@ -33,6 +33,9 @@ type
     TNginxVirtualHostBalancerTask = class(TBaseNginxVirtualHostTask)
     private
         fProtocol : shortstring;
+        fProxyPass : shortstring;
+        fProxyParams : shortstring;
+        fServerPrefix : shortstring;
         function getBalancerMember(const opt : ITaskOptions) : string;
         function getBalancerMethod(const opt : ITaskOptions) : string;
     protected
@@ -43,7 +46,10 @@ type
             const dirCreator : IDirectoryCreator;
             const cntModifier : IContentModifier;
             const baseDir : string = BASE_DIRECTORY;
-            const protocol : shortstring = 'scgi'
+            const protocol : shortstring = 'scgi',
+            const proxyPass : shortstring = 'scgi_pass',
+            const proxyParams : shortstring = 'scgi_params',
+            const serverPrefix : shortstring = 'lb-'
         );
         function run(
             const opt : ITaskOptions;
@@ -63,11 +69,17 @@ uses
         const dirCreator : IDirectoryCreator;
         const cntModifier : IContentModifier;
         const baseDir : string = BASE_DIRECTORY;
-        const protocol : shortstring = 'scgi'
+        const protocol : shortstring = 'scgi',
+        const proxyPass : shortstring = 'scgi_pass',
+        const proxyParams : shortstring = 'scgi_params',
+        const serverPrefix : shortstring = 'lb-'
     );
     begin
         inherited create(txtFileCreator, dirCreator, cntModifier, baseDir);
         fProtocol := protocol;
+        fProxyPass := proxyPass;
+        fProxyParams := proxyParams;
+        fServerPrefix := serverPrefix;
     end;
 
     function TNginxVirtualHostBalancerTask.getVhostTemplate() : string;
@@ -122,8 +134,9 @@ uses
     begin
         contentModifier.setVar('[[LOAD_BALANCER_MEMBERS]]', getBalancerMember(opt));
         contentModifier.setVar('[[LOAD_BALANCER_METHOD]]', getBalancerMethod(opt));
-        contentModifier.setVar('[[PROXY_PASS_TYPE]]', fProtocol + '_pass');
-        contentModifier.setVar('[[PROXY_PARAMS_TYPE]]', fProtocol + '_params');
+        contentModifier.setVar('[[PROXY_PASS_TYPE]]', fProxyPass);
+        contentModifier.setVar('[[PROXY_PARAMS_TYPE]]', fProxyParams);
+        contentModifier.setVar('[[SERVER_PREFIX]]', fServerPrefix);
         inherited run(opt, longOpt);
         result := self;
     end;

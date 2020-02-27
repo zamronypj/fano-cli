@@ -27,6 +27,9 @@ type
     TDeployHttpBalancerTaskFactory = class(TDeployBalancerTaskFactory)
     protected
         function getProtocol() : shortstring; override;
+        function getProxyPass() : shortstring; override;
+        function getProxyParams() : shortstring; override;
+        function getServerPrefix() : shortstring; override;
     end;
 
 implementation
@@ -37,4 +40,18 @@ implementation
         result := 'http';
     end;
 
+    function TDeployHttpBalancerTaskFactory.getProxyPass() : shortstring; override;
+    begin
+        result := 'proxy_pass';
+    end;
+
+    function TDeployHttpBalancerTaskFactory.getProxyParams() : shortstring;
+    begin
+        result := '';
+    end;
+
+    function TDeployHttpBalancerTaskFactory.getServerPrefix() : shortstring;
+    begin
+        result := 'http://';
+    end;
 end.

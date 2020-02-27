@@ -19,8 +19,8 @@ strBalancerVhostConf: string =
     '    }' + LineEnding +
     '' + LineEnding +
     '    location @[[SERVER_NAME]] {' + LineEnding +
-    '        [[PROXY_PASS_TYPE]] lb-[[SERVER_NAME]];' + LineEnding +
-    '        include [[PROXY_PARAMS_TYPE]];' + LineEnding +
+    '        [[PROXY_PASS_TYPE]] [[SERVER_PREFIX]][[SERVER_NAME]];' + LineEnding +
+    '        [[PROXY_PARAMS_TYPE]]' + LineEnding +
     '    }' + LineEnding +
     '' + LineEnding +
     '}';

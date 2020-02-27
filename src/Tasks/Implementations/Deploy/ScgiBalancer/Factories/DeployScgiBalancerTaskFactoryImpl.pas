@@ -27,6 +27,8 @@ type
     TDeployScgiBalancerTaskFactory = class(TDeployBalancerTaskFactory)
     protected
         function getProtocol() : shortstring; override;
+        function getProxyPass() : shortstring; override;
+        function getProxyParams() : shortstring; override;
     end;
 
 implementation
@@ -35,6 +37,18 @@ implementation
     function TDeployScgiBalancerTaskFactory.getProtocol() : shortstring;
     begin
         result := 'scgi';
+    end;
+
+    function TDeployScgiBalancerTaskFactory.getProxyPass() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'scgi_pass';
+    end;
+
+    function TDeployScgiBalancerTaskFactory.getProxyParams() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'include scgi_params;';
     end;
 
 end.

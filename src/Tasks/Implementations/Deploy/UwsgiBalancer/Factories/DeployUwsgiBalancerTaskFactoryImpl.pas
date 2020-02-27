@@ -27,6 +27,8 @@ type
     TDeployUwsgiBalancerTaskFactory = class(TDeployBalancerTaskFactory)
     protected
         function getProtocol() : shortstring; override;
+        function getProxyPass() : shortstring; override;
+        function getProxyParams() : shortstring; override;
     end;
 
 implementation
@@ -35,6 +37,18 @@ implementation
     function TDeployUwsgiBalancerTaskFactory.getProtocol() : shortstring;
     begin
         result := 'uwsgi';
+    end;
+
+    function TDeployScgiBalancerTaskFactory.getProxyPass() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'uwscgi_pass';
+    end;
+
+    function TDeployScgiBalancerTaskFactory.getProxyParams() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'include uwsgi_params;';
     end;
 
 end.

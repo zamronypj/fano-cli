@@ -27,6 +27,8 @@ type
     TDeployFcgiBalancerTaskFactory = class(TDeployBalancerTaskFactory)
     protected
         function getProtocol() : shortstring; override;
+        function getProxyPass() : shortstring; override;
+        function getProxyParams() : shortstring; override;
     end;
 
 implementation
@@ -37,4 +39,15 @@ implementation
         result := 'fcgi';
     end;
 
+    function TDeployFcgiBalancerTaskFactory.getProxyPass() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'fastcgi_pass';
+    end;
+
+    function TDeployFcgiBalancerTaskFactory.getProxyParams() : shortstring;
+    begin
+        //this will be used by nginx
+        result := 'include fastcgi_params;';
+    end;
 end.
