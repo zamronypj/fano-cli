@@ -12,7 +12,7 @@ taskFactory := TDeployHttpTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-http',
-        '--deploy-http=[server name] Deploy as reverse proxied http web application.' + LineEnding +
+        '--deploy-http=[server name] Deploy as http web application over http reverse proxy server.' + LineEnding +
         '     --web-server=[web server] if omited, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omited, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omited, 127.0.0.1 is assumed.' + LineEnding +
