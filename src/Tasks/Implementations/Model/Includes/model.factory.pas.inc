@@ -10,6 +10,9 @@ strModelFactoryPasInc: string =
     '' + LineEnding +
     'interface' + LineEnding +
     '' + LineEnding +
+    '{$MODE OBJFPC}' + LineEnding +
+    '{$H+}' + LineEnding +
+    '' + LineEnding +
     'uses' + LineEnding +
     '    fano;' + LineEnding +
     '' + LineEnding +
