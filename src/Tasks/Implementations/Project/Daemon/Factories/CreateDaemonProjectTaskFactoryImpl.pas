@@ -54,7 +54,9 @@ uses
     CreateShellScriptsTaskImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
-    CreateProjectTaskImpl;
+    CreateProjectTaskImpl,
+    WithGitRepoTaskImpl,
+    WithGitInitialCommitTaskImpl;
 
     constructor TCreateDaemonProjectTaskFactory.create(
         const depFactory : ITaskFactory;
@@ -77,7 +79,13 @@ uses
             fProjectDepTaskFactory.build(),
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             fBootstrapTaskFactory.build(),
-            TInitGitRepoTask.create(TCommitGitRepoTask.create())
+            TWithGitRepoTask.create(
+                TInitGitRepoTask.create(
+                    TWithGitInitialCommitTask.create(
+                        TCommitGitRepoTask.create()
+                    )
+                )
+            )
         );
     end;
 end.

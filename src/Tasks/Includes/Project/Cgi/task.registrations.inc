@@ -14,10 +14,12 @@ taskFactory := TCreateProjectTaskFactory.create(
 );
 try
     appInst.registerTask(
-        'project',
-        '--project=[project-name] Create new CGI project.' + LineEnding +
+        'project-cgi',
+        '--project-cgi=[project-name] Create new CGI project.' + LineEnding +
         '     --config=[json, ini] Type of generated application config. If omitted, json is assumed.' + LineEnding +
-        '     --with-session=[file, cookie, db] Add session support',
+        '     --with-session=[file, cookie, db] Add session support' + LineEnding +
+        '     --no-git if omitted, git repository is created.' + LineEnding +
+        '     --no-initial-commit if omitted, git repository is created with initial commit.',
         taskFactory.build()
     );
 finally

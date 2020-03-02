@@ -16,9 +16,12 @@ try
     appInst.registerTask(
         'project-mhd',
         '--project-mhd=[project-name] Create new libmicrohttpd project' + LineEnding +
-        '     --config=[ini, json] if omited, config is not setup.' + LineEnding +
-        '     --host=[host where http app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where http app listen] if omited, 20477 is assumed.',
+        '     --config=[ini, json] if omitted, config is not setup.' + LineEnding +
+        '     --host=[host where http app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
+        '     --port=[port where http app listen] if omitted, 20477 is assumed.' + LineEnding +
+        '     --with-session=[file, cookie, db] Add session support' + LineEnding +
+        '     --no-git if omitted, git repository is created.' + LineEnding +
+        '     --no-initial-commit if omitted, git repository is created with initial commit.',
         taskFactory.build()
     );
 finally

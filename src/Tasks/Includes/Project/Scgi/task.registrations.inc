@@ -18,7 +18,10 @@ try
         '--project-scgi=[project-name] Create new SCGI project' + LineEnding +
         '     --config=[ini, json] if omited, config is not setup.' + LineEnding +
         '     --host=[host where SCGI app listen] if omited, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where SCGI app listen] if omited, 20477 is assumed.',
+        '     --port=[port where SCGI app listen] if omited, 20477 is assumed.' + LineEnding +
+        '     --with-session=[file, cookie, db] Add session support' + LineEnding +
+        '     --no-git if omitted, git repository is created.' + LineEnding +
+        '     --no-initial-commit if omitted, git repository is created with initial commit.',
         taskFactory.build()
     );
 finally
