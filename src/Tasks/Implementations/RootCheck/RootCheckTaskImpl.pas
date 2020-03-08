@@ -27,6 +27,8 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TRootCheckTask = class(TDecoratorTask)
+    private
+        function isRunAsRoot() : boolean;
     public
         function run(
             const opt : ITaskOptions;
@@ -39,20 +41,41 @@ implementation
 uses
 
     SysUtils,
-    BaseUnix;
+
+    {$IFDEF UNIX}
+    BaseUnix
+    {$ENDIF}
+
+    {$IFDEF WINDOWS}
+    winutils
+    {$ENDIF};
 
 resourcestring
 
     sErrMustRunAsRoot = 'Cannot run privileged task as ordinary user. Try to run with sudo.';
 
+    {$IFDEF UNIX}
+    function TRootCheckTask.isRunAsRoot() : boolean;
+    const ROOT = 0;
+    begin
+        //get effective user id, 0 mean root
+        result := (fpgeteuid() = ROOT);
+    end;
+    {$ENDIF}
+
+    {$IFDEF WINDOWS}
+    function TRootCheckTask.isRunAsRoot() : boolean;
+    begin
+        result := isWindowsAdmin();
+    end;
+    {$ENDIF}
+
     function TRootCheckTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
-    const ROOT = 0;
     begin
-        //get effective user id, 0 mean root
-        if fpgeteuid() = ROOT then
+        if isRunAsRoot() then
         begin
             actualTask.run(opt, longOpt);
         end else
