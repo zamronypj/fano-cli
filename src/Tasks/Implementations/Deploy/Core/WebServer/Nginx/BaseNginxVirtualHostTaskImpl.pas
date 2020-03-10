@@ -37,7 +37,8 @@ implementation
 
 uses
 
-    SysUtils;
+    SysUtils,
+    strformats;
 
     procedure TBaseNginxVirtualHostTask.createVhostFile(
         const opt : ITaskOptions;
@@ -51,7 +52,10 @@ uses
                 '/etc/nginx/conf.d/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /etc/nginx/conf.d/' + serverName + '.conf');
+            writeln(
+                'Create virtual host ',
+                formatColor('/etc/nginx/conf.d/' + serverName + '.conf', TXT_GREEN)
+            );
         end else
         begin
             writeln('Unsupported platform or web server');

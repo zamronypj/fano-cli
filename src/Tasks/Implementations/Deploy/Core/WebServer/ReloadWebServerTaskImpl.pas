@@ -39,6 +39,7 @@ implementation
 uses
 
     SysUtils,
+    strformats,
     process;
 
     function TReloadWebServerTask.run(
@@ -59,7 +60,7 @@ uses
                 outputString,
                 [poStderrToOutPut]
             );
-            writeln('Reload ', svcName, ' service');
+            writeln('Reload ', formatColor(svcName, TXT_GREEN), ' service');
         end else
         begin
             writeln('Cannot reload web server. Unsupported platform or web server.');

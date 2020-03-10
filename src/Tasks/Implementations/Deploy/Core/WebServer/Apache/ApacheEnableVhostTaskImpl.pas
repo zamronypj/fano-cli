@@ -38,6 +38,7 @@ implementation
 uses
 
     SysUtils,
+    strformats,
     BaseUnix;
 
     function TApacheEnableVhostTask.run(
@@ -56,13 +57,20 @@ uses
                     PChar('/etc/apache2/sites-available/' + serverName + '.conf'),
                     PChar('/etc/apache2/sites-enabled/' + serverName + '.conf')
                 );
-                writeln('Enable virtual host /etc/apache2/sites-enabled/' + serverName + '.conf');
+
+                writeln(
+                    'Enable virtual host ',
+                    formatColor('/etc/apache2/sites-enabled/' + serverName + '.conf', TXT_GREEN)
+                );
             end;
         end else
         if directoryExists('/etc/httpd') then
         begin
             //fedora-based we do nothing
-            writeln('Enable virtual host /etc/httpd/conf.d/' + serverName + '.conf');
+            writeln(
+                'Enable virtual host ',
+                formatColor('/etc/httpd/conf.d/' + serverName + '.conf', TXT_GREEN)
+            );
         end else
         begin
             writeln('Cannot create vhost symlink. Unsupported platform or web server');

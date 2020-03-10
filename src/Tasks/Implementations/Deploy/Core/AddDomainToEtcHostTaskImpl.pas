@@ -49,7 +49,8 @@ implementation
 
 uses
 
-    SysUtils;
+    SysUtils,
+    strformats;
 
     constructor TAddDomainToEtcHostTask.create(
         const afreader : IFileContentReader;
@@ -91,7 +92,7 @@ uses
         etcHosts := etcHosts + LineEnding +
                 serverIp + ' ' + serverName + LineEnding;
         fWriter.write('/etc/hosts', etcHosts);
-        writeln('Add ' + serverIp + ' ' + serverName +' to /etc/hosts ');
+        writeln('Add ', formatColor(serverIp + ' ' + serverName, TXT_GREEN), ' to /etc/hosts ');
         result := self;
     end;
 end.
