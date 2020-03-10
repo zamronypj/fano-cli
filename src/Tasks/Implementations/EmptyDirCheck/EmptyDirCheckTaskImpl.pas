@@ -43,7 +43,8 @@ implementation
 
 uses
 
-    SysUtils;
+    SysUtils,
+    strformats;
 
 resourcestring
 
@@ -92,7 +93,7 @@ resourcestring
             actualTask.run(opt, longOpt);
         end else
         begin
-            writeln(format(sDirExistsNotEmpty, [baseDir]));
+            writeln(format(sDirExistsNotEmpty, [formatColor(baseDir, TXT_GREEN)]));
             writeln(sRunWithHelp);
         end;
         result := self;

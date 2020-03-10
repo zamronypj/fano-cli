@@ -52,7 +52,8 @@ implementation
 uses
 
     SysUtils,
-    Classes;
+    Classes,
+    strformats;
 
 const
 
@@ -111,7 +112,11 @@ const
             ) + LineEnding;
         fileWriter.write(BASE_ROUTE_DIR + controllerName + '/routes.inc', strCtrlRoutesInc);
 
-        writeln('Create route ', routePattern, ' (', uppercase(routeMethod), ')');
+        writeln(
+            'Create route ',
+            formatColor(routePattern, TXT_GREEN),
+            ' (', formatColor(uppercase(routeMethod), TXT_YELLOW), ')'
+        );
         result := self;
     end;
 end.

@@ -46,6 +46,10 @@ type
 
 implementation
 
+uses
+
+    StrFormats;
+
     constructor TCreateControllerTask.create(
         const createCtrlFileTask : ITask;
         const createCtrlFactoryFileTask : ITask;
@@ -83,12 +87,12 @@ implementation
             exit();
         end;
 
-        writeln('Creating ', controllerName, 'Controller class.');
+        writeln('Creating ', formatColor(controllerName + 'Controller', TXT_GREEN), ' class.');
         createControllerFileTask.run(opt, longOpt);
         createControllerFactoryFileTask.run(opt, longOpt);
         createDependenciesTask.run(opt, longOpt);
         createRouteTask.run(opt, longOpt);
-        writeln(controllerName, 'Controller class is created.');
+        writeln(formatColor(controllerName + 'Controller', TXT_GREEN),' class is created.');
         result := self;
     end;
 end.

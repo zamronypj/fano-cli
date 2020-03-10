@@ -46,6 +46,10 @@ type
 
 implementation
 
+uses
+
+    strformats;
+
     constructor TCreateModelTask.create(
         const createMdlFileTask : ITask;
         const createMdlFactoryFileTask : ITask;
@@ -80,11 +84,11 @@ implementation
             exit();
         end;
 
-        writeln('Creating ' + modelName +'Model class.');
+        writeln('Creating ', formatColor(modelName + 'Model', TXT_GREEN), ' class.');
         createModelFileTask.run(opt, longOpt);
         createModelFactoryFileTask.run(opt, longOpt);
         createDependenciesTask.run(opt, longOpt);
-        writeln(modelName +'Model class is created.');
+        writeln(formatColor(modelName + 'Model', TXT_GREEN), ' class is created.');
         result := self;
     end;
 end.

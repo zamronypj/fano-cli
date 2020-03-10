@@ -55,7 +55,8 @@ implementation
 
 uses
 
-    sysutils;
+    sysutils,
+    StrFormats;
 
     constructor TCreateProjectTask.create(
         const createDirTask : ITask;
@@ -101,7 +102,7 @@ uses
             exit();
         end;
 
-        writeln('Start creating project in ', baseDirectory, ' directory.');
+        writeln('Start creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
 
         createDirectoryTask.run(opt, longOpt);
         createShellScriptsTask.run(opt, longOpt);
@@ -110,7 +111,7 @@ uses
         createAppConfigsTask.run(opt, longOpt);
         createGitRepoTask.run(opt, longOpt);
 
-        writeln('Finish creating project in ', baseDirectory, ' directory.');
+        writeln('Finish creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
         writeln('Change directory to ', baseDirectory, ' to start creating controller, view, etc.');
         result := self;
     end;

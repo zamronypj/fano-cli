@@ -44,6 +44,10 @@ type
 
 implementation
 
+uses
+
+    strformats;
+
     constructor TCreateViewTask.create(
         const createVwFileTask : ITask;
         const createVwFactoryFileTask : ITask;
@@ -78,11 +82,11 @@ implementation
             exit();
         end;
 
-        writeln('Creating ' + viewName +'View class.');
+        writeln('Creating ', formatColor(viewName + 'View', TXT_GREEN),' class.');
         createViewFileTask.run(opt, longOpt);
         createViewFactoryFileTask.run(opt, longOpt);
         createDependenciesTask.run(opt, longOpt);
-        writeln(viewName +'View class is created.');
+        writeln(formatColor(viewName + 'View', TXT_GREEN), ' class is created.');
         result := self;
     end;
 end.

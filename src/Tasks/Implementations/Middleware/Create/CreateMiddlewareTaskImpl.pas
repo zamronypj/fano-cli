@@ -44,6 +44,10 @@ type
 
 implementation
 
+uses
+
+    strformats;
+
     constructor TCreateMiddlewareTask.create(
         const createMdlwFileTask : ITask;
         const createMdlwFactoryFileTask : ITask;
@@ -78,11 +82,11 @@ implementation
             exit();
         end;
 
-        writeln('Creating ' +middlewareName +'Middleware class.');
+        writeln('Creating ', formatColor(middlewareName + 'Middleware', TXT_GREEN), ' class.');
         createMiddlewareFileTask.run(opt, longOpt);
         createMiddlewareFactoryFileTask.run(opt, longOpt);
         createDependenciesTask.run(opt, longOpt);
-        writeln(middlewareName +'Middleware class is created.');
+        writeln(formatColor(middlewareName + 'Middleware', TXT_GREEN), ' class is created.');
         result := self;
     end;
 end.
