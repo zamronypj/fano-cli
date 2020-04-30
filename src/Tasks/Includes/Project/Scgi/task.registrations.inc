@@ -10,7 +10,7 @@
 
 taskFactory := TCreateDaemonProjectTaskFactory.create(
     TCreateProjectDependenciesTaskFactory.create(),
-    TCreateAppBootstrapScgiTaskFactory.create()
+    TCreateAppBootstrapExScgiTaskFactory.create()
 );
 try
     appInst.registerTask(

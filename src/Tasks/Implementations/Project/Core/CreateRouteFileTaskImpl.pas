@@ -65,7 +65,7 @@ uses
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createApp(opt, longOpt, baseDirectory + '/src');
+        createRoutes(opt, longOpt, baseDirectory + '/src/Routes');
         result := self;
     end;
 end.
