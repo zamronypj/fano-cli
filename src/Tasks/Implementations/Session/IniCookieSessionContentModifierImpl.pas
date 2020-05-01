@@ -49,8 +49,8 @@ implementation
         {$INCLUDE src/Tasks/Implementations/Session/Includes/decl.dispatcher.method.inc}
         {$INCLUDE src/Tasks/Implementations/Session/Includes/impl.ini.cookie.dispatcher.method.inc}
     begin
-        setVar('[[METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
-        setVar('[[METHOD_IMPL_SECTION]]', strImplIniCookieDispatcherMethod);
+        setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
+        setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplIniCookieDispatcherMethod);
         result := inherited modify(content);
     end;
 end.
