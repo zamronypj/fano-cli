@@ -43,8 +43,8 @@ strBootstrapPas: string =
     '    {---- put your controller factory here ---};' + LineEnding +
     '' + LineEnding +
     '' + LineEnding +
-    '[[METHOD_IMPL_SECTION]]' + LineEnding +
     '[[BUILD_CONFIG_METHOD_IMPL_SECTION]]' +
+    '[[METHOD_IMPL_SECTION]]' +
     '' + LineEnding +
     '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +

@@ -31,7 +31,9 @@ type
     TCreateConfigMethodTask = class(TCreateFileTask)
     private
         fFileReader : IFileContentReader;
+        procedure createBuildConfigDependencyTpl(const methodDecl, methodImpl : string);
         procedure createBuildConfigDependency();
+        procedure dontCreateBuildConfigDependency();
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
@@ -63,20 +65,18 @@ implementation
         inherited destroy();
     end;
 
-    procedure TCreateConfigMethodTask.createBuildConfigDependency();
+    procedure TCreateConfigMethodTask.createBuildConfigDependencyTpl(const methodDecl, methodImpl : string);
     var
         bootstrapContent : string;
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/methods/buildAppConfig.decl.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/methods/buildAppConfig.impl.inc}
     begin
         fContentModifier.setVar(
             '[[BUILD_CONFIG_METHOD_DECL_SECTION]]',
-            fContentModifier.modify(strBuildAppConfigMethodDecl)
+            fContentModifier.modify(methodDecl)
         );
 
         fContentModifier.setVar(
             '[[BUILD_CONFIG_METHOD_IMPL_SECTION]]',
-            fContentModifier.modify(strBuildAppConfigMethodImpl)
+            fContentModifier.modify(methodImpl)
         );
 
         bootstrapContent := fFileReader.read(baseDirectory + '/src/bootstrap.pas');
@@ -84,6 +84,22 @@ implementation
             baseDirectory + '/src/bootstrap.pas',
             fContentModifier.modify(bootstrapContent)
         );
+    end;
+
+    procedure TCreateConfigMethodTask.createBuildConfigDependency();
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/methods/buildAppConfig.decl.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/methods/buildAppConfig.impl.inc}
+    begin
+        createBuildConfigDependencyTpl(
+            strBuildAppConfigMethodDecl,
+            strBuildAppConfigMethodImpl
+        );
+    end;
+
+    procedure TCreateConfigMethodTask.dontCreateBuildConfigDependency();
+    begin
+        createBuildConfigDependencyTpl('', '');
     end;
 
     function TCreateConfigMethodTask.run(
@@ -97,6 +113,9 @@ implementation
         if (opt.hasOption('config')) then
         begin
             createBuildConfigDependency();
+        end else
+        begin
+            dontCreateBuildConfigDependency();
         end;
 
         result := self;
