@@ -32,7 +32,7 @@ type
         function buildBootstrapTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
-        ) : ITask; virtual;
+        ) : ITask; override;
     end;
 
 implementation
