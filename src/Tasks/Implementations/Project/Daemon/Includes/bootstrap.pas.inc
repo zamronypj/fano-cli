@@ -18,7 +18,7 @@ strBootstrapPas: string =
     '' + LineEnding +
     '    TAppServiceProvider = class(TDaemonAppServiceProvider)' + LineEnding +
     '    protected' + LineEnding +
-    '        function buildAppConfig(const container : IDependencyContainer) : IAppConfiguration; override;' + LineEnding +
+    '[[BUILD_CONFIG_METHOD_DECL_SECTION]]' +
     '[[METHOD_DECL_SECTION]]' + LineEnding +
     '    public' + LineEnding +
     '        procedure register(const container : IDependencyContainer); override;' + LineEnding +
@@ -44,10 +44,7 @@ strBootstrapPas: string =
     '' + LineEnding +
     '' + LineEnding +
     '[[METHOD_IMPL_SECTION]]' + LineEnding +
-    '    function TAppServiceProvider.buildAppConfig(const container : IDependencyContainer) : IAppConfiguration;' + LineEnding +
-    '    begin' + LineEnding +
-    '[[CONFIG_IMPL_SECTION]]' + LineEnding +
-    '    end;' + LineEnding +
+    '[[BUILD_CONFIG_METHOD_IMPL_SECTION]]' +
     '' + LineEnding +
     '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +
