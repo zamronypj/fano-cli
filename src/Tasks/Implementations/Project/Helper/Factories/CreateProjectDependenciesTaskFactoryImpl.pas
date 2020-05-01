@@ -28,6 +28,10 @@ type
      *---------------------------------------*)
     TCreateProjectDependenciesTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
+        function buildConfigProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
         function buildSessionProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -69,6 +73,7 @@ uses
     CompositeSessionTaskImpl,
     CreateShellScriptsTaskImpl,
     RegisterConfigDependencyTaskImpl,
+    CreateConfigMethodTaskImpl,
     FileHelperAppendImpl,
     GroupTaskImpl,
     CompositeTaskImpl,
@@ -78,17 +83,35 @@ uses
     CreateSessionDirTaskImpl,
     ForceConfigDecoratorTaskImpl;
 
+    function TCreateProjectDependenciesTaskFactory.buildConfigProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    var fileReader : IFileContentReader
+    begin
+        fileReader := TFileHelperAppender.create();
+        result := TGroupTask.create([
+            TCreateConfigMethodTask.create(
+                textFileCreator,
+                contentModifier,
+                fileReader
+            ),
+            TRegisterConfigDependencyTask.create(
+                textFileCreator,
+                contentModifier,
+                fileReader
+            )
+        ]);
+
+    end;
+
     function TCreateProjectDependenciesTaskFactory.buildSessionProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
     var registerCfgTask : ITask;
     begin
-        registerCfgTask := TRegisterConfigDependencyTask.create(
-            textFileCreator,
-            contentModifier,
-            TFileHelperAppender.create()
-        );
+        registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
 
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
@@ -130,15 +153,14 @@ uses
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
+    var registerCfgTask : ITask;
     begin
+        registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
+
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
-            TRegisterConfigDependencyTask.create(
-                textFileCreator,
-                contentModifier,
-                TFileHelperAppender.create()
-            ),
+            registerCfgTask,
             TCreateMiddlewareDependenciesTask.create(
                 textFileCreator,
                 contentModifier,
@@ -151,15 +173,13 @@ uses
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
+    var registerCfgTask : ITask;
     begin
+        registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
-            TRegisterConfigDependencyTask.create(
-                textFileCreator,
-                contentModifier,
-                TFileHelperAppender.create()
-            )
+            registerCfgTask
         ]);
     end;
 
@@ -195,6 +215,5 @@ uses
             textFileCreator := nil;
         end;
     end;
-
 
 end.

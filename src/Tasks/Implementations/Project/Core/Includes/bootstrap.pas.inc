@@ -1,3 +1,10 @@
+(*!-----------------------------------------------------------
+ * Fano CLI Application (https://fanoframework.github.io)
+ *
+ * @link      https://github.com/fanoframework/fano-cli
+ * @copyright Copyright (c) 2018 Zamrony P. Juhara
+ * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
+ *------------------------------------------------------------- *)
 strBootstrapPas: string =
     '(*!------------------------------------------------------------' + LineEnding +
     ' * [[APP_NAME]] ([[APP_URL]])' + LineEnding +
@@ -18,7 +25,7 @@ strBootstrapPas: string =
     '' + LineEnding +
     '    TAppServiceProvider = class(TBasicAppServiceProvider)' + LineEnding +
     '    protected' + LineEnding +
-    '        function buildAppConfig(const container : IDependencyContainer) : IAppConfiguration; override;' + LineEnding +
+    '[[BUILD_CONFIG_METHOD_DECL_SECTION]]' +
     '[[METHOD_DECL_SECTION]]' + LineEnding +
     '    public' + LineEnding +
     '        procedure register(const container : IDependencyContainer); override;' + LineEnding +
@@ -44,11 +51,7 @@ strBootstrapPas: string =
     '' + LineEnding +
     '' + LineEnding +
     '[[METHOD_IMPL_SECTION]]' + LineEnding +
-    '    function TAppServiceProvider.buildAppConfig(const container : IDependencyContainer) : IAppConfiguration;' + LineEnding +
-    '    begin' + LineEnding +
-    '[[CONFIG_IMPL_SECTION]]' + LineEnding +
-    '    end;' + LineEnding +
-    '' + LineEnding +
+    '[[BUILD_CONFIG_METHOD_IMPL_SECTION]]' +
     '    procedure TAppServiceProvider.register(const container : IDependencyContainer);' + LineEnding +
     '    begin' + LineEnding +
     '        {$INCLUDE Dependencies/dependencies.inc}' + LineEnding +
