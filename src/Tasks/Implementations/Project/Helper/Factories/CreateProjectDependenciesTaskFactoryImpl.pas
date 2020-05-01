@@ -59,6 +59,7 @@ implementation
 
 uses
 
+    FileContentReaderIntf,
     NullTaskImpl,
     DirectoryCreatorImpl,
     TextFileCreatorImpl,
@@ -87,7 +88,7 @@ uses
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
-    var fileReader : IFileContentReader
+    var fileReader : IFileContentReader;
     begin
         fileReader := TFileHelperAppender.create();
         result := TGroupTask.create([

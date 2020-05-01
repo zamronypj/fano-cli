@@ -71,12 +71,12 @@ implementation
     begin
         fContentModifier.setVar(
             '[[BUILD_CONFIG_METHOD_DECL_SECTION]]',
-            fContentModifier.modify(strBuildConfigMethodDecl)
+            fContentModifier.modify(strBuildAppConfigMethodDecl)
         );
 
         fContentModifier.setVar(
             '[[BUILD_CONFIG_METHOD_IMPL_SECTION]]',
-            fContentModifier.modify(strBuildConfigMethodDecl)
+            fContentModifier.modify(strBuildAppConfigMethodImpl)
         );
 
         bootstrapContent := fFileReader.read(baseDirectory + '/src/bootstrap.pas');

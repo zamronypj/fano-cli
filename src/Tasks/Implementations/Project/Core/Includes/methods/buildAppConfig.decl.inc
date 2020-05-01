@@ -5,5 +5,5 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-strBuildConfigMethodDecl : string =
+strBuildAppConfigMethodDecl : string =
     '        function buildAppConfig(const container : IDependencyContainer) : IAppConfiguration; override;' + LineEnding;
