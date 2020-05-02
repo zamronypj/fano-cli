@@ -10,7 +10,7 @@
 
 taskFactory := TCreateDaemonProjectTaskFactory.create(
     TCreateProjectDependenciesTaskFactory.create(),
-    TCreateAppBootstrapExFcgidTaskFactory.create(),
+    TCreateAppBootstrapFcgidTaskFactory.create(),
     'public'
 );
 try

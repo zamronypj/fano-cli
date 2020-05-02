@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateAppBootstrapExFcgidTaskFactoryImpl;
+unit CreateAppBootstrapMhdTaskFactoryImpl;
 
 interface
 
@@ -27,7 +27,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateAppBootstrapExFcgidTaskFactory = class(TCreateAppBootstrapTaskFactory)
+    TCreateAppBootstrapMhdTaskFactory = class(TCreateAppBootstrapTaskFactory)
     protected
         function buildBootstrapTask(
             const textFileCreator : ITextFileCreator;
@@ -41,19 +41,19 @@ uses
 
     GroupTaskImpl,
 
-    CreateFcgidAppFileTaskImpl,
+    CreateMhdAppFileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
 
 
-    function TCreateAppBootstrapExFcgidTaskFactory.buildBootstrapTask(
+    function TCreateAppBootstrapMhdTaskFactory.buildBootstrapTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
     begin
         result := TGroupTask.create([
-            TCreateFcgidAppFileTask.create(textFileCreator, contentModifier),
+            TCreateMhdAppFileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)
