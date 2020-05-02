@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateMiddlewareDependenciesExTaskImpl;
+unit CreateDispatcherMethodTaskImpl;
 
 interface
 
@@ -24,16 +24,16 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that add middleware support to project creation
+     * Task that add basic setup for buildDispatcher
+     * to project creation
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateMiddlewareDependenciesExTask = class(TCreateFileTask)
+    TCreateDispatcherMethodTask = class (TCreateFileTask)
     private
         fFileReader : IFileContentReader;
+    protected
         procedure createBuildDispatcherDependencyTpl(const methodDecl, methodImpl : string);
-        procedure createBuildDispatcherDependency();
-        procedure dontCreateBuildDispatcherDependency();
     public
         constructor create(
             const txtFileCreator : ITextFileCreator;
@@ -42,32 +42,27 @@ type
         );
         destructor destroy(); override;
 
-        function run(
-            const opt : ITaskOptions;
-            const longOpt : shortstring
-        ) : ITask; override;
     end;
 
 implementation
 
-    constructor TCreateMiddlewareDependenciesExTask.create(
+    constructor TCreateDispatcherMethodTask.create(
         const txtFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier;
         const fileReader : IFileContentReader
-
     );
     begin
         inherited create(txtFileCreator, contentModifier);
         fFileReader := fileReader;
     end;
 
-    destructor TCreateMiddlewareDependenciesExTask.destroy();
+    destructor TCreateDispatcherMethodTask.destroy();
     begin
         fFileReader := nil;
         inherited destroy();
     end;
 
-    procedure TCreateMiddlewareDependenciesExTask.createBuildDispatcherDependencyTpl(const methodDecl, methodImpl : string);
+    procedure TCreateDispatcherMethodTask.createBuildDispatcherDependencyTpl(const methodDecl, methodImpl : string);
     var
         bootstrapContent : string;
     begin
@@ -89,35 +84,4 @@ implementation
         );
     end;
 
-    procedure TCreateMiddlewareDependenciesExTask.createBuildDispatcherDependency();
-    var
-        {$INCLUDE src/Tasks/Implementations/Middleware/Support/Includes/buildDispatcher.decl.inc}
-        {$INCLUDE src/Tasks/Implementations/Middleware/Support/Includes/buildDispatcher.impl.inc}
-    begin
-        createBuildDispatcherDependencyTpl(strBuildDispatcherDecl, strBuildDispatcherImpl);
-    end;
-
-    procedure TCreateMiddlewareDependenciesExTask.dontCreateBuildDispatcherDependency();
-    begin
-        createBuildDispatcherDependencyTpl('', '');
-    end;
-
-    function TCreateMiddlewareDependenciesExTask.run(
-        const opt : ITaskOptions;
-        const longOpt : shortstring
-    ) : ITask;
-    begin
-        //need to call parent run() so baseDirectory can be initialized
-        inherited run(opt, longOpt);
-
-        if (opt.hasOption('with-middleware')) then
-        begin
-            createBuildDispatcherDependency();
-        end else
-        begin
-            dontCreateBuildDispatcherDependency();
-        end;
-
-        result := self;
-    end;
 end.

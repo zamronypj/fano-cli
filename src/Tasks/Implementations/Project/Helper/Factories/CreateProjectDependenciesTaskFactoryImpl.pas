@@ -81,7 +81,7 @@ uses
     BasicKeyGeneratorImpl,
     WithSessionOrMiddlewareTaskImpl,
     CreateMiddlewareDependenciesTaskImpl,
-    CreateMiddlewareDependenciesExTaskImpl,
+    CreateNoMiddlewareDependenciesTaskImpl,
     CreateSessionDirTaskImpl,
     ForceConfigDecoratorTaskImpl;
 
@@ -163,7 +163,7 @@ uses
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             registerCfgTask,
-            TCreateMiddlewareDependenciesExTask.create(
+            TCreateMiddlewareDependenciesTask.create(
                 textFileCreator,
                 contentModifier,
                 TFileHelperAppender.create()
@@ -181,7 +181,13 @@ uses
         result := TGroupTask.create([
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
-            registerCfgTask
+            registerCfgTask,
+            //add no middleware support
+            TCreateNoMiddlewareDependenciesTask.create(
+                textFileCreator,
+                contentModifier,
+                TFileHelperAppender.create()
+            )
         ]);
     end;
 
