@@ -16,5 +16,5 @@ strMiddlewaresDependenciesInc: string =
     '' + LineEnding +
     '{%dependencies.inc}' + LineEnding +
     '' + LineEnding +
-    '{---put your dependencies registration here---}' + LineEnding +
+    '{---put your middleware-related dependencies registration here---}' + LineEnding +
     '';

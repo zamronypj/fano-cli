@@ -16,5 +16,5 @@ strModelDependenciesInc: string =
     '' + LineEnding +
     '{%dependencies.inc}' + LineEnding +
     '' + LineEnding +
-    '{---put your dependencies registration here---}' + LineEnding +
+    '{---put your data model-related dependencies registration here---}' + LineEnding +
     '';
