@@ -81,6 +81,7 @@ uses
     BasicKeyGeneratorImpl,
     WithSessionOrMiddlewareTaskImpl,
     CreateMiddlewareDependenciesTaskImpl,
+    CreateMiddlewareDependenciesExTaskImpl,
     CreateSessionDirTaskImpl,
     ForceConfigDecoratorTaskImpl;
 
@@ -162,7 +163,7 @@ uses
             TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             registerCfgTask,
-            TCreateMiddlewareDependenciesTask.create(
+            TCreateMiddlewareDependenciesExTask.create(
                 textFileCreator,
                 contentModifier,
                 TFileHelperAppender.create()
