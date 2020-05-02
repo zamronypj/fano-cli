@@ -54,7 +54,6 @@ uses
     CreateDirTaskImpl,
     CreateAdditionalFilesTaskImpl,
     CreateShellScriptsTaskImpl,
-    CreateAppBootstrapTaskImpl,
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,

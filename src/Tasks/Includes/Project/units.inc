@@ -7,12 +7,6 @@
  *------------------------------------------------------------- *)
 
 CreateProjectDependenciesTaskFactoryImpl,
-CreateAppBootstrapTaskFactoryImpl,
-CreateAppBootstrapScgiTaskFactoryImpl,
-CreateAppBootstrapFcgiTaskFactoryImpl,
-CreateAppBootstrapFcgidTaskFactoryImpl,
-CreateAppBootstrapUwsgiTaskFactoryImpl,
-CreateAppBootstrapMhdTaskFactoryImpl,
 CreateProjectTaskFactoryImpl,
 CreateDaemonProjectTaskFactoryImpl,
 

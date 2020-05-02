@@ -18,7 +18,7 @@ uses
     TaskIntf,
     TextFileCreatorIntf,
     ContentModifierIntf,
-    FileContentAppenderIntf,
+    FileContentReaderIntf,
     CreateFileTaskImpl;
 
 type
@@ -30,7 +30,7 @@ type
      *---------------------------------------*)
     TCreateMiddlewareDependenciesExTask = class(TCreateFileTask)
     private
-        fFileAppender : IFileContentAppender;
+        fFileReader : IFileContentReader;
         procedure createBuildDispatcherDependencyTpl(const methodDecl, methodImpl : string);
         procedure createBuildDispatcherDependency();
         procedure dontCreateBuildDispatcherDependency();
@@ -38,7 +38,7 @@ type
         constructor create(
             const txtFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier;
-            const fAppend : IFileContentAppender
+            const fileReader : IFileContentReader
         );
         destructor destroy(); override;
 
@@ -53,16 +53,17 @@ implementation
     constructor TCreateMiddlewareDependenciesExTask.create(
         const txtFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier;
-        const fAppend : IFileContentAppender
+        const fileReader : IFileContentReader
+
     );
     begin
         inherited create(txtFileCreator, contentModifier);
-        fFileAppender := fAppend;
+        fFileReader := fileReader;
     end;
 
     destructor TCreateMiddlewareDependenciesExTask.destroy();
     begin
-        fFileAppender := nil;
+        fFileReader := nil;
         inherited destroy();
     end;
 
@@ -72,15 +73,16 @@ implementation
     begin
         fContentModifier.setVar(
             '[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]',
-            fContentModifier.modify(methodDecl)
+            methodDecl
         );
 
         fContentModifier.setVar(
             '[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]',
-            fContentModifier.modify(methodImpl)
+            methodImpl
         );
 
         bootstrapContent := fFileReader.read(baseDirectory + '/src/bootstrap.pas');
+
         createTextFile(
             baseDirectory + '/src/bootstrap.pas',
             fContentModifier.modify(bootstrapContent)

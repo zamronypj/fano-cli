@@ -26,7 +26,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateAppBootstrapTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TCreateAppBootstrapTaskFactory = class abstract (TInterfacedObject, ITaskFactory)
     private
         function buildAppBootstrap(
             const textFileCreator : ITextFileCreator;
@@ -36,7 +36,7 @@ type
         function buildBootstrapTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
-        ) : ITask; virtual;
+        ) : ITask; virtual; abstract;
     public
         function build() : ITask;
     end;
@@ -51,19 +51,10 @@ uses
     CompositeSessionTaskImpl,
     CompositeSessionTypeTaskImpl,
     CompositeFileTypeTaskImpl,
-    CreateAppBootstrapTaskImpl,
     JsonFileSessionContentModifierImpl,
     IniFileSessionContentModifierImpl,
     JsonCookieSessionContentModifierImpl,
     IniCookieSessionContentModifierImpl;
-
-    function TCreateAppBootstrapTaskFactory.buildBootstrapTask(
-        const textFileCreator : ITextFileCreator;
-        const contentModifier : IContentModifier
-    ) : ITask;
-    begin
-        result := TCreateAppBootstrapTask.create(textFileCreator, contentModifier);
-    end;
 
     function TCreateAppBootstrapTaskFactory.buildAppBootstrap(
         const textFileCreator : ITextFileCreator;

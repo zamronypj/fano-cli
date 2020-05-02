@@ -77,13 +77,13 @@ uses
 
     destructor TCreateProjectTask.destroy();
     begin
-        inherited destroy();
         createDirectoryTask := nil;
         createShellScriptsTask := nil;
         createAppConfigsTask := nil;
         createAdditionalFilesTask := nil;
         createAppBootstrapTask := nil;
         createGitRepoTask := nil;
+        inherited destroy();
     end;
 
     function TCreateProjectTask.run(
