@@ -18,6 +18,7 @@ strDependenciesInc: string =
     '' + LineEnding +
     '{---put your dependencies registration here---}' + LineEnding +
     '{ container.add(''db'', TMySqlDbFactory.create()); }' + LineEnding +
+    '{$INCLUDE middlewares.dependencies.inc}' + LineEnding +
     '{$INCLUDE models.dependencies.inc}' + LineEnding +
     '{$INCLUDE views.dependencies.inc}' + LineEnding +
     '{$INCLUDE controllers.dependencies.inc}' + LineEnding +
