@@ -97,7 +97,7 @@ implementation
     var appName : string;
     begin
         appName := opt.getOptionValue('app-name');
-        if (length(appName) > 0) then
+        if (appName <> '') then
         begin
             contentModifier.setVar('[[APP_NAME]]', appName);
         end;

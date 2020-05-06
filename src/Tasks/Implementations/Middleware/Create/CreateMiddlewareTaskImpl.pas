@@ -74,7 +74,7 @@ uses
     var middlewareName : string;
     begin
         middlewareName := opt.getOptionValue(longOpt);
-        if (length(middlewareName) = 0) then
+        if (middlewareName = '') then
         begin
             writeln('Middleware name can not be empty.');
             writeln('Run with --help to view available task.');

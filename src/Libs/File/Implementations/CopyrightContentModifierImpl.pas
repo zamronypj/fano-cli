@@ -115,7 +115,7 @@ uses
     ) : string;
     begin
         result := content;
-        if (length(newPattern) > 0 ) then
+        if (newPattern <> '' ) then
         begin
             result := stringReplace(result, oldPattern, newPattern, [rfReplaceAll]);
         end;

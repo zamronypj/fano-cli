@@ -76,7 +76,7 @@ uses
     var modelName : string;
     begin
         modelName := opt.getOptionValue(longOpt);
-        if (length(modelName) = 0) then
+        if (modelName = '') then
         begin
             writeln('Model name can not be empty.');
             writeln('Run with --help to view available task.');

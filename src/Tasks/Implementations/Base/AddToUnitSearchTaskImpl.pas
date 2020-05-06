@@ -144,7 +144,7 @@ const
     begin
         content := fileReader.read(filename);
         unitSearch := getUnitSearchEntry(content);
-        if (length(unitSearch) > 0) then
+        if (unitSearch <> '') then
         begin
             //add new unit search entry
             baseDir := '-Fu$USER_APP_DIR$/App/' + objectName + '/' + objectType + 's';

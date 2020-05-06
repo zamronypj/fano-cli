@@ -57,7 +57,7 @@ implementation
         result := self;
         objName := opt.getOptionValue(longOpt);
         objType := getType();
-        if (length(objName) = 0) then
+        if (objName = '') then
         begin
             writeln('Name of ', objType, ' can not be empty.');
             writeln('Run with --help to view available task.');

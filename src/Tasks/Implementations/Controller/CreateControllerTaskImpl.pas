@@ -79,7 +79,7 @@ uses
     var controllerName : string;
     begin
         controllerName := opt.getOptionValue(longOpt);
-        if (length(controllerName) = 0) then
+        if (controllerName = '') then
         begin
             writeln('Controller name can not be empty.');
             writeln('Run with --help to view available task.');

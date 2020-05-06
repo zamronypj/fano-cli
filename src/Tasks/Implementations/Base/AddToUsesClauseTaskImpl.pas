@@ -135,7 +135,7 @@ const
         objectName := opt.getOptionValue(longOpt);
         bootstrapUnitContent := fileReader.read('src/bootstrap.pas');
         usesUnits := getUnitNamesFromUsesClause(bootstrapUnitContent);
-        if (length(usesUnits) > 0) then
+        if (usesUnits <> '') then
         begin
             //add new controller factory unit with nicely 4 space format
             modifiedUsesUnits := usesUnits + ',' + LineEnding +

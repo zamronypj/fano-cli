@@ -74,7 +74,7 @@ uses
     var viewName : string;
     begin
         viewName := opt.getOptionValue(longOpt);
-        if (length(viewName) = 0) then
+        if (viewName = '') then
         begin
             writeln('View name can not be empty.');
             writeln('Run with --help to view available task.');
