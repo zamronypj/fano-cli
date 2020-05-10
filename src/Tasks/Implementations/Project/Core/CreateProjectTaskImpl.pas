@@ -113,6 +113,9 @@ uses
 
         writeln('Finish creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
         writeln('Change directory to ', baseDirectory, ' to start creating controller, view, etc.');
+        writeln();
+        writeln(formatColor('$ cd ' + baseDirectory, TXT_GREEN));
+        writeln(formatColor('$ fanocli --controller=Home --route=/', TXT_GREEN));
         result := self;
     end;
 end.
