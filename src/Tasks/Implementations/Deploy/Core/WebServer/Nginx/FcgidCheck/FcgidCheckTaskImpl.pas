@@ -82,6 +82,7 @@ resourcestring
         writeln(formatColor('$ sudo fanocli --deploy-fcgid=' + deployValue + ' --web-server=apache', TXT_GREEN));
         writeln();
         writeln(sRunWithHelp);
+        result := self;
     end;
 
     function TFcgidCheckTask.run(
