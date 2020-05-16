@@ -47,7 +47,8 @@ uses
     TextFileCreatorImpl,
     DirectoryCreatorImpl,
     ContentModifierImpl,
-    FileHelperImpl;
+    FileHelperImpl,
+    FcgidCheckTaskImpl;
 
     function TDeployFcgidTaskFactory.build() : ITask;
     var deployTask : ITask;
@@ -78,6 +79,9 @@ uses
                 TNullTask.create()
             )
         );
+
+        //nginx does not support something similar like mod_fcgid
+        deployTask := TFcgidCheckTask.create(deployTask);
 
         //protect to avoid accidentally running without root privilege
         result := TRootCheckTask.create(deployTask);
