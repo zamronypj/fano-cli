@@ -15,7 +15,11 @@ interface
 uses
 
     SysUtils,
-    KeyGeneratorIntf;
+    KeyGeneratorIntf
+
+    {$IFDEF WINDOWS}
+    ,jwawincrypt
+    {$ENDIF};
 
 type
 
@@ -27,9 +31,15 @@ type
      *---------------------------------------*)
     TBasicKeyGenerator = class(TInterfacedObject, IKeyGenerator)
     private
+        {$IFDEF WINDOWS}
+        FProvider: HCRYPTPROV;
+        {$ENDIF}
+
         function readRandomBytes(const numberOfBytes : integer) : TBytes;
         function encodeB64(aob: TBytes): string;
     public
+        constructor create();
+        destructor destroy(); override;
         function generate(const len : integer; const prefix : string = '') : string;
     end;
 
@@ -38,9 +48,43 @@ implementation
 uses
 
     Classes,
-    Base64,
-    BaseUnix;
+    Base64
+    {$IFDEF UNIX}
+    , BaseUnix
+    {$ENDIF};
 
+    constructor TBasicKeyGenerator.create();
+    {$IFDEF WINDOWS}
+    var ctxAcquired : boolean;
+    {$ENDIF}
+    begin
+        {$IFDEF WINDOWS}
+        ctxAcquired := CryptAcquireContext(
+            FProvider,
+            nil,
+            nil,
+            PROV_RSA_FULL,
+            CRYPT_VERIFYCONTEXT or CRYPT_SILENT
+        );
+        if not ctxAcquired then
+        begin
+            raiseLastOSError();
+        end;
+        {$ENDIF}
+    end;
+
+    destructor TBasicKeyGenerator.destroy();
+    begin
+        {$IFDEF WINDOWS}
+        if FProvider <> 0 then
+        begin
+            CryptReleaseContext(FProvider, 0);
+        end;
+        {$ENDIF}
+        inherited destroy();
+    end;
+
+    {$IFDEF UNIX}
     function TBasicKeyGenerator.readRandomBytes(const numberOfBytes : integer) : TBytes;
     var fs : TFileStream;
         bytes : TBytes;
@@ -54,6 +98,24 @@ uses
             fs.free();
         end;
     end;
+    {$ENDIF}
+
+    {$IFDEF WINDOWS}
+    (*!------------------------------------------------
+     * read random bytes using Windows CryptoAPI
+     *-------------------------------------------------
+     * @author: ASerge
+     * @credit: https://forum.lazarus.freepascal.org/index.php/topic,35523.msg235007.html#msg235007
+     *-------------------------------------------------*)
+    function TBasicKeyGenerator.readRandomBytes(const numberOfBytes : integer) : TBytes;
+    begin
+        setLength(result, numberOfBytes);
+        if not CryptGenRandom(FProvider, numberOfBytes, result[0]) then
+        begin
+            raiseLastOSError();
+        end;
+    end;
+    {$ENDIF}
 
     (*!------------------------------------------------
      * encode array of bytes to Base64 string

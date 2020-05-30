@@ -40,14 +40,14 @@ implementation
 
 uses
 
-    SysUtils,
+    SysUtils
 
     {$IFDEF UNIX}
-    BaseUnix
+    ,BaseUnix
     {$ENDIF}
 
     {$IFDEF WINDOWS}
-    winutils
+    ,winutils
     {$ENDIF};
 
 resourcestring
