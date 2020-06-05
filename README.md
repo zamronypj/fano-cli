@@ -27,6 +27,8 @@ For easier access, copy `bin/out/fanocli` executable binary to globally accessib
 $ sudo cp bin/out/fanocli /usr/local/bin/fanocli
 ```
 
+In FreeBSD, before you run `build.sh`, edit `build.cfg` and replace target OS compilation to `-Tfreebsd`.
+
 ### Setting up
 
 Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run
