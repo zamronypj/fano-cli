@@ -47,6 +47,7 @@ uses
     begin
         if directoryExists('/etc/nginx') then
         begin
+            //mostly in Linux
             contentModifier.setVar('[[NGINX_LOG_DIR]]', '/var/log/nginx');
             createTextFile(
                 '/etc/nginx/conf.d/' + serverName + '.conf',
@@ -55,6 +56,30 @@ uses
             writeln(
                 'Create virtual host ',
                 formatColor('/etc/nginx/conf.d/' + serverName + '.conf', TXT_GREEN)
+            );
+        end else
+        if directoryExists('/usr/local/etc/nginx') then
+        begin
+            //in FreeBSD
+            contentModifier.setVar('[[NGINX_LOG_DIR]]', '/var/log/nginx');
+
+            if not directoryExists('/usr/local/etc/nginx/conf.d') then
+            begin
+                mkdir('/usr/local/etc/nginx/conf.d');
+            end;
+
+            if pos('/usr/local/etc/nginx/conf.d', nginXConfigContent) = 0 then
+            begin
+                fileHelper.append('include /usr/local/etc/nginx/conf.d/*' + LineEnding);
+            end;
+
+            createTextFile(
+                '/usr/local/etc/nginx/conf.d/' + serverName + '.conf',
+                getVhostTemplate()
+            );
+            writeln(
+                'Create virtual host ',
+                formatColor('/usr/local/etc/nginx/conf.d/' + serverName + '.conf', TXT_GREEN)
             );
         end else
         begin
