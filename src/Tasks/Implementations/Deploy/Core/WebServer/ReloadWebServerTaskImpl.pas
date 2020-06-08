@@ -25,6 +25,8 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TReloadWebServerTask = class(TInterfacedObject, ITask)
+    private
+        function isSystemD() : boolean;
     protected
         function getSvcName() : string; virtual; abstract;
     public
@@ -42,6 +44,12 @@ uses
     strformats,
     process;
 
+    function TReloadWebServerTask.isSystemD() : boolean;
+    begin
+        //cheap test if we are in OS where systemD is installed
+        result := DirectoryExists('/lib/systemd');
+    end;
+
     function TReloadWebServerTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
@@ -52,14 +60,28 @@ uses
         svcName := getSvcName();
         if (svcName <> '') then
         begin
-            //run systemctl reload [name of service]
-            runCommandInDir(
-                getCurrentDir(),
-                'systemctl',
-                ['reload', svcName],
-                outputString,
-                [poStderrToOutPut]
-            );
+            if isSystemD() then
+            begin
+                //run systemctl reload [name of service]
+                runCommandInDir(
+                    getCurrentDir(),
+                    'systemctl',
+                    ['reload', svcName],
+                    outputString,
+                    [poStderrToOutPut]
+                );
+            end else
+            begin
+                //assume SysVInit
+                //run services [name of service] reload
+                runCommandInDir(
+                    getCurrentDir(),
+                    'services',
+                    [ svcName, 'reload'],
+                    outputString,
+                    [poStderrToOutPut]
+                );
+            end;
             writeln('Reload ', formatColor(svcName, TXT_GREEN), ' service');
         end else
         begin
