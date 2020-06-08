@@ -19,6 +19,9 @@ uses
     TextFileCreatorIntf,
     ContentModifierIntf,
     DirectoryCreatorIntf,
+    FileContentReaderIntf,
+    FileContentWriterIntf,
+    CreateFileConsts,
     BaseCreateFileTaskImpl,
     BaseNginxVirtualHostTaskImpl;
 
@@ -45,6 +48,8 @@ type
             const txtFileCreator : ITextFileCreator;
             const dirCreator : IDirectoryCreator;
             const cntModifier : IContentModifier;
+            const cntReader : IFileContentReader;
+            const cntWriter : IFileContentWriter;
             const baseDir : string = BASE_DIRECTORY;
             const protocol : shortstring = 'scgi';
             const proxyPass : shortstring = 'scgi_pass';
@@ -68,6 +73,8 @@ uses
         const txtFileCreator : ITextFileCreator;
         const dirCreator : IDirectoryCreator;
         const cntModifier : IContentModifier;
+        const cntReader : IFileContentReader;
+        const cntWriter : IFileContentWriter;
         const baseDir : string = BASE_DIRECTORY;
         const protocol : shortstring = 'scgi';
         const proxyPass : shortstring = 'scgi_pass';
@@ -75,7 +82,14 @@ uses
         const serverPrefix : shortstring = ''
     );
     begin
-        inherited create(txtFileCreator, dirCreator, cntModifier, baseDir);
+        inherited create(
+            txtFileCreator,
+            dirCreator,
+            cntModifier,
+            cntReader,
+            cntWriter,
+            baseDir
+        );
         fProtocol := protocol;
         fProxyPass := proxyPass;
         fProxyParams := proxyParams;

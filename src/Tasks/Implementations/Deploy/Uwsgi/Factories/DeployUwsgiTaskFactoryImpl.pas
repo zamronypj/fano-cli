@@ -67,7 +67,9 @@ uses
                 TNginxVirtualHostUwsgiTask.create(
                     TTextFileCreator.create(),
                     TDirectoryCreator.create(),
-                    TContentModifier.create()
+                    TContentModifier.create(),
+                    fReader,
+                    fWriter
                 )
             ),
             TWebServerTask.create(

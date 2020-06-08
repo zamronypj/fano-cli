@@ -19,6 +19,7 @@ uses
     TextFileCreatorIntf,
     ContentModifierIntf,
     DirectoryCreatorIntf,
+    CreateFileConsts,
     BaseCreateFileTaskImpl,
     BaseApacheVirtualHostTaskImpl;
 

@@ -18,9 +18,8 @@ uses
     TaskIntf,
     TextFileCreatorIntf,
     ContentModifierIntf,
-    DirectoryCreatorIntf;
-
-const BASE_DIRECTORY = 'src' + DirectorySeparator + 'App';
+    DirectoryCreatorIntf,
+    CreateFileConsts;
 
 type
 

@@ -55,7 +55,8 @@ uses
     DirectoryCreatorImpl,
     ContentModifierImpl,
     FileHelperImpl,
-    BaseCreateFileTaskImpl;
+    BaseCreateFileTaskImpl,
+    CreateFileConsts;
 
     function TDeployBalancerTaskFactory.getServerPrefix() : shortstring;
     begin
@@ -82,6 +83,8 @@ uses
                     TTextFileCreator.create(),
                     TDirectoryCreator.create(),
                     TContentModifier.create(),
+                    fReader,
+                    fWriter,
                     BASE_DIRECTORY,
                     getProtocol(),
                     getProxyPass(),
