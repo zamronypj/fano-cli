@@ -104,7 +104,7 @@ uses
         begin
             lastCurlyBracket := rpos('}', nginxConfContent);
             insert(
-                LineEnding + '   include ' + nginxConfigDir + '/conf.d/*' + LineEnding,
+                LineEnding + '   include ' + nginxConfigDir + '/conf.d/*;' + LineEnding,
                 nginxConfContent,
                 lastCurlyBracket
             );
