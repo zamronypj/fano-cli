@@ -25,7 +25,7 @@ strBuildCfg: string =
     '# Target OS' + LineEnding +
     '# linux : Linux' + LineEnding +
     '# win64 : Windows (not tested yet)' + LineEnding +
-    '# freebsd : FreeBSD (not tested yet)' + LineEnding +
+    '# freebsd : FreeBSD' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '-Tlinux' + LineEnding +
     '' + LineEnding +

@@ -48,7 +48,14 @@ uses
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.dev.cfg.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.prod.cfg.inc}
     begin
+        {$IFDEF FREEBSD}
+        createTextFile(
+            dir + '/build.cfg',
+            StringReplace(strBuildCfg, '-Tlinux', '-Tfreebsd', [rfReplaceAll])
+        );
+        {$ElSE}
         createTextFile(dir + '/build.cfg', strBuildCfg);
+        {$ENDIF}
         createTextFile(dir + '/build.cfg.sample', strBuildCfg);
 
         createTextFile(dir + '/build.dev.cfg', strBuildCfgDev);
