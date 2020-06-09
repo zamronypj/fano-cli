@@ -76,7 +76,7 @@ uses
                 //run services [name of service] reload
                 runCommandInDir(
                     getCurrentDir(),
-                    'services',
+                    'service',
                     [ svcName, 'reload'],
                     outputString,
                     [poStderrToOutPut]
