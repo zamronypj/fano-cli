@@ -170,6 +170,7 @@ uses
         const serverName : string
     );
     begin
+        //TODO: refactor to avoid too many conditional check
         if directoryExists('/etc/nginx') then
         begin
             //in Linux
@@ -177,6 +178,7 @@ uses
         end else
         if directoryExists('/usr/local/etc/nginx') then
         begin
+            //FreeBSD
             doCreateVhostFile(opt, serverName, '/usr/local/etc/nginx');
         end else
         begin

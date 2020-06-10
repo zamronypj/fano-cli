@@ -48,6 +48,7 @@ uses
     var serverName : shortString;
     begin
         serverName := opt.getOptionValue(longOpt);
+        //TODO: refactor to avoid too many conditional check
         if directoryExists('/etc/apache2/sites-enabled') then
         begin
             //debian-based
@@ -74,7 +75,7 @@ uses
         end else
         if directoryExists('/usr/local/etc/apache24') then
         begin
-            //fedora-based we do nothing
+            //FreeBSD we do nothing
             writeln(
                 'Enable virtual host ',
                 formatColor('/usr/local/etc/apache24/Includes/' + serverName + '.conf', TXT_GREEN)

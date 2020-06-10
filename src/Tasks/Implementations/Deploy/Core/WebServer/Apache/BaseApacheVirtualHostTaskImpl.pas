@@ -45,6 +45,7 @@ uses
         const serverName : string
     );
     begin
+        //TODO: refactor to avoid too many conditional check
         if directoryExists('/etc/apache2') then
         begin
             //debian-based
