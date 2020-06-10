@@ -72,6 +72,7 @@ uses
                 formatColor('/etc/httpd/conf.d/' + serverName + '.conf', TXT_GREEN)
             );
         end else
+        //TODO: avoid harcode Apache version, for example Apache 2.5 will use apache25
         if directoryExists('/usr/local/etc/apache24') then
         begin
             //FreeBSD
