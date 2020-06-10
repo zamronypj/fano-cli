@@ -47,6 +47,11 @@ uses
         begin
             result := 'httpd';
         end else
+        if directoryExists('/usr/local/etc/apache24') then
+        begin
+            //FreeBSD
+            result := 'apache24';
+        end else
         begin
             //unsupported
             result := '';

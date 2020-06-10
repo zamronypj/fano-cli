@@ -64,6 +64,16 @@ uses
             );
             writeln('Create virtual host /etc/httpd/conf.d/' + serverName + '.conf');
         end else
+        if directoryExists('/usr/local/etc/apache24') then
+        begin
+            //FreeBSD
+            contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log');
+            createTextFile(
+                '/usr/local/etc/apache24/Includes/' + serverName + '.conf',
+                getVhostTemplate()
+            );
+            writeln('Create virtual host /usr/local/etc/apache24/Includes/' + serverName + '.conf');
+        end else
         begin
             writeln('Unsupported platform or web server');
         end;

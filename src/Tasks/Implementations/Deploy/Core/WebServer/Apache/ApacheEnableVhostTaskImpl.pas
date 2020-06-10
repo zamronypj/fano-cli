@@ -72,6 +72,14 @@ uses
                 formatColor('/etc/httpd/conf.d/' + serverName + '.conf', TXT_GREEN)
             );
         end else
+        if directoryExists('/usr/local/etc/apache24') then
+        begin
+            //fedora-based we do nothing
+            writeln(
+                'Enable virtual host ',
+                formatColor('/usr/local/etc/apache24/Includes/' + serverName + '.conf', TXT_GREEN)
+            );
+        end else
         begin
             writeln('Cannot create vhost symlink. Unsupported platform or web server');
         end;
