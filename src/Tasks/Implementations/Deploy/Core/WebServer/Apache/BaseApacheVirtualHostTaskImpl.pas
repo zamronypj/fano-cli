@@ -37,7 +37,8 @@ implementation
 
 uses
 
-    SysUtils;
+    SysUtils,
+    strformats;
 
     procedure TBaseApacheVirtualHostTask.createVhostFile(
         const opt : ITaskOptions;
@@ -52,7 +53,10 @@ uses
                 '/etc/apache2/sites-available/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /etc/apache2/sites-available/' + serverName + '.conf');
+            writeln(
+                'Create virtual host ',
+                formatColor('/etc/apache2/sites-available/' + serverName + '.conf', TXT_GREEN)
+            );
         end else
         if directoryExists('/etc/httpd') then
         begin
@@ -62,7 +66,10 @@ uses
                 '/etc/httpd/conf.d/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /etc/httpd/conf.d/' + serverName + '.conf');
+            writeln(
+                'Create virtual host ',
+                formatColor('/etc/httpd/conf.d/' + serverName + '.conf', TXT_GREEN)
+            );
         end else
         if directoryExists('/usr/local/etc/apache24') then
         begin
@@ -72,7 +79,10 @@ uses
                 '/usr/local/etc/apache24/Includes/' + serverName + '.conf',
                 getVhostTemplate()
             );
-            writeln('Create virtual host /usr/local/etc/apache24/Includes/' + serverName + '.conf');
+            writeln(
+                'Create virtual host ',
+                formatColor('/usr/local/etc/apache24/Includes/' + serverName + '.conf', TXT_GREEN)
+            );
         end else
         begin
             writeln('Unsupported platform or web server');
