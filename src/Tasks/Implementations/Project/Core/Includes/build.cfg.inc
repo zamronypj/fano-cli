@@ -44,6 +44,16 @@ strBuildCfg: string =
     '#-Px86_64' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
+    '# Link with libmicrohttpd' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
+    '#-DLIBMICROHTTPD' + LineEnding +
+    '' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
+    '# Link with libcurl' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
+    '#-DLIBCURL' + LineEnding +
+    '' + LineEnding +
+    '#----------------------------------------------' + LineEnding +
     '# Application Unit search path' + LineEnding +
     '# USER_APP_DIR is contains user application base directory' + LineEnding +
     '#----------------------------------------------' + LineEnding +
