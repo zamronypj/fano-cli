@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateMhdCompilerConfigsTaskImpl;
+unit CreateCurlCompilerConfigsTaskImpl;
 
 interface
 
@@ -23,12 +23,12 @@ type
     (*!--------------------------------------
      * Task that create web application project
      * compiler config files and enable conditional 
-     * define -DLIBMICROHTTPD if current command is 
-     * --project-mhd
+     * define -DLIBCURL if current command has 
+     * --with-curl
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateMhdCompilerConfigsTask = class(TDecoratorCreateCompilerConfigsTask)
+    TCreateCurlCompilerConfigsTask = class(TDecoratorCreateCompilerConfigsTask)
     protected
         function doCompilerConfigs(
             const opt : ITaskOptions;
@@ -42,19 +42,19 @@ uses
 
     SysUtils;
 
-    function TCreateMhdCompilerConfigsTask.doCompilerConfigs(
+    function TCreateCurlCompilerConfigsTask.doCompilerConfigs(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
     begin
-        if (longOpt = 'project-mhd') then 
+        if opt.hasOption('with-curl') then 
         begin
             fWriter.write(
                 baseDirectory + '/build.cfg',
                 StringReplace(
                     fReader.read(baseDirectory + '/build.cfg'), 
-                    '#-dLIBMICROHTTPD', 
-                    '-dLIBMICROHTTPD', 
+                    '#-dLIBCURL', 
+                    '-dLIBCURL', 
                     [rfReplaceAll]
                 )
             );

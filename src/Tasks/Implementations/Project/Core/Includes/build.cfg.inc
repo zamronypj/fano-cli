@@ -44,14 +44,16 @@ strBuildCfg: string =
     '#-Px86_64' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
+    '# Add $DEFINE LIBMICROHTTPD' + LineEnding +
     '# Link with libmicrohttpd' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '#-DLIBMICROHTTPD' + LineEnding +
+    '#-dLIBMICROHTTPD' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
+    '# Add $DEFINE LIBCURL' + LineEnding +
     '# Link with libcurl' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '#-DLIBCURL' + LineEnding +
+    '#-dLIBCURL' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Application Unit search path' + LineEnding +

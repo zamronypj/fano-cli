@@ -29,7 +29,7 @@ strBuildCfgProd: string =
     '# Level 3 optimization' + LineEnding +
     '# Other available switch -O1, -O2, -O4' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '-O3' + LineEnding +
+    '-O4' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Move frequent-used variable in register' + LineEnding +

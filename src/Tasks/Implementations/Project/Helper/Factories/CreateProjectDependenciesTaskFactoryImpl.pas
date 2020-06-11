@@ -71,6 +71,7 @@ uses
     TextFileCreatorImpl,
     ContentModifierImpl,
     CreateCompilerConfigsTaskImpl,
+    CreateCurlCompilerConfigsTaskImpl,
     CreateAppConfigsTaskImpl,
     CreateSessionJsonAppConfigsTaskImpl,
     CreateSessionIniAppConfigsTaskImpl,
@@ -82,6 +83,7 @@ uses
     RegisterConfigDependencyTaskImpl,
     CreateConfigMethodTaskImpl,
     FileHelperAppendImpl,
+    FileHelperImpl,
     GroupTaskImpl,
     CompositeTaskImpl,
     BasicKeyGeneratorImpl,
@@ -95,8 +97,17 @@ uses
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
+    var aReader : IFileContentReader;
+        aWriter : IFileContentWriter;
     begin
-        result := TCreateCompilerConfigsTask.create(textFileCreator, contentModifier);      
+        aReader := TFileHelper.create();
+        aWriter := aReader as IFileContentWriter;
+        //wrap so that when --with-curl is set, it will enable -dLIBCURL
+        result := TCreateCurlCompilerConfigsTask.create(
+            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            aReader,
+            aWriter
+        );      
     end;
 
     function TCreateProjectDependenciesTaskFactory.buildConfigProjectTask(
