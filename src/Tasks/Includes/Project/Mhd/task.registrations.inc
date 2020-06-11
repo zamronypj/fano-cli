@@ -9,7 +9,9 @@
 {%../Includes/task.registrations.inc}
 
 taskFactory := TCreateDaemonProjectTaskFactory.create(
-    TCreateProjectDependenciesTaskFactory.create(),
+    TCreateProjectDependenciesMhdTaskFactory.create(
+        TCreateProjectDependenciesTaskFactory.create()
+    ),
     TCreateAppBootstrapMhdTaskFactory.create()
 );
 try

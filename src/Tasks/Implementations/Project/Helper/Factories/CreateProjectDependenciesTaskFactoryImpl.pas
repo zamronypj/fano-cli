@@ -28,6 +28,11 @@ type
      *---------------------------------------*)
     TCreateProjectDependenciesTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
+        function buildCompilerConfigProjectTask(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
+
         function buildConfigProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -60,6 +65,7 @@ implementation
 uses
 
     FileContentReaderIntf,
+    FileContentWriterIntf,
     NullTaskImpl,
     DirectoryCreatorImpl,
     TextFileCreatorImpl,
@@ -85,6 +91,14 @@ uses
     CreateSessionDirTaskImpl,
     ForceConfigDecoratorTaskImpl;
 
+    function TCreateProjectDependenciesTaskFactory.buildCompilerConfigProjectTask(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TCreateCompilerConfigsTask.create(textFileCreator, contentModifier);      
+    end;
+
     function TCreateProjectDependenciesTaskFactory.buildConfigProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
@@ -93,6 +107,7 @@ uses
     begin
         fileReader := TFileHelperAppender.create();
         result := TGroupTask.create([
+            //task that add buildConfig() method
             TCreateConfigMethodTask.create(
                 textFileCreator,
                 contentModifier,
@@ -116,7 +131,7 @@ uses
         registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
 
         result := TGroupTask.create([
-            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            buildCompilerConfigsTask(textFileCreator, contentModifier),
             TCompositeSessionTask.create(
                 //force --config always set if --with-session is set
                 TForceConfigDecoratorTask.create(
@@ -160,7 +175,7 @@ uses
         registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
 
         result := TGroupTask.create([
-            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            buildCompilerConfigsTask(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             registerCfgTask,
             TCreateMiddlewareDependenciesTask.create(
@@ -179,7 +194,7 @@ uses
     begin
         registerCfgTask := buildConfigProjectTask(textFileCreator, contentModifier);
         result := TGroupTask.create([
-            TCreateCompilerConfigsTask.create(textFileCreator, contentModifier),
+            buildCompilerConfigsTask(textFileCreator, contentModifier),
             TCreateAppConfigsTask.create(textFileCreator, contentModifier),
             registerCfgTask,
             //add no middleware support

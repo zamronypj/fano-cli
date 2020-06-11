@@ -26,6 +26,8 @@ type
      * Task that create web application project
      * files using fano web framework
      *
+     * TODO: refactor as this is similar with TBaseCreateFileTask
+     *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateFileTask = class(TBaseProjectTask)

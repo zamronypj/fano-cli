@@ -7,6 +7,7 @@
  *------------------------------------------------------------- *)
 
 CreateProjectDependenciesTaskFactoryImpl,
+CreateProjectDependenciesMhdTaskFactoryImpl,
 CreateProjectTaskFactoryImpl,
 CreateDaemonProjectTaskFactoryImpl,
 
