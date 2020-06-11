@@ -38,6 +38,8 @@ implementation
 
 uses
 
+    FileContentReaderIntf,
+    FileContentWriterIntf,
     FileHelperImpl,
     CreateMhdCompilerConfigsTaskImpl;
 

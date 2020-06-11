@@ -16,6 +16,8 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
+    FileContentWriterIntf,
+    FileContentReaderIntf,
     BaseProjectTaskImpl;
 
 type
@@ -85,9 +87,9 @@ uses
         if (longOpt = 'project-mhd') then 
         begin
             fWriter.write(
-                dir + '/build.cfg',
+                baseDirectory + '/build.cfg',
                 StringReplace(
-                    fReader.read(dir + '/build.cfg'), 
+                    fReader.read(baseDirectory + '/build.cfg'), 
                     '#-DLIBMICROHTTPD', 
                     '-DLIBMICROHTTPD', 
                     [rfReplaceAll]

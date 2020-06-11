@@ -28,7 +28,7 @@ type
      *---------------------------------------*)
     TCreateProjectDependenciesTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildCompilerConfigProjectTask(
+        function buildCompilerConfigsTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
         ) : ITask;
@@ -91,7 +91,7 @@ uses
     CreateSessionDirTaskImpl,
     ForceConfigDecoratorTaskImpl;
 
-    function TCreateProjectDependenciesTaskFactory.buildCompilerConfigProjectTask(
+    function TCreateProjectDependenciesTaskFactory.buildCompilerConfigsTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
