@@ -6,16 +6,18 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strReadme: string =
-    '# Fano Web Framework Skeleton Application' + LineEnding +
+    '# uwsgi Fano Web Framework Skeleton Application' + LineEnding +
     '' + LineEnding +
-    'Web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
+    '[uwsgi](https://uwsgi-docs.readthedocs.io/en/latest/Protocol.html) web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
     '' + LineEnding +
     'This project is generated using [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
     'command line tools to help scaffolding web application using Fano Framework.' + LineEnding +
     '' + LineEnding +
     '## Requirement' + LineEnding +
     '' + LineEnding +
+    '- Linux or FreeBSD' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
+    '- Web Server ([Apache with mod_proxy_uwsgi](https://httpd.apache.org/docs/current/mod/mod_proxy_uwsgi.html), nginx)' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
     '- Web Server (Apache, nginx)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
@@ -29,7 +31,7 @@ strReadme: string =
     '$ cd fano-app' + LineEnding +
     '$ ./tools/config.setup.sh' + LineEnding +
     '$ ./build.sh' + LineEnding +
-    '$ sudo fanocli --deploy-cgi=fano-app.fano' + LineEnding +
+    '$ sudo fanocli --deploy-uwsgi=fano-app.fano' + LineEnding +
     '```' + LineEnding +
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 
@@ -117,10 +119,20 @@ strReadme: string =
     '## Run' + LineEnding +
     '' + LineEnding +
     '### Run with a webserver' + LineEnding +
-    '' + LineEnding +
+    ' + LineEnding +
     'Setup a virtual host. Please consult documentation of web server you use.' + LineEnding +
     '' + LineEnding +
-    'For example on Apache,' + LineEnding +
+    '#### Apache' + LineEnding +
+    '' + LineEnding +
+    'You need to have `mod_proxy_uwsgi` installed and loaded. This module is Apache''s built-in module. For example, on Debian,' + LineEnding +
+    '' + LineEnding +
+    '```' + LineEnding +
+    '$ sudo apt install libapache2-mod-proxy-uwsgi' + LineEnding +
+    '$ sudo a2enmod proxy_uwsgi' + LineEnding +
+    '$ sudo systemctl restart apache2' + LineEnding +
+    '```' + LineEnding +
+    '' + LineEnding +
+    'Create virtual host config and add `ProxyPassMatch`, for example' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
     '<VirtualHost *:80>' + LineEnding +
@@ -131,34 +143,25 @@ strReadme: string =
     '         Options +ExecCGI' + LineEnding +
     '         AllowOverride FileInfo' + LineEnding +
     '         Require all granted' + LineEnding +
-    '         DirectoryIndex app.cgi' + LineEnding +
-    '         AddHandler cgi-script .cgi' + LineEnding +
     '     </Directory>' + LineEnding +
+    '' + LineEnding +
+    '    ProxyRequests Off' + LineEnding +
+    '    ProxyPass /css !' + LineEnding +
+    '    ProxyPass /images !' + LineEnding +
+    '    ProxyPass /js !' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ uwsgi://127.0.0.1:20477' + LineEnding +
     '</VirtualHost>' + LineEnding +
     '```' + LineEnding +
-    'On Apache, you will need to enable CGI module, such as `mod_cgi` or `mod_cgid`. If CGI module not loaded, above virtual host will cause `app.cgi` is downloaded instead of executed.' + LineEnding +
-    '' + LineEnding +
-    'For example, on Debian, this will enable `mod_cgi` module.' + LineEnding +
+    'Last four line of virtual host configurations basically tell Apache to serve any' + LineEnding +
+    'files inside `css`, `images`, `js` directly otherwise pass it to our application.' + LineEnding +
+    ' + LineEnding +
+    'On Debian, save it to `/etc/apache2/sites-available` for example as `fano-uwsgi.conf`' + LineEnding +
+    'Enable this site and restart Apache' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '$ sudo a2enmod cgi' + LineEnding +
+    '$ sudo a2ensite fano-uwsgi.conf' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
     '```' + LineEnding +
-    '' + LineEnding +
-    'Depending on your server setup, for example, if  you use `.htaccess`, add following code:' + LineEnding +
-    '' + LineEnding +
-    '```' + LineEnding +
-    '<IfModule mod_rewrite.c>' + LineEnding +
-    '    RewriteEngine On' + LineEnding +
-    '    RewriteCond %{REQUEST_FILENAME} !-d' + LineEnding +
-    '    RewriteCond %{REQUEST_FILENAME} !-f' + LineEnding +
-    '    RewriteRule ^(.*)$ app.cgi [L]' + LineEnding +
-    '</IfModule>' + LineEnding +
-    '```' + LineEnding +
-    'and put `.htaccess` file in same directory as `app.cgi` file (i.e., in `public` directory).' + LineEnding +
-    '' + LineEnding +
-    'Content of `.htaccess` basically tells Apache to serve existing files/directories directly. For any non-existing files/directories, pass them to our application.' + LineEnding +
-    '' + LineEnding +
     '### Simulate run on command line' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
