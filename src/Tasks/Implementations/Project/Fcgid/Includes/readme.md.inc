@@ -6,9 +6,9 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strReadme: string =
-    '# Fano Web Framework Skeleton Application' + LineEnding +
+    '# FastCGI Fano Web Framework Skeleton Application' + LineEnding +
     '' + LineEnding +
-    'Web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
+    'FastCGI web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
     '' + LineEnding +
     'This project is generated using [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
     'command line tools to help scaffolding web application using Fano Framework.' + LineEnding +
@@ -17,7 +17,7 @@ strReadme: string =
     '' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
-    '- Web Server (Apache, nginx)' + LineEnding +
+    '- Web Server (Apache with [mod_fcgid](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html), nginx)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +
@@ -117,48 +117,47 @@ strReadme: string =
     '## Run' + LineEnding +
     '' + LineEnding +
     '### Run with a webserver' + LineEnding +
-    ' + LineEnding +
+    '' + LineEnding +
     'Setup a virtual host. Please consult documentation of web server you use.' + LineEnding +
     '' + LineEnding +
-    '#### Apache' + LineEnding +
-    '' + LineEnding +
-    'You need to have `mod_proxy_scgi` installed and loaded. This module is Apache''s built-in module, so it is very likely that you will have it with your Apache installation. You just need to make sure it is loaded. For example, on Debian,' + LineEnding +
-    '' + LineEnding +
-    '```' + LineEnding +
-    '$ sudo a2enmod proxy_scgi' + LineEnding +
-    '$ sudo systemctl restart apache2' + LineEnding +
-    '```' + LineEnding +
-    '' + LineEnding +
-    'Create virtual host config and add `ProxyPassMatch`, for example' + LineEnding +
+    'For example on Apache,' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
     '<VirtualHost *:80>' + LineEnding +
-    '     ServerName www.example.com' + LineEnding +
-    '     DocumentRoot /home/example/public' + LineEnding +
+    '    ServerName www.example.com' + LineEnding +
+    '    DocumentRoot /home/example/public' + LineEnding +
     '' + LineEnding +
-    '     <Directory "/home/example/public">' + LineEnding +
-    '         Options +ExecCGI' + LineEnding +
-    '         AllowOverride FileInfo' + LineEnding +
-    '         Require all granted' + LineEnding +
-    '     </Directory>' + LineEnding +
-    '' + LineEnding +
-    '    ProxyRequests Off' + LineEnding +
-    '    ProxyPass /css !' + LineEnding +
-    '    ProxyPass /images !' + LineEnding +
-    '    ProxyPass /js !' + LineEnding +
-    '    ProxyPassMatch ^/(.*)$ scgi://127.0.0.1:20477' + LineEnding +
+    '    <Directory "/home/example/public">' + LineEnding +
+    '        Options +ExecCGI' + LineEnding +
+    '        AllowOverride FileInfo' + LineEnding +
+    '        Require all granted' + LineEnding +
+    '        DirectoryIndex app.cgi' + LineEnding +
+    '        AddHandler fcgid-script .cgi' + LineEnding +
+    '    </Directory>' + LineEnding +
     '</VirtualHost>' + LineEnding +
     '```' + LineEnding +
-    'Last four line of virtual host configurations basically tell Apache to serve any' + LineEnding +
-    'files inside `css`, `images`, `js` directly otherwise pass it to our application.' + LineEnding +
-    ' + LineEnding +
-    'On Debian, save it to `/etc/apache2/sites-available` for example as `fano-scgi.conf`' + LineEnding +
-    'Enable this site and restart Apache' + LineEnding +
+    'On Apache, you will need to enable `mod_fcgid`. If correct module not loaded, above virtual host will cause `app.cgi` is downloaded instead of executed.' + LineEnding +
+    '' + LineEnding +
+    'For example, on Debian, this will enable `mod_fcgid` module.' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '$ sudo a2ensite fano-scgi.conf' + LineEnding +
+    '$ sudo a2enmod fcgid' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
     '```' + LineEnding +
+    '' + LineEnding +
+    'Depending on your server setup, for example, if  you use `.htaccess`, add following code:' + LineEnding +
+    '' + LineEnding +
+    '```' + LineEnding +
+    '<IfModule mod_rewrite.c>' + LineEnding +
+    '    RewriteEngine On' + LineEnding +
+    '    RewriteCond %{REQUEST_FILENAME} !-d' + LineEnding +
+    '    RewriteCond %{REQUEST_FILENAME} !-f' + LineEnding +
+    '    RewriteRule ^(.*)$ app.cgi [L]' + LineEnding +
+    '</IfModule>' + LineEnding +
+    '```' + LineEnding +
+    'and put `.htaccess` file in same directory as `app.cgi` file (i.e., in `public` directory).' + LineEnding +
+    '' + LineEnding +
+    'Content of `.htaccess` basically tells Apache to serve existing files/directories directly. For any non-existing files/directories, pass them to our application.' + LineEnding +
     '### Simulate run on command line' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
