@@ -156,11 +156,11 @@ strReadme: string =
     'Last four line of virtual host configurations basically tell Apache to serve any' + LineEnding +
     'files inside `css`, `images`, `js` directly otherwise pass it to our application.' + LineEnding +
     '' + LineEnding +
-    'On Debian, save it to `/etc/apache2/sites-available` for example as `fano-scgi.conf`' + LineEnding +
+    'On Debian, save it to `/etc/apache2/sites-available` for example as `fano-http.conf`' + LineEnding +
     'Enable this site and restart Apache' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '$ sudo a2ensite fano-scgi.conf' + LineEnding +
+    '$ sudo a2ensite fano-http.conf' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
     '```' + LineEnding +
     '## Deployment' + LineEnding +
