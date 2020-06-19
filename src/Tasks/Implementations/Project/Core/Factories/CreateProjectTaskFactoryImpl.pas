@@ -57,7 +57,7 @@ uses
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
-    InvInFanoProjectDirCheckTaskImpl,
+    NotInFanoProjectDirCheckTaskImpl,
     EmptyDirCheckTaskImpl,
     CompositeSessionTaskImpl,
     WithGitRepoTaskImpl,
@@ -114,7 +114,7 @@ uses
 
         //protect to avoid accidentally creating another project inside Fano-CLI
         //project directory structure
-        invInFanoProjectDirCheckTask := TInvInFanoProjectDirCheckTask.create(createPrjTask);
+        invInFanoProjectDirCheckTask := TNotInFanoProjectDirCheckTask.create(createPrjTask);
 
         //protect to avoid accidentally creating project inside
         //existing and non empty directory

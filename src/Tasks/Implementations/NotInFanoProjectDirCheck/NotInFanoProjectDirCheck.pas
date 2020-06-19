@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit InvInFanoProjectDirCheckTaskImpl;
+unit NotInFanoProjectDirCheckTaskImpl;
 
 interface
 
@@ -31,7 +31,7 @@ type
      *--------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TInvInFanoProjectDirCheckTask = class(TInFanoProjectDirCheckTask)
+    TNotInFanoProjectDirCheckTask = class(TInFanoProjectDirCheckTask)
     public
         function run(
             const opt : ITaskOptions;
@@ -50,7 +50,7 @@ resourcestring
                'Maybe you should not use --create-project.';
     sRunWithHelp = 'Run with --help option to view available task.';
 
-    function TInvInFanoProjectDirCheckTask.run(
+    function TNotInFanoProjectDirCheckTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
