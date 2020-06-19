@@ -56,7 +56,12 @@ resourcestring
     begin
         result := directoryExists(currDir + 'vendor/fano') and
             directoryExists(currDir + 'src/Dependencies') and
+            {$IFDEF UNIX}
             fileExists(currDir + 'build.sh') and
+            {$ENDIF}
+            {$IFDEF WINDOWS}
+            fileExists(currDir + 'build.cmd') and
+            {$ENDIF}
             fileExists(currDir + 'build.cfg') and
             fileExists(currDir + 'build.cfg.sample') and
             fileExists(currDir + 'src/bootstrap.pas') and
