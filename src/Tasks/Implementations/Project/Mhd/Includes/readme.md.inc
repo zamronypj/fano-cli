@@ -129,7 +129,7 @@ strReadme: string =
     'You need to have `mod_proxy_http` installed and loaded. This module is Apache''s built-in module, so it is very likely that you will have it with your Apache installation. You just need to make sure it is loaded. For example, on Debian,' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
-    '$ sudo a2enmod proxy_scgi' + LineEnding +
+    '$ sudo a2enmod proxy_http' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
     '```' + LineEnding +
     '' + LineEnding +
