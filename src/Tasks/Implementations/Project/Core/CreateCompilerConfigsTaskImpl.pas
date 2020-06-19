@@ -53,9 +53,24 @@ uses
             dir + '/build.cfg',
             StringReplace(strBuildCfg, '-Tlinux', '-Tfreebsd', [rfReplaceAll])
         );
-        {$ElSE}
+        {$ENDIF}
+
+        {$IFDEF WINDOWS}
+        createTextFile(
+            dir + '/build.cfg',
+            StringReplace(
+                StringReplace(strBuildCfg, '-Tlinux', '-Twin64', [rfReplaceAll]),
+                '#-WC',
+                '-WC',
+                [rfReplaceAll]
+            )
+        );
+        {$ENDIF}
+
+        {$IFDEF LINUX}
         createTextFile(dir + '/build.cfg', strBuildCfg);
         {$ENDIF}
+
         createTextFile(dir + '/build.cfg.sample', strBuildCfg);
 
         createTextFile(dir + '/build.dev.cfg', strBuildCfgDev);

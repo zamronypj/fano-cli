@@ -26,15 +26,15 @@ strBuildCfgProd: string =
     '-Se' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '# Level 3 optimization' + LineEnding +
-    '# Other available switch -O1, -O2, -O4' + LineEnding +
+    '# Level 4 optimization' + LineEnding +
+    '# Other available switch -O1, -O2, -O3' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '-O4' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Move frequent-used variable in register' + LineEnding +
     '# This switch is actually redundant as this' + LineEnding +
-    '# already be covered by -O3 switch above.' + LineEnding +
+    '# already be covered by -O3 switch.' + LineEnding +
     '# It puts here just for completeness.' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '-Ooregvar' + LineEnding +

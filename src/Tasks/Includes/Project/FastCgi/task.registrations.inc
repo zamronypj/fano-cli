@@ -20,6 +20,7 @@ try
         '     --host=[host where FastCGI app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
         '     --port=[port where FastCGI app listen] if omitted, 20477 is assumed.' + LineEnding +
         '     --with-session=[file, cookie, db] Add session support' + LineEnding +
+        '     --with-middleware Add middleware support' + LineEnding +
         '     --no-git if omitted, git repository is created.' + LineEnding +
         '     --no-initial-commit if omitted, git repository is created with initial commit.',
         taskFactory.build()

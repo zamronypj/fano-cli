@@ -19,6 +19,7 @@ try
         '--project-fcgid=[project-name] Create new FastCGI project with Apache and mod_fcgid.' + LineEnding +
         '     --config=[ini, json] if omitted, config is not setup.' + LineEnding +
         '     --with-session=[file, cookie, db] Add session support' + LineEnding +
+        '     --with-middleware Add middleware support' + LineEnding +
         '     --no-git if omitted, git repository is created.' + LineEnding +
         '     --no-initial-commit if omitted, git repository is created with initial commit.',
         taskFactory.build()
