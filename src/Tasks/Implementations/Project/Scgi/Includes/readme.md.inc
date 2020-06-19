@@ -32,6 +32,7 @@ strReadme: string =
     '$ ./tools/config.setup.sh' + LineEnding +
     '$ ./build.sh' + LineEnding +
     '$ sudo fanocli --deploy-scgi=fano-app.fano' + LineEnding +
+    '$ ./bin/app.cgi' + LineEnding +
     '```' + LineEnding +
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 

@@ -6,18 +6,19 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strReadme: string =
-    '# Fano Web Framework Skeleton Application' + LineEnding +
+    '# FastCGI Fano Web Framework Skeleton Application' + LineEnding +
     '' + LineEnding +
-    'Web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
+    'FastCGI web application skeleton using Fano Framework, Pascal web application framework' + LineEnding +
     '' + LineEnding +
     'This project is generated using [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
     'command line tools to help scaffolding web application using Fano Framework.' + LineEnding +
     '' + LineEnding +
     '## Requirement' + LineEnding +
     '' + LineEnding +
+    '- Linux or FreeBSD' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
-    '- Web Server (Apache, nginx)' + LineEnding +
+    '- Web Server ([Apache with mod_proxy_fcgi](https://httpd.apache.org/docs/current/mod/mod_proxy_fcgi.html), nginx)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +
@@ -29,7 +30,8 @@ strReadme: string =
     '$ cd fano-app' + LineEnding +
     '$ ./tools/config.setup.sh' + LineEnding +
     '$ ./build.sh' + LineEnding +
-    '$ sudo fanocli --deploy-deploy-fcgi=fano-app.fano' + LineEnding +
+    '$ sudo fanocli --deploy-fcgi=fano-app.fano' + LineEnding +
+    '$ ./bin/app.cgi' + LineEnding +
     '```' + LineEnding +
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 

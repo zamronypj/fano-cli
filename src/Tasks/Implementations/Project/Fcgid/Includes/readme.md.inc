@@ -15,9 +15,11 @@ strReadme: string =
     '' + LineEnding +
     '## Requirement' + LineEnding +
     '' + LineEnding +
+    '- Linux or FreeBSD' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
     '- Apache with [mod_fcgid](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html)' + LineEnding +
+    '- [mod_rewrite](https://httpd.apache.org/docs/current/mod/mod_rewrite.html)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +

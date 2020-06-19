@@ -15,9 +15,11 @@ strReadme: string =
     '' + LineEnding +
     '## Requirement' + LineEnding +
     '' + LineEnding +
+    '- Linux or FreeBSD' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
-    '- Web Server (Apache, nginx)' + LineEnding +
+    '- libmicrohttpd' + LineEnding +
+    '- Web server ([Apache with mod_proxy_http](https://httpd.apache.org/docs/current/mod/mod_proxy_http.html), nginx) as reverse proxy (optional)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +
@@ -30,6 +32,7 @@ strReadme: string =
     '$ ./tools/config.setup.sh' + LineEnding +
     '$ ./build.sh' + LineEnding +
     '$ sudo fanocli --deploy-http=fano-app.fano' + LineEnding +
+    '$ ./bin/app.cgi' + LineEnding +
     '```' + LineEnding +
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 
@@ -116,13 +119,14 @@ strReadme: string =
     '' + LineEnding +
     '## Run' + LineEnding +
     '' + LineEnding +
-    '### Run with a webserver' + LineEnding +
+    'You can access application directly from web browser. Alternatively you can run application behind web server as reverse proxy.' + LineEnding +
+    '### Run with a webserver as reverse proxy' + LineEnding +
     '' + LineEnding +
     'Setup a virtual host. Please consult documentation of web server you use.' + LineEnding +
     '' + LineEnding +
     '#### Apache' + LineEnding +
     '' + LineEnding +
-    'You need to have `mod_proxy_scgi` installed and loaded. This module is Apache''s built-in module, so it is very likely that you will have it with your Apache installation. You just need to make sure it is loaded. For example, on Debian,' + LineEnding +
+    'You need to have `mod_proxy_http` installed and loaded. This module is Apache''s built-in module, so it is very likely that you will have it with your Apache installation. You just need to make sure it is loaded. For example, on Debian,' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
     '$ sudo a2enmod proxy_scgi' + LineEnding +
@@ -146,7 +150,7 @@ strReadme: string =
     '    ProxyPass /css !' + LineEnding +
     '    ProxyPass /images !' + LineEnding +
     '    ProxyPass /js !' + LineEnding +
-    '    ProxyPassMatch ^/(.*)$ scgi://127.0.0.1:20477' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ http://127.0.0.1:20477' + LineEnding +
     '</VirtualHost>' + LineEnding +
     '```' + LineEnding +
     'Last four line of virtual host configurations basically tell Apache to serve any' + LineEnding +
