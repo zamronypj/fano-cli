@@ -69,50 +69,78 @@ uses
 
     procedure TCreateShellScriptsTask.createShellScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.cmd.inc}
+        {$IFDEF UNIX}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.sh.inc}
+        {$ENDIF}
+        {$IFDEF WINDOWS}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/build.cmd.inc}
+        {$ENDIF}
     begin
         fContentModifier.setVar('[[EXEC_OUTPUT_DIR]]', fExecBinOutput);
-        createTextFile(dir + '/build.sh', fContentModifier.modify(strBuildSh));
-        createTextFile(dir + '/build.cmd', fContentModifier.modify(strBuildCmd));
         {$IFDEF UNIX}
+        createTextFile(dir + '/build.sh', fContentModifier.modify(strBuildSh));
         fpChmod(dir + '/build.sh', &775);
+        {$ENDIF}
+
+        {$IFDEF WINDOWS}
+        createTextFile(dir + '/build.cmd', fContentModifier.modify(strBuildCmd));
         {$ENDIF}
     end;
 
     procedure TCreateShellScriptsTask.createCleanScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.cmd.inc}
-    begin
-        createTextFile(dir + '/clean.sh', strClearUnitsSh);
-        createTextFile(dir + '/clean.cmd', strClearUnitsCmd);
         {$IFDEF UNIX}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.sh.inc}
+        {$ENDIF}
+        {$IFDEF WINDOWS}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/clean.cmd.inc}
+        {$ENDIF}
+    begin
+        {$IFDEF UNIX}
+        createTextFile(dir + '/clean.sh', strClearUnitsSh);
         fpChmod(dir + '/clean.sh', &775);
+        {$ENDIF}
+
+        {$IFDEF WINDOWS}
+        createTextFile(dir + '/clean.cmd', strClearUnitsCmd);
         {$ENDIF}
     end;
 
     procedure TCreateShellScriptsTask.createConfigSetupScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.cmd.inc}
-    begin
-        createTextFile(dir + '/config.setup.sh', strConfigSetupSh);
-        createTextFile(dir + '/config.setup.cmd', strConfigSetupCmd);
         {$IFDEF UNIX}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.sh.inc}
+        {$ENDIF}
+        {$IFDEF WINDOWS}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/config.setup.cmd.inc}
+        {$ENDIF}
+    begin
+        {$IFDEF UNIX}
+        createTextFile(dir + '/config.setup.sh', strConfigSetupSh);
         fpChmod(dir + '/config.setup.sh', &775);
+        {$ENDIF}
+
+        {$IFDEF WINDOWS}
+        createTextFile(dir + '/config.setup.cmd', strConfigSetupCmd);
         {$ENDIF}
     end;
 
     procedure TCreateShellScriptsTask.createSimulateScripts(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.sh.inc}
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.cmd.inc}
-    begin
-        createTextFile(dir + '/simulate.run.sh', strSimulateSh);
-        createTextFile(dir + '/simulate.run.cmd', strSimulateCmd);
         {$IFDEF UNIX}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.sh.inc}
+        {$ENDIF}
+        {$IFDEF WINDOWS}
+            {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/simulate.run.cmd.inc}
+        {$ENDIF}
+    begin
+        {$IFDEF UNIX}
+        createTextFile(dir + '/simulate.run.sh', strSimulateSh);
         fpChmod(dir + '/simulate.run.sh', &775);
+        {$ENDIF}
+
+        {$IFDEF WINDOWS}
+        createTextFile(dir + '/simulate.run.cmd', strSimulateCmd);
         {$ENDIF}
     end;
 
