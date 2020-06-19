@@ -43,7 +43,7 @@ uses
     FileHelperImpl,
     CopyrightContentModifierImpl,
 
-    RunCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     CreateModelFileTaskImpl,
     CreateModelFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
@@ -78,7 +78,7 @@ uses
         //protect to avoid accidentally creating model in non Fano-CLI
         //project directory structure and also prevent accidentatlly create
         //model with same name as existing model
-        result := TRunCheckTask.create(TDuplicateModelCheckTask.create(task));
+        result := TInFanoProjectDirCheckTask.create(TDuplicateModelCheckTask.create(task));
     end;
 
 end.

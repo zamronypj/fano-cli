@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit RunCheckTaskImpl;
+unit InFanoProjectDirCheckTaskImpl;
 
 interface
 
@@ -31,7 +31,7 @@ type
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TRunCheckTask = class(TDecoratorTask)
+    TInFanoProjectDirCheckTask = class(TDecoratorTask)
     protected
         function inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
     public
@@ -52,7 +52,7 @@ resourcestring
                   'Try create project first, for example with --project-scgi or --project-fcgi.';
     sRunWithHelp = 'Run with --help option to view available task.';
 
-    function TRunCheckTask.inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
+    function TInFanoProjectDirCheckTask.inFanoCliGeneratedProjectDir(const currDir : string) : boolean;
     begin
         result := directoryExists(currDir + 'vendor/fano') and
             directoryExists(currDir + 'src/Dependencies') and
@@ -64,7 +64,7 @@ resourcestring
             fileExists(currDir + 'src/Dependencies/dependencies.inc');
     end;
 
-    function TRunCheckTask.run(
+    function TInFanoProjectDirCheckTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;

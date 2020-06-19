@@ -43,6 +43,7 @@ uses
     ApacheVirtualHostFcgidTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
     TextFileCreatorImpl,
     DirectoryCreatorImpl,
@@ -84,7 +85,8 @@ uses
         deployTask := TFcgidCheckTask.create(deployTask);
 
         //protect to avoid accidentally running without root privilege
-        result := TRootCheckTask.create(deployTask);
+        //and not in FanoCLI generated project directory
+        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
     end;
 
 

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit DecoratorTaskImpl;
+unit WithNoRouteTaskImpl;
 
 interface
 
@@ -15,47 +15,36 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf;
+    TaskIntf,
+    DecoratorTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that decorate other task
-     *---------------------------------------------
+     * Task that skip controller route creation
+     * if there is --no-route parameter
+     *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TDecoratorTask = class(TInterfacedObject, ITask)
-    protected
-        actualTask : ITask;
+    TWithNoRouteTask = class(TDecoratorTask)
     public
-        constructor create(const task : ITask);
-        destructor destroy(); override;
-
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; virtual;
+        ) : ITask; override;
     end;
 
 implementation
 
-    constructor TDecoratorTask.create(const task : ITask);
-    begin
-        actualTask := task;
-    end;
-
-    destructor TDecoratorTask.destroy();
-    begin
-        actualTask := nil;
-        inherited destroy();
-    end;
-
-    function TDecoratorTask.run(
+    function TWithNoRouteTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
     begin
-        actualTask.run(opt, longOpt);
+        if not opt.hasOption('no-route') then
+        begin
+            actualTask.run(opt, longOpt);
+        end;
         result := self;
     end;
 end.

@@ -43,7 +43,7 @@ uses
     FileHelperImpl,
     CopyrightContentModifierImpl,
 
-    RunCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     CreateViewFileTaskImpl,
     CreateViewFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
@@ -78,7 +78,7 @@ uses
         //protect to avoid accidentally creating view in non Fano-CLI
         //project directory structure and also prevent accidentally create
         //view with same name as existing view
-        result := TRunCheckTask.create(TDuplicateViewCheckTask.create(task));
+        result := TInFanoProjectDirCheckTask.create(TDuplicateViewCheckTask.create(task));
     end;
 
 end.

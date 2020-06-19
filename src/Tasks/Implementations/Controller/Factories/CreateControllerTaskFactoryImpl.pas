@@ -43,13 +43,14 @@ uses
     FileHelperImpl,
     CopyrightContentModifierImpl,
 
-    RunCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     CreateControllerFileTaskImpl,
     CreateControllerFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
     AddToUnitSearchTaskImpl,
     CreateDependencyRegistrationTaskImpl,
     CreateRouteTaskImpl,
+    WithNoRouteTaskImpl,
     CreateDependencyTaskImpl,
     CreateControllerTaskImpl,
     DuplicateCtrlCheckTaskImpl;
@@ -75,12 +76,15 @@ uses
                 TAddToUnitSearchTask.create(fileReader, fileWriter, 'Controller'),
                 TCreateDependencyRegistrationTask.create(fileReader, fileWriter, 'Controller')
             ),
-            TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
+            //wrap to handle --no-route argument
+            TWithNoRouteTask.create(
+                TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
+            )
         );
         //protect to avoid accidentally creating controller in non Fano-CLI
         //project directory structure and also prevent accidentally create
         //controller with same name as existing controller.
-        result := TRunCheckTask.create(TDuplicateCtrlCheckTask.create(task));
+        result := TInFanoProjectDirCheckTask.create(TDuplicateCtrlCheckTask.create(task));
     end;
 
 end.

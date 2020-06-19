@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit InvRunCheckTaskImpl;
+unit InvInFanoProjectDirCheckTaskImpl;
 
 interface
 
@@ -16,14 +16,14 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    RunCheckTaskImpl;
+    InFanoProjectDirCheckTaskImpl;
 
 type
 
     (*!--------------------------------------
      * Task that run other task only if
      * we are not in project directory that is generated
-     * by Fano CLI tools. This is inverse of TRunCheckTask
+     * by Fano CLI tools. This is inverse of TInFanoProjectDirCheckTask
      *------------------------------------------
      * This is to protect accidentally creating project
      * inside Fano-CLI generated project directory
@@ -31,7 +31,7 @@ type
      *--------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TInvRunCheckTask = class(TRunCheckTask)
+    TInvInFanoProjectDirCheckTask = class(TInFanoProjectDirCheckTask)
     public
         function run(
             const opt : ITaskOptions;
@@ -50,7 +50,7 @@ resourcestring
                'Maybe you should not use --create-project.';
     sRunWithHelp = 'Run with --help option to view available task.';
 
-    function TInvRunCheckTask.run(
+    function TInvInFanoProjectDirCheckTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;

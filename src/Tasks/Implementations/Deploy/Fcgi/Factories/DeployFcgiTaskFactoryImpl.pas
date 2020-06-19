@@ -44,6 +44,7 @@ uses
     NginxVirtualHostFcgiTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
     TextFileCreatorImpl,
     DirectoryCreatorImpl,
@@ -86,7 +87,8 @@ uses
         );
 
         //protect to avoid accidentally running without root privilege
-        result := TRootCheckTask.create(deployTask);
+        //and not in FanoCLI generated project directory
+        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
     end;
 
 end.

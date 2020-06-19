@@ -57,7 +57,7 @@ uses
     InitGitRepoTaskImpl,
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
-    InvRunCheckTaskImpl,
+    InvInFanoProjectDirCheckTaskImpl,
     EmptyDirCheckTaskImpl,
     CompositeSessionTaskImpl,
     WithGitRepoTaskImpl,
@@ -104,7 +104,7 @@ uses
     var textFileCreator : ITextFileCreator;
         contentModifier : IContentModifier;
         createPrjTask : ITask;
-        invRunCheckTask : ITask;
+        invInFanoProjectDirCheckTask : ITask;
     begin
         //TODO: refactor as this is similar to TCreateProjectFastCgiTaskFactory
         //or TCreateProjectScgiTaskFactory
@@ -114,11 +114,11 @@ uses
 
         //protect to avoid accidentally creating another project inside Fano-CLI
         //project directory structure
-        invRunCheckTask := TInvRunCheckTask.create(createPrjTask);
+        invInFanoProjectDirCheckTask := TInvInFanoProjectDirCheckTask.create(createPrjTask);
 
         //protect to avoid accidentally creating project inside
         //existing and non empty directory
-        result := TEmptyDirCheckTask.create(invRunCheckTask);
+        result := TEmptyDirCheckTask.create(invInFanoProjectDirCheckTask);
     end;
 
 end.

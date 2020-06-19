@@ -43,7 +43,7 @@ uses
     FileHelperImpl,
     CopyrightContentModifierImpl,
 
-    RunCheckTaskImpl,
+    InFanoProjectDirCheckTaskImpl,
     CreateMiddlewareFileTaskImpl,
     CreateMiddlewareFactoryFileTaskImpl,
     AddToUsesClauseTaskImpl,
@@ -79,7 +79,7 @@ uses
         //protect to avoid accidentally creating middleware in non Fano-CLI
         //project directory structure and also prevent accidentally create
         //middleware with same name as existing middleware
-        result := TRunCheckTask.create(TDuplicateMiddlewareCheckTask.create(task));
+        result := TInFanoProjectDirCheckTask.create(TDuplicateMiddlewareCheckTask.create(task));
     end;
 
 end.
