@@ -23,7 +23,7 @@ uses
 type
 
     (*!--------------------------------------
-     * interface for factory Task
+     * factory class for http application bootstrap task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
@@ -42,6 +42,7 @@ uses
     GroupTaskImpl,
 
     CreateMhdAppFileTaskImpl,
+    CreateMhdReadmeFileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -54,6 +55,7 @@ uses
     begin
         result := TGroupTask.create([
             TCreateMhdAppFileTask.create(textFileCreator, contentModifier),
+            TCreateMhdReadmeFileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)

@@ -117,7 +117,7 @@ strReadme: string =
     '## Run' + LineEnding +
     '' + LineEnding +
     '### Run with a webserver' + LineEnding +
-    ' + LineEnding +
+    '' + LineEnding +
     'Setup a virtual host. Please consult documentation of web server you use.' + LineEnding +
     '' + LineEnding +
     '#### Apache' + LineEnding +
@@ -151,41 +151,14 @@ strReadme: string =
     '```' + LineEnding +
     'Last four line of virtual host configurations basically tell Apache to serve any' + LineEnding +
     'files inside `css`, `images`, `js` directly otherwise pass it to our application.' + LineEnding +
-    ' + LineEnding +
+    '' + LineEnding +
     'On Debian, save it to `/etc/apache2/sites-available` for example as `fano-scgi.conf`' + LineEnding +
     'Enable this site and restart Apache' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
     '$ sudo a2ensite fano-fcgi.conf' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
-    '```' + LineEnding;
-    '### Simulate run on command line' + LineEnding +
-    '' + LineEnding +
     '```' + LineEnding +
-    '$ cd public' + LineEnding +
-    '$ REQUEST_METHOD=GET \' + LineEnding +
-    '  REQUEST_URI=/test/test \' + LineEnding +
-    '  SERVER_NAME=juhara.com \' + LineEnding +
-    '  ./app.cgi' + LineEnding +
-    '```' + LineEnding +
-    '' + LineEnding +
-    '`tools/simulate.run.sh` is bash script that can be used to simplify simulating run' + LineEnding +
-    'application in shell.' + LineEnding +
-    '' + LineEnding +
-    '    $ ./tools/simulate.run.sh' + LineEnding +
-    '' + LineEnding +
-    'or to change route to access, set `REQUEST_URI` variable.' + LineEnding +
-    '' + LineEnding +
-    '    $ REQUEST_URI=/test/test ./tools/simulate.run.sh' + LineEnding +
-    '' + LineEnding +
-    'This is similar to simulating browser requesting this page,for example,' + LineEnding +
-    '' + LineEnding +
-    '    $ wget -O- http://[your fano app hostname]/test/test' + LineEnding +
-    '' + LineEnding +
-    'However, running using `tools/simulate.run.sh` allows you to view output of `heaptrc`' + LineEnding +
-    'unit for detecting memory leak (if you enable `-gh` switch in `build.dev.cfg`).' + LineEnding +
-    '' + LineEnding +
-    '' + LineEnding +
     '## Deployment' + LineEnding +
     '' + LineEnding +
     'You need to deploy only executable binary and any supporting files such as HTML templates, images, css stylesheets, application config.' + LineEnding +

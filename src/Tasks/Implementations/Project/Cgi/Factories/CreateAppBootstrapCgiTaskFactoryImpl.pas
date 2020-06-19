@@ -23,7 +23,7 @@ uses
 type
 
     (*!--------------------------------------
-     * interface for factory Task
+     * factory class for CGI application bootstrap task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
@@ -41,7 +41,8 @@ uses
 
     GroupTaskImpl,
 
-    CreateAppFileTaskImpl,
+    CreateCgiAppFileTaskImpl,
+    CreateCgiReadmeFileTaskImpl,
     CreateBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -53,7 +54,8 @@ uses
     ) : ITask;
     begin
         result := TGroupTask.create([
-            TCreateAppFileTask.create(textFileCreator, contentModifier),
+            TCreateCgiAppFileTask.create(textFileCreator, contentModifier),
+            TCreateCgiReadmeFileTask.create(textFileCreator, contentModifier),
             TCreateBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)

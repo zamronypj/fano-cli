@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateAppFileTaskImpl;
+unit CreateReadmeFileTaskImpl;
 
 interface
 
@@ -21,19 +21,14 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that create app.pas file
+     * Task that create web application project
+     * custom README file
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateAppFileTask = class abstract (TCreateFileTask)
+    TCreateReadmeFileTask = class abstract (TCreateFileTask)
     protected
-
-        procedure createApp(
-            const opt : ITaskOptions;
-            const longOpt : shortstring;
-            const dir : string
-        ); virtual; abstract;
-
+        procedure createReadmeFile(const dir : string); virtual; abstract;
     public
         function run(
             const opt : ITaskOptions;
@@ -43,14 +38,14 @@ type
 
 implementation
 
-    function TCreateAppFileTask.run(
+    function TCreateReadmeFileTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
-        createApp(opt, longOpt, baseDirectory + '/src');
+        createReadmeFile(baseDirectory);
         result := self;
     end;
 end.

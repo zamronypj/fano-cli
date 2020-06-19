@@ -23,7 +23,7 @@ uses
 type
 
     (*!--------------------------------------
-     * interface for factory Task
+     * factory class for FastCGI application bootstrap task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
@@ -42,6 +42,7 @@ uses
     GroupTaskImpl,
 
     CreateFcgiAppFileTaskImpl,
+    CreateFcgiReadmeFileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -54,6 +55,7 @@ uses
     begin
         result := TGroupTask.create([
             TCreateFcgiAppFileTask.create(textFileCreator, contentModifier),
+            TCreateFcgiReadmeFileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)

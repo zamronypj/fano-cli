@@ -17,7 +17,7 @@ strReadme: string =
     '' + LineEnding +
     '- [Free Pascal](https://www.freepascal.org/) >= 3.0' + LineEnding +
     '- [Fano CLI](https://github.com/fanoframework/fano-cli)' + LineEnding +
-    '- Web Server (Apache with [mod_fcgid](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html), nginx)' + LineEnding +
+    '- Apache with [mod_fcgid](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html)' + LineEnding +
     '- Administrative privilege for setting up virtual host' + LineEnding +
     '' + LineEnding +
     '## Installation' + LineEnding +
@@ -141,6 +141,7 @@ strReadme: string =
     'For example, on Debian, this will enable `mod_fcgid` module.' + LineEnding +
     '' + LineEnding +
     '```' + LineEnding +
+    '$ sudo apt install libapache2-mod-fcgid' + LineEnding +
     '$ sudo a2enmod fcgid' + LineEnding +
     '$ sudo systemctl restart apache2' + LineEnding +
     '```' + LineEnding +

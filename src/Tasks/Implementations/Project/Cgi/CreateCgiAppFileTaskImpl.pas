@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateAppFileTaskImpl;
+unit CreateCgiAppFileTaskImpl;
 
 interface
 
@@ -16,41 +16,41 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    CreateFileTaskImpl;
+    CreateAppFileTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that create app.pas file
+     * Task that create app.pas file for CGI project
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateAppFileTask = class abstract (TCreateFileTask)
+    TCreateCgiAppFileTask = class(TCreateAppFileTask)
     protected
 
         procedure createApp(
             const opt : ITaskOptions;
             const longOpt : shortstring;
             const dir : string
-        ); virtual; abstract;
+        ); override;
 
-    public
-        function run(
-            const opt : ITaskOptions;
-            const longOpt : shortstring
-        ) : ITask; override;
     end;
 
 implementation
 
-    function TCreateAppFileTask.run(
+uses
+
+    sysutils;
+
+    procedure TCreateCgiAppFileTask.createApp(
         const opt : ITaskOptions;
-        const longOpt : shortstring
-    ) : ITask;
+        const longOpt : shortstring;
+        const dir : string
+    );
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Cgi/Includes/app.pas.inc}
     begin
-        //need to call parent run() so baseDirectory can be initialized
-        inherited run(opt, longOpt);
-        createApp(opt, longOpt, baseDirectory + '/src');
-        result := self;
+        createTextFile(dir + '/app.pas', strAppPas);
     end;
+
 end.

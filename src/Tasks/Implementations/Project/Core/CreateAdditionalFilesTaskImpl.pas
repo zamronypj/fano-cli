@@ -45,11 +45,9 @@ uses
 
     procedure TCreateAdditionalFilesTask.createAdditionalFiles(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/readme.md.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/gitignore.inc}
         {$INCLUDE src/Tasks/Implementations/Project/Core/Includes/htaccess.example.inc}
     begin
-        createTextFile(dir + '/README.md', strReadme);
         createTextFile(dir + '/.gitignore', strGitignore);
         createTextFile(dir + '/public/htaccess.example', strHtaccessExampleInc);
         createTextFile(dir + '/public/.htaccess', strHtaccessExampleInc);
