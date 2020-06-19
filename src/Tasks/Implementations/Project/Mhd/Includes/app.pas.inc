@@ -44,6 +44,13 @@ strAppPas: string =
     '    svrConfig.serverSoftware := ''Fano Framework Web App'';' + LineEnding +
     '    svrConfig.timeout := 120;' + LineEnding +
     '' + LineEnding +
+    '    //uncomment following lines support https' + LineEnding +
+    '    //svrConfig.useTLS := true;' + LineEnding +
+    '    //svrConfig.tlsKey := (TStringFileReader.create() as IFileReader)
+    '    //    .readFile(''/path/to/ssl/cert/key'');' + LineEnding +
+    '    //svrConfig.tlsCert := (TStringFileReader.create() as IFileReader)
+    '    //    .readFile(''/path/to/ssl/cert/cert'');' + LineEnding +
+    '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Bootstrap libmicrohttpd application' + LineEnding +
     '     *' + LineEnding +
