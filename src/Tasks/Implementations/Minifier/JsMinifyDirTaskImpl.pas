@@ -61,6 +61,7 @@ uses
     Var info : TSearchRec;
         fileIdx : integer;
     begin
+        result := default(TStringArray);
         fileIdx := 0;
         setLength(result, 50);
         if findFirst(dir + '*.js', faAnyFile, info) = 0 then

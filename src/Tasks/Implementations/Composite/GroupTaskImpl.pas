@@ -44,6 +44,7 @@ implementation
     function initTasks(const atasks : array of ITask) : TTaskArray;
     var i, len : integer;
     begin
+        result := default(TTaskArray);
         len := high(atasks) - low(atasks) + 1;
         setLength(result, len);
         for i := 0 to len -1 do
