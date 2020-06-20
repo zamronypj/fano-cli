@@ -46,10 +46,8 @@ strAppPas: string =
     '' + LineEnding +
     '    //uncomment following lines support https' + LineEnding +
     '    //svrConfig.useTLS := true;' + LineEnding +
-    '    //svrConfig.tlsKey := (TStringFileReader.create() as IFileReader)' + LineEnding +
-    '    //    .readFile(''/path/to/ssl/cert/key'');' + LineEnding +
-    '    //svrConfig.tlsCert := (TStringFileReader.create() as IFileReader)' + LineEnding +
-    '    //    .readFile(''/path/to/ssl/cert/cert'');' + LineEnding +
+    '    //svrConfig.tlsKey := ''/path/to/ssl/cert/key'';' + LineEnding +
+    '    //svrConfig.tlsCert := ''/path/to/ssl/cert/cert'';' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
     '     * Bootstrap libmicrohttpd application' + LineEnding +
