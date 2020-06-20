@@ -109,6 +109,7 @@ uses
      *-------------------------------------------------*)
     function TBasicKeyGenerator.readRandomBytes(const numberOfBytes : integer) : TBytes;
     begin
+        result := default(TBytes);
         setLength(result, numberOfBytes);
         if not CryptGenRandom(FProvider, numberOfBytes, result[0]) then
         begin
