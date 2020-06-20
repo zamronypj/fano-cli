@@ -21,9 +21,9 @@ strBuildCfgDev: string =
     '#----------------------------------------------' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '# halt compiler after error, warning and notes' + LineEnding +
+    '# halt compiler after error, warning' + LineEnding +
     '#----------------------------------------------' + LineEnding +
-    '-Sewn' + LineEnding +
+    '-Sew' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Generate debugging information for debugging with gdb.' + LineEnding +
