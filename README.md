@@ -36,7 +36,7 @@ Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run
 
     $ fpc -i
 
-If you see something like `Free Pascal Compiler version 3.0.4`,  you are good to go.
+If you see something like `Free Pascal Compiler version 3.x.x`,  you are good to go.
 
 Clone this repository
 
