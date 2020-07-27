@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit TaskOptionsIntf;
+unit VirtualHostIntf;
 
 interface
 
@@ -16,15 +16,16 @@ type
 
     (*!--------------------------------------
      * interface for any class having capability
-     * to query command line options of a task
+     * to query web virtual host configuration
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    ITaskOptions = interface
-        ['{D2AF03BD-3B30-4C1D-9F14-3BAEE0E17C23}']
-        function hasOption(const longOpt: string) : boolean;
-        function getOptionValue(const longOpt: string) : string;
-        function getOptionValueDef(const longOpt: string; const defValue : string) : string;
+    IVirtualHost = interface
+        ['{DA492850-C0B3-483F-A2A3-419C50170033}']
+        function getServerName(const opt : ITaskOptions; const longOpt : shortstring) : string;
+        function getDocumentRoot(const opt : ITaskOptions; const longOpt : shortstring) : string;
+        function getHost(const opt : ITaskOptions; const longOpt : shortstring) : string;
+        function getPort(const opt : ITaskOptions; const longOpt : shortstring) : string;
     end;
 
 implementation

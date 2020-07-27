@@ -17,6 +17,12 @@ uses
 
 type
 
+    (*!--------------------------------------
+     * interface for task. Task is anything that
+     * can be run
+     *
+     * @author Zamrony P. Juhara <zamronypj@yahoo.com>
+     *---------------------------------------*)
     ITask = interface
         ['{E9FF160F-DE92-4475-91A3-88CEA2A92130}']
 

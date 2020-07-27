@@ -18,6 +18,12 @@ uses
 
 type
 
+    (*!--------------------------------------
+     * interface for any class having capability
+     * to get list of available tasks.
+     *
+     * @author Zamrony P. Juhara <zamronypj@yahoo.com>
+     *---------------------------------------*)
     ITaskListAware = interface
         ['{662D0179-97D9-492F-A395-1AFE459D64FD}']
         function getTaskList() : IList;

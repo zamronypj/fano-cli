@@ -5,28 +5,34 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit TaskOptionsIntf;
+unit StdoutTextFileCreatorImpl;
 
 interface
 
 {$MODE OBJFPC}
 {$H+}
 
+uses
+
+    TextFileCreatorIntf;
+
 type
 
     (*!--------------------------------------
-     * interface for any class having capability
-     * to query command line options of a task
+     * ITextFileCreator class that just output content to
+     * standard output instead of write to file
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    ITaskOptions = interface
-        ['{D2AF03BD-3B30-4C1D-9F14-3BAEE0E17C23}']
-        function hasOption(const longOpt: string) : boolean;
-        function getOptionValue(const longOpt: string) : string;
-        function getOptionValueDef(const longOpt: string; const defValue : string) : string;
+    TStdoutTextFileCreator = class(TInterfacedObject, ITextFileCreator)
+    public
+        procedure createTextFile(const filename : string; const content : string);
     end;
 
 implementation
 
+    procedure TStdoutTextFileCreator.createTextFile(const filename : string; const content : string);
+    begin
+        write(content);
+    end;
 end.

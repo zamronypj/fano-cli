@@ -19,7 +19,7 @@ uses
 type
 
     (*!--------------------------------------
-     * interface for factory Task
+     * interface for ITask factory
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)

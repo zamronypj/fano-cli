@@ -14,6 +14,12 @@ interface
 
 type
 
+    (*!--------------------------------------
+     * interface for any class having capability
+     * to describe a task. This is mostly use for help
+     *
+     * @author Zamrony P. Juhara <zamronypj@yahoo.com>
+     *---------------------------------------*)
     ITaskInfo = interface
         ['{D3051780-EFA0-465D-8181-2096DD419BE1}']
         function getLongOption() : string;
