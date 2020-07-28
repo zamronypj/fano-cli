@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheVirtualHostWriterImpl;
+unit VirtualHostWriterImpl;
 
 interface
 
@@ -25,9 +25,10 @@ type
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheVirtualHostWriter = class(TInterfacedObject, IVirtualHostWriter)
+    TVirtualHostWriter = class(TInterfacedObject, IVirtualHostWriter)
     private
         fVhostWriters : TList;
+        procedure cleanupVhosts();
     public
         constructor create();
         destructor destroy(); override;
@@ -54,18 +55,31 @@ type
 
     PVhostWriter = ^TVhostWriter;
 
-    constructor TApacheVirtualHostWriter.create();
+    constructor TVirtualHostWriter.create();
     begin
         fVhostWriters := TList.create();
     end;
 
-    destructor TApacheVirtualHostWriter.destroy();
+    procedure TVirtualHostWriter.cleanupVhosts();
+    var i : integer;
+        vhost : PVhostWriter;
     begin
+        for i := fVhostWriters.count - 1 downto 0 do
+        begin
+            vhost := fVhostWriters[i];
+            dispose(vhost);
+            fVhostWriters.delete(i);
+        end;
+    end;
+
+    destructor TVirtualHostWriter.destroy();
+    begin
+        cleanupVhosts();
         fVhostWriters.free();
         inherited destroy();
     end;
 
-    procedure TApacheVirtualHostWriter.addWriter(const dir : string; const writer : IVirtualHostWriter);
+    procedure TVirtualHostWriter.addWriter(const dir : string; const writer : IVirtualHostWriter);
     var vhost : PVhostWriter;
     begin
         new(vhost);
@@ -74,7 +88,7 @@ type
         fVhostWriters.add(vhost);
     end;
 
-    procedure TApacheVirtualHostWriter.writeVhost(
+    procedure TVirtualHostWriter.writeVhost(
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier);
