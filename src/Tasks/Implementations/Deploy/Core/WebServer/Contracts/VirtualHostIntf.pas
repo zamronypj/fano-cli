@@ -12,6 +12,10 @@ interface
 {$MODE OBJFPC}
 {$H+}
 
+uses
+
+    TaskOptionsIntf;
+
 type
 
     (*!--------------------------------------

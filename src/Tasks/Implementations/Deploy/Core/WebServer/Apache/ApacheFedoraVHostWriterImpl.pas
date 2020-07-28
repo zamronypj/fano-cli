@@ -15,6 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
     VirtualHostWriterIntf;
 
 type
@@ -53,10 +55,10 @@ uses
         const vhostTpl : string;
         const cntModifier : IContentModifier);
     begin
-        contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
+        cntModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
         fTextFileCreator.createTextFile(
             '/etc/httpd/conf.d/' + serverName + '.conf',
-            contentModifier.modify(vhostTpl)
+            cntModifier.modify(vhostTpl)
         );
     end;
 

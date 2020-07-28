@@ -16,10 +16,10 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
+    ContentModifierIntf,
     VirtualHostIntf,
     VirtualHostTemplateIntf,
-    VirtualHostWriterIntf,
-    BaseCreateFileTaskImpl;
+    VirtualHostWriterIntf;
 
 type
 
@@ -28,31 +28,57 @@ type
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TBaseWebServerVirtualHostTask = class(TBaseCreateFileTask)
+    TWebServerVirtualHostTask = class(TInterfacedObject, ITask)
     private
         fVhost : IVirtualHost;
         fVhostTpl : IVirtualHostTemplate;
         fVhostWriter : IVirtualHostWriter;
+        fContentModifier : IContentModifier;
     public
+        constructor create(
+            const aVhost : IVirtualHost;
+            const aVhostTpl : IVirtualHostTemplate;
+            const aVhostWriter : IVirtualHostWriter;
+            const aContentModifier : IContentModifier
+        );
+
         function run(
             const opt : ITaskOptions;
             const longOpt : shortstring
-        ) : ITask; override;
+        ) : ITask;
     end;
 
 implementation
 
-    function TBaseWebServerVirtualHostTask.run(
+    constructor TWebServerVirtualHostTask.create(
+        const aVhost : IVirtualHost;
+        const aVhostTpl : IVirtualHostTemplate;
+        const aVhostWriter : IVirtualHostWriter;
+        const aContentModifier : IContentModifier
+    );
+    begin
+        fVhost := aVhost;
+        fVhostTpl := aVhostTpl;
+        fVhostWriter := aVhostWriter;
+        fContentModifier := aContentModifier;
+    end;
+
+    function TWebServerVirtualHostTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
+    var serverName : string;
     begin
-        inherited run(opt, longOpt);
-        contentModifier.setVar('[[SERVER_NAME]]', fVhost.getServerName(opt, longOpt));
-        contentModifier.setVar('[[DOC_ROOT]]', fVhost.getDocumentRoot(opt, longOpt));
-        contentModifier.setVar('[[HOST]]', fVhost.getHost(opt, longOpt));
-        contentModifier.setVar('[[PORT]]', fVhost.getPort(opt, longOpt));
-        fVhostWriter.writeVhost(fVhostTpl.getVhostTemplate(), contentModifier);
+        serverName := fVhost.getServerName(opt, longOpt);
+        fContentModifier.setVar('[[SERVER_NAME]]', serverName);
+        fContentModifier.setVar('[[DOC_ROOT]]', fVhost.getDocumentRoot(opt, longOpt));
+        fContentModifier.setVar('[[HOST]]', fVhost.getHost(opt, longOpt));
+        fContentModifier.setVar('[[PORT]]', fVhost.getPort(opt, longOpt));
+        fVhostWriter.writeVhost(
+            serverName,
+            fVhostTpl.getVhostTemplate(opt, longOpt, fContentModifier),
+            fContentModifier
+        );
         result := self;
     end;
 end.

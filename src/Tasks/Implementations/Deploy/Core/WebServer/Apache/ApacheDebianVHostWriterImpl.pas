@@ -15,6 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
     VirtualHostWriterIntf;
 
 type
@@ -53,10 +55,10 @@ uses
         const vhostTpl : string;
         const cntModifier : IContentModifier);
     begin
-        contentModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/apache2');
+        cntModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/apache2');
         fTextFileCreator.createTextFile(
             '/etc/apache2/sites-available/' + serverName + '.conf',
-            contentModifier.modify(vhostTpl)
+            cntModifier.modify(vhostTpl)
         );
     end;
 

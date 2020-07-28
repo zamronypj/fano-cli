@@ -15,6 +15,8 @@ interface
 uses
 
     TaskOptionsIntf,
+    TextFileCreatorIntf,
+    ContentModifierIntf,
     VirtualHostWriterIntf;
 
 type
@@ -59,10 +61,10 @@ uses
         const vhostTpl : string;
         const cntModifier : IContentModifier);
     begin
-        contentModifier.setVar('[[NGINX_LOG_DIR]]', '/var/log/nginx');
+        cntModifier.setVar('[[NGINX_LOG_DIR]]', '/var/log/nginx');
         fTextFileCreator.createTextFile(
             '/usr/local/etc/nginx/conf.d/' + serverName + '.conf',
-            contentModifier.modify(vhostTpl)
+            cntModifier.modify(vhostTpl)
         );
     end;
 

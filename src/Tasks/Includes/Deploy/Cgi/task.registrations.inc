@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployCgiTaskFactory.create();
+taskFactory := TXDeployCgiTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-cgi',

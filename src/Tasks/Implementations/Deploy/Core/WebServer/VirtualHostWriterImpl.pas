@@ -14,7 +14,9 @@ interface
 
 uses
 
+    Classes,
     TaskOptionsIntf,
+    ContentModifierIntf,
     VirtualHostWriterIntf;
 
 type
@@ -32,7 +34,7 @@ type
     public
         constructor create();
         destructor destroy(); override;
-        procedure addWriter(const dir : string; const writer : IVirtualHostWriter);
+        function addWriter(const dir : string; const writer : IVirtualHostWriter) : TVirtualHostWriter;
         procedure writeVhost(
             const serverName : string;
             const vhostTpl : string;
@@ -79,13 +81,14 @@ type
         inherited destroy();
     end;
 
-    procedure TVirtualHostWriter.addWriter(const dir : string; const writer : IVirtualHostWriter);
+    function TVirtualHostWriter.addWriter(const dir : string; const writer : IVirtualHostWriter) : TVirtualHostWriter;
     var vhost : PVhostWriter;
     begin
         new(vhost);
         vhost^.dir := dir;
         vhost^.writer := writer;
         fVhostWriters.add(vhost);
+        result := self;
     end;
 
     procedure TVirtualHostWriter.writeVhost(
@@ -93,11 +96,11 @@ type
         const vhostTpl : string;
         const cntModifier : IContentModifier);
     var vhostWriter : PVhostWriter;
+        i : integer;
     begin
         for i:=0 to fVhostWriters.count-1 do
         begin
-            vhostWriter := fVHostWriter[i];
-
+            vhostWriter := fVHostWriters[i];
             if directoryExists(vhostWriter^.dir) then
             begin
                 vhostWriter^.writer.writeVhost(serverName, vhostTpl, cntModifier);

@@ -7,6 +7,7 @@
  *------------------------------------------------------------- *)
 
 DeployCgiTaskFactoryImpl,
+XDeployCgiTaskFactoryImpl,
 DeployFcgiTaskFactoryImpl,
 DeployFcgidTaskFactoryImpl,
 DeployScgiTaskFactoryImpl,
