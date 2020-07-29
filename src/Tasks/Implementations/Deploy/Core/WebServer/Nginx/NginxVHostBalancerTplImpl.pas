@@ -30,7 +30,6 @@ type
     TNginxVHostBalancerTpl = class(TInterfacedObject, IVirtualHostTemplate)
     private
         fVhost : IVirtualHost;
-        fProtocol : shortstring;
         fProxyPass : shortstring;
         fProxyParams : shortstring;
         fServerPrefix : shortstring;
