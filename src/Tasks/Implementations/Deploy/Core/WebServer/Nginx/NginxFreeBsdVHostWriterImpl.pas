@@ -30,12 +30,8 @@ type
     TNginxFreeBsdVHostWriter = class(TInterfacedObject, IVirtualHostWriter)
     private
         fTextFileCreator : ITextFileCreator;
-        fApacheVer : string;
     public
-        constructor create(
-            const txtFileCreator : ITextFileCreator;
-            const apacheVer : string = 'apache24'
-        );
+        constructor create(const txtFileCreator : ITextFileCreator);
         procedure writeVhost(
             const serverName : string;
             const vhostTpl : string;

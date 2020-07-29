@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployScgiTaskFactory.create();
+taskFactory := TXDeployScgiTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-scgi',

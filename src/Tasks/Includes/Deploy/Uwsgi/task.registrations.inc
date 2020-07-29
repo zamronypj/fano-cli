@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployUwsgiTaskFactory.create();
+taskFactory := TXDeployUwsgiTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-uwsgi',

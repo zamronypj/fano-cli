@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployScgiBalancerTaskFactory.create();
+taskFactory := TXDeployScgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-scgi',

@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployFcgiBalancerTaskFactory.create();
+taskFactory := TXDeployFcgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-fcgi',

@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployHttpBalancerTaskFactory.create();
+taskFactory := TXDeployHttpBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-http',

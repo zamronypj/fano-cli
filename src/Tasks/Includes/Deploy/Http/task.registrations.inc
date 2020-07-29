@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployHttpTaskFactory.create();
+taskFactory := TXDeployHttpTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-http',

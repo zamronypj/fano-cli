@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployFCgidTaskFactory.create();
+taskFactory := TXDeployFCgidTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-fcgid',

@@ -8,7 +8,7 @@
 
 {%../Includes/task.registrations.inc}
 
-taskFactory := TDeployUwsgiBalancerTaskFactory.create();
+taskFactory := TXDeployUwsgiBalancerTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-lb-uwsgi',
