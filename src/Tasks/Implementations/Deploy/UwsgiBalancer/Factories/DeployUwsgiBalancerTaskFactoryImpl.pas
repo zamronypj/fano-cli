@@ -42,7 +42,7 @@ implementation
     function TDeployUwsgiBalancerTaskFactory.getProxyPass() : shortstring;
     begin
         //this will be used by nginx
-        result := 'uwscgi_pass';
+        result := 'uwsgi_pass';
     end;
 
     function TDeployUwsgiBalancerTaskFactory.getProxyParams() : shortstring;
