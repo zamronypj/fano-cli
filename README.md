@@ -118,6 +118,10 @@ $ fanocli --help
 
 Read [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-with-fano-cli/) for more information.
 
+## Versioning Number
+
+Fano CLI follows [Semantic Versioning 2.0.0](https://semver.org#semantic-versioning-200).
+
 ## Known Issues
 
 ### Issue with GNU Linker
