@@ -53,7 +53,7 @@ type
             const baseDir : string = BASE_DIRECTORY;
             const protocol : shortstring = 'scgi';
             const proxyPass : shortstring = 'scgi_pass';
-            const proxyParams : shortstring = 'scgi_params';
+            const proxyParams : shortstring = 'include scgi_params;';
             const serverPrefix : shortstring = ''
         );
         function run(
