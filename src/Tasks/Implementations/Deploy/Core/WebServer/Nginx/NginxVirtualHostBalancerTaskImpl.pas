@@ -41,7 +41,6 @@ type
         fServerPrefix : shortstring;
         function getBalancerMember(const opt : ITaskOptions) : string;
         function getBalancerMethod(const opt : ITaskOptions) : string;
-        function getProxyParams(const proxyParams : string) : string;
     protected
         function getVhostTemplate() : string; override;
     public
@@ -142,17 +141,6 @@ uses
         end;
     end;
 
-    function TNginxVirtualHostBalancerTask.getProxyParams(const proxyParams : string) : string;
-    begin
-        if proxyParams = '' then
-        begin
-            result := '';
-        end else
-        begin
-            result := 'include ' + proxyParams + ';';
-        end;
-    end;
-
     function TNginxVirtualHostBalancerTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
@@ -161,7 +149,7 @@ uses
         contentModifier.setVar('[[LOAD_BALANCER_MEMBERS]]', getBalancerMember(opt));
         contentModifier.setVar('[[LOAD_BALANCER_METHOD]]', getBalancerMethod(opt));
         contentModifier.setVar('[[PROXY_PASS_TYPE]]', fProxyPass);
-        contentModifier.setVar('[[PROXY_PARAMS_TYPE]]', getProxyParams(fProxyParams));
+        contentModifier.setVar('[[PROXY_PARAMS_TYPE]]', fProxyParams);
         contentModifier.setVar('[[SERVER_PREFIX]]', fServerPrefix);
         inherited run(opt, longOpt);
         result := self;
