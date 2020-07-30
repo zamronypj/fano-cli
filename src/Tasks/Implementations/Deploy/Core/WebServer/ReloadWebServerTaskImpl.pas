@@ -83,7 +83,6 @@ uses
                 );
             end;
             writeln('Reload ', formatColor(svcName, TXT_GREEN), ' service');
-            writeln(outputString);
         end else
         begin
             writeln('Cannot reload web server. Unsupported platform or web server.');
