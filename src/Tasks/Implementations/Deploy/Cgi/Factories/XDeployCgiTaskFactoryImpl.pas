@@ -48,7 +48,6 @@ uses
     DeployTaskImpl,
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
-    ApacheVirtualHostCgiTaskImpl,
     AddDomainToEtcHostTaskImpl,
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
