@@ -15,7 +15,10 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    VirtualHostWriterIntf,
+    TextFileCreatorIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -26,8 +29,18 @@ type
      *---------------------------------------*)
     TXDeployScgiTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildApacheScgiVhostTask() : ITask;
-        function buildNginxScgiVhostTask() : ITask;
+        function buildApacheScgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutApacheScgiVhostTask() : ITask;
+        function buildNormalApacheScgiVhostTask() : ITask;
+        function buildNginxScgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutNginxScgiVhostTask() : ITask;
+        function buildNormalNginxScgiVhostTask() : ITask;
     public
         function build() : ITask;
     end;
@@ -49,12 +62,14 @@ uses
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
+    StdoutTextFileCreatorImpl,
     DirectoryCreatorImpl,
+    ContentModifierIntf,
     ContentModifierImpl,
     FileHelperImpl,
-    VirtualHostWriterIntf,
+    VirtualHostIntf,
+    VirtualHostTemplateIntf,
     WebServerVirtualHostTaskImpl,
     VirtualHostImpl,
     VirtualHostWriterImpl,
@@ -64,14 +79,18 @@ uses
     ApacheVHostScgiTplImpl,
     NginxLinuxVHostWriterImpl,
     NginxFreeBsdVHostWriterImpl,
-    NginxVHostScgiTplImpl;
+    NginxVHostScgiTplImpl,
+    StdoutCheckTaskImpl,
+    DirectoryExistsImpl,
+    NullDirectoryExistsImpl;
 
-    function TXDeployScgiTaskFactory.buildApacheScgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployScgiTaskFactory.buildApacheScgiVhostTask(
         ftext : ITextFileCreator;
+        adirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/apache2', TApacheDebianVHostWriter.create(ftext))
             .addWriter('/etc/httpd', TApacheFedoraVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/apache24', TApacheFreeBsdVHostWriter.create(ftext, 'apache24'))
@@ -85,12 +104,29 @@ uses
         );
     end;
 
-    function TXDeployScgiTaskFactory.buildNginxScgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
-        ftext : ITextFileCreator;
+    function TXDeployScgiTaskFactory.buildStdoutApacheScgiVhostTask() : ITask;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        result := buildApacheScgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployScgiTaskFactory.buildNormalApacheScgiVhostTask() : ITask;
+    begin
+        result := buildApacheScgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployScgiTaskFactory.buildNginxScgiVhostTask(
+        ftext : ITextFileCreator;
+        aDirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
+    begin
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/nginx', TNginxLinuxVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/nginx', TNginxFreeBsdVHostWriter.create(ftext));
 
@@ -102,17 +138,33 @@ uses
         );
     end;
 
+    function TXDeployScgiTaskFactory.buildStdoutNginxScgiVhostTask() : ITask;
+    begin
+        result := buildNginxScgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployScgiTaskFactory.buildNormalNginxScgiVhostTask() : ITask;
+    begin
+        result := buildNginxScgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
     function TXDeployScgiTaskFactory.build() : ITask;
-    var deployTask : ITask;
+    var normalDeployTask, stdoutDeployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
     begin
         fReader := TFileHelper.create();
         fWriter := fReader as IFileContentWriter;
-        deployTask := TDeployTask.create(
+        normalDeployTask := TDeployTask.create(
             TWebServerTask.create(
-                buildApacheScgiVhostTask(),
-                buildNginxScgiVhostTask()
+                buildNormalApacheScgiVhostTask(),
+                buildNormalNginxScgiVhostTask()
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
@@ -127,9 +179,24 @@ uses
             )
         );
 
-        //protect to avoid accidentally running without root privilege
-        //and not in FanoCLI generated project directory
-        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
+        //this is just simply output virtual host config to stdout
+        //so no need for root privilege and reload web server or
+        //messing up /etc/hosts
+        stdoutDeployTask := TWebServerTask.create(
+            buildStdoutApacheScgiVhostTask(),
+            buildStdoutNginxScgiVhostTask()
+        );
+
+        result := TStdoutCheckTask.create(
+            //if --stdout command line provided, execute this task
+            //protect to avoid accidentally running
+            //not in FanoCLI generated project directory
+            TInFanoProjectDirCheckTask.create(stdoutDeployTask),
+
+            //protect to avoid accidentally running without root privilege
+            //and not in FanoCLI generated project directory
+            TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
+        );
     end;
 
 end.

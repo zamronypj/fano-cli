@@ -15,7 +15,9 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -26,8 +28,18 @@ type
      *---------------------------------------*)
     TXDeployUwsgiTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildApacheUwsgiVhostTask() : ITask;
-        function buildNginxUwsgiVhostTask() : ITask;
+        function buildApacheUwsgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutApacheUwsgiVhostTask() : ITask;
+        function buildNormalApacheUwsgiVhostTask() : ITask;
+        function buildNginxUwsgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutNginxUwsgiVhostTask() : ITask;
+        function buildNormalNginxUwsgiVhostTask() : ITask;
     public
         function build() : ITask;
     end;
@@ -49,8 +61,8 @@ uses
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
+    StdoutTextFileCreatorImpl,
     DirectoryCreatorImpl,
     ContentModifierImpl,
     FileHelperImpl,
@@ -64,14 +76,18 @@ uses
     ApacheVHostUwsgiTplImpl,
     NginxLinuxVHostWriterImpl,
     NginxFreeBsdVHostWriterImpl,
-    NginxVHostUwsgiTplImpl;
+    NginxVHostUwsgiTplImpl,
+    StdoutCheckTaskImpl,
+    DirectoryExistsImpl,
+    NullDirectoryExistsImpl;
 
-    function TXDeployUwsgiTaskFactory.buildApacheUwsgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployUwsgiTaskFactory.buildApacheUwsgiVhostTask(
         ftext : ITextFileCreator;
+        adirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/apache2', TApacheDebianVHostWriter.create(ftext))
             .addWriter('/etc/httpd', TApacheFedoraVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/apache24', TApacheFreeBsdVHostWriter.create(ftext, 'apache24'))
@@ -85,12 +101,29 @@ uses
         );
     end;
 
-    function TXDeployUwsgiTaskFactory.buildNginxUwsgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
-        ftext : ITextFileCreator;
+    function TXDeployUwsgiTaskFactory.buildStdoutApacheUwsgiVhostTask() : ITask;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        result := buildApacheUwsgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployUwsgiTaskFactory.buildNormalApacheUwsgiVhostTask() : ITask;
+    begin
+        result := buildApacheUwsgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployUwsgiTaskFactory.buildNginxUwsgiVhostTask(
+        ftext : ITextFileCreator;
+        aDirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
+    begin
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/nginx', TNginxLinuxVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/nginx', TNginxFreeBsdVHostWriter.create(ftext));
 
@@ -102,27 +135,33 @@ uses
         );
     end;
 
+    function TXDeployUwsgiTaskFactory.buildStdoutNginxUwsgiVhostTask() : ITask;
+    begin
+        result := buildNginxUwsgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployUwsgiTaskFactory.buildNormalNginxUwsgiVhostTask() : ITask;
+    begin
+        result := buildNginxUwsgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
     function TXDeployUwsgiTaskFactory.build() : ITask;
-    var deployTask : ITask;
+    var normalDeployTask, stdoutDeployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
     begin
         fReader := TFileHelper.create();
         fWriter := fReader as IFileContentWriter;
-        deployTask := TDeployTask.create(
+        normalDeployTask := TDeployTask.create(
             TWebServerTask.create(
-                TApacheVirtualHostUwsgiTask.create(
-                    TTextFileCreator.create(),
-                    TDirectoryCreator.create(),
-                    TContentModifier.create()
-                ),
-                TNginxVirtualHostUwsgiTask.create(
-                    TTextFileCreator.create(),
-                    TDirectoryCreator.create(),
-                    TContentModifier.create(),
-                    fReader,
-                    fWriter
-                )
+                buildNormalApacheUwsgiVhostTask(),
+                buildNormalNginxUwsgiVhostTask()
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
@@ -137,9 +176,24 @@ uses
             )
         );
 
-        //protect to avoid accidentally running without root privilege
-        //and not in FanoCLI generated project directory
-        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
+        //this is just simply output virtual host config to stdout
+        //so no need for root privilege and reload web server or
+        //messing up /etc/hosts
+        stdoutDeployTask := TWebServerTask.create(
+            buildStdoutApacheUwsgiVhostTask(),
+            buildStdoutNginxUwsgiVhostTask()
+        );
+
+        result := TStdoutCheckTask.create(
+            //if --stdout command line provided, execute this task
+            //protect to avoid accidentally running
+            //not in FanoCLI generated project directory
+            TInFanoProjectDirCheckTask.create(stdoutDeployTask),
+
+            //protect to avoid accidentally running without root privilege
+            //and not in FanoCLI generated project directory
+            TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
+        );
     end;
 
 end.

@@ -15,7 +15,9 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -26,8 +28,18 @@ type
      *---------------------------------------*)
     TXDeployFcgiTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildApacheFcgiVhostTask() : ITask;
-        function buildNginxFcgiVhostTask() : ITask;
+        function buildApacheFcgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutApacheFcgiVhostTask() : ITask;
+        function buildNormalApacheFcgiVhostTask() : ITask;
+        function buildNginxFcgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutNginxFcgiVhostTask() : ITask;
+        function buildNormalNginxFcgiVhostTask() : ITask;
     public
         function build() : ITask;
     end;
@@ -49,14 +61,14 @@ uses
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
+    StdoutTextFileCreatorImpl,
     DirectoryCreatorImpl,
     ContentModifierImpl,
     FileHelperImpl,
-    VirtualHostWriterIntf,
     WebServerVirtualHostTaskImpl,
     VirtualHostImpl,
+    VirtualHostWriterIntf,
     VirtualHostWriterImpl,
     ApacheDebianVHostWriterImpl,
     ApacheFedoraVHostWriterImpl,
@@ -64,14 +76,18 @@ uses
     ApacheVHostFcgiTplImpl,
     NginxLinuxVHostWriterImpl,
     NginxFreeBsdVHostWriterImpl,
-    NginxVHostFcgiTplImpl;
+    NginxVHostFcgiTplImpl,
+    StdoutCheckTaskImpl,
+    DirectoryExistsImpl,
+    NullDirectoryExistsImpl;
 
-    function TXDeployFcgiTaskFactory.buildApacheFcgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployFcgiTaskFactory.buildApacheFcgiVhostTask(
         ftext : ITextFileCreator;
+        adirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/apache2', TApacheDebianVHostWriter.create(ftext))
             .addWriter('/etc/httpd', TApacheFedoraVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/apache24', TApacheFreeBsdVHostWriter.create(ftext, 'apache24'))
@@ -85,12 +101,29 @@ uses
         );
     end;
 
-    function TXDeployFcgiTaskFactory.buildNginxFcgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
-        ftext : ITextFileCreator;
+    function TXDeployFcgiTaskFactory.buildStdoutApacheFcgiVhostTask() : ITask;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        result := buildApacheFcgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployFcgiTaskFactory.buildNormalApacheFcgiVhostTask() : ITask;
+    begin
+        result := buildApacheFcgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployFcgiTaskFactory.buildNginxFcgiVhostTask(
+        ftext : ITextFileCreator;
+        aDirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
+    begin
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/nginx', TNginxLinuxVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/nginx', TNginxFreeBsdVHostWriter.create(ftext));
 
@@ -102,17 +135,33 @@ uses
         );
     end;
 
+    function TXDeployFcgiTaskFactory.buildStdoutNginxFcgiVhostTask() : ITask;
+    begin
+        result := buildNginxFcgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployFcgiTaskFactory.buildNormalNginxFcgiVhostTask() : ITask;
+    begin
+        result := buildNginxFcgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
     function TXDeployFcgiTaskFactory.build() : ITask;
-    var deployTask : ITask;
+    var normalDeployTask, stdoutDeployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
     begin
         fReader := TFileHelper.create();
         fWriter := fReader as IFileContentWriter;
-        deployTask := TDeployTask.create(
+        normalDeployTask := TDeployTask.create(
             TWebServerTask.create(
-                buildApacheFcgiVhostTask(),
-                buildNginxFcgiVhostTask()
+                buildNormalApacheFcgiVhostTask(),
+                buildNormalNginxFcgiVhostTask()
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
@@ -127,9 +176,24 @@ uses
             )
         );
 
-        //protect to avoid accidentally running without root privilege
-        //and not in FanoCLI generated project directory
-        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
+        //this is just simply output virtual host config to stdout
+        //so no need for root privilege and reload web server or
+        //messing up /etc/hosts
+        stdoutDeployTask := TWebServerTask.create(
+            buildStdoutApacheFcgiVhostTask(),
+            buildStdoutNginxFcgiVhostTask()
+        );
+
+        result := TStdoutCheckTask.create(
+            //if --stdout command line provided, execute this task
+            //protect to avoid accidentally running
+            //not in FanoCLI generated project directory
+            TInFanoProjectDirCheckTask.create(stdoutDeployTask),
+
+            //protect to avoid accidentally running without root privilege
+            //and not in FanoCLI generated project directory
+            TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
+        );
     end;
 
 end.

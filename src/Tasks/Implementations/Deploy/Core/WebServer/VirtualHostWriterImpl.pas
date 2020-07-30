@@ -17,7 +17,8 @@ uses
     Classes,
     TaskOptionsIntf,
     ContentModifierIntf,
-    VirtualHostWriterIntf;
+    VirtualHostWriterIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -30,9 +31,10 @@ type
     TVirtualHostWriter = class(TInterfacedObject, IVirtualHostWriter)
     private
         fVhostWriters : TList;
+        fDirExists : IDirectoryExists;
         procedure cleanupVhosts();
     public
-        constructor create();
+        constructor create(const dirExists : IDirectoryExists);
         destructor destroy(); override;
         function addWriter(const dir : string; const writer : IVirtualHostWriter) : TVirtualHostWriter;
         procedure writeVhost(
@@ -57,8 +59,9 @@ type
 
     PVhostWriter = ^TVhostWriter;
 
-    constructor TVirtualHostWriter.create();
+    constructor TVirtualHostWriter.create(const dirExists : IDirectoryExists);
     begin
+        fDirExists := dirExists;
         fVhostWriters := TList.create();
     end;
 
@@ -78,6 +81,7 @@ type
     begin
         cleanupVhosts();
         fVhostWriters.free();
+        fDirExists := nil;
         inherited destroy();
     end;
 
@@ -101,7 +105,7 @@ type
         for i:=0 to fVhostWriters.count-1 do
         begin
             vhostWriter := fVHostWriters[i];
-            if directoryExists(vhostWriter^.dir) then
+            if fDirExists.dirExists(vhostWriter^.dir) then
             begin
                 vhostWriter^.writer.writeVhost(serverName, vhostTpl, cntModifier);
                 break;

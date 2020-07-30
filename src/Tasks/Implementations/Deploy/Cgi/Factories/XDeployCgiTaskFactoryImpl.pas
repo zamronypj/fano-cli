@@ -15,7 +15,9 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -26,7 +28,12 @@ type
      *---------------------------------------*)
     TXDeployCgiTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildApacheCgiVhostTask() : ITask;
+        function buildApacheCgiVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutApacheCgiVhostTask() : ITask;
+        function buildNormalApacheCgiVhostTask() : ITask;
     public
         function build() : ITask;
     end;
@@ -46,8 +53,8 @@ uses
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
+    StdoutTextFileCreatorImpl,
     DirectoryCreatorImpl,
     ContentModifierImpl,
     FileHelperImpl,
@@ -58,15 +65,18 @@ uses
     ApacheDebianVHostWriterImpl,
     ApacheFedoraVHostWriterImpl,
     ApacheFreeBsdVHostWriterImpl,
-    ApacheVHostCgiTplImpl;
+    ApacheVHostCgiTplImpl,
+    StdoutCheckTaskImpl,
+    DirectoryExistsImpl,
+    NullDirectoryExistsImpl;
 
-
-    function TXDeployCgiTaskFactory.buildApacheCgiVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployCgiTaskFactory.buildApacheCgiVhostTask(
         ftext : ITextFileCreator;
+        adirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/apache2', TApacheDebianVHostWriter.create(ftext))
             .addWriter('/etc/httpd', TApacheFedoraVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/apache24', TApacheFreeBsdVHostWriter.create(ftext, 'apache24'))
@@ -80,16 +90,32 @@ uses
         );
     end;
 
+    function TXDeployCgiTaskFactory.buildStdoutApacheCgiVhostTask() : ITask;
+    begin
+        result := buildApacheCgiVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployCgiTaskFactory.buildNormalApacheCgiVhostTask() : ITask;
+    begin
+        result := buildApacheCgiVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
     function TXDeployCgiTaskFactory.build() : ITask;
-    var deployTask : ITask;
+    var normalDeployTask, stdoutDeployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
     begin
         fReader := TFileHelper.create();
         fWriter := fReader as IFileContentWriter;
-        deployTask := TDeployTask.create(
+        normalDeployTask := TDeployTask.create(
             TWebServerTask.create(
-                buildApacheCgiVhostTask(),
+                buildNormalApacheCgiVhostTask(),
                 //do nothing as nginx does not support CGI
                 TNullTask.create()
             ),
@@ -106,9 +132,25 @@ uses
             )
         );
 
-        //protect to avoid accidentally running without root privilege
-        //and not in FanoCLI generated project directory
-        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
+        //this is just simply output virtual host config to stdout
+        //so no need for root privilege and reload web server or
+        //messing up /etc/hosts
+        stdoutDeployTask := TWebServerTask.create(
+            buildStdoutApacheCgiVhostTask(),
+            //do nothing as nginx does not support CGI
+            TNullTask.create()
+        );
+
+        result := TStdoutCheckTask.create(
+            //if --stdout command line provided, execute this task
+            //protect to avoid accidentally running
+            //not in FanoCLI generated project directory
+            TInFanoProjectDirCheckTask.create(stdoutDeployTask),
+
+            //protect to avoid accidentally running without root privilege
+            //and not in FanoCLI generated project directory
+            TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
+        );
     end;
 
 end.

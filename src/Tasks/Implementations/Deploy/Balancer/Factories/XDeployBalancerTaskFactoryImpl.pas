@@ -15,7 +15,9 @@ interface
 uses
 
     TaskIntf,
-    TaskFactoryIntf;
+    TaskFactoryIntf,
+    TextFileCreatorIntf,
+    DirectoryExistsIntf;
 
 type
 
@@ -27,8 +29,18 @@ type
      *---------------------------------------*)
     TXDeployBalancerTaskFactory = class(TInterfacedObject, ITaskFactory)
     private
-        function buildApacheBalancerVhostTask() : ITask;
-        function buildNginxBalancerVhostTask() : ITask;
+        function buildApacheBalancerVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutApacheBalancerVhostTask() : ITask;
+        function buildNormalApacheBalancerVhostTask() : ITask;
+        function buildNginxBalancerVhostTask(
+            ftext : ITextFileCreator;
+            aDirExists : IDirectoryExists
+        ) : ITask;
+        function buildStdoutNginxBalancerVhostTask() : ITask;
+        function buildNormalNginxBalancerVhostTask() : ITask;
     protected
         function getProtocol() : shortstring; virtual; abstract;
         function getProxyPass() : shortstring; virtual; abstract;
@@ -55,8 +67,8 @@ uses
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
-    TextFileCreatorIntf,
     TextFileCreatorImpl,
+    StdoutTextFileCreatorImpl,
     DirectoryCreatorImpl,
     ContentModifierImpl,
     FileHelperImpl,
@@ -73,19 +85,24 @@ uses
     ApacheVHostBalancerTplImpl,
     NginxLinuxVHostWriterImpl,
     NginxFreeBsdVHostWriterImpl,
-    NginxVHostBalancerTplImpl;
+    NginxVHostBalancerTplImpl,
+    StdoutCheckTaskImpl,
+    DirectoryExistsImpl,
+    NullDirectoryExistsImpl;
 
-    function TXDeployBalancerTaskFactory.buildApacheBalancerVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployBalancerTaskFactory.buildApacheBalancerVhostTask(
         ftext : ITextFileCreator;
+        adirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
         vhost : IVirtualHost;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/apache2', TApacheDebianVHostWriter.create(ftext))
             .addWriter('/etc/httpd', TApacheFedoraVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/apache24', TApacheFreeBsdVHostWriter.create(ftext, 'apache24'))
             .addWriter('/usr/local/etc/apache25', TApacheFreeBsdVHostWriter.create(ftext, 'apache25'));
+
         vhost := TVirtualHost.create();
         result := TWebServerVirtualHostTask.create(
             vhost,
@@ -95,15 +112,33 @@ uses
         );
     end;
 
-    function TXDeployBalancerTaskFactory.buildNginxBalancerVhostTask() : ITask;
-    var vhostWriter : IVirtualHostWriter;
+    function TXDeployBalancerTaskFactory.buildStdoutApacheBalancerVhostTask() : ITask;
+    begin
+        result := buildApacheBalancerVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployBalancerTaskFactory.buildNormalApacheBalancerVhostTask() : ITask;
+    begin
+        result := buildApacheBalancerVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployBalancerTaskFactory.buildNginxBalancerVhostTask(
         ftext : ITextFileCreator;
+        aDirExists : IDirectoryExists
+    ) : ITask;
+    var vhostWriter : IVirtualHostWriter;
         vhost : IVirtualHost;
     begin
-        ftext := TTextFileCreator.create();
-        vhostWriter := (TVirtualHostWriter.create())
+        vhostWriter := (TVirtualHostWriter.create(aDirExists))
             .addWriter('/etc/nginx', TNginxLinuxVHostWriter.create(ftext))
             .addWriter('/usr/local/etc/nginx', TNginxFreeBsdVHostWriter.create(ftext));
+
         vhost := TVirtualHost.create();
         result := TWebServerVirtualHostTask.create(
             vhost,
@@ -118,22 +153,38 @@ uses
         );
     end;
 
+    function TXDeployBalancerTaskFactory.buildStdoutNginxBalancerVhostTask() : ITask;
+    begin
+        result := buildNginxBalancerVhostTask(
+            TStdoutTextFileCreator.create(),
+            TNullDirectoryExists.create()
+        );
+    end;
+
+    function TXDeployBalancerTaskFactory.buildNormalNginxBalancerVhostTask() : ITask;
+    begin
+        result := buildNginxBalancerVhostTask(
+            TTextFileCreator.create(),
+            TDirectoryExists.create()
+        );
+    end;
+
     function TXDeployBalancerTaskFactory.getServerPrefix() : shortstring;
     begin
         result := '';
     end;
 
     function TXDeployBalancerTaskFactory.build() : ITask;
-    var deployTask : ITask;
+    var normalDeployTask, stdoutDeployTask : ITask;
         fReader : IFileContentReader;
         fWriter : IFileContentWriter;
     begin
         fReader := TFileHelper.create();
         fWriter := fReader as IFileContentWriter;
-        deployTask := TDeployTask.create(
+        normalDeployTask := TDeployTask.create(
             TWebServerTask.create(
-                buildApacheBalancerVhostTask(),
-                buildNginxBalancerVhostTask()
+                buildNormalApacheBalancerVhostTask(),
+                buildNormalNginxBalancerVhostTask()
             ),
             TWebServerTask.create(
                 TApacheEnableVhostTask.create(),
@@ -148,9 +199,24 @@ uses
             )
         );
 
-        //protect to avoid accidentally running without root privilege
-        //and not in FanoCLI generated project directory
-        result := TRootCheckTask.create(TInFanoProjectDirCheckTask.create(deployTask));
+        //this is just simply output virtual host config to stdout
+        //so no need for root privilege and reload web server or
+        //messing up /etc/hosts
+        stdoutDeployTask := TWebServerTask.create(
+            buildStdoutApacheBalancerVhostTask(),
+            buildStdoutNginxBalancerVhostTask()
+        );
+
+        result := TStdoutCheckTask.create(
+            //if --stdout command line provided, execute this task
+            //protect to avoid accidentally running
+            //not in FanoCLI generated project directory
+            TInFanoProjectDirCheckTask.create(stdoutDeployTask),
+
+            //protect to avoid accidentally running without root privilege
+            //and not in FanoCLI generated project directory
+            TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
+        );
     end;
 
 end.
