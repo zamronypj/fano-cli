@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit InitGitRepoTaskImpl;
+unit CheckoutFanoRepoTaskImpl;
 
 interface
 
@@ -21,12 +21,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that create web application project
-     * git repository using fano web framework
+     * Task that checkout fano web framework
+     * to a specific release version
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TInitGitRepoTask = class(TBaseGitRepoTask)
+    TCheckoutFanoRepoTask = class(TBaseGitRepoTask)
     public
         function run(
             const opt : ITaskOptions;
@@ -40,20 +40,30 @@ uses
 
     sysutils;
 
-    function TInitGitRepoTask.run(
+    function TCheckoutFanoRepoTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
     var outputString : string;
+        branch, fanoAbsDir : string;
     begin
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
 
-        //following line equals calling following command on shell
-        // $ git init
-        runGit(baseDirectory, ['init'], outputString);
-        writeln(outputString);
-
+        if opt.hasOption('fano-ver') then
+        begin
+            branch := opt.getOptionValueDef('fano-ver', 'master');
+            fanoAbsDir := getCurrentDir() + '/' + baseDirectory + '/vendor/fano';
+            // following line equals calling following command on shell
+            // $ cd vendor/fano
+            // $ git checkout [[tag/branch]]
+            runGit(fanoAbsDir, ['checkout', branch ], outputString);
+            if (branch <> 'master') then
+            begin
+                runGit(fanoAbsDir, ['checkout', '-b', 'fano-' + branch ], outputString);
+            end;
+            writeln(outputString);
+        end;
         result := self;
     end;
 end.

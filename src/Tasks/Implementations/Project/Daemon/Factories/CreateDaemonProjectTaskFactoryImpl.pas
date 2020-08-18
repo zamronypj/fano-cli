@@ -56,7 +56,11 @@ uses
     CommitGitRepoTaskImpl,
     CreateProjectTaskImpl,
     WithGitRepoTaskImpl,
-    WithGitInitialCommitTaskImpl;
+    WithGitInitialCommitTaskImpl,
+    AddFanoRepoTaskImpl,
+    CheckoutFanoRepoTaskImpl,
+    StageRepoTaskImpl,
+    GroupTaskImpl;
 
     constructor TCreateDaemonProjectTaskFactory.create(
         const depFactory : ITaskFactory;
@@ -80,11 +84,15 @@ uses
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             fBootstrapTaskFactory.build(),
             TWithGitRepoTask.create(
-                TInitGitRepoTask.create(
+                TGroupTask.create([
+                    TInitGitRepoTask.create(),
+                    TAddFanoRepoTask.create(),
+                    TCheckoutFanoRepoTask.create(),
+                    TStageRepoTask.create(),
                     TWithGitInitialCommitTask.create(
                         TCommitGitRepoTask.create()
                     )
-                )
+                ])
             )
         );
     end;

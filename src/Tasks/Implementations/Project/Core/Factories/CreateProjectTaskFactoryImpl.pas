@@ -61,7 +61,11 @@ uses
     EmptyDirCheckTaskImpl,
     CompositeSessionTaskImpl,
     WithGitRepoTaskImpl,
-    WithGitInitialCommitTaskImpl;
+    WithGitInitialCommitTaskImpl,
+    GroupTaskImpl,
+    AddFanoRepoTaskImpl,
+    CheckoutFanoRepoTaskImpl,
+    StageRepoTaskImpl;
 
     constructor TCreateProjectTaskFactory.create(
         const depFactory : ITaskFactory;
@@ -91,11 +95,15 @@ uses
             TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
             fBootstrapTaskFactory.build(),
             TWithGitRepoTask.create(
-                TInitGitRepoTask.create(
+                TGroupTask.create([
+                    TInitGitRepoTask.create(),
+                    TAddFanoRepoTask.create(),
+                    TCheckoutFanoRepoTask.create(),
+                    TStageRepoTask.create(),
                     TWithGitInitialCommitTask.create(
                         TCommitGitRepoTask.create()
                     )
-                )
+                ])
             )
         );
     end;

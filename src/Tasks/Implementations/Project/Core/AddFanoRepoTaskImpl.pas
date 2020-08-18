@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit InitGitRepoTaskImpl;
+unit AddFanoRepoTaskImpl;
 
 interface
 
@@ -21,12 +21,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that create web application project
-     * git repository using fano web framework
+     * Task that add fano web framework git repository
+     * as submodule
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TInitGitRepoTask = class(TBaseGitRepoTask)
+    TAddFanoRepoTask = class(TBaseGitRepoTask)
     public
         function run(
             const opt : ITaskOptions;
@@ -40,7 +40,7 @@ uses
 
     sysutils;
 
-    function TInitGitRepoTask.run(
+    function TAddFanoRepoTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
@@ -49,11 +49,10 @@ uses
         //need to call parent run() so baseDirectory can be initialized
         inherited run(opt, longOpt);
 
-        //following line equals calling following command on shell
-        // $ git init
-        runGit(baseDirectory, ['init'], outputString);
+        // following line equals calling following command on shell
+        // $ git submodule add fano_repo_url vendor/fano
+        runGit(baseDirectory, ['submodule', 'add', FANO_REPO, 'vendor/fano'], outputString);
         writeln(outputString);
-
         result := self;
     end;
 end.
