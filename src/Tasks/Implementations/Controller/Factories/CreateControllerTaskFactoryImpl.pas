@@ -51,6 +51,8 @@ uses
     CreateDependencyRegistrationTaskImpl,
     CreateRouteTaskImpl,
     WithNoRouteTaskImpl,
+    CreateMultiRouteTaskImpl,
+    WithMultiRouteTaskImpl,
     CreateDependencyTaskImpl,
     CreateControllerTaskImpl,
     DuplicateCtrlCheckTaskImpl;
@@ -78,7 +80,11 @@ uses
             ),
             //wrap to handle --no-route argument
             TWithNoRouteTask.create(
-                TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
+                //wrap to handle multiple methods route creation
+                TWithMultiRouteTask.create(
+                    TCreateMultiRouteTask.create(fileReader, fileWriter, directoryCreator),
+                    TCreateRouteTask.create(fileReader, fileWriter, directoryCreator)
+                )
             )
         );
         //protect to avoid accidentally creating controller in non Fano-CLI
