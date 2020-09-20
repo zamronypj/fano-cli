@@ -56,6 +56,7 @@ uses
     ApacheReloadWebServerTaskImpl,
     NginxReloadWebServerTaskImpl,
     AddDomainToEtcHostTaskImpl,
+    WithSkipEtcHostTaskImpl,
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
@@ -167,7 +168,12 @@ uses
                 //so it automatically enabled
                 TNullTask.create()
             ),
-            TAddDomainToEtcHostTask.create(fReader, fWriter),
+            //wrap to allow skip domain name creation in /etc/host with
+            //--skip-etc-hosts parameter
+            TWithSkipEtcHostTask.create(
+                TNullTask.create(),
+                TAddDomainToEtcHostTask.create(fReader, fWriter)
+            ),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
                 TNginxReloadWebServerTask.create()

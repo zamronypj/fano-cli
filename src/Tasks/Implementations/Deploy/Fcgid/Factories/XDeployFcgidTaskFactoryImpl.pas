@@ -50,6 +50,7 @@ uses
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     AddDomainToEtcHostTaskImpl,
+    WithSkipEtcHostTaskImpl,
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
@@ -125,7 +126,12 @@ uses
                 //nginx does not support so do nothing
                 TNullTask.create()
             ),
-            TAddDomainToEtcHostTask.create(fReader, fWriter),
+            //wrap to allow skip domain name creation in /etc/host with
+            //--skip-etc-hosts parameter
+            TWithSkipEtcHostTask.create(
+                TNullTask.create(),
+                TAddDomainToEtcHostTask.create(fReader, fWriter)
+            ),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
                 //nginx does not support so do nothing

@@ -49,6 +49,7 @@ uses
     ApacheEnableVhostTaskImpl,
     ApacheReloadWebServerTaskImpl,
     AddDomainToEtcHostTaskImpl,
+    WithSkipEtcHostTaskImpl,
     RootCheckTaskImpl,
     InFanoProjectDirCheckTaskImpl,
     WebServerTaskImpl,
@@ -123,7 +124,12 @@ uses
                 //do nothing as nginx does not support CGI
                 TNullTask.create()
             ),
-            TAddDomainToEtcHostTask.create(fReader, fWriter),
+            //wrap to allow skip domain name creation in /etc/host with
+            //--skip-etc-hosts parameter
+            TWithSkipEtcHostTask.create(
+                TNullTask.create(),
+                TAddDomainToEtcHostTask.create(fReader, fWriter)
+            ),
             TWebServerTask.create(
                 TApacheReloadWebServerTask.create(),
                 //do nothing as nginx does not support CGI
