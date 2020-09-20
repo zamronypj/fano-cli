@@ -2,6 +2,9 @@
 
 Fano CLI is command line tools to help scaffolding web application using [Fano Web Framework](https://github.com/fanoframework/fano).
 
+[![MIT License](https://img.shields.io/github/license/fanoframework/fano-cli.svg)](https://github.com/fanoframework/fano-cli/blob/master/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/fanoframework/fano-cli.svg)](https://github.com/fanoframework/fano-cli/releases)
+
 - [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-with-fano-cli/)
 
 ## Requirement
