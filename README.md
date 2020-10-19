@@ -140,6 +140,14 @@ This is known issue between Free Pascal and GNU Linker. See
 
 However, this warning is minor and can be ignored. It does not affect output executable.
 
+### Missing /etc/fpc.cfg
+
+`build.sh` script may show error about missing `/etc/fpc.cfg` file. This may happen if you install Free Pascal in non default directory or using tools such as [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe). To remedy this situation, create symbolic link in `/etc` to actual `fpc.cfg` file.
+
+```
+$ sudo ln -s ~/fpcupdeluxe/fpc/bin/x86_64-linux/fpc.cfg /etc/fpc.cfg
+```
+
 ### Issue with unsynchronized compiled unit with unit source
 
 Sometime Free Pascal can not compile your code because, for example, you deleted a
