@@ -2,6 +2,9 @@
 
 Fano CLI is command line tools to help scaffolding web application using [Fano Web Framework](https://github.com/fanoframework/fano).
 
+[![MIT License](https://img.shields.io/github/license/fanoframework/fano-cli.svg)](https://github.com/fanoframework/fano-cli/blob/master/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/fanoframework/fano-cli.svg)](https://github.com/fanoframework/fano-cli/releases)
+
 - [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-with-fano-cli/)
 
 ## Requirement
@@ -136,6 +139,14 @@ This is known issue between Free Pascal and GNU Linker. See
 [FAQ: link.res syntax error, or "did you forget -T?"](https://www.freepascal.org/faq.var#unix-ld219)
 
 However, this warning is minor and can be ignored. It does not affect output executable.
+
+### Missing /etc/fpc.cfg
+
+`build.sh` script may show error about missing `/etc/fpc.cfg` file. This may happen if you install Free Pascal in non default directory or using tools such as [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe). To remedy this situation, create symbolic link in `/etc` to actual `fpc.cfg` file.
+
+```
+$ sudo ln -s ~/fpcupdeluxe/fpc/bin/x86_64-linux/fpc.cfg /etc/fpc.cfg
+```
 
 ### Issue with unsynchronized compiled unit with unit source
 
