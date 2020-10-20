@@ -21,6 +21,7 @@ type
 
     (*!--------------------------------------
      * Task that add session support to project creation
+     * based on session storage type, i.e, file, cookie or db
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)

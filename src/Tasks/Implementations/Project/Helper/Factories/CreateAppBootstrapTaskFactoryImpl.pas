@@ -94,7 +94,8 @@ uses
                 ),
 
                 //run this task if session use db as storage, not yet supported
-                TNullTask.create()
+                //so just create as if --with-session is not set
+                buildBootstrapTask(textFileCreator, contentModifier)
             ),
             //run this task when --with-session parameter is not set
             buildBootstrapTask(textFileCreator, contentModifier)

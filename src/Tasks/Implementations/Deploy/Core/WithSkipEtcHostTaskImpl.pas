@@ -45,7 +45,6 @@ uses
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : boolean;
-    var routeMethods : TStringArray;
     begin
         result := opt.hasOption('skip-etc-hosts');
     end;
