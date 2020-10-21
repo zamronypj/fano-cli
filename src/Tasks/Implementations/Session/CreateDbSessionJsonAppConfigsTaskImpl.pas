@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateSessionJsonAppConfigsTaskImpl;
+unit CreateDbSessionJsonAppConfigsTaskImpl;
 
 interface
 
@@ -28,7 +28,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateSessionJsonAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
+    TCreateDbSessionJsonAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
     protected
         function getConfigType() : string; override;
         function getConfigTemplate() : string; override;
@@ -40,16 +40,16 @@ uses
 
     sysutils;
 
-    function TCreateSessionJsonAppConfigsTask.getConfigType() : string;
+    function TCreateDbSessionJsonAppConfigsTask.getConfigType() : string;
     begin
         result := 'json';
     end;
 
-    function TCreateSessionJsonAppConfigsTask.getConfigTemplate() : string;
+    function TCreateDbSessionJsonAppConfigsTask.getConfigTemplate() : string;
     var
-        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.inc}
+        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.db.inc}
     begin
-        result := strConfigJsonDb;
+        result := strConfigJson;
     end;
 
 end.

@@ -92,6 +92,36 @@ uses
                         TIniCookieSessionContentModifier.create(contentModifier)
                     )
                 ),
+                TCompositeDbTypeTask.create([
+                    (
+                        name :'mysql',
+                        task : buildBootstrapTask(
+                            textFileCreator,
+                            TMysqlDbSessionContentModifier.create(contentModifier)
+                        )
+                    ),
+                    (
+                        name :'postgresql',
+                        task : buildBootstrapTask(
+                            textFileCreator,
+                            TPostgresqlDbSessionContentModifier.create(contentModifier)
+                        )
+                    ),
+                    (
+                        name :'firebird',
+                        task : buildBootstrapTask(
+                            textFileCreator,
+                            TFirebirdDbSessionContentModifier.create(contentModifier)
+                        )
+                    ),
+                    (
+                        name :'sqlite',
+                        task : buildBootstrapTask(
+                            textFileCreator,
+                            TSqliteDbSessionContentModifier.create(contentModifier)
+                        )
+                    ),
+                ])
 
                 //run this task if session use db as storage, not yet supported
                 //so just create as if --with-session is not set
