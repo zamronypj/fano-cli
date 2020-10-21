@@ -23,7 +23,7 @@ type
         name : shortstring;
         task : ITask;
     end;
-    TNamedTaskArr = array of TNamedTas;
+    TNamedTaskArr = array of TNamedTask;
 
     (*!--------------------------------------
      * Abstract task that run selected task from group of tasks

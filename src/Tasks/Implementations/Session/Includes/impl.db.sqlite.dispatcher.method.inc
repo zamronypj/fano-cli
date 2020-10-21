@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-strImplDbFirebirdDispatcherMethod : string =
+strImplDbSqliteDispatcherMethod : string =
     '    function TAppServiceProvider.buildDispatcher(' + LineEnding +
     '        const container : IDependencyContainer;' + LineEnding +
     '        const routeMatcher : IRouteMatcher;' + LineEnding +

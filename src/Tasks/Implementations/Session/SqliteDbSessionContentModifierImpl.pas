@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit FirebirdDbSessionContentModifierImpl;
+unit SqliteDbSessionContentModifierImpl;
 
 interface
 
@@ -22,11 +22,11 @@ type
     (*!--------------------------------------
      * Helper class that modify content of
      * buildDispatcher() method implementation for
-     * session that is stored in Firebird database
+     * session that is stored in SQLite database
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TFirebirdDbSessionContentModifier = class(TDecoratorContentModifier)
+    TSqliteDbSessionContentModifier = class(TDecoratorContentModifier)
     public
         (*!------------------------------------------
          * Modify content
@@ -46,13 +46,13 @@ implementation
      * @param content original content to modify
      * @return modified content
      *-------------------------------------------*)
-    function TFirebirdDbSessionContentModifier.modify(const content : string) : string;
+    function TSqliteDbSessionContentModifier.modify(const content : string) : string;
     var
         {$INCLUDE src/Tasks/Implementations/Session/Includes/decl.dispatcher.method.inc}
-        {$INCLUDE src/Tasks/Implementations/Session/Includes/impl.db.firebird.dispatcher.method.inc}
+        {$INCLUDE src/Tasks/Implementations/Session/Includes/impl.db.sqlite.dispatcher.method.inc}
     begin
         setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
-        setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbFirebirdDispatcherMethod);
+        setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbSqliteDispatcherMethod);
         result := inherited modify(content);
     end;
 end.

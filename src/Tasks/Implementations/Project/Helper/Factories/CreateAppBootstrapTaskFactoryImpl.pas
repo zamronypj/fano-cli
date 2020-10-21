@@ -28,6 +28,10 @@ type
      *---------------------------------------*)
     TCreateAppBootstrapTaskFactory = class abstract (TInterfacedObject, ITaskFactory)
     private
+        function buildDbAppBootstrap(
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
         function buildAppBootstrap(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -54,7 +58,48 @@ uses
     JsonFileSessionContentModifierImpl,
     IniFileSessionContentModifierImpl,
     JsonCookieSessionContentModifierImpl,
-    IniCookieSessionContentModifierImpl;
+    IniCookieSessionContentModifierImpl,
+    NamedCompositeTaskImpl,
+    CompositeDbTypeTaskImpl,
+    MysqlDbSessionContentModifierImpl,
+    PostgresqlDbSessionContentModifierImpl,
+    FirebirdDbSessionContentModifierImpl,
+    SqliteDbSessionContentModifierImpl;
+
+    function TCreateAppBootstrapTaskFactory.buildDbAppBootstrap(
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    var taskArr : TNamedTaskArr;
+    begin
+        setLength(taskArr, 4);
+
+        taskArr[0].name := 'mysql';
+        taskArr[0].task := buildBootstrapTask(
+            textFileCreator,
+            TMysqlDbSessionContentModifier.create(contentModifier)
+        );
+
+        taskArr[1].name := 'postgresql';
+        taskArr[1].task := buildBootstrapTask(
+            textFileCreator,
+            TPostgresqlDbSessionContentModifier.create(contentModifier)
+        );
+
+        taskArr[2].name := 'firebird';
+        taskArr[2].task := buildBootstrapTask(
+            textFileCreator,
+            TFirebirdDbSessionContentModifier.create(contentModifier)
+        );
+
+        taskArr[3].name := 'sqlite';
+        taskArr[3].task := buildBootstrapTask(
+            textFileCreator,
+            TSqliteDbSessionContentModifier.create(contentModifier)
+        );
+
+        result := TCompositeDbTypeTask.create(taskArr);
+    end;
 
     function TCreateAppBootstrapTaskFactory.buildAppBootstrap(
         const textFileCreator : ITextFileCreator;
@@ -92,40 +137,8 @@ uses
                         TIniCookieSessionContentModifier.create(contentModifier)
                     )
                 ),
-                TCompositeDbTypeTask.create([
-                    (
-                        name :'mysql',
-                        task : buildBootstrapTask(
-                            textFileCreator,
-                            TMysqlDbSessionContentModifier.create(contentModifier)
-                        )
-                    ),
-                    (
-                        name :'postgresql',
-                        task : buildBootstrapTask(
-                            textFileCreator,
-                            TPostgresqlDbSessionContentModifier.create(contentModifier)
-                        )
-                    ),
-                    (
-                        name :'firebird',
-                        task : buildBootstrapTask(
-                            textFileCreator,
-                            TFirebirdDbSessionContentModifier.create(contentModifier)
-                        )
-                    ),
-                    (
-                        name :'sqlite',
-                        task : buildBootstrapTask(
-                            textFileCreator,
-                            TSqliteDbSessionContentModifier.create(contentModifier)
-                        )
-                    ),
-                ])
-
-                //run this task if session use db as storage, not yet supported
-                //so just create as if --with-session is not set
-                buildBootstrapTask(textFileCreator, contentModifier)
+                //run this task when session use database as storage
+                buildDbAppBootstrap(textFileCreator, contentModifier)
             ),
             //run this task when --with-session parameter is not set
             buildBootstrapTask(textFileCreator, contentModifier)

@@ -49,7 +49,7 @@ uses
     var
         {$INCLUDE src/Tasks/Implementations/Session/Includes/config.json.inc}
     begin
-        result := strConfigJsonDb;
+        result := strConfigJson;
     end;
 
 end.
