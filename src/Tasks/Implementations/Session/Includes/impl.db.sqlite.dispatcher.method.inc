@@ -13,12 +13,7 @@ strImplDbSqliteDispatcherMethod : string =
     '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
     '        container.add(''db'', TSqliteDbFactory.create(' + LineEnding +
-    '            config.getString(''db.version''),' + LineEnding +
-    '            config.getString(''db.host''),' + LineEnding +
-    '            config.getString(''db.db''),' + LineEnding +
-    '            config.getString(''db.user''),' + LineEnding +
-    '            config.getString(''db.passw''),' + LineEnding +
-    '            config.getInt(''db.port'')' + LineEnding +
+    '            config.getString(''db.db'')' + LineEnding +
     '        ));' + LineEnding +
     '' + LineEnding +
     '        container.add(''appMiddlewares'', TMiddlewareListFactory.create());' + LineEnding +
