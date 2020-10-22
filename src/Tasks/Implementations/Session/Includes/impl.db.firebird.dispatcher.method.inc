@@ -12,7 +12,7 @@ strImplDbFirebirdDispatcherMethod : string =
     '        const config : IAppConfiguration' + LineEnding +
     '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
-    '        ctnr.add(''db'', TFirebirdDbFactory.create(' + LineEnding +
+    '        container.add(''db'', TFirebirdDbFactory.create(' + LineEnding +
     '            config.getString(''db.version''),' + LineEnding +
     '            config.getString(''db.host''),' + LineEnding +
     '            config.getString(''db.db''),' + LineEnding +
@@ -26,7 +26,7 @@ strImplDbFirebirdDispatcherMethod : string =
     '        container.add(' + LineEnding +
     '            ''sessionManager'',' + LineEnding +
     '            TJsonDbSessionManagerFactory.create(' + LineEnding +
-    '                ctnr[''db''] as IRdbms,' + LineEnding +
+    '                container[''db''] as IRdbms,' + LineEnding +
     '                config.getString(''session.name'')' + LineEnding +
     '            ).table(config.getString(''session.tableName''))' + LineEnding +
     '               .sessionIdColumn(config.getString(''session.sessionIdColumn''))' + LineEnding +
