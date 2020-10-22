@@ -13,7 +13,6 @@ strImplDbPostgresqlDispatcherMethod : string =
     '    ) : IDispatcher;' + LineEnding +
     '    begin' + LineEnding +
     '        container.add(''db'', TPostgreSqlDbFactory.create(' + LineEnding +
-    '            config.getString(''db.version''),' + LineEnding +
     '            config.getString(''db.host''),' + LineEnding +
     '            config.getString(''db.db''),' + LineEnding +
     '            config.getString(''db.user''),' + LineEnding +
