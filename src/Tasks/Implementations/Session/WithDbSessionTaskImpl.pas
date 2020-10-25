@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit CreateDbSessionIniAppConfigsTaskImpl;
+unit WithDbSessionTaskImpl;
 
 interface
 
@@ -16,34 +16,31 @@ uses
 
     TaskOptionsIntf,
     TaskIntf,
-    ContentModifierIntf,
-    KeyGeneratorIntf,
-    CreateSessionIniAppConfigsTaskImpl;
+    ConditionalCompositeTaskImpl;
 
 type
 
     (*!--------------------------------------
-     * Task that create web application json config files
-     * using fano web framework
-     *
+     * Task that execute first task if --with-session=db
+     * is set, otherwise run second task
+     *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateDbSessionIniAppConfigsTask = class(TCreateSessionIniAppConfigsTask)
+    TWithDbSessionTask = class(TConditionalCompositeTask)
     protected
-        function getConfigTemplate() : string; override;
+        function condition(
+            const opt : ITaskOptions;
+            const longOpt : shortstring
+        ) : boolean; override;
     end;
 
 implementation
 
-uses
-
-    sysutils;
-
-    function TCreateDbSessionIniAppConfigsTask.getConfigTemplate() : string;
-    var
-        {$INCLUDE src/Tasks/Implementations/Session/Includes/config.ini.db.inc}
+    function TWithDbSessionTask.condition(
+        const opt : ITaskOptions;
+        const longOpt : shortstring
+    ) : boolean;
     begin
-        result := strConfigIniDb;
+        result := lowercase(opt.getOptionValue('with-session')) = 'db';
     end;
-
 end.

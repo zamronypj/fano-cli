@@ -53,6 +53,21 @@ implementation
     begin
         setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
         setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbMysqlDispatcherMethod);
+
+        //set default value
+        //TODO: allow modification from command line parameter
+        setVar('[[DB_VER]]', 'mysql 5.7');
+        setVar('[[DB_HOST]]', 'localhost');
+        setVar('[[DB_PORT]]', '3306');
+        setVar('[[DB_NAME]]', 'fano_db');
+        setVar('[[DB_USER]]', 'fano_db');
+        setVar('[[DB_PASSW]]', 'fano_db');
+
+        setVar('[[SESSION_TABLE]]', 'sessions');
+        setVar('[[SESSION_ID_COLUMN]]', 'id');
+        setVar('[[SESSION_DATA_COLUMN]]', 'data');
+        setVar('[[SESSION_EXPIRED_AT_COLUMN]]', 'expired_at');
+
         result := inherited modify(content);
     end;
 end.

@@ -18,7 +18,7 @@ uses
     TaskIntf,
     ContentModifierIntf,
     KeyGeneratorIntf,
-    BaseCreateSessionAppConfigsTaskImpl;
+    CreateSessionJsonAppConfigsTaskImpl;
 
 type
 
@@ -28,9 +28,8 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TCreateDbSessionJsonAppConfigsTask = class(TBaseCreateSessionAppConfigsTask)
+    TCreateDbSessionJsonAppConfigsTask = class(TCreateSessionJsonAppConfigsTask)
     protected
-        function getConfigType() : string; override;
         function getConfigTemplate() : string; override;
     end;
 
@@ -39,11 +38,6 @@ implementation
 uses
 
     sysutils;
-
-    function TCreateDbSessionJsonAppConfigsTask.getConfigType() : string;
-    begin
-        result := 'json';
-    end;
 
     function TCreateDbSessionJsonAppConfigsTask.getConfigTemplate() : string;
     var

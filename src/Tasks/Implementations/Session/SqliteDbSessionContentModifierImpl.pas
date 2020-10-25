@@ -53,6 +53,16 @@ implementation
     begin
         setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
         setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbSqliteDispatcherMethod);
+
+        //set default value
+        //TODO: allow modification from command line parameter
+        setVar('[[DB_NAME]]', 'fano_db');
+
+        setVar('[[SESSION_TABLE]]', 'sessions');
+        setVar('[[SESSION_ID_COLUMN]]', 'id');
+        setVar('[[SESSION_DATA_COLUMN]]', 'data');
+        setVar('[[SESSION_EXPIRED_AT_COLUMN]]', 'expired_at');
+
         result := inherited modify(content);
     end;
 end.
