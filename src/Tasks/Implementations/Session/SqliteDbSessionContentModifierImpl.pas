@@ -54,6 +54,13 @@ implementation
         setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
         setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbSqliteDispatcherMethod);
 
+        //remove irrelevant config value (see config.json.db.inc) for SQLite
+        setVar('"version" : "[[DB_VER]]",', '');
+        setVar('"host" : "[[DB_HOST]]",', '');
+        setVar('"port" : [[DB_PORT]],', '');
+        setVar('"user" : "[[DB_USER]]",', '');
+        setVar('"passw" : "[[DB_PASSW]]"', '');
+
         //set default value
         //TODO: allow modification from command line parameter
         setVar('[[DB_NAME]]', 'fano_db');
