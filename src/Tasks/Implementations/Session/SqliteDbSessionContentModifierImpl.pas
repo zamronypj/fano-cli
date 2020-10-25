@@ -63,7 +63,9 @@ implementation
 
         //set default value
         //TODO: allow modification from command line parameter
-        setVar('[[DB_NAME]]', 'fano_db');
+
+        //here we replace [[DB_NAME]] and also remove coma
+        setVar('"db" : "[[DB_NAME]]",', '"db" : "fano_db"');
 
         setVar('[[SESSION_TABLE]]', 'sessions');
         setVar('[[SESSION_ID_COLUMN]]', 'id');
