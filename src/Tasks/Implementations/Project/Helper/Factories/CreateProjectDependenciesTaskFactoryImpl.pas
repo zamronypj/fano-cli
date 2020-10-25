@@ -201,11 +201,7 @@ uses
         //setup JSON format config
         jsonCfgTask := TWithDbSessionTask.create(
             //this is for --with-session=db
-            TCreateDbSessionJsonAppConfigsTask.create(
-                textFileCreator,
-                contentModifier,
-                TBasicKeyGenerator.create()
-            ),
+            buildDbConfig(textFileCreator, contentModifier),
             TCreateSessionJsonAppConfigsTask.create(
                 textFileCreator,
                 contentModifier,
