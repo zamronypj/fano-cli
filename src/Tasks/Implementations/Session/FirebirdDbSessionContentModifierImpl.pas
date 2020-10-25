@@ -54,7 +54,7 @@ implementation
         setVar('[[BUILD_DISPATCHER_METHOD_DECL_SECTION]]', strDeclDispatcherMethod);
         setVar('[[BUILD_DISPATCHER_METHOD_IMPL_SECTION]]', strImplDbFirebirdDispatcherMethod);
 
-        //remove irrelevant config value (see config.json.db.inc) for Postgresql
+        //remove irrelevant config value (see config.json.db.inc) for Firebird
         setVar('"version" : "[[DB_VER]]",', '');
 
         //set default value
