@@ -203,10 +203,14 @@ begin
     end;
     if length(line)>1 then
       result := result + line;
+
+    result := StringReplace(result, #10, '', [rfReplaceAll]);
+    result := StringReplace(result, #13, '', [rfReplaceAll]);
   except
     // unexpected exception
     result := input;
   end;
+
 end;
 
 procedure CSSMinFile(cssFile: string; cssFileOut : string);
