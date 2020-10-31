@@ -22,8 +22,8 @@ type
 
     (*!--------------------------------------
      * Task that create web application project
-     * compiler config files and enable conditional 
-     * define -DLIBMICROHTTPD if current command is 
+     * compiler config files and enable conditional
+     * define -DLIBMICROHTTPD if current command is
      * --project-mhd
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
@@ -38,7 +38,7 @@ type
 
 implementation
 
-uses 
+uses
 
     SysUtils;
 
@@ -47,14 +47,23 @@ uses
         const longOpt : shortstring
     ) : ITask;
     begin
-        if (longOpt = 'project-mhd') then 
+        if (longOpt = 'project-mhd') then
         begin
             fWriter.write(
                 baseDirectory + '/build.cfg',
                 StringReplace(
-                    fReader.read(baseDirectory + '/build.cfg'), 
-                    '#-dLIBMICROHTTPD', 
-                    '-dLIBMICROHTTPD', 
+                    fReader.read(baseDirectory + '/build.cfg'),
+                    '#-dLIBMICROHTTPD',
+                    '-dLIBMICROHTTPD',
+                    [rfReplaceAll]
+                )
+            );
+            fWriter.write(
+                baseDirectory + '/build.cfg.sample',
+                StringReplace(
+                    fReader.read(baseDirectory + '/build.cfg.sample'),
+                    '#-dLIBMICROHTTPD',
+                    '-dLIBMICROHTTPD',
                     [rfReplaceAll]
                 )
             );
