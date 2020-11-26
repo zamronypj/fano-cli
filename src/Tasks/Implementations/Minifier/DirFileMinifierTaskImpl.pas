@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit JsMinifierTaskImpl;
+unit DirFileMinifierTaskImpl;
 
 interface
 
@@ -15,24 +15,23 @@ interface
 uses
 
     TaskOptionsIntf,
-    TaskIntf,
-    DecoratorTaskImpl;
+    TaskIntf;
 
 type
 
     (*!--------------------------------------
-     * Task that run minify one or more javascript files
+     * Task that run minify one or more files
      *---------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TJsMinifierTask = class(TInterfacedObject, ITask)
+    TDirFileMinifierTask = class(TInterfacedObject, ITask)
     private
-        fSingleJsMinifierTask : ITask;
-        fMultipleJsMinifierTask : ITask;
+        fSingleMinifierTask : ITask;
+        fMultipleMinifierTask : ITask;
     public
         constructor create(
-            const aSingleJsMinifierTask : ITask;
-            const aMultipleJsMinifierTask : ITask
+            const aSingleMinifierTask : ITask;
+            const aMultipleMinifierTask : ITask
         );
         destructor destroy(); override;
         function run(
@@ -51,23 +50,23 @@ resourcestring
 
     sErrPathNotFound = 'Path %s not found';
 
-    constructor TJsMinifierTask.create(
-        const aSingleJsMinifierTask : ITask;
-        const aMultipleJsMinifierTask : ITask
+    constructor TDirFileMinifierTask.create(
+        const aSingleMinifierTask : ITask;
+        const aMultipleMinifierTask : ITask
     );
     begin
-        fSingleJsMinifierTask := aSingleJsMinifierTask;
-        fMultipleJsMinifierTask := aMultipleJsMinifierTask;
+        fSingleMinifierTask := aSingleMinifierTask;
+        fMultipleMinifierTask := aMultipleMinifierTask;
     end;
 
-    destructor TJsMinifierTask.destroy();
+    destructor TDirFileMinifierTask.destroy();
     begin
-        fSingleJsMinifierTask := nil;
-        fMultipleJsMinifierTask := nil;
+        fSingleMinifierTask := nil;
+        fMultipleMinifierTask := nil;
         inherited destroy();
     end;
 
-    function TJsMinifierTask.run(
+    function TDirFileMinifierTask.run(
         const opt : ITaskOptions;
         const longOpt : shortstring
     ) : ITask;
@@ -76,11 +75,11 @@ resourcestring
         jsPath := opt.getOptionValueDef(longOpt, getCurrentDir());
         if directoryExists(jsPath) then
         begin
-            fMultipleJsMinifierTask.run(opt, longOpt);
+            fMultipleMinifierTask.run(opt, longOpt);
         end else
         if fileExists(jsPath) then
         begin
-            fSingleJsMinifierTask.run(opt, longOpt);
+            fSingleMinifierTask.run(opt, longOpt);
         end else
         begin
             writeln(format(sErrPathNotFound, [jsPath]));

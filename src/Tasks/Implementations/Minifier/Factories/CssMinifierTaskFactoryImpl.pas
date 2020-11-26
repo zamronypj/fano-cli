@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit JsMinifierTaskFactoryImpl;
+unit CssMinifierTaskFactoryImpl;
 
 interface
 
@@ -20,11 +20,11 @@ uses
 type
 
     (*!--------------------------------------
-     * Factory class for JavaScript minifier task
+     * Factory class for CSS minifier task
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TJsMinifierTaskFactory = class(TInterfacedObject, ITaskFactory)
+    TCssMinifierTaskFactory = class(TInterfacedObject, ITaskFactory)
     public
         function build() : ITask;
     end;
@@ -35,20 +35,20 @@ uses
 
     NullTaskImpl,
     DirFileMinifierTaskImpl,
-    JsMinifierImpl,
+    CssMinifierImpl,
     FileHelperImpl,
     MinifyFileTaskImpl,
     MinifyDirTaskImpl;
 
-    function TJsMinifierTaskFactory.build() : ITask;
+    function TCssMinifierTaskFactory.build() : ITask;
     begin
         result := TDirFileMinifierTask.create(
             TMinifyFileTask.create(
-                TJsMinifier.create(),
+                TCssMinifier.create(),
                 TFileHelper.create()
             ),
             TMinifyDirTask.create(
-                TJsMinifier.create(),
+                TCssMinifier.create(),
                 TFileHelper.create()
             )
         );
