@@ -55,6 +55,13 @@ uses
         );
         {$ENDIF}
 
+        {$IFDEF OPENBSD}
+        createTextFile(
+            dir + '/build.cfg',
+            StringReplace(strBuildCfg, '-Tlinux', '-Topenbsd', [rfReplaceAll])
+        );
+        {$ENDIF}
+
         {$IFDEF WINDOWS}
         createTextFile(
             dir + '/build.cfg',
