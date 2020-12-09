@@ -125,6 +125,10 @@ Read [Scaffolding with Fano CLI](https://fanoframework.github.io/scaffolding-wit
 
 Fano CLI follows [Semantic Versioning 2.0.0](https://semver.org#semantic-versioning-200).
 
+## Copyright Notice
+
+Read [NOTICE](NOTICE)
+
 ## Known Issues
 
 ### Issue with GNU Linker
