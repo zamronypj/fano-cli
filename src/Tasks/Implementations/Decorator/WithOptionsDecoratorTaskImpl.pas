@@ -82,6 +82,6 @@ implementation
 
     function TWithOptionsDecoratorTask.getOptionValueDef(const longOpt: string; const defValue : string) : string;
     begin
-        result := fOrigOpts.getOptionValueDef(longOpt ,defValue);
+        result := fOrigOpts.getOptionValueDef(longOpt, defValue);
     end;
 end.

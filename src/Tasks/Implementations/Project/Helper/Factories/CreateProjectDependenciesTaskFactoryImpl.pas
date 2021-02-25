@@ -63,6 +63,12 @@ type
             const contentModifier : IContentModifier
         ) : ITask;
 
+        function buildWithCsrfProjectTask(
+            const prjTask : ITask;
+            const textFileCreator : ITextFileCreator;
+            const contentModifier : IContentModifier
+        ) : ITask;
+
         function buildProjectTask(
             const textFileCreator : ITextFileCreator;
             const contentModifier : IContentModifier
@@ -111,7 +117,10 @@ uses
     MysqlDbSessionContentModifierImpl,
     PostgresqlDbSessionContentModifierImpl,
     FirebirdDbSessionContentModifierImpl,
-    SqliteDbSessionContentModifierImpl;
+    SqliteDbSessionContentModifierImpl,
+    WithCsrfTaskImpl,
+    CreateCsrfMiddlewareDependenciesTaskImpl,
+    ForceConfigSessionDecoratorTaskImpl;
 
     function TCreateProjectDependenciesTaskFactory.buildCompilerConfigsTask(
         const textFileCreator : ITextFileCreator;
@@ -301,15 +310,41 @@ uses
         ]);
     end;
 
+    function TCreateProjectDependenciesTaskFactory.buildWithCsrfProjectTask(
+        const prjTask : ITask;
+        const textFileCreator : ITextFileCreator;
+        const contentModifier : IContentModifier
+    ) : ITask;
+    begin
+        result := TWithCsrfTask.create(
+            //if --with-csrf parameter is set, force add --config and --with-session
+            TForceConfigSessionDecoratorTask.create(
+                TGroupTask.create([
+                    prjTask,
+                    TCreateCsrfMiddlewareDependenciesTask.create(
+                        textFileCreator,
+                        contentModifier,
+                        TFileHelperAppender.create()
+                    )
+                ])
+            ),
+            prjTask
+        );
+    end;
+
     function TCreateProjectDependenciesTaskFactory.buildProjectTask(
         const textFileCreator : ITextFileCreator;
         const contentModifier : IContentModifier
     ) : ITask;
     begin
-        result := TWithSessionOrMiddlewareTask.create(
-            buildSessionProjectTask(textFileCreator, contentModifier),
-            buildMiddlewareProjectTask(textFileCreator, contentModifier),
-            buildBasicProjectTask(textFileCreator, contentModifier)
+        result := buildWithCsrfProjectTask(
+            TWithSessionOrMiddlewareTask.create(
+                buildSessionProjectTask(textFileCreator, contentModifier),
+                buildMiddlewareProjectTask(textFileCreator, contentModifier),
+                buildBasicProjectTask(textFileCreator, contentModifier)
+            ),
+            textFileCreator,
+            contentModifier
         );
     end;
 
