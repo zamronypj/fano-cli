@@ -16,7 +16,7 @@ try
     appInst.registerTask(
         'project-fcgi',
         '--project-fcgi=[project-name] Create new FastCGI project.' + LineEnding +
-        '     --config=[ini, json] if omited, config is not setup.' + LineEnding +
+        '     --config=[ini, json] if omitted, config is not setup.' + LineEnding +
         '     --host=[host where FastCGI app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
         '     --port=[port where FastCGI app listen] if omitted, 20477 is assumed.' + LineEnding +
         '     --with-session=[file, cookie, db] Add session support' + LineEnding +

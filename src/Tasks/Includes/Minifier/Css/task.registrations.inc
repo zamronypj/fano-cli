@@ -14,7 +14,7 @@ try
         'cssmin',
         '--cssmin=[path] Minify CSS file. Path can be file path or directory.' + LineEnding +
         '     --output=[output path] target output path' + LineEnding +
-        '         if omited, it is assumed [path].min.css' + LineEnding +
+        '         if omitted, it is assumed [path].min.css' + LineEnding +
         '         if output-path = stdout, minified version is output to STDOUT',
         taskFactory.build()
     );

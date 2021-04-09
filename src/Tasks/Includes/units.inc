@@ -12,6 +12,7 @@ InfoTaskImpl,
 KeyGenTaskImpl,
 KeyGenTaskFactoryImpl,
 GuidGenTaskImpl,
+Text2IncTaskImpl,
 
 {$INCLUDE Project/units.inc}
 

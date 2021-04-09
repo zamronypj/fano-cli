@@ -13,8 +13,8 @@ try
     appInst.registerTask(
         'controller',
         '--controller=[controller-name] Create new controller' + LineEnding +
-        '     --route=[route pattern] if omited, controller name is assumed.' + LineEnding +
-        '     --method=[request method] if omited, HTTP GET is assumed.',
+        '     --route=[route pattern] if omitted, controller name is assumed.' + LineEnding +
+        '     --method=[request method] if omitted, HTTP GET is assumed.',
         taskFactory.build()
     );
 finally
