@@ -24,6 +24,6 @@ strUwsgiVhostConf: string =
     '    </Directory>' + LineEnding +
     '' + LineEnding +
     '    ProxyRequests Off' + LineEnding +
-    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
+    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)|webfonts" !' + LineEnding +
     '    ProxyPassMatch ^/(.*)$ "uwsgi://[[HOST]]:[[PORT]]"' + LineEnding +
     '</VirtualHost>';

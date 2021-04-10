@@ -28,6 +28,6 @@ strBalancerVhostConf: string =
     '        ProxySet lbmethod=[[LOAD_BALANCER_METHOD]] ' + LineEnding +
     '    </Proxy> ' + LineEnding +
     '    ProxyRequests Off' + LineEnding +
-    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)" !' + LineEnding +
+    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)|webfonts" !' + LineEnding +
     '    ProxyPassMatch ^/(.*)$ "balancer://[[SERVER_NAME]]"' + LineEnding +
     '</VirtualHost>';
