@@ -160,7 +160,7 @@ However, this warning is minor and can be ignored. It does not affect output exe
 
 ### Missing /etc/fpc.cfg
 
-`build.sh` script may show error about missing `/etc/fpc.cfg` file. This may happen if you install Free Pascal in non default directory or using tools such as [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe). To remedy this situation, create symbolic link in `/etc` to actual `fpc.cfg` file.
+`build.sh` script may show error about missing `/etc/fpc.cfg` file. This may happen if you install Free Pascal in non default directory or using tools such as [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe). To remedy this situation, create symbolic link in `/etc` to actual `fpc.cfg` file. Alternatively you can set `PPC_CONFIG_PATH` environment variable as described above.
 
 ```
 $ sudo ln -s ~/fpcupdeluxe/fpc/bin/x86_64-linux/fpc.cfg /etc/fpc.cfg
