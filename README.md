@@ -30,6 +30,7 @@ For easier access, copy `bin/out/fanocli` executable binary to globally accessib
 ```
 $ sudo cp bin/out/fanocli /usr/local/bin/fanocli
 ```
+or you can put absolute path of `bin/out` directory in `PATH` environment variable.
 
 In FreeBSD, before you run `build.sh`, edit `build.cfg` and replace target OS compilation to `-Tfreebsd`.
 
