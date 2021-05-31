@@ -107,7 +107,7 @@ environment variable. By default is `bin/unit` directory.
 
 ## Change Free Pascal compiler binary
 
-By default, build script use `fpc` command. If `fpc` can not be found or if you want to use different Free Pascal version, you can set compiler binary with `FPC_BIN`
+By default, build script uses `fpc` command. If `fpc` can not be found or if you want to use different Free Pascal version, you can set compiler binary with `FPC_BIN`
 environment variable. By default it is `fpc`.
 
     $ FPC_BIN=/path/to/fpc ./build.sh
