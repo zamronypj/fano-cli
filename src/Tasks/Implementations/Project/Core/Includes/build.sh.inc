@@ -37,19 +37,19 @@ strBuildSh: string =
     'fi' + LineEnding +
     '' + LineEnding +
     'if [ -z "${EXEC_OUTPUT_DIR}" ]; then' + LineEnding +
-    'export EXEC_OUTPUT_DIR="[[EXEC_OUTPUT_DIR]]"' + LineEnding +
+    '    export EXEC_OUTPUT_DIR="[[EXEC_OUTPUT_DIR]]"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [ -z "${EXEC_OUTPUT_NAME}" ]; then' + LineEnding +
-    'export EXEC_OUTPUT_NAME="app.cgi"' + LineEnding +
+    '    export EXEC_OUTPUT_NAME="app.cgi"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [ -z "${SOURCE_PROGRAM_NAME}" ]; then' + LineEnding +
-    'export SOURCE_PROGRAM_NAME="app.pas"' + LineEnding +
+    '    export SOURCE_PROGRAM_NAME="app.pas"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     'if [ -z "${FPC_BIN}" ]; then' + LineEnding +
-    'export FPC_BIN="fpc"' + LineEnding +
+    '    export FPC_BIN="fpc"' + LineEnding +
     'fi' + LineEnding +
     '' + LineEnding +
     '${FPC_BIN} @vendor/fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}';
