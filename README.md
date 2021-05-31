@@ -154,7 +154,7 @@ When running `build.sh` script, you may encounter following warning:
 ```
 
 This is known issue between Free Pascal and GNU Linker. See
-[FAQ: link.res syntax error, or "did you forget -T?"](https://www.freepascal.org/faq.var#unix-ld219)
+[FAQ: link.res syntax error, or "did you forget -T?"](https://www.freepascal.org/faq.var#unix-ld219) and only happens with Free Pascal 3.0.4 or older. Free Pascal 3.2.0 or newer does not have this issue.
 
 However, this warning is minor and can be ignored. It does not affect output executable.
 
