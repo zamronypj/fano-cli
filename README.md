@@ -105,6 +105,20 @@ environment variable. By default is `bin/unit` directory.
 
     $ UNIT_OUTPUT_DIR=/path/to/compiled/units/dir ./build.sh
 
+## Change Free Pascal compiler binary
+
+By default, build script use `fpc` command. If `fpc` can not be found or if you want to use different Free Pascal version, you can set compiler binary with `FPC_BIN`
+environment variable. By default it is `fpc`.
+
+    $ FPC_BIN=/path/to/fpc ./build.sh
+
+You will very likely need to set location of `fpc.cfg` file to match Free Pascal version. For example, if you have multiple version of Free Pascal installation and you want to compile using Free Pascal version 3.0.4 as shown in following command.
+
+```
+$ PPC_CONFIG_PATH=/path/to/fpc-3.0.4 FPC_BIN=/path/to/fpc-3.0.4/fpc ./build.sh
+```
+where `PPC_CONFIG_PATH` is environment variable which Free Pascal uses to look for `fpc.cfg` file for Free Pascal version 3.0.4.
+
 ## Run
 
 Copy `bin/out/fanocli` executable file to directory that is accessible globally, for example `/usr/local/bin`,
