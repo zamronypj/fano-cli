@@ -61,6 +61,7 @@ strBuildCfg: string =
     '#----------------------------------------------' + LineEnding +
     '-Fu$USER_APP_DIR$/Dependencies' + LineEnding +
     '-Fu$USER_APP_DIR$/Routes' + LineEnding +
+    '-Fu$USER_APP_DIR$/App' + LineEnding +
     '#-Fu$USER_APP_DIR$/path/to/other/units' + LineEnding +
     '#-Fu$USER_APP_DIR$/path/to/other/units' + LineEnding +
     '' + LineEnding +
