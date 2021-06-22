@@ -22,4 +22,6 @@ strConfigSetupCmd: string =
     'IF EXIST config\config.ini.sample (copy config\config.ini.sample config\config.ini)' + LineEnding +
     'copy build.prod.cfg.sample build.prod.cfg' + LineEnding +
     'copy build.dev.cfg.sample build.dev.cfg' + LineEnding +
-    'copy build.cfg.sample build.cfg';
+    'copy build.cfg.sample build.cfg' + LineEnding +
+    'copy defines.cfg.sample defines.cfg' + LineEnding +
+    '(Get-Content build.cfg) -replace ''-Tlinux'', ''-Twin64'' | Out-File -encoding ASCII build.cfg';
