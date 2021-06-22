@@ -6,13 +6,6 @@
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 
-{%../Includes/task.registrations.inc}
-
-appInst.registerTask(
-    'help',
-    '--help Display help information',
-    TWithSingleInfoTask.create(
-        TSingleInfoTask.create(appInst.getTaskList()),
-        TInfoTask.create(appInst.getTaskList())
-    )
-);
+InfoTaskImpl,
+SingleInfoTaskImpl,
+WithSingleInfoTaskImpl,
