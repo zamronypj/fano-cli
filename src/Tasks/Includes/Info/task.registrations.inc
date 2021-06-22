@@ -10,7 +10,7 @@
 
 appInst.registerTask(
     'help',
-    '--help Display help information',
+    formatColor('--help', TXT_GREEN) + ' Display help information',
     TWithSingleInfoTask.create(
         TSingleInfoTask.create(appInst.getTaskList()),
         TInfoTask.create(appInst.getTaskList())
