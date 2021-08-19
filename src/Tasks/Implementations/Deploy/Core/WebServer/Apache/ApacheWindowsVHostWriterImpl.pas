@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheFedoraVHostWriterImpl;
+unit ApacheWindowsVHostWriterImpl;
 
 interface
 
@@ -23,11 +23,11 @@ type
 
     (*!--------------------------------------
      * Task that creates Apache web server virtual host file
-     * in Fedora-based distros
+     * in Windows
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheFedoraVHostWriter = class(TInterfacedObject, IVirtualHostWriter)
+    TApacheWindowsVHostWriter = class(TInterfacedObject, IVirtualHostWriter)
     private
         fTextFileCreator : ITextFileCreator;
     public
@@ -45,20 +45,20 @@ uses
 
     SysUtils;
 
-    constructor TApacheFedoraVHostWriter.create(const txtFileCreator : ITextFileCreator);
+    constructor TApacheWindowsVHostWriter.create(const txtFileCreator : ITextFileCreator);
     begin
         fTextFileCreator := txtFileCreator;
     end;
 
-    procedure TApacheFedoraVHostWriter.writeVhost(
+    procedure TApacheWindowsVHostWriter.writeVhost(
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier
     );
     begin
-        cntModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
+        cntModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/apache2');
         fTextFileCreator.createTextFile(
-            '/etc/httpd/conf.d/' + serverName + '.conf',
+            '/etc/apache2/sites-available/' + serverName + '.conf',
             cntModifier.modify(vhostTpl)
         );
     end;
