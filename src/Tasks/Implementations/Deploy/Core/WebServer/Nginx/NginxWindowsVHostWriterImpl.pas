@@ -93,17 +93,17 @@ uses
     var nginxDir : string;
     begin
         nginxDir := getEnvironmentVariable('NGINX_DIR');
-        if (nginxDir <> '') then
+        if (nginxDir = '') then
         begin
             nginxDir := 'C:\Program Files\nginx';
         end;
 
         if (not directoryExists(nginxDir)) then
         begin
-            nginxDir := 'C:/nginx';
+            nginxDir := 'C:\nginx';
         end;
 
-        if (not directoryExists(nginxDir)) then
+        if (directoryExists(nginxDir)) then
         begin
             nginxDir := ExcludeTrailingPathDelimiter(nginxDir);
             doWriteVhost(serverName,vhostTpl,cntModifier, nginxDir);

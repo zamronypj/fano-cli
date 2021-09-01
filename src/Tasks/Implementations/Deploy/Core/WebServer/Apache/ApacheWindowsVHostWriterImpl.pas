@@ -93,20 +93,20 @@ uses
     var apacheDir : string;
     begin
         apacheDir := getEnvironmentVariable('APACHE_DIR');
-        if (apacheDir <> '') then
+        if (apacheDir = '') then
         begin
             apacheDir := 'C:\Program Files\Apache Group';
         end;
 
         if (not directoryExists(apacheDir)) then
         begin
-            apacheDir := 'C:/Apache24';
+            apacheDir := 'C:\Apache24';
         end;
 
-        if (not directoryExists(apacheDir)) then
+        if (directoryExists(apacheDir)) then
         begin
             apacheDir := ExcludeTrailingPathDelimiter(apacheDir);
-            doWriteVhost(serverName,vhostTpl,cntModifier, apacheDir);
+            doWriteVhost(serverName, vhostTpl, cntModifier, apacheDir);
         end else
         begin
             writeln(
