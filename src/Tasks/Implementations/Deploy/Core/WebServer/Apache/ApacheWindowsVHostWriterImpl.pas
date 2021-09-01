@@ -37,7 +37,7 @@ type
             const serverName : string;
             const vhostTpl : string;
             const cntModifier : IContentModifier;
-            const apacheDir : string;
+            const apacheDir : string
         );
     public
         constructor create(
@@ -70,7 +70,7 @@ uses
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier;
-        const apacheDir : string;
+        const apacheDir : string
     );
     begin
         cntModifier.setVar('[[APACHE_LOG_DIR]]', apacheDir + '\logs');
@@ -92,7 +92,7 @@ uses
     );
     var apacheDir : string;
     begin
-        apacheDir = getEnvirontmentVariable('APACHE_DIR');
+        apacheDir := getEnvironmentVariable('APACHE_DIR');
         if (apacheDir <> '') then
         begin
             apacheDir := 'C:\Program Files\Apache Group';

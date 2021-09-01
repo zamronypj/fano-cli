@@ -37,7 +37,7 @@ type
             const serverName : string;
             const vhostTpl : string;
             const cntModifier : IContentModifier;
-            const nginxDir : string;
+            const nginxDir : string
         );
     public
         constructor create(
@@ -70,7 +70,7 @@ uses
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier;
-        const nginxDir : string;
+        const nginxDir : string
     );
     begin
         cntModifier.setVar('[[NGINX_LOG_DIR]]', nginxDir + '\logs');
@@ -92,7 +92,7 @@ uses
     );
     var nginxDir : string;
     begin
-        nginxDir = getEnvirontmentVariable('NGINX_DIR');
+        nginxDir := getEnvironmentVariable('NGINX_DIR');
         if (nginxDir <> '') then
         begin
             nginxDir := 'C:\Program Files\nginx';

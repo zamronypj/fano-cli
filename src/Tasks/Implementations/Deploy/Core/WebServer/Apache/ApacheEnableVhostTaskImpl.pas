@@ -112,7 +112,7 @@ uses
             apacheDir : string;
         begin
             serverName := opt.getOptionValue(longOpt);
-            apacheDir = getEnvirontmentVariable('APACHE_DIR');
+            apacheDir := getEnvironmentVariable('APACHE_DIR');
             if (apacheDir <> '') then
             begin
                 apacheDir := 'C:\Program Files\Apache Group';
