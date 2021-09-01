@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
-unit ApacheWindowsVHostWriterImpl;
+unit NginxWindowsVHostWriterImpl;
 
 interface
 
@@ -23,12 +23,12 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that creates Apache web server virtual host file
+     * Task that creates Nginx web server virtual host file
      * in Windows
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
-    TApacheWindowsVHostWriter = class(TInterfacedObject, IVirtualHostWriter)
+    TNginxWindowsVHostWriter = class(TInterfacedObject, IVirtualHostWriter)
     private
         fFileAppender : IFileContentAppender;
         fTextFileCreator : ITextFileCreator;
@@ -37,7 +37,7 @@ type
             const serverName : string;
             const vhostTpl : string;
             const cntModifier : IContentModifier;
-            const apacheDir : string;
+            const nginxDir : string;
         );
     public
         constructor create(
@@ -57,7 +57,7 @@ uses
 
     SysUtils;
 
-    constructor TApacheWindowsVHostWriter.create(
+    constructor TNginxWindowsVHostWriter.create(
         const txtFileCreator : ITextFileCreator;
         const fileAppender : IFileContentAppender
     );
@@ -66,52 +66,52 @@ uses
         fFileAppender := fileAppender;
     end;
 
-    procedure TApacheWindowsVHostWriter.doWriteVhost(
+    procedure TNginxWindowsVHostWriter.doWriteVhost(
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier;
-        const apacheDir : string;
+        const nginxDir : string;
     );
     begin
-        cntModifier.setVar('[[APACHE_LOG_DIR]]', apacheDir + '\logs');
+        cntModifier.setVar('[[NGINX_LOG_DIR]]', nginxDir + '\logs');
         fTextFileCreator.createTextFile(
-            apacheDir + '\conf\extra\' + serverName + '.conf',
+            nginxDir + '\conf\' + serverName + '.conf',
             cntModifier.modify(vhostTpl)
         );
 
         fFileAppender.append(
-            apacheDir + '\conf\httpd.conf',
-            'Include ' + apacheDir + '\conf\extra\' + serverName + '.conf' + LineEnding
+            nginxDir + '\conf\nginx.conf',
+            'include "' + nginxDir + '\conf\' + serverName + '.conf";' + LineEnding
         );
     end;
 
-    procedure TApacheWindowsVHostWriter.writeVhost(
+    procedure TNginxWindowsVHostWriter.writeVhost(
         const serverName : string;
         const vhostTpl : string;
         const cntModifier : IContentModifier
     );
-    var apacheDir : string;
+    var nginxDir : string;
     begin
-        apacheDir = getEnvirontmentVariable('APACHE_DIR');
-        if (apacheDir <> '') then
+        nginxDir = getEnvirontmentVariable('NGINX_DIR');
+        if (nginxDir <> '') then
         begin
-            apacheDir := 'C:\Program Files\Apache Group';
+            nginxDir := 'C:\Program Files\nginx';
         end;
 
-        if (not directoryExists(apacheDir)) then
+        if (not directoryExists(nginxDir)) then
         begin
-            apacheDir := 'C:/Apache24';
+            nginxDir := 'C:/nginx';
         end;
 
-        if (not directoryExists(apacheDir)) then
+        if (not directoryExists(nginxDir)) then
         begin
-            apacheDir := ExcludeTrailingPathDelimiter(apacheDir);
-            doWriteVhost(serverName,vhostTpl,cntModifier, apacheDir);
+            nginxDir := ExcludeTrailingPathDelimiter(nginxDir);
+            doWriteVhost(serverName,vhostTpl,cntModifier, nginxDir);
         end else
         begin
             writeln(
-                'Cannot find Apache 2 directory in ' + apacheDir +
-                '. Set APACHE_DIR environment variable to correct directory'
+                'Cannot find Nginx directory in ' + nginxDir +
+                '. Set NGINX_DIR environment variable to correct directory'
             );
         end;
 

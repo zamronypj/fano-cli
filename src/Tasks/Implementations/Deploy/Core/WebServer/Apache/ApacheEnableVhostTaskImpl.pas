@@ -115,7 +115,12 @@ uses
             apacheDir = getEnvirontmentVariable('APACHE_DIR');
             if (apacheDir <> '') then
             begin
-                apacheDir := 'C:/Apache24';
+                apacheDir := 'C:\Program Files\Apache Group';
+            end;
+
+            if (not directoryExists(apacheDir)) then
+            begin
+                apacheDir := 'C:\Apache24';
             end;
 
             if (directoryExists(apacheDir)) then
@@ -125,9 +130,9 @@ uses
             begin
                 writeln(
                     'Cannot find Apache 2 directory in ' + apacheDir +
-                    '. Set APACHE_DIR environment variable to correct directory');
+                    '. Set APACHE_DIR environment variable to correct directory'
+                );
             end;
-
         end;
     {$ENDIF}
 
