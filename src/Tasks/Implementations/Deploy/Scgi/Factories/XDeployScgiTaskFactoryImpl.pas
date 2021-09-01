@@ -80,7 +80,7 @@ uses
     NullDirectoryExistsImpl;
 
     function TXDeployScgiTaskFactory.buildApacheScgiVhostTask(
-        ftext : ITextFileCreator;
+        atxtFileCreator : ITextFileCreator;
         adirExists : IDirectoryExists
     ) : ITask;
     var vhostWriter : IVirtualHostWriter;
@@ -112,7 +112,7 @@ uses
     end;
 
     function TXDeployScgiTaskFactory.buildNginxScgiVhostTask(
-        ftext : ITextFileCreator;
+        atxtFileCreator : ITextFileCreator;
         aDirExists : IDirectoryExists
     ) : ITask;
     var vhostWriter : IVirtualHostWriter;

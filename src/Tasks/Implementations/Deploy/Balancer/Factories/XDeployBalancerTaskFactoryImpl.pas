@@ -37,7 +37,7 @@ type
         function buildStdoutApacheBalancerVhostTask() : ITask;
         function buildNormalApacheBalancerVhostTask() : ITask;
         function buildNginxBalancerVhostTask(
-            ftext : ITextFileCreator;
+            atxtFileCreator : ITextFileCreator;
             aDirExists : IDirectoryExists
         ) : ITask;
         function buildStdoutNginxBalancerVhostTask() : ITask;
@@ -120,7 +120,7 @@ uses
     end;
 
     function TXDeployBalancerTaskFactory.buildNginxBalancerVhostTask(
-        ftext : ITextFileCreator;
+        atxtFileCreator : ITextFileCreator;
         aDirExists : IDirectoryExists
     ) : ITask;
     var vhostWriter : IVirtualHostWriter;

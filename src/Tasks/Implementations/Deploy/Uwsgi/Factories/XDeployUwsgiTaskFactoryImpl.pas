@@ -77,7 +77,7 @@ uses
     NullDirectoryExistsImpl;
 
     function TXDeployUwsgiTaskFactory.buildApacheUwsgiVhostTask(
-        ftext : ITextFileCreator;
+        atxtFileCreator : ITextFileCreator;
         adirExists : IDirectoryExists
     ) : ITask;
     var vhostWriter : IVirtualHostWriter;
@@ -109,7 +109,7 @@ uses
     end;
 
     function TXDeployUwsgiTaskFactory.buildNginxUwsgiVhostTask(
-        ftext : ITextFileCreator;
+        atxtFileCreator : ITextFileCreator;
         aDirExists : IDirectoryExists
     ) : ITask;
     var vhostWriter : IVirtualHostWriter;
