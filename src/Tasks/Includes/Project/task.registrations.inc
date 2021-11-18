@@ -14,3 +14,4 @@
 {$INCLUDE Uwsgi/task.registrations.inc}
 {$INCLUDE Fcgid/task.registrations.inc}
 {$INCLUDE Mhd/task.registrations.inc}
+{$INCLUDE Fpweb/task.registrations.inc}
