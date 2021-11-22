@@ -15,7 +15,7 @@ taskFactory := TCreateDaemonProjectTaskFactory.create(
 try
     appInst.registerTask(
         'project-http',
-        formatColor('--project-http', TXT_GREEN) + '=[project-name] Create new http project' + LineEnding +
+        formatColor('--project-http', TXT_GREEN) + '=[project-name] Create new http project using TFpHttpServer' + LineEnding +
         '     --config=[ini, json] if omitted, config is not setup.' + LineEnding +
         '     --host=[host where http app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
         '     --port=[port where http app listen] if omitted, 20477 is assumed.' + LineEnding +

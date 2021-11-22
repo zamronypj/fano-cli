@@ -17,7 +17,7 @@ taskFactory := TCreateDaemonProjectTaskFactory.create(
 try
     appInst.registerTask(
         'project-mhd',
-        formatColor('--project-mhd', TXT_GREEN) + '=[project-name] Create new libmicrohttpd project' + LineEnding +
+        formatColor('--project-mhd', TXT_GREEN) + '=[project-name] Create new http project using libmicrohttpd' + LineEnding +
         '     --config=[ini, json] if omitted, config is not setup.' + LineEnding +
         '     --host=[host where http app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
         '     --port=[port where http app listen] if omitted, 20477 is assumed.' + LineEnding +
