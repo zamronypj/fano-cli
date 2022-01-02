@@ -35,4 +35,12 @@ strEnv: string =
     '# Fano Framework. Set it to actual path where Synapse is.' + LineEnding +
     '#------------------------------------------------------' + LineEnding +
     '#SYNAPSE_DIR="/path/to/synapse"' + LineEnding +
+    '' + LineEnding +
+    '' + LineEnding +
+    '#------------------------------------------------------' + LineEnding +
+    '# LNET base directory' + LineEnding +
+    '# Remove # if you want to use LNET library with' + LineEnding +
+    '# Fano Framework. Set it to actual path where LNET is.' + LineEnding +
+    '#------------------------------------------------------' + LineEnding +
+    '#LNET_DIR="/path/to/lnet"' + LineEnding +
     '' + LineEnding;
