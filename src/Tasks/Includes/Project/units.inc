@@ -8,6 +8,7 @@
 
 CreateProjectDependenciesTaskFactoryImpl,
 CreateProjectDependenciesMhdTaskFactoryImpl,
+CreateProjectDependenciesIndyTaskFactoryImpl,
 CreateProjectTaskFactoryImpl,
 CreateDaemonProjectTaskFactoryImpl,
 
@@ -18,3 +19,4 @@ CreateAppBootstrapFcgidTaskFactoryImpl,
 CreateAppBootstrapUwsgiTaskFactoryImpl,
 CreateAppBootstrapMhdTaskFactoryImpl,
 CreateAppBootstrapFpwebTaskFactoryImpl,
+CreateAppBootstrapIndyTaskFactoryImpl,

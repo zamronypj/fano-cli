@@ -15,3 +15,4 @@
 {$INCLUDE Fcgid/task.registrations.inc}
 {$INCLUDE Mhd/task.registrations.inc}
 {$INCLUDE Fpweb/task.registrations.inc}
+{$INCLUDE Indy/task.registrations.inc}

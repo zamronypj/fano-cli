@@ -23,4 +23,5 @@ CreateMvcTaskFactoryImpl,
 CreateMiddlewareTaskFactoryImpl,
 JsMinifierTaskFactoryImpl,
 CssMinifierTaskFactoryImpl,
+WritelnTaskFactoryImpl,
 SystemDDaemonTaskFactoryImpl;
