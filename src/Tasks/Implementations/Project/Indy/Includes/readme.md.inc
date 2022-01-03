@@ -29,6 +29,7 @@ strReadme: string =
     '$ cd fano-app' + LineEnding +
     '$ ./tools/config.setup.sh' + LineEnding +
     '```' + LineEnding +
+    '' + LineEnding +
     'Open `.env` file and edit `INDY_DIR` environment variable to match your Indy directory (no trailing slash).' + LineEnding +
     '```' + LineEnding +
     '$ ./build.sh' + LineEnding +

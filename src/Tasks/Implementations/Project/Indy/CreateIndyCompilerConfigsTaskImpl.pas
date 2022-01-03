@@ -67,6 +67,27 @@ uses
                     [rfReplaceAll]
                 )
             );
+
+            //Indy library causing some warnings during compilation so we need
+            //to make it stop compilation only on error with -Se rather than -Sew
+            fWriter.write(
+                baseDirectory + '/build.dev.cfg',
+                StringReplace(
+                    fReader.read(baseDirectory + '/build.dev.cfg'),
+                    '-Sew',
+                    '-Se',
+                    [rfReplaceAll]
+                )
+            );
+            fWriter.write(
+                baseDirectory + '/build.dev.cfg.sample',
+                StringReplace(
+                    fReader.read(baseDirectory + '/build.dev.cfg.sample'),
+                    '-Sew',
+                    '-Se',
+                    [rfReplaceAll]
+                )
+            );
         end;
         result := self;
     end;
