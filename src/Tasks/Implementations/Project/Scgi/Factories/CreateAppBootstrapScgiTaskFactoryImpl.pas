@@ -43,6 +43,7 @@ uses
 
     CreateScgiAppFileTaskImpl,
     CreateScgiReadmeFileTaskImpl,
+    CreateScgiDockerfileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -56,6 +57,7 @@ uses
         result := TGroupTask.create([
             TCreateScgiAppFileTask.create(textFileCreator, contentModifier),
             TCreateScgiReadmeFileTask.create(textFileCreator, contentModifier),
+            TCreateScgiDockerfileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)

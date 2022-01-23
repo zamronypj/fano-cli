@@ -43,6 +43,7 @@ uses
 
     CreateUwsgiAppFileTaskImpl,
     CreateUwsgiReadmeFileTaskImpl,
+    CreateUwsgiDockerfileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -56,6 +57,7 @@ uses
         result := TGroupTask.create([
             TCreateUwsgiAppFileTask.create(textFileCreator, contentModifier),
             TCreateUwsgiReadmeFileTask.create(textFileCreator, contentModifier),
+            TCreateUwsgiDockerfileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)
