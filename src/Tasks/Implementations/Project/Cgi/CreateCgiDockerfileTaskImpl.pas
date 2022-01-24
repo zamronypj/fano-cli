@@ -37,6 +37,7 @@ type
 
 implementation
 
+
 uses
 
     sysutils;
@@ -47,6 +48,7 @@ uses
     begin
         createTextFile(dir + '/vhost.example', strVhostExample);
     end;
+
 
     procedure TCreateCgiDockerfileTask.createDockerfileFile(const dir : string);
     var

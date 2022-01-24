@@ -1,18 +1,13 @@
-strVhostExample : string =
-    '#------------------------------------------------------------' + LineEnding +
-    '# [[APP_NAME]] ([[APP_URL]])' + LineEnding +
-    '#' + LineEnding +
-    '# @link      [[APP_REPOSITORY_URL]]' + LineEnding +
-    '# @copyright Copyright (c) [[COPYRIGHT_YEAR]] [[COPYRIGHT_HOLDER]]' + LineEnding +
-    '# @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
-    '#--------------------------------------------------------------' + LineEnding +
-    '' + LineEnding +
+(*!------------------------------------------------------------
+ * Fano CLI Application (https://fanoframework.github.io)
+ *
+ * @link      https://github.com/fanoframework/fano-cli
+ * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
+ *------------------------------------------------------------- *)
+strVhostExample: string =
     '<VirtualHost *:80>' + LineEnding +
-    '    <Directory "/usr/local/fano/public">' + LineEnding +
-    '        Options +ExecCGI' + LineEnding +
-    '        AllowOverride FileInfo Indexes' + LineEnding +
-    '        Require all granted' + LineEnding +
-    '        AddHandler fcgid-script .cgi' + LineEnding +
-    '    </Directory>' + LineEnding +
-    '</VirtualHost>' + LineEnding +
-    '' + LineEnding;
+    '    ProxyRequests Off' + LineEnding +
+    '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)|webfonts" !' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ "fcgi://127.0.0.1:7704"' + LineEnding +
+    '</VirtualHost>';

@@ -14,6 +14,13 @@ strVhostExample : string =
     '        Require all granted' + LineEnding +
     '        DirectoryIndex app.cgi' + LineEnding +
     '        AddHandler cgi-script .cgi' + LineEnding +
+    '        <IfModule mod_rewrite.c>' + LineEnding +
+    '            RewriteEngine On' + LineEnding +
+    '' + LineEnding +
+    '            RewriteCond %{REQUEST_FILENAME} !-d' + LineEnding +
+    '            RewriteCond %{REQUEST_FILENAME} !-f' + LineEnding +
+    '            RewriteRule ^(.*)$ app.cgi [L]' + LineEnding +
+    '        </IfModule>' + LineEnding +
     '    </Directory>' + LineEnding +
     '</VirtualHost>' + LineEnding +
     '' + LineEnding;

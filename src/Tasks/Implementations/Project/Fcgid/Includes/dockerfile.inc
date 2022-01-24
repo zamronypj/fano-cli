@@ -36,4 +36,5 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     'RUN rm htdocs/index.html' + LineEnding +
     '' + LineEnding +
-    'COPY ./public/ /usr/local/apache2/htdocs';
+    'COPY ./config/ /usr/local/apache2/config' + LineEnding;
+    'COPY ./public/ /usr/local/apache2/htdocs' + LineEnding;
