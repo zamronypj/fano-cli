@@ -31,7 +31,7 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     '# remove unneeded file' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    'RUN rm htdocs/index.html' + LineEnding +
+    'RUN rm /usr/local/apache2/htdocs/index.html' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
     '# add all files in public' + LineEnding +
