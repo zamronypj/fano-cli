@@ -27,6 +27,9 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateFcgidDockerfileTask = class(TCreateBasicFileTask)
+    private
+        procedure createVhostExampleFile(const dir : string);
+        procedure createDockerfileFile(const dir : string);
     protected
         procedure createFile(const dir : string); override;
     end;
@@ -37,11 +40,24 @@ uses
 
     sysutils;
 
-    procedure TCreateFcgidDockerfileTask.createFile(const dir : string);
+    procedure TCreateFcgidDockerfileTask.createVhostExampleFile(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Fcgid/Includes/vhost.example.inc}
+    begin
+        createTextFile(dir + '/vhost.example', strVhostExample);
+    end;
+
+    procedure TCreateFcgidDockerfileTask.createDockerfileFile(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Fcgid/Includes/dockerfile.inc}
     begin
         createTextFile(dir + '/Dockerfile', strDockerfile);
+    end;
+
+    procedure TCreateFcgidDockerfileTask.createFile(const dir : string);
+    begin
+        createVhostExampleFile(dir);
+        createDockerfileFile(dir);
     end;
 
 end.

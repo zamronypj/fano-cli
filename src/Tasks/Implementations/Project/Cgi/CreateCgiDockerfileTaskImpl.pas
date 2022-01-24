@@ -27,6 +27,10 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateCgiDockerfileTask = class(TCreateBasicFileTask)
+    private
+        procedure createVhostExampleFile(const dir : string);
+        procedure createDockerfileFile(const dir : string);
+
     protected
         procedure createFile(const dir : string); override;
     end;
@@ -37,11 +41,24 @@ uses
 
     sysutils;
 
-    procedure TCreateCgiDockerfileTask.createFile(const dir : string);
+    procedure TCreateCgiDockerfileTask.createVhostExampleFile(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Cgi/Includes/vhost.example.inc}
+    begin
+        createTextFile(dir + '/vhost.example', strVhostExample);
+    end;
+
+    procedure TCreateCgiDockerfileTask.createDockerfileFile(const dir : string);
     var
         {$INCLUDE src/Tasks/Implementations/Project/Cgi/Includes/dockerfile.inc}
     begin
         createTextFile(dir + '/Dockerfile', strDockerfile);
+    end;
+
+    procedure TCreateCgiDockerfileTask.createFile(const dir : string);
+    begin
+        createVhostExampleFile(dir);
+        createDockerfileFile(dir);
     end;
 
 end.

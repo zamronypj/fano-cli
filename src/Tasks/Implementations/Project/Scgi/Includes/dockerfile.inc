@@ -9,4 +9,4 @@ strDockerfile: string =
     'FROM httpd:2.4' + LineEnding +
     'RUN apt-get update' + LineEnding +
     'RUN apt-get upgrade' + LineEnding +
-    'ADD ./public/ /usr/local/apache2/htdocs/' + LineEnding +
+    'ADD ./public/ /usr/local/apache2/htdocs/' + LineEnding;
