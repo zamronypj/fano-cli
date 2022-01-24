@@ -13,10 +13,17 @@ strDockerfile : string =
     'FROM httpd:2.4' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
+    '# Setup default user and its group' + LineEnding +
+    '#-----------------------------------' + LineEnding +
+    'RUN groupadd -g 999 fano && \ ' + LineEnding +
+    '    useradd -r -u 999 -g fano fano' + LineEnding +
+    'USER fano' + LineEnding +
+    '#-----------------------------------' + LineEnding +
     '# Enable mod_proxy_fcgi mod_rewrite and' + LineEnding +
     '# additional virtual host config' + LineEnding +
     '#-----------------------------------' + LineEnding +
     'RUN sed -i \' + LineEnding +
+    '        -e ''s/^#\(LoadModule .*mod_proxy.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_proxy_fcgi.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
@@ -27,5 +34,6 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     'COPY ./vhost.example /usr/local/apache2/conf/extra/httpd-vhosts.conf' + LineEnding +
     '' + LineEnding +
-    'COPY ./bin/out/ /usr/local/fano' + LineEnding;
-    'COPY ./public/ /usr/local/fano/public' + LineEnding;
+    'COPY ./bin/out/ /usr/local/fano' + LineEnding +
+    'COPY ./config/ /usr/local/fano/config' + LineEnding +
+    'COPY ./public/ /usr/local/apache2/htdocs' + LineEnding;

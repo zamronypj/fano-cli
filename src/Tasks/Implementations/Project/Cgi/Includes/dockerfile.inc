@@ -43,5 +43,5 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     '# add all files in public' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    'COPY ./config/ /usr/local/apache2/config' + LineEnding;
+    'COPY ./config/ /usr/local/apache2/config' + LineEnding +
     'COPY ./public/app.cgi /usr/local/apache2/htdocs/app.cgi' + LineEnding;
