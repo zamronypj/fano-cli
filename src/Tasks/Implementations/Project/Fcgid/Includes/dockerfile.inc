@@ -13,6 +13,13 @@ strDockerfile : string =
     'FROM httpd:2.4' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
+    '# Setup default user and its group' + LineEnding +
+    '#-----------------------------------' + LineEnding +
+    'RUN groupadd -g 999 fano && \ ' + LineEnding +
+    '    useradd -r -u 999 -g fano fano' + LineEnding +
+    'USER fano' + LineEnding +
+    '' + LineEnding +
+    '#-----------------------------------' + LineEnding +
     '# Install mod_fcgid' + LineEnding +
     '#-----------------------------------' + LineEnding +
     'RUN apt-get update && apt-get install -y libapache2-mod-fcgid' + LineEnding +
