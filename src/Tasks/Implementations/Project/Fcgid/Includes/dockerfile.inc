@@ -15,7 +15,7 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     '# Install mod_fcgid' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    'RUN apt-get update && apt-get install libapache2-mod-fcgid' + LineEnding +
+    'RUN apt-get update && apt-get install -y libapache2-mod-fcgid' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
     '# Enable mod_fcgid mod_rewrite and' + LineEnding +
