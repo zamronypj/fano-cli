@@ -12,12 +12,13 @@ taskFactory := TXDeployHttpTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-http',
-        '--deploy-http=[server name] Deploy as http web application over http reverse proxy server.' + LineEnding +
+        formatColor('--deploy-http', TXT_GREEN) + '=[server name] Deploy as http web application over http reverse proxy server.' + LineEnding +
         '     --web-server=[web server] if omitted, apache is assumed.' + LineEnding +
         '     --doc-root=[document-root] if omitted, public directory in current directory is used.' + LineEnding +
         '     --server-ip=[web server ip] if omitted, 127.0.0.1 is assumed.' + LineEnding +
         '     --host=[host where http app listen] if omitted, 127.0.0.1 is assumed.' + LineEnding +
-        '     --port=[port where http app listen] if omitted, 20477 is assumed.',
+        '     --port=[port where http app listen] if omitted, 20477 is assumed.' + LineEnding +
+        '     --stdout=Output virtual host configuration to STDOUT (no root privilege needed).',
         taskFactory.build()
     );
 finally

@@ -12,9 +12,10 @@ taskFactory := TXDeployFCgidTaskFactory.create();
 try
     appInst.registerTask(
         'deploy-fcgid',
-        '--deploy-fcgid=[server name] Deploy as FastCGI web application with mod_fcgid.' + LineEnding +
+        formatColor('--deploy-fcgid', TXT_GREEN) + '=[server name] Deploy as FastCGI web application with mod_fcgid.' + LineEnding +
         '     --doc-root=[document-root] if omitted, public directory in current directory is used.' + LineEnding +
-        '     --server-ip=[web server ip] if omitted, 127.0.0.1 is assumed.',
+        '     --server-ip=[web server ip] if omitted, 127.0.0.1 is assumed.' + LineEnding +
+        '     --stdout=Output virtual host configuration to STDOUT (no root privilege needed).',
         taskFactory.build()
     );
 finally

@@ -7,8 +7,8 @@
  *------------------------------------------------------------- *)
 
 {$INCLUDE Deploy/units.inc}
+{$INCLUDE Info/units.inc}
 
-InfoTaskImpl,
 KeyGenTaskImpl,
 KeyGenTaskFactoryImpl,
 GuidGenTaskImpl,
@@ -23,4 +23,5 @@ CreateMvcTaskFactoryImpl,
 CreateMiddlewareTaskFactoryImpl,
 JsMinifierTaskFactoryImpl,
 CssMinifierTaskFactoryImpl,
+WritelnTaskFactoryImpl,
 SystemDDaemonTaskFactoryImpl;
