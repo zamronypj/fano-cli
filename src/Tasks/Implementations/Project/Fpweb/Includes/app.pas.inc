@@ -50,7 +50,7 @@ strAppPas: string =
     '    //svrConfig.tlsCert := ''/path/to/ssl/cert/cert'';' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
-    '     * Bootstrap libmicrohttpd application' + LineEnding +
+    '     * Bootstrap Fpweb-based http application' + LineEnding +
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +
