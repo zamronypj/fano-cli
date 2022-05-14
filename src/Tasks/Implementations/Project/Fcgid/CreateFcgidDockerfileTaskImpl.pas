@@ -30,6 +30,7 @@ type
     private
         procedure createVhostExampleFile(const dir : string);
         procedure createDockerfileFile(const dir : string);
+        procedure createDockercomposeFile(const dir : string);
     protected
         procedure createFile(const dir : string); override;
     end;
@@ -54,10 +55,18 @@ uses
         createTextFile(dir + '/Dockerfile', strDockerfile);
     end;
 
+    procedure TCreateFcgidDockerfileTask.createDockercomposeFile(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Fcgif/Includes/dockercompose.inc}
+    begin
+        createTextFile(dir + '/docker-compose.yaml', strDockercompose);
+    end;
+
     procedure TCreateFcgidDockerfileTask.createFile(const dir : string);
     begin
         createVhostExampleFile(dir);
         createDockerfileFile(dir);
+        createDockercomposeFile(dir);
     end;
 
 end.

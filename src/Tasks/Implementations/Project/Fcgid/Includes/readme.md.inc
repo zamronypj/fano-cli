@@ -37,13 +37,13 @@ strReadme: string =
 
     '' + LineEnding +
     '### Run application with Docker' + LineEnding +
-    'Alternatively, you can run application via Docker. After you run `build.sh` script, ' + LineEnding +
-    'build Docker image from Dockerfile and run it.' + LineEnding +
+    'Alternatively, you can run application via `docker-compose`. After you run `build.sh` script, ' + LineEnding +
+    'build Docker image container.' + LineEnding +
     '```' + LineEnding +
-    '$ docker build -t fano-app .' + LineEnding +
-    '$ docker run fano-app' + LineEnding +
+    '$ docker-compose up' + LineEnding +
     '```' + LineEnding +
-    'Open internet browser and go to `http://172.17.0.2`. You should see application.' + LineEnding +
+    'Open internet browser and go to `http://[IP Fano Docker container]`. You should see application.' + LineEnding +
+    'To get IP address of Fano application Docker container, run `docker network`.' + LineEnding +
 
     '' + LineEnding +
     '### Free Pascal installation' + LineEnding +

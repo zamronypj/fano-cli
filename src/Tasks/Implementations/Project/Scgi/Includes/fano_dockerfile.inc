@@ -1,4 +1,4 @@
-strDockerCompose : string =
+strDockerfile : string =
     '#------------------------------------------------------------' + LineEnding +
     '# [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     '#' + LineEnding +
@@ -7,20 +7,12 @@ strDockerCompose : string =
     '# @license   [[LICENSE_URL]] ([[LICENSE]])' + LineEnding +
     '#--------------------------------------------------------------' + LineEnding +
     '' + LineEnding +
-    'version: ''3''' + LineEnding +
-    'services:' + LineEnding +
-
     '#-----------------------------------' + LineEnding +
-    '# fano web app' + LineEnding +
+    '# use Ubuntu 20.04' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    '  fano:' + LineEnding +
-    '    build:' + LineEnding +
-    '      context: ./docker/fano' + LineEnding +
+    'FROM ubuntu' + LineEnding +
     '' + LineEnding +
-    '#-----------------------------------' + LineEnding +
-    '# web server' + LineEnding +
-    '#-----------------------------------' + LineEnding +
-    '  webserver:' + LineEnding +
-    '    build:' + LineEnding +
-    '      context: ./docker/nginx' + LineEnding +
-    '';
+    'COPY ./config/ /usr/local/fano/config' + LineEnding +
+    'COPY ./resources/ /usr/local/fano/resources' + LineEnding +
+    'COPY ./bin/app.cgi /usr/local/fano/app.cgi' + LineEnding +
+    'CMD ["/usr/local/fano/app.cgi", "--host=0.0.0.0", "--port=7704"]' + LineEnding;

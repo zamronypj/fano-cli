@@ -30,6 +30,8 @@ type
     private
         procedure createVhostExampleFile(const dir : string);
         procedure createDockerfileFile(const dir : string);
+        procedure createHttpdDockerfileFile(const dir : string);
+        procedure createDockercomposeFile(const dir : string);
     protected
         procedure createFile(const dir : string); override;
     end;
@@ -49,15 +51,31 @@ uses
 
     procedure TCreateScgiDockerfileTask.createDockerfileFile(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Scgi/Includes/dockerfile.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Scgi/Includes/fano_dockerfile.inc}
     begin
-        createTextFile(dir + '/Dockerfile', strDockerfile);
+        createTextFile(dir + '/fano_dockerfile', strDockerfile);
+    end;
+
+    procedure TCreateScgiDockerfileTask.createHttpdDockerfileFile(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Scgi/Includes/httpd_dockerfile.inc}
+    begin
+        createTextFile(dir + '/httpd_dockerfile', strHttpdDockerfile);
+    end;
+
+    procedure TCreateScgiDockerfileTask.createDockercomposeFile(const dir : string);
+    var
+        {$INCLUDE src/Tasks/Implementations/Project/Scgi/Includes/dockercompose.inc}
+    begin
+        createTextFile(dir + '/docker-compose.yaml', strDockercompose);
     end;
 
     procedure TCreateScgiDockerfileTask.createFile(const dir : string);
     begin
         createVhostExampleFile(dir);
         createDockerfileFile(dir);
+        createHttpdDockerfileFile(dir);
+        createDockercomposeFile(dir);
     end;
 
 

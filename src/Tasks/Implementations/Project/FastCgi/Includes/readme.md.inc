@@ -36,6 +36,15 @@ strReadme: string =
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 
     '' + LineEnding +
+    '### Run application with Docker' + LineEnding +
+    'Alternatively, you can run application via docker-compose. After you run `build.sh` script, ' + LineEnding +
+    '```' + LineEnding +
+    '$ docker compose up' + LineEnding +
+    '```' + LineEnding +
+    'Open internet browser and go to `http://[IP Apache docker container]`. You should see application.' + LineEnding +
+    'To get IP of Apache docker container just run `docker network`' + LineEnding +
+
+    '' + LineEnding +
     '### Free Pascal installation' + LineEnding +
     '' + LineEnding +
     'Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run' + LineEnding +

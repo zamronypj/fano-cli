@@ -8,18 +8,11 @@ strDockerfile : string =
     '#--------------------------------------------------------------' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    '# use Linux Alpine as base' + LineEnding +
+    '# use Ubuntu 20.04' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    'FROM alpine' + LineEnding +
+    'FROM ubuntu' + LineEnding +
     '' + LineEnding +
-    '#-----------------------------------' + LineEnding +
-    '# Setup default user and its group' + LineEnding +
-    '#-----------------------------------' + LineEnding +
-    'RUN groupadd -g 999 fano && \ ' + LineEnding +
-    '    useradd -r -u 999 -g fano fano' + LineEnding +
-    'USER fano' + LineEnding +
-    'COPY ./bin/out/ /usr/local/fano' + LineEnding +
     'COPY ./config/ /usr/local/fano/config' + LineEnding +
-    'WORKDIR /usr/local/fano' + LineEnding +
-    'EXPOSE 9000' + LineEnding +
-    'CMD ["/usr/local/fano/app.cgi", "--port=9000"]';
+    'COPY ./resources/ /usr/local/fano/resources' + LineEnding +
+    'COPY ./bin/app.cgi /usr/local/fano/app.cgi' + LineEnding +
+    'CMD ["/usr/local/fano/app.cgi", "--host=0.0.0.0", "--port=7704"]' + LineEnding;

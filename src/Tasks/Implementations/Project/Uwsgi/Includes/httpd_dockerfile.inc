@@ -1,4 +1,4 @@
-strDockerfile : string =
+strHttpdDockerfile : string =
     '#------------------------------------------------------------' + LineEnding +
     '# [[APP_NAME]] ([[APP_URL]])' + LineEnding +
     '#' + LineEnding +
@@ -13,22 +13,25 @@ strDockerfile : string =
     'FROM httpd:2.4' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    '# Enable mod_proxy_fcgi mod_rewrite and' + LineEnding +
+    '# Enable mod_proxy_uwsgi mod_rewrite and' + LineEnding +
     '# additional virtual host config' + LineEnding +
     '#-----------------------------------' + LineEnding +
     'RUN sed -i \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_proxy.so\)/\1/'' \' + LineEnding +
-    '        -e ''s/^#\(LoadModule .*mod_proxy_fcgi.so\)/\1/'' \' + LineEnding +
+    '        -e ''s/^#\(LoadModule .*mod_proxy_uwsgi.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
-    '        /usr/local/apache2/conf/httpd.conf' + LineEnding +
+    '        -e ''s/^#ServerName.*/ServerName 172.17.0.2/'' \' + LineEnding +
+    '        /usr/local/apache2/conf/httpd.conf && \' + LineEnding +
+    '    rm /usr/local/apache2/htdocs/index.html' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
     '# set default virtual host config' + LineEnding +
     '#-----------------------------------' + LineEnding +
     'COPY ./vhost.example /usr/local/apache2/conf/extra/httpd-vhosts.conf' + LineEnding +
     '' + LineEnding +
-    'COPY ./bin/app.cgi /usr/local/fano/app.cgi' + LineEnding +
-    'COPY ./config/ /usr/local/fano/config' + LineEnding +
+    '#-----------------------------------' + LineEnding +
+    '# copy public assets (images, css, js)' + LineEnding +
+    '#-----------------------------------' + LineEnding +
     'COPY ./public/ /usr/local/apache2/htdocs' + LineEnding +
-    'CMD /usr/local/fano/app.cgi --host=0.0.0.0 --port=7704 & httpd-foreground' + LineEnding;
+    '' + LineEnding;

@@ -9,5 +9,5 @@ strVhostExample: string =
     '<VirtualHost *:80>' + LineEnding +
     '    ProxyRequests Off' + LineEnding +
     '    ProxyPassMatch "/css|js|images|img|plugins|bower_components(.*)|webfonts" !' + LineEnding +
-    '    ProxyPassMatch ^/(.*)$ "uwsgi://127.0.0.1:7704"' + LineEnding +
+    '    ProxyPassMatch ^/(.*)$ "uwsgi://fano:7704"' + LineEnding +
     '</VirtualHost>';
