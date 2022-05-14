@@ -13,13 +13,6 @@ strDockerfile : string =
     'FROM httpd:2.4' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    '# Setup default user and its group' + LineEnding +
-    '#-----------------------------------' + LineEnding +
-    'RUN groupadd -g 999 fano && \ ' + LineEnding +
-    '    useradd -r -u 999 -g fano fano' + LineEnding +
-    'USER fano' + LineEnding +
-    '' + LineEnding +
-    '#-----------------------------------' + LineEnding +
     '# Enable mod_cgi mod_rewrite and' + LineEnding +
     '# additional virtual host config' + LineEnding +
     '#-----------------------------------' + LineEnding +
@@ -28,6 +21,7 @@ strDockerfile : string =
     '        -e ''s/#\(LoadModule .*mod_cgid.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
+    '        -e ''s/^#ServerName.*/ServerName 172.17.0.2/'' \' + LineEnding +
     '        /usr/local/apache2/conf/httpd.conf' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
@@ -41,7 +35,11 @@ strDockerfile : string =
     'RUN rm /usr/local/apache2/htdocs/index.html' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    '# add all files in public' + LineEnding +
+    '# add all your project required files' + LineEnding +
     '#-----------------------------------' + LineEnding +
     'COPY ./config/ /usr/local/apache2/config' + LineEnding +
-    'COPY ./public/app.cgi /usr/local/apache2/htdocs/app.cgi' + LineEnding;
+    'COPY ./resources/ /usr/local/apache2/resources' + LineEnding +
+    'COPY ./storages/ /usr/local/apache2/storages' + LineEnding +
+    'COPY ./public/ /usr/local/apache2/htdocs/' + LineEnding +
+    'COPY ./public/app.cgi /usr/local/apache2/htdocs/app.cgi' + LineEnding +
+    '' + LineEnding;
