@@ -27,6 +27,7 @@ strDockerfile : string =
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
     '        -e ''/LoadModule .*mod_rewrite.so/a LoadModule fcgid_module /usr/lib/apache2/modules/mod_fcgid.so'' \' + LineEnding +
+    '        -e ''s/^#ServerName.*/ServerName 172.17.0.2/'' \' + LineEnding +
     '        /usr/local/apache2/conf/httpd.conf' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +
@@ -40,5 +41,8 @@ strDockerfile : string =
     'RUN rm htdocs/index.html' + LineEnding +
     '' + LineEnding +
     'COPY ./config/ /usr/local/apache2/config' + LineEnding +
-    'COPY ./public/ /usr/local/apache2/htdocs' + LineEnding +
+    'COPY ./resources/ /usr/local/apache2/resources' + LineEnding +
+    'COPY ./storages/ /usr/local/apache2/storages' + LineEnding +
+    'COPY ./public/ /usr/local/apache2/htdocs/' + LineEnding +
+    'COPY ./public/app.cgi /usr/local/apache2/htdocs/app.cgi' + LineEnding +
     '' + LineEnding;

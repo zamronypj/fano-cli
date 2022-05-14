@@ -36,6 +36,16 @@ strReadme: string =
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
 
     '' + LineEnding +
+    '### Run application with Docker' + LineEnding +
+    'Alternatively, you can run application via Docker. After you run `build.sh` script, ' + LineEnding +
+    'build Docker image from Dockerfile and run it.' + LineEnding +
+    '```' + LineEnding +
+    '$ docker build -t fano-app .' + LineEnding +
+    '$ docker run fano-app' + LineEnding +
+    '```' + LineEnding +
+    'Open internet browser and go to `http://172.17.0.2`. You should see application.' + LineEnding +
+
+    '' + LineEnding +
     '### Free Pascal installation' + LineEnding +
     '' + LineEnding +
     'Make sure [Free Pascal](https://www.freepascal.org/) is installed. Run' + LineEnding +
