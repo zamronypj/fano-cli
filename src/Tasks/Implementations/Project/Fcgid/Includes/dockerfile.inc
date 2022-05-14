@@ -27,7 +27,7 @@ strDockerfile : string =
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
     '        -e ''/LoadModule .*mod_rewrite.so/a LoadModule fcgid_module /usr/lib/apache2/modules/mod_fcgid.so'' \' + LineEnding +
-    '        -e ''s/^#ServerName.*/ServerName 172.17.0.2/'' \' + LineEnding +
+    '        -e ''s/^#ServerName.*/ServerName fano-app/'' \' + LineEnding +
     '        /usr/local/apache2/conf/httpd.conf' + LineEnding +
     '' + LineEnding +
     '#-----------------------------------' + LineEnding +

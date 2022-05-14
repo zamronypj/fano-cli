@@ -21,7 +21,7 @@ strHttpdDockerfile : string =
     '        -e ''s/^#\(LoadModule .*mod_proxy_scgi.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(LoadModule .*mod_rewrite.so\)/\1/'' \' + LineEnding +
     '        -e ''s/^#\(Include .*httpd-vhosts.conf\)/\1/'' \' + LineEnding +
-    '        -e ''s/^#ServerName.*/ServerName 172.17.0.2/'' \' + LineEnding +
+    '        -e ''s/^#ServerName.*/ServerName fano-app/'' \' + LineEnding +
     '        /usr/local/apache2/conf/httpd.conf && \' + LineEnding +
     '    rm /usr/local/apache2/htdocs/index.html' + LineEnding +
     '' + LineEnding +

@@ -57,7 +57,7 @@ uses
 
     procedure TCreateFcgidDockerfileTask.createDockercomposeFile(const dir : string);
     var
-        {$INCLUDE src/Tasks/Implementations/Project/Fcgif/Includes/dockercompose.inc}
+        {$INCLUDE src/Tasks/Implementations/Project/Fcgid/Includes/dockercompose.inc}
     begin
         createTextFile(dir + '/docker-compose.yaml', strDockercompose);
     end;
