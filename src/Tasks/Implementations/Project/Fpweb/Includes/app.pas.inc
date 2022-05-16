@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strAppPas: string =
@@ -50,7 +50,7 @@ strAppPas: string =
     '    //svrConfig.tlsCert := ''/path/to/ssl/cert/cert'';' + LineEnding +
     '' + LineEnding +
     '    (*!-----------------------------------------------' + LineEnding +
-    '     * Bootstrap libmicrohttpd application' + LineEnding +
+    '     * Bootstrap Fpweb-based http application' + LineEnding +
     '     *' + LineEnding +
     '     * @author AUTHOR_NAME <author@email.tld>' + LineEnding +
     '     *------------------------------------------------*)' + LineEnding +

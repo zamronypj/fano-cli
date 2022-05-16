@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strReadme: string =
@@ -34,6 +34,16 @@ strReadme: string =
     '$ sudo fanocli --deploy-cgi=fano-app.fano' + LineEnding +
     '```' + LineEnding +
     'Open internet browser and go to `http://fano-app.fano`. You should see application.' + LineEnding +
+
+    '' + LineEnding +
+    '### Run application with Docker' + LineEnding +
+    'Alternatively, you can run application via `docker-compose`. After you run `build.sh` script, ' + LineEnding +
+    'build Docker image container.' + LineEnding +
+    '```' + LineEnding +
+    '$ docker-compose up' + LineEnding +
+    '```' + LineEnding +
+    'Open internet browser and go to `http://[IP Fano Docker container]`. You should see application.' + LineEnding +
+    'To get IP address of Fano application Docker container, run `docker network`.' + LineEnding +
 
     '' + LineEnding +
     '### Free Pascal installation' + LineEnding +
