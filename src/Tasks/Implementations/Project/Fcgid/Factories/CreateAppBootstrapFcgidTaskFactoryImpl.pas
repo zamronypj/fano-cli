@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit CreateAppBootstrapFcgidTaskFactoryImpl;
@@ -44,6 +44,7 @@ uses
 
     CreateFcgidAppFileTaskImpl,
     CreateFcgidReadmeFileTaskImpl,
+    CreateFcgidDockerfileTaskImpl,
     CreateDaemonBootstrapFileTaskImpl,
     CreateDepFileTaskImpl,
     CreateRouteFileTaskImpl;
@@ -57,6 +58,7 @@ uses
         result := TGroupTask.create([
             TCreateFcgidAppFileTask.create(textFileCreator, contentModifier),
             TCreateFcgidReadmeFileTask.create(textFileCreator, contentModifier),
+            TCreateFcgidDockerfileTask.create(textFileCreator, contentModifier),
             TCreateDaemonBootstrapFileTask.create(textFileCreator, contentModifier),
             TCreateDepFileTask.create(textFileCreator, contentModifier),
             TCreateRouteFileTask.create(textFileCreator, contentModifier)
