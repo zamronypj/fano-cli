@@ -16,3 +16,4 @@
 {$INCLUDE Mhd/task.registrations.inc}
 {$INCLUDE Fpweb/task.registrations.inc}
 {$INCLUDE Indy/task.registrations.inc}
+{$INCLUDE Fancy/task.registrations.inc}
