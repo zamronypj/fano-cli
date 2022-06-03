@@ -38,7 +38,7 @@ strDockerfile : string =
     '#-----------------------------------' + LineEnding +
     '# remove unneeded file' + LineEnding +
     '#-----------------------------------' + LineEnding +
-    'RUN rm htdocs/index.html' + LineEnding +
+    'RUN rm /usr/local/apache2/htdocs/index.html' + LineEnding +
     '' + LineEnding +
     'COPY ./config/ /usr/local/apache2/config' + LineEnding +
     'COPY ./resources/ /usr/local/apache2/resources' + LineEnding +
