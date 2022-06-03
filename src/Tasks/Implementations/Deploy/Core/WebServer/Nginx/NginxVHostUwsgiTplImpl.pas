@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit NginxVHostUwsgiTplImpl;
@@ -21,7 +21,7 @@ uses
 type
 
     (*!--------------------------------------
-     * Task that creates ninx virtual host template
+     * Task that creates nginx virtual host template
      * for uwsgi web application
      *------------------------------------------
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>

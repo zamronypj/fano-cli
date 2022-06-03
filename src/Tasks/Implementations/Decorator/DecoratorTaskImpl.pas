@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit DecoratorTaskImpl;
@@ -26,7 +26,7 @@ type
      *---------------------------------------*)
     TDecoratorTask = class(TInterfacedObject, ITask)
     protected
-        actualTask : ITask;
+        fActualTask : ITask;
     public
         constructor create(const task : ITask);
         destructor destroy(); override;
@@ -41,12 +41,12 @@ implementation
 
     constructor TDecoratorTask.create(const task : ITask);
     begin
-        actualTask := task;
+        fActualTask := task;
     end;
 
     destructor TDecoratorTask.destroy();
     begin
-        actualTask := nil;
+        fActualTask := nil;
         inherited destroy();
     end;
 
@@ -55,7 +55,7 @@ implementation
         const longOpt : shortstring
     ) : ITask;
     begin
-        actualTask.run(opt, longOpt);
+        fActualTask.run(opt, longOpt);
         result := self;
     end;
 end.

@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 strGitignore: string =
@@ -51,6 +51,7 @@ strGitignore: string =
     'build.cfg' + LineEnding +
     'build.dev.cfg' + LineEnding +
     'build.prod.cfg' + LineEnding +
+    'defines.cfg' + LineEnding +
     '' + LineEnding +
     '#----------------------------------------------' + LineEnding +
     '# Ignore all generated compiled units files' + LineEnding +

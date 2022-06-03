@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit BasicKeyGeneratorImpl;
@@ -108,10 +108,12 @@ uses
      * @credit: https://forum.lazarus.freepascal.org/index.php/topic,35523.msg235007.html#msg235007
      *-------------------------------------------------*)
     function TBasicKeyGenerator.readRandomBytes(const numberOfBytes : integer) : TBytes;
+    var resAddr : PByte;
     begin
         result := default(TBytes);
         setLength(result, numberOfBytes);
-        if not CryptGenRandom(FProvider, numberOfBytes, result[0]) then
+        resAddr := @result[0];
+        if not CryptGenRandom(FProvider, numberOfBytes, resAddr) then
         begin
             raiseLastOSError();
         end;

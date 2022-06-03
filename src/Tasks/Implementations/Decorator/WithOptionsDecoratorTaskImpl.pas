@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit WithOptionsDecoratorTaskImpl;
@@ -66,8 +66,12 @@ implementation
     ) : ITask;
     begin
         fOrigOpts := opt;
-        actualTask.run(self, longOpt);
-        result := self;
+        try
+            fActualTask.run(self, longOpt);
+            result := self;
+        finally
+            fOrigOpts := nil;
+        end;
     end;
 
     function TWithOptionsDecoratorTask.hasOption(const longOpt: string) : boolean;
@@ -82,6 +86,6 @@ implementation
 
     function TWithOptionsDecoratorTask.getOptionValueDef(const longOpt: string; const defValue : string) : string;
     begin
-        result := fOrigOpts.getOptionValueDef(longOpt ,defValue);
+        result := fOrigOpts.getOptionValueDef(longOpt, defValue);
     end;
 end.

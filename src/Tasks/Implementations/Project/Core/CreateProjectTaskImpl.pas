@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit CreateProjectTaskImpl;
@@ -114,8 +114,13 @@ uses
         writeln('Finish creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
         writeln('Change directory to ', baseDirectory, ' to start creating controller, view, etc.');
         writeln();
+        {$IFDEF WINDOWS}
+        writeln(formatColor('> cd ' + baseDirectory, TXT_GREEN));
+        writeln(formatColor('> fanocli --controller=Home --route=/', TXT_GREEN));
+        {$ELSE}
         writeln(formatColor('$ cd ' + baseDirectory, TXT_GREEN));
         writeln(formatColor('$ fanocli --controller=Home --route=/', TXT_GREEN));
+        {$ENDIF}
         result := self;
     end;
 end.

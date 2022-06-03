@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit CreateMhdCompilerConfigsTaskImpl;
@@ -50,18 +50,18 @@ uses
         if (longOpt = 'project-mhd') then
         begin
             fWriter.write(
-                baseDirectory + '/build.cfg',
+                baseDirectory + '/defines.cfg',
                 StringReplace(
-                    fReader.read(baseDirectory + '/build.cfg'),
+                    fReader.read(baseDirectory + '/defines.cfg'),
                     '#-dLIBMICROHTTPD',
                     '-dLIBMICROHTTPD',
                     [rfReplaceAll]
                 )
             );
             fWriter.write(
-                baseDirectory + '/build.cfg.sample',
+                baseDirectory + '/defines.cfg.sample',
                 StringReplace(
-                    fReader.read(baseDirectory + '/build.cfg.sample'),
+                    fReader.read(baseDirectory + '/defines.cfg.sample'),
                     '#-dLIBMICROHTTPD',
                     '-dLIBMICROHTTPD',
                     [rfReplaceAll]

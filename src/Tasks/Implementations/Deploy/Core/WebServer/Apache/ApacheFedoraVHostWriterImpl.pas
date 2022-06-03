@@ -2,7 +2,7 @@
  * Fano CLI Application (https://fanoframework.github.io)
  *
  * @link      https://github.com/fanoframework/fano-cli
- * @copyright Copyright (c) 2018 - 2020 Zamrony P. Juhara
+ * @copyright Copyright (c) 2018 - 2022 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-cli/blob/master/LICENSE (MIT)
  *------------------------------------------------------------- *)
 unit ApacheFedoraVHostWriterImpl;
@@ -53,7 +53,8 @@ uses
     procedure TApacheFedoraVHostWriter.writeVhost(
         const serverName : string;
         const vhostTpl : string;
-        const cntModifier : IContentModifier);
+        const cntModifier : IContentModifier
+    );
     begin
         cntModifier.setVar('[[APACHE_LOG_DIR]]', '/var/log/httpd');
         fTextFileCreator.createTextFile(
