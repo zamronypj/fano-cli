@@ -68,7 +68,8 @@ uses
     ApacheVHostFcgidTplImpl,
     StdoutCheckTaskImpl,
     DirectoryExistsImpl,
-    NullDirectoryExistsImpl;
+    NullDirectoryExistsImpl,
+    ApacheExecCheckTaskImpl;
 
     function TXDeployFcgidTaskFactory.buildApacheFcgidVhostTask(
         atxtFileCreator : ITextFileCreator;
@@ -157,6 +158,8 @@ uses
             //and not in FanoCLI generated project directory
             TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
         );
+
+        result := TApacheExecCheckTask.create(result);
     end;
 
 end.

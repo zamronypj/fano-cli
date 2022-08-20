@@ -68,7 +68,8 @@ uses
     ApacheVHostCgiTplImpl,
     StdoutCheckTaskImpl,
     DirectoryExistsImpl,
-    NullDirectoryExistsImpl;
+    NullDirectoryExistsImpl,
+    ApacheExecCheckTaskImpl;
 
     function TXDeployCgiTaskFactory.buildApacheCgiVhostTask(
         atxtFileCreator : ITextFileCreator;
@@ -152,6 +153,8 @@ uses
             //and not in FanoCLI generated project directory
             TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
         );
+        //make sure we check Apache2/Nginx install
+        result := TApacheExecCheckTask.create(result);
     end;
 
 end.

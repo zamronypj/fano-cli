@@ -74,7 +74,10 @@ uses
     NginxVHostUwsgiTplImpl,
     StdoutCheckTaskImpl,
     DirectoryExistsImpl,
-    NullDirectoryExistsImpl;
+    NullDirectoryExistsImpl,
+    ApacheExecCheckTaskImpl,
+    NginxExecCheckTaskImpl,
+    GroupTaskImpl;
 
     function TXDeployUwsgiTaskFactory.buildApacheUwsgiVhostTask(
         atxtFileCreator : ITextFileCreator;
@@ -188,6 +191,12 @@ uses
             //and not in FanoCLI generated project directory
             TRootCheckTask.create(TInFanoProjectDirCheckTask.create(normalDeployTask))
         );
+
+        //make sure we check Apache2/Nginx install
+        result := TGroupTask.create([
+            TApacheExecCheckTask.create(result),
+            TNginxExecCheckTask.create(result)
+        ]);
     end;
 
 end.
