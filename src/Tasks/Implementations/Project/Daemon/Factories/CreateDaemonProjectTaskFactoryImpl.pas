@@ -60,7 +60,8 @@ uses
     AddFanoRepoTaskImpl,
     CheckoutFanoRepoTaskImpl,
     StageRepoTaskImpl,
-    GroupTaskImpl;
+    GroupTaskImpl,
+    LazarusTaskImpl;
 
     constructor TCreateDaemonProjectTaskFactory.create(
         const depFactory : ITaskFactory;
@@ -78,22 +79,25 @@ uses
     ) : ITask;
     begin
         result := TCreateProjectTask.create(
-            TCreateDirTask.create(TDirectoryCreator.create()),
-            TCreateShellScriptsTask.create(textFileCreator, contentModifier, fExecOutputDir),
-            fProjectDepTaskFactory.build(),
-            TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-            fBootstrapTaskFactory.build(),
-            TWithGitRepoTask.create(
-                TGroupTask.create([
-                    TInitGitRepoTask.create(),
-                    TAddFanoRepoTask.create(),
-                    TCheckoutFanoRepoTask.create(),
-                    TStageRepoTask.create(),
-                    TWithGitInitialCommitTask.create(
-                        TCommitGitRepoTask.create()
-                    )
-                ])
-            )
+            TGroupTask.create([
+                TCreateDirTask.create(TDirectoryCreator.create()),
+                TCreateShellScriptsTask.create(textFileCreator, contentModifier, fExecOutputDir),
+                fProjectDepTaskFactory.build(),
+                TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
+                fBootstrapTaskFactory.build(),
+                TLazarusTask.create(textFileCreator, contentModifier),
+                TWithGitRepoTask.create(
+                    TGroupTask.create([
+                        TInitGitRepoTask.create(),
+                        TAddFanoRepoTask.create(),
+                        TCheckoutFanoRepoTask.create(),
+                        TStageRepoTask.create(),
+                        TWithGitInitialCommitTask.create(
+                            TCommitGitRepoTask.create()
+                        )
+                    ])
+                )
+            ])
         );
     end;
 end.

@@ -28,21 +28,14 @@ type
      *---------------------------------------*)
     TCreateProjectTask = class(TBaseProjectTask)
     private
-        createDirectoryTask : ITask;
-        createShellScriptsTask : ITask;
-        createAppConfigsTask : ITask;
-        createAdditionalFilesTask : ITask;
-        createGitRepoTask : ITask;
-        createAppBootstrapTask : ITask;
+        fTask: ITask;
+    protected
+        procedure runTasks(
+            const opt : ITaskOptions;
+            const longOpt : shortstring
+        ); virtual;
     public
-        constructor create(
-            const createDirTask : ITask;
-            const createScriptsTask : ITask;
-            const createConfigsTask : ITask;
-            const createAddFilesTask : ITask;
-            const createAppTask : ITask;
-            const createRepoTask : ITask
-        );
+        constructor create(const aTask : ITask);
         destructor destroy(); override;
 
         function run(
@@ -59,31 +52,24 @@ uses
     StrFormats;
 
     constructor TCreateProjectTask.create(
-        const createDirTask : ITask;
-        const createScriptsTask : ITask;
-        const createConfigsTask : ITask;
-        const createAddFilesTask : ITask;
-        const createAppTask : ITask;
-        const createRepoTask : ITask
+        const aTask : ITask
     );
     begin
-        createDirectoryTask := createDirTask;
-        createShellScriptsTask := createScriptsTask;
-        createAppConfigsTask := createConfigsTask;
-        createAdditionalFilesTask := createAddFilesTask;
-        createAppBootstrapTask := createAppTask;
-        createGitRepoTask := createRepoTask;
+        fTask := aTask;
     end;
 
     destructor TCreateProjectTask.destroy();
     begin
-        createDirectoryTask := nil;
-        createShellScriptsTask := nil;
-        createAppConfigsTask := nil;
-        createAdditionalFilesTask := nil;
-        createAppBootstrapTask := nil;
-        createGitRepoTask := nil;
+        fTask := nil;
         inherited destroy();
+    end;
+
+    procedure TCreateProjectTask.runTasks(
+        const opt : ITaskOptions;
+        const longOpt : shortstring
+    );
+    begin
+        fTask.run(opt, longOpt);
     end;
 
     function TCreateProjectTask.run(
@@ -104,12 +90,7 @@ uses
 
         writeln('Start creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
 
-        createDirectoryTask.run(opt, longOpt);
-        createShellScriptsTask.run(opt, longOpt);
-        createAdditionalFilesTask.run(opt, longOpt);
-        createAppBootstrapTask.run(opt, longOpt);
-        createAppConfigsTask.run(opt, longOpt);
-        createGitRepoTask.run(opt, longOpt);
+        runTasks(opt, longOpt);
 
         writeln('Finish creating project in ', formatColor(baseDirectory, TXT_GREEN), ' directory.');
         writeln('Change directory to ', baseDirectory, ' to start creating controller, view, etc.');
