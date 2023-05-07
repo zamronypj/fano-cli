@@ -27,6 +27,8 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateProjectTaskFactory = class(TInterfacedObject, ITaskFactory)
+    private
+        fExecOutputDir : string;
     protected
         fProjectDepTaskFactory : ITaskFactory;
         fBootstrapTaskFactory : ITaskFactory;
@@ -38,7 +40,8 @@ type
     public
         constructor create(
             const depFactory : ITaskFactory;
-            const bootstrapFactory : ITaskFactory
+            const bootstrapFactory : ITaskFactory;
+            const execOutputDir : string = 'public'
         );
         destructor destroy(); override;
         function build() : ITask; virtual;
@@ -70,11 +73,13 @@ uses
 
     constructor TCreateProjectTaskFactory.create(
         const depFactory : ITaskFactory;
-        const bootstrapFactory : ITaskFactory
+        const bootstrapFactory : ITaskFactory;
+        const execOutputDir : string = 'public'
     );
     begin
         fProjectDepTaskFactory := depFactory;
         fBootstrapTaskFactory := bootstrapFactory;
+        fExecOutputDir := execOutputDir;
     end;
 
     destructor TCreateProjectTaskFactory.destroy();
@@ -92,10 +97,12 @@ uses
         result := TCreateProjectTask.create(
             TGroupTask.create([
                 TCreateDirTask.create(TDirectoryCreator.create()),
-                TCreateShellScriptsTask.create(textFileCreator, contentModifier),
+                TCreateShellScriptsTask.create(textFileCreator, contentModifier, fExecOutputDir),
+                // fBootstrapTaskFactory need to be called earlier than
+                // fProjectDepTaskFactory as we need src/boostrap.pas created first
+                fBootstrapTaskFactory.build(),
                 fProjectDepTaskFactory.build(),
                 TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-                fBootstrapTaskFactory.build(),
                 TLazarusTask.create(textFileCreator, contentModifier),
                 TWithGitRepoTask.create(
                     TGroupTask.create([

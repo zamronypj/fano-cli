@@ -16,8 +16,6 @@ uses
 
     TaskIntf,
     TaskFactoryIntf,
-    TextFileCreatorIntf,
-    ContentModifierIntf,
     CreateProjectTaskFactoryImpl;
 
 type
@@ -28,40 +26,15 @@ type
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *---------------------------------------*)
     TCreateDaemonProjectTaskFactory = class(TCreateProjectTaskFactory)
-    private
-        fExecOutputDir : string;
-    protected
-        function buildProjectTask(
-            const textFileCreator : ITextFileCreator;
-            const contentModifier : IContentModifier
-        ) : ITask; override;
     public
         constructor create(
             const depFactory : ITaskFactory;
             const bootstrapFactory : ITaskFactory;
             const execOutputDir : string = 'bin'
         );
-
     end;
 
 implementation
-
-uses
-
-    DirectoryCreatorImpl,
-    CreateDirTaskImpl,
-    CreateAdditionalFilesTaskImpl,
-    CreateShellScriptsTaskImpl,
-    InitGitRepoTaskImpl,
-    CommitGitRepoTaskImpl,
-    CreateProjectTaskImpl,
-    WithGitRepoTaskImpl,
-    WithGitInitialCommitTaskImpl,
-    AddFanoRepoTaskImpl,
-    CheckoutFanoRepoTaskImpl,
-    StageRepoTaskImpl,
-    GroupTaskImpl,
-    LazarusTaskImpl;
 
     constructor TCreateDaemonProjectTaskFactory.create(
         const depFactory : ITaskFactory;
@@ -69,35 +42,6 @@ uses
         const execOutputDir : string = 'bin'
     );
     begin
-        fExecOutputDir := execOutputDir;
-        inherited create(depFactory, bootstrapFactory);
-    end;
-
-    function TCreateDaemonProjectTaskFactory.buildProjectTask(
-        const textFileCreator : ITextFileCreator;
-        const contentModifier : IContentModifier
-    ) : ITask;
-    begin
-        result := TCreateProjectTask.create(
-            TGroupTask.create([
-                TCreateDirTask.create(TDirectoryCreator.create()),
-                TCreateShellScriptsTask.create(textFileCreator, contentModifier, fExecOutputDir),
-                fProjectDepTaskFactory.build(),
-                TCreateAdditionalFilesTask.create(textFileCreator, contentModifier),
-                fBootstrapTaskFactory.build(),
-                TLazarusTask.create(textFileCreator, contentModifier),
-                TWithGitRepoTask.create(
-                    TGroupTask.create([
-                        TInitGitRepoTask.create(),
-                        TAddFanoRepoTask.create(),
-                        TCheckoutFanoRepoTask.create(),
-                        TStageRepoTask.create(),
-                        TWithGitInitialCommitTask.create(
-                            TCommitGitRepoTask.create()
-                        )
-                    ])
-                )
-            ])
-        );
+        inherited create(depFactory, bootstrapFactory, execOutputDir);
     end;
 end.
