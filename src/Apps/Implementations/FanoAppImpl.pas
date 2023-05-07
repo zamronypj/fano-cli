@@ -158,13 +158,36 @@ resourcestring
         end;
     end;
 
+    procedure DumpExceptionCallStack(e: Exception);
+    var
+        i: Integer;
+        frames: PPointer;
+        report: string;
+    begin
+        report := '';
+        if e <> nil then
+        begin
+            report := Report + 'Exception class: ' + E.ClassName + LineEnding +
+            'Message: ' + E.Message + LineEnding;
+        end;
+        report := report + BackTraceStrFunc(ExceptAddr);
+        frames := ExceptFrames;
+        for i := 0 to ExceptFrameCount - 1 do
+            Report := Report + LineEnding + BackTraceStrFunc(frames[i]);
+        writeln(report);
+    end;
+
     procedure TFanoCliApplication.doRun();
     begin
         try
             tryRun();
         except
-            terminate();
-            raise;
+            on E: Exception do
+            begin
+                DumpExceptionCallStack(e);
+                terminate();
+                raise;
+            end;
         end;
     end;
 end.
