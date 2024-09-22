@@ -140,7 +140,7 @@ const
             //add new controller factory unit with nicely 4 space format
             modifiedUsesUnits := usesUnits + ',' + LineEnding +
                 '    ' + objectName + objectType + 'Factory';
-            //replace app/bootstrap.pas with modified content
+            //replace src/bootstrap.pas with modified content
             modifiedUnitContent := stringReplace(
                 bootstrapUnitContent,
                 usesUnits,
