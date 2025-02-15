@@ -20,4 +20,6 @@ if [["$OSTYPE" == "freebsd"*]]; then
     sed -i '' 's/\-Tlinux/\-Tfreebsd/g' build.cfg
 elif [["$OSTYPE" == "msys"*]]; then
     sed -i '' 's/\-Tlinux/\-Twin64/g' build.cfg
+elif [["$OSTYPE" == "darwin"*]]; then
+    sed -i '' 's/\-Tlinux/\-Tdarwin/g' build.cfg
 fi

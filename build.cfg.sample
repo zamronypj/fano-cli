@@ -19,6 +19,7 @@
 # win64 : Windows 64 (not tested yet)
 # win32 : Windows 32 (not tested yet)
 # freebsd : FreeBSD
+# darwin : MacOS
 #----------------------------------------------
 -Tlinux
 
