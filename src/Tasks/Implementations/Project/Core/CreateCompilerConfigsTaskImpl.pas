@@ -56,6 +56,13 @@ uses
         );
         {$ENDIF}
 
+        {$IFDEF DARWIN}
+        createTextFile(
+            dir + '/build.cfg',
+            StringReplace(strBuildCfg, '-Tlinux', '-Tdarwin', [rfReplaceAll])
+        );
+        {$ENDIF}
+
         {$IFDEF OPENBSD}
         createTextFile(
             dir + '/build.cfg',
